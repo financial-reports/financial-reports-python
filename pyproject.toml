@@ -21,6 +21,13 @@ dependencies = [
     "pydantic>=2.0.0",
 ]
 
+[project.optional-dependencies]
+test = [
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.23.0",
+    "pytest-cov>=4.1.0",
+]
+
 [project.urls]
 "Homepage" = "https://github.com/financial-reports/financial-reports-python"
 "Documentation" = "https://docs.financialreports.eu"

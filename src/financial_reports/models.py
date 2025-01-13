@@ -1,5 +1,6 @@
 from typing import Any, TypedDict
 
+
 class Filing(TypedDict):
     id: int
     company: dict[str, Any]
@@ -13,24 +14,29 @@ class Filing(TypedDict):
     source: dict[str, str]
     document: str
 
+
 class Sector(TypedDict):
     code: str
     name: str
+
 
 class IndustryGroup(TypedDict):
     code: str
     name: str
     sector: Sector
 
+
 class Industry(TypedDict):
     code: str
     name: str
     industry_group: IndustryGroup
 
+
 class SubIndustry(TypedDict):
     code: str
     name: str
     industry: Industry
+
 
 class Company(TypedDict):
     id: int
@@ -54,3 +60,54 @@ class Company(TypedDict):
     social_youtube: str | None
     social_tiktok: str | None
     social_pinterest: str | None
+    social_xing: str | None
+    social_glassdoor: str | None
+    year_founded: str
+    corporate_video_id: str | None
+    served_area: str
+    headcount: int
+    contact_email: str
+    ticker: str
+    is_listed: bool
+
+
+class FilingResponse(TypedDict):
+    count: int
+    next: str | None
+    previous: str | None
+    results: list[Filing]
+
+
+class CompanyResponse(TypedDict):
+    count: int
+    next: str | None
+    previous: str | None
+    results: list[Company]
+
+
+class FilingTypeResponse(TypedDict):
+    count: int
+    next: str | None
+    previous: str | None
+    results: list[dict[str, str]]
+
+
+class SourceResponse(TypedDict):
+    count: int
+    next: str | None
+    previous: str | None
+    results: list[dict[str, str]]
+
+
+class SectorResponse(TypedDict):
+    count: int
+    next: str | None
+    previous: str | None
+    results: list[dict[str, str]]
+
+
+class IndustryResponse(TypedDict):
+    count: int
+    next: str | None
+    previous: str | None
+    results: list[dict[str, Any]]

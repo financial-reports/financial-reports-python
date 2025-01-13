@@ -1,123 +1,18 @@
 import os
 from datetime import datetime
-from typing import Any, TypedDict, cast
+from typing import Any, Optional, cast
+import ssl
+
 
 import aiohttp
 from pydantic import BaseModel
 
-from src.logger import logger
-
-
-class Filing(TypedDict):
-    id: int
-    company: dict[str, Any]
-    filing_type: dict[str, str]
-    language: dict[str, str]
-    title: str
-    added_to_platform: str
-    updated_date: str
-    dissemination_datetime: str
-    release_datetime: str
-    source: dict[str, str]
-    document: str
-
-
-class Sector(TypedDict):
-    code: str
-    name: str
-
-
-class IndustryGroup(TypedDict):
-    code: str
-    name: str
-    sector: Sector
-
-
-class Industry(TypedDict):
-    code: str
-    name: str
-    industry_group: IndustryGroup
-
-
-class SubIndustry(TypedDict):
-    code: str
-    name: str
-    industry: Industry
-
-
-class Company(TypedDict):
-    id: int
-    name: str
-    isins: list[str]  # Changed from isin/isin_secondary to isins array
-    lei: str
-    country: str  # This should be one of the enum values from the API spec
-    sector: Sector
-    industry_group: IndustryGroup
-    industry: Industry
-    sub_industry: SubIndustry
-    ir_link: str
-    homepage_link: str
-    date_public: str
-    date_ipo: str
-    main_stock_exchange: str
-    social_facebook: str | None
-    social_instagram: str | None
-    social_twitter: str | None
-    social_linkedin: str | None
-    social_youtube: str | None
-    social_tiktok: str | None
-    social_pinterest: str | None
-    social_xing: str | None
-    social_glassdoor: str | None
-    year_founded: str
-    corporate_video_id: str | None
-    served_area: str
-    headcount: int
-    contact_email: str
-    ticker: str
-    is_listed: bool
-
-
-class FilingResponse(TypedDict):
-    count: int
-    next: str | None
-    previous: str | None
-    results: list[Filing]
-
-
-class CompanyResponse(TypedDict):
-    count: int
-    next: str | None
-    previous: str | None
-    results: list[Company]
-
-
-class FilingTypeResponse(TypedDict):
-    count: int
-    next: str | None
-    previous: str | None
-    results: list[dict[str, str]]
-
-
-class SourceResponse(TypedDict):
-    count: int
-    next: str | None
-    previous: str | None
-    results: list[dict[str, str]]
-
-
-class SectorResponse(TypedDict):
-    count: int
-    next: str | None
-    previous: str | None
-    results: list[dict[str, str]]
-
-
-class IndustryResponse(TypedDict):
-    count: int
-    next: str | None
-    previous: str | None
-    results: list[dict[str, Any]]
+from .logger import logger
+from .models import (
+    Filing, Company, Sector, IndustryGroup, Industry, SubIndustry,
+    FilingResponse, CompanyResponse, FilingTypeResponse, SourceResponse,
+    SectorResponse, IndustryResponse
+)
 
 
 class FinancialReportsRequest(BaseModel):
@@ -159,7 +54,10 @@ class FinancialReportsClient:
     """Async client for interacting with the Financial Reports API."""
 
     def __init__(
-        self, api_key: str | None = None, base_url: str = "https://api.financialreports.eu"
+        self, 
+        api_key: str | None = None, 
+        base_url: str = "https://api.financialreports.eu",
+        verify_ssl: bool = True
     ):
         """Initialize the Financial Reports API client."""
         self.api_key = api_key or os.getenv("FINANCIAL_REPORTS_API_KEY")
@@ -168,33 +66,56 @@ class FinancialReportsClient:
                 "API key must be provided either directly or via FINANCIAL_REPORTS_API_KEY environment variable"
             )
         self.base_url = base_url.rstrip("/")
+        self.verify_ssl = verify_ssl
+        self._session = None
+
+    async def _get_session(self) -> aiohttp.ClientSession:
+        if self._session is None:
+            self._session = aiohttp.ClientSession(
+                headers={"x-api-key": self.api_key}  # Remove ssl parameter from here
+            )
+        return self._session
+
+    async def close(self):
+        """Close the client session."""
+        if self._session:
+            await self._session.close()
+            self._session = None
 
     async def _make_request(
         self, method: str, endpoint: str, params: dict[str, Any] | None = None
     ) -> dict[str, Any]:
         """Make a request to the API."""
         url = f"{self.base_url}{endpoint}"
-        headers = {"x-api-key": self.api_key, "Accept": "application/json"}
+        session = await self._get_session()
 
-        async with aiohttp.ClientSession(headers=headers) as session:
-            try:
-                async with session.request(method, url, params=params) as response:
-                    if response.status != 200:
-                        error_data = await response.json()
-                        logger.error(f"Financial Reports API error: {error_data}")
-                        if response.status == 401:
-                            raise ValueError("Invalid API key")
-                        elif response.status == 403:
-                            raise ValueError("Insufficient permissions")
-                        response.raise_for_status()
+        # Create SSL context if verification is disabled
+        ssl_context = None
+        if not self.verify_ssl:
+            ssl_context = ssl.create_default_context()
+            ssl_context.check_hostname = False
+            ssl_context.verify_mode = ssl.CERT_NONE
+            logger.warning("SSL verification is disabled")
 
-                    data = await response.json()
-                    if not isinstance(data, dict):
-                        raise ValueError(f"Expected dict response, got {type(data)}")
-                    return data
-            except Exception as e:
-                logger.error(f"Error making request to Financial Reports API: {str(e)}")
-                raise
+        try:
+            # Pass ssl_context to the request
+            async with session.request(method, url, params=params, ssl=ssl_context) as response:
+                if response.status != 200:
+                    error_data = await response.json()
+                    logger.error(f"Financial Reports API error: {error_data}")
+                    if response.status == 401:
+                        raise ValueError("Invalid API key")
+                    elif response.status == 403:
+                        raise ValueError("Insufficient permissions")
+                    response.raise_for_status()
+
+                data = await response.json()
+                if not isinstance(data, dict):
+                    raise ValueError(f"Expected dict response, got {type(data)}")
+                return data
+        except Exception as e:
+            logger.error(f"Error making request to Financial Reports API: {str(e)}")
+            raise
 
     async def list_filings(
         self,
