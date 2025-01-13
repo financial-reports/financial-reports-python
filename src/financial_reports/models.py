@@ -1,4 +1,4 @@
-from typing import Any, TypedDict
+from typing import Any, TypedDict, Union, Optional
 
 
 class Filing(TypedDict):
@@ -53,17 +53,17 @@ class Company(TypedDict):
     date_public: str
     date_ipo: str
     main_stock_exchange: str
-    social_facebook: str | None
-    social_instagram: str | None
-    social_twitter: str | None
-    social_linkedin: str | None
-    social_youtube: str | None
-    social_tiktok: str | None
-    social_pinterest: str | None
-    social_xing: str | None
-    social_glassdoor: str | None
+    social_facebook: Optional[str]
+    social_instagram: Optional[str]
+    social_twitter: Optional[str]
+    social_linkedin: Optional[str]
+    social_youtube: Optional[str]
+    social_tiktok: Optional[str]
+    social_pinterest: Optional[str]
+    social_xing: Optional[str]
+    social_glassdoor: Optional[str]
     year_founded: str
-    corporate_video_id: str | None
+    corporate_video_id: Optional[str]
     served_area: str
     headcount: int
     contact_email: str
@@ -73,41 +73,41 @@ class Company(TypedDict):
 
 class FilingResponse(TypedDict):
     count: int
-    next: str | None
-    previous: str | None
+    next: Union[str, None]
+    previous: Union[str, None]
     results: list[Filing]
 
 
 class CompanyResponse(TypedDict):
     count: int
-    next: str | None
-    previous: str | None
+    next: Union[str, None]
+    previous: Union[str, None]
     results: list[Company]
 
 
 class FilingTypeResponse(TypedDict):
     count: int
-    next: str | None
-    previous: str | None
+    next: Union[str, None]
+    previous: Union[str, None]
     results: list[dict[str, str]]
 
 
 class SourceResponse(TypedDict):
     count: int
-    next: str | None
-    previous: str | None
+    next: Union[str, None]
+    previous: Union[str, None]
     results: list[dict[str, str]]
 
 
 class SectorResponse(TypedDict):
     count: int
-    next: str | None
-    previous: str | None
+    next: Union[str, None]
+    previous: Union[str, None]
     results: list[dict[str, str]]
 
 
 class IndustryResponse(TypedDict):
     count: int
-    next: str | None
-    previous: str | None
+    next: Union[str, None]
+    previous: Union[str, None]
     results: list[dict[str, Any]]
