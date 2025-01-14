@@ -1,6 +1,6 @@
 import os
 from datetime import datetime
-from typing import Any, Optional, cast, Union
+from typing import Any, Optional, Union, cast
 import ssl
 
 import aiohttp
@@ -50,7 +50,7 @@ class FinancialReportsClient:
 
     def __init__(
         self, 
-        api_key: str | None = None, 
+        api_key: Optional[str] = None, 
         base_url: str = "https://api.financialreports.eu",
         verify_ssl: bool = True
     ):
@@ -78,7 +78,7 @@ class FinancialReportsClient:
             self._session = None
 
     async def _make_request(
-        self, method: str, endpoint: str, params: dict[str, Any] | None = None
+        self, method: str, endpoint: str, params: Optional[dict[str, Any]] = None
     ) -> dict[str, Any]:
         """Make a request to the API."""
         url = f"{self.base_url}{endpoint}"
@@ -116,19 +116,19 @@ class FinancialReportsClient:
         self,
         page: int = 1,
         page_size: int = 50,
-        company_isin: str | None = None,
-        lei: str | None = None,
-        countries: str | None = None,
-        language: str | None = None,
-        added_to_platform_from: str | datetime | None = None,
-        added_to_platform_to: str | datetime | None = None,
-        dissemination_datetime_from: str | datetime | None = None,
-        dissemination_datetime_to: str | datetime | None = None,
-        release_datetime_from: str | datetime | None = None,
-        release_datetime_to: str | datetime | None = None,
-        type: str | None = None,
-        search: str | None = None,
-        ordering: str | None = None,
+        company_isin: Optional[str] = None,
+        lei: Optional[str] = None,
+        countries: Optional[str] = None,
+        language: Optional[str] = None,
+        added_to_platform_from: Optional[Union[str, datetime]] = None,
+        added_to_platform_to: Optional[Union[str, datetime]] = None,
+        dissemination_datetime_from: Optional[Union[str, datetime]] = None,
+        dissemination_datetime_to: Optional[Union[str, datetime]] = None,
+        release_datetime_from: Optional[Union[str, datetime]] = None,
+        release_datetime_to: Optional[Union[str, datetime]] = None,
+        type: Optional[str] = None,
+        search: Optional[str] = None,
+        ordering: Optional[str] = None,
     ) -> FilingResponse:
         """
         List financial filings with optional filtering.
@@ -231,11 +231,11 @@ class FinancialReportsClient:
         self,
         page: int = 1,
         page_size: int = 50,
-        countries: str | None = None,
-        sector: int | None = None,
-        industry_group: int | None = None,
-        industry: int | None = None,
-        sub_industry: int | None = None,
+        countries: Optional[str] = None,
+        sector: Optional[int] = None,
+        industry_group: Optional[int] = None,
+        industry: Optional[int] = None,
+        sub_industry: Optional[int] = None,
     ) -> CompanyResponse:
         """
         List companies with optional filtering.
@@ -450,7 +450,7 @@ class FinancialReportsClient:
         response = await self._make_request("GET", f"/sub-industries/{sub_industry_id}/")
         return cast(dict[str, Any], response)
 
-    async def get_ticker_by_name(self, company_name: str) -> str | None:
+    async def get_ticker_by_name(self, company_name: str) -> Optional[str]:
         """
         Get company ticker symbol by company name.
 
@@ -551,7 +551,7 @@ class FinancialReportsClient:
             logger.error(f"Error searching for company: {str(e)}")
             return None
 
-    async def get_primary_isin_by_name(self, company_name: str) -> str | None:
+    async def get_primary_isin_by_name(self, company_name: str) -> Optional[str]:
         """
         Get company ISIN by company name.
 
