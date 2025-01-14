@@ -31,3 +31,7 @@ test = [
 [project.urls]
 "Homepage" = "https://github.com/financial-reports/financial-reports-python"
 "Documentation" = "https://docs.financialreports.eu"
+
+[tool.pytest.ini_options]
+asyncio_mode = "strict"
+asyncio_default_fixture_loop_scope = "function"

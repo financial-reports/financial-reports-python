@@ -1,8 +1,7 @@
 import os
 from datetime import datetime
-from typing import Any, Optional, cast
+from typing import Any, Optional, cast, Union
 import ssl
-
 
 import aiohttp
 from pydantic import BaseModel
@@ -17,38 +16,34 @@ from .models import (
 
 class FinancialReportsRequest(BaseModel):
     """Base model for Financial Reports API requests."""
-
     page: int = 1
     page_size: int = 50
 
 
 class FilingsRequest(FinancialReportsRequest):
     """Model for filings list request parameters."""
-
-    company_isin: str | None = None
-    lei: str | None = None
-    countries: str | None = None
-    language: str | None = None
-    added_to_platform_from: str | datetime | None = None
-    added_to_platform_to: str | datetime | None = None
-    dissemination_datetime_from: str | datetime | None = None
-    dissemination_datetime_to: str | datetime | None = None
-    release_datetime_from: str | datetime | None = None
-    release_datetime_to: str | datetime | None = None
-    type: str | None = None
-    search: str | None = None
-    ordering: str | None = None
+    company_isin: Optional[str] = None
+    lei: Optional[str] = None
+    countries: Optional[str] = None
+    language: Optional[str] = None
+    added_to_platform_from: Optional[Union[str, datetime]] = None
+    added_to_platform_to: Optional[Union[str, datetime]] = None
+    dissemination_datetime_from: Optional[Union[str, datetime]] = None
+    dissemination_datetime_to: Optional[Union[str, datetime]] = None
+    release_datetime_from: Optional[Union[str, datetime]] = None
+    release_datetime_to: Optional[Union[str, datetime]] = None
+    type: Optional[str] = None
+    search: Optional[str] = None
+    ordering: Optional[str] = None
 
 
 class CompaniesRequest(FinancialReportsRequest):
     """Model for companies list request parameters."""
-
-    countries: str | None = None
-    sector: int | None = None
-    industry_group: int | None = None
-    industry: int | None = None
-    sub_industry: int | None = None
-
+    countries: Optional[str] = None
+    sector: Optional[int] = None
+    industry_group: Optional[int] = None
+    industry: Optional[int] = None
+    sub_industry: Optional[int] = None
 
 class FinancialReportsClient:
     """Async client for interacting with the Financial Reports API."""
