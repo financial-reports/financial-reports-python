@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "financial_reports_generated_client"
-version = "0.1.1"
+version = "0.1.2"
 description = "Financial Reports API"
 authors = ["API Support <api@financialreports.eu>"]
 license = "Apache 2.0"
