@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "0.1.5"
+__version__ = "0.1.6"
 
 # import apis into sdk package
 from financial_reports_generated_client.api.companies_api import CompaniesApi
