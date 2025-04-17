@@ -18,7 +18,7 @@ Name | Type | Description | Notes
 **release_datetime** | **datetime** | Timestamp when the filing was released (e.g., for press releases) (UTC). | [readonly] 
 **source** | [**Source**](Source.md) | Source from which the filing was obtained. | [readonly] 
 **document** | **str** | URL link to the primary filing document (e.g., PDF, HTML). | [readonly] 
-**year** | **int** | The financial year the filing pertains to. | [readonly] 
+**processed_filing_id** | **int** | ID of the processed version of this filing, if available. Null otherwise. | [readonly] 
 
 ## Example
 

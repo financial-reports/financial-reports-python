@@ -20,7 +20,7 @@ import json
 
 from datetime import date, datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List
+from typing import Any, ClassVar, Dict, List, Optional
 from financial_reports_generated_client.models.company_minimal import CompanyMinimal
 from financial_reports_generated_client.models.filing_type import FilingType
 from financial_reports_generated_client.models.language import Language
@@ -44,8 +44,8 @@ class Filing(BaseModel):
     release_datetime: datetime = Field(description="Timestamp when the filing was released (e.g., for press releases) (UTC).")
     source: Source = Field(description="Source from which the filing was obtained.")
     document: StrictStr = Field(description="URL link to the primary filing document (e.g., PDF, HTML).")
-    year: StrictInt = Field(description="The financial year the filing pertains to.")
-    __properties: ClassVar[List[str]] = ["id", "company", "filing_type", "language", "filing_date", "title", "added_to_platform", "updated_date", "dissemination_datetime", "release_datetime", "source", "document", "year"]
+    processed_filing_id: Optional[StrictInt] = Field(description="ID of the processed version of this filing, if available. Null otherwise.")
+    __properties: ClassVar[List[str]] = ["id", "company", "filing_type", "language", "filing_date", "title", "added_to_platform", "updated_date", "dissemination_datetime", "release_datetime", "source", "document", "processed_filing_id"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -104,7 +104,7 @@ class Filing(BaseModel):
             "release_datetime",
             "source",
             "document",
-            "year",
+            "processed_filing_id",
         ])
 
         _dict = self.model_dump(
@@ -124,6 +124,11 @@ class Filing(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of source
         if self.source:
             _dict['source'] = self.source.to_dict()
+        # set to None if processed_filing_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.processed_filing_id is None and "processed_filing_id" in self.model_fields_set:
+            _dict['processed_filing_id'] = None
+
         return _dict
 
     @classmethod
@@ -148,7 +153,7 @@ class Filing(BaseModel):
             "release_datetime": obj.get("release_datetime"),
             "source": Source.from_dict(obj["source"]) if obj.get("source") is not None else None,
             "document": obj.get("document"),
-            "year": obj.get("year")
+            "processed_filing_id": obj.get("processed_filing_id")
         })
         return _obj
 

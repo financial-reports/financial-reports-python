@@ -20,7 +20,7 @@ import json
 
 from datetime import date
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List
+from typing import Any, ClassVar, Dict, List, Optional
 from financial_reports_generated_client.models.industry import Industry
 from financial_reports_generated_client.models.industry_group import IndustryGroup
 from financial_reports_generated_client.models.sector import Sector
@@ -54,7 +54,7 @@ class Company(BaseModel):
     social_pinterest: StrictStr = Field(description="Pinterest profile identifier.")
     social_xing: StrictStr = Field(description="Xing company profile identifier.")
     social_glassdoor: StrictStr = Field(description="Glassdoor company identifier.")
-    year_founded: StrictInt = Field(description="Year the company was founded.")
+    year_founded: Optional[date] = Field(description="Date the company was founded.")
     corporate_video_id: StrictStr = Field(description="Identifier for a corporate video (e.g., YouTube ID).")
     served_area: StrictStr = Field(description="Geographical area served by the company.")
     headcount: StrictInt = Field(description="Approximate number of employees.")
@@ -172,6 +172,11 @@ class Company(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of sub_industry
         if self.sub_industry:
             _dict['sub_industry'] = self.sub_industry.to_dict()
+        # set to None if year_founded (nullable) is None
+        # and model_fields_set contains the field
+        if self.year_founded is None and "year_founded" in self.model_fields_set:
+            _dict['year_founded'] = None
+
         return _dict
 
     @classmethod

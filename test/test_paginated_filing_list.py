@@ -53,7 +53,7 @@ class TestPaginatedFilingList(unittest.TestCase):
                         release_datetime = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
                         source = null, 
                         document = '', 
-                        year = 56, )
+                        processed_filing_id = 56, )
                     ]
             )
         else:
@@ -73,7 +73,7 @@ class TestPaginatedFilingList(unittest.TestCase):
                         release_datetime = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
                         source = null, 
                         document = '', 
-                        year = 56, )
+                        processed_filing_id = 56, )
                     ],
         )
         """

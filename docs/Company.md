@@ -28,7 +28,7 @@ Name | Type | Description | Notes
 **social_pinterest** | **str** | Pinterest profile identifier. | [readonly] 
 **social_xing** | **str** | Xing company profile identifier. | [readonly] 
 **social_glassdoor** | **str** | Glassdoor company identifier. | [readonly] 
-**year_founded** | **int** | Year the company was founded. | [readonly] 
+**year_founded** | **date** | Date the company was founded. | [readonly] 
 **corporate_video_id** | **str** | Identifier for a corporate video (e.g., YouTube ID). | [readonly] 
 **served_area** | **str** | Geographical area served by the company. | [readonly] 
 **headcount** | **int** | Approximate number of employees. | [readonly] 

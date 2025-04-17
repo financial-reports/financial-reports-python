@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "0.2.0"
+__version__ = "0.2.1"
 
 # import apis into sdk package
 from financial_reports_generated_client.api.companies_api import CompaniesApi
@@ -23,6 +23,7 @@ from financial_reports_generated_client.api.filing_types_api import FilingTypesA
 from financial_reports_generated_client.api.filings_api import FilingsApi
 from financial_reports_generated_client.api.industries_api import IndustriesApi
 from financial_reports_generated_client.api.industry_groups_api import IndustryGroupsApi
+from financial_reports_generated_client.api.processed_filings_api import ProcessedFilingsApi
 from financial_reports_generated_client.api.schema_api import SchemaApi
 from financial_reports_generated_client.api.sectors_api import SectorsApi
 from financial_reports_generated_client.api.sources_api import SourcesApi
@@ -55,6 +56,7 @@ from financial_reports_generated_client.models.paginated_industry_list import Pa
 from financial_reports_generated_client.models.paginated_sector_list import PaginatedSectorList
 from financial_reports_generated_client.models.paginated_source_list import PaginatedSourceList
 from financial_reports_generated_client.models.paginated_sub_industry_list import PaginatedSubIndustryList
+from financial_reports_generated_client.models.processed_filing import ProcessedFiling
 from financial_reports_generated_client.models.sector import Sector
 from financial_reports_generated_client.models.source import Source
 from financial_reports_generated_client.models.sub_industry import SubIndustry

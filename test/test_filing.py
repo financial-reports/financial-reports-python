@@ -61,7 +61,7 @@ class TestFiling(unittest.TestCase):
                     url = '', 
                     description = '', ),
                 document = '',
-                year = 56
+                processed_filing_id = 56
             )
         else:
             return Filing(
@@ -90,7 +90,7 @@ class TestFiling(unittest.TestCase):
                     url = '', 
                     description = '', ),
                 document = '',
-                year = 56,
+                processed_filing_id = 56,
         )
         """
 
