@@ -9,7 +9,7 @@ Method | HTTP request | Description
 
 
 # **sub_industries_list**
-> PaginatedSubIndustryList sub_industries_list(industry=industry, page=page, page_size=page_size, search=search)
+> PaginatedSubIndustryList sub_industries_list(code=code, code__iexact=code__iexact, code__in=code__in, industry_code=industry_code, industry_code_in=industry_code_in, industry_group_code=industry_group_code, name__icontains=name__icontains, page=page, page_size=page_size, search=search, sector_code=sector_code)
 
 Retrieve a list of all available GICS Sub-Industries. Can be filtered by parent industry ID.
 
@@ -51,13 +51,20 @@ configuration.api_key['cookieAuth'] = os.environ["API_KEY"]
 async with financial_reports_generated_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = financial_reports_generated_client.SubIndustriesApi(api_client)
-    industry = 56 # int |  (optional)
+    code = 'code_example' # str |  (optional)
+    code__iexact = 'code__iexact_example' # str |  (optional)
+    code__in = ['code__in_example'] # List[str] | Multiple values may be separated by commas. (optional)
+    industry_code = 'industry_code_example' # str | Filter by parent Industry GICS code (e.g., 101010) (optional)
+    industry_code_in = ['industry_code_in_example'] # List[str] | Multiple values may be separated by commas. (optional)
+    industry_group_code = 'industry_group_code_example' # str | Filter by grandparent Industry Group GICS code (e.g., 1010) (optional)
+    name__icontains = 'name__icontains_example' # str |  (optional)
     page = 56 # int | A page number within the paginated result set. (optional)
     page_size = 56 # int | Number of results to return per page. (optional)
     search = 'search_example' # str | A search term. (optional)
+    sector_code = 'sector_code_example' # str | Filter by great-grandparent Sector GICS code (e.g., 10) (optional)
 
     try:
-        api_response = await api_instance.sub_industries_list(industry=industry, page=page, page_size=page_size, search=search)
+        api_response = await api_instance.sub_industries_list(code=code, code__iexact=code__iexact, code__in=code__in, industry_code=industry_code, industry_code_in=industry_code_in, industry_group_code=industry_group_code, name__icontains=name__icontains, page=page, page_size=page_size, search=search, sector_code=sector_code)
         print("The response of SubIndustriesApi->sub_industries_list:\n")
         pprint(api_response)
     except Exception as e:
@@ -71,10 +78,17 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **industry** | **int**|  | [optional] 
+ **code** | **str**|  | [optional] 
+ **code__iexact** | **str**|  | [optional] 
+ **code__in** | [**List[str]**](str.md)| Multiple values may be separated by commas. | [optional] 
+ **industry_code** | **str**| Filter by parent Industry GICS code (e.g., 101010) | [optional] 
+ **industry_code_in** | [**List[str]**](str.md)| Multiple values may be separated by commas. | [optional] 
+ **industry_group_code** | **str**| Filter by grandparent Industry Group GICS code (e.g., 1010) | [optional] 
+ **name__icontains** | **str**|  | [optional] 
  **page** | **int**| A page number within the paginated result set. | [optional] 
  **page_size** | **int**| Number of results to return per page. | [optional] 
  **search** | **str**| A search term. | [optional] 
+ **sector_code** | **str**| Filter by great-grandparent Sector GICS code (e.g., 10) | [optional] 
 
 ### Return type
 

@@ -18,7 +18,7 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
 from pydantic import Field, StrictInt, StrictStr
-from typing import Optional
+from typing import List, Optional
 from typing_extensions import Annotated
 from financial_reports_generated_client.models.industry_group import IndustryGroup
 from financial_reports_generated_client.models.paginated_industry_group_list import PaginatedIndustryGroupList
@@ -44,10 +44,15 @@ class IndustryGroupsApi:
     @validate_call
     async def industry_groups_list(
         self,
+        code: Optional[StrictStr] = None,
+        code__iexact: Optional[StrictStr] = None,
+        code__in: Annotated[Optional[List[StrictStr]], Field(description="Multiple values may be separated by commas.")] = None,
+        name__icontains: Optional[StrictStr] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
         search: Annotated[Optional[StrictStr], Field(description="A search term.")] = None,
-        sector: Optional[StrictInt] = None,
+        sector_code: Annotated[Optional[StrictStr], Field(description="Filter by parent Sector GICS code (e.g., 10)")] = None,
+        sector_code_in: Annotated[Optional[List[StrictStr]], Field(description="Multiple values may be separated by commas.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -65,14 +70,24 @@ class IndustryGroupsApi:
 
         Retrieve a list of all available GICS Industry Groups. Can be filtered by parent sector ID.
 
+        :param code:
+        :type code: str
+        :param code__iexact:
+        :type code__iexact: str
+        :param code__in: Multiple values may be separated by commas.
+        :type code__in: List[str]
+        :param name__icontains:
+        :type name__icontains: str
         :param page: A page number within the paginated result set.
         :type page: int
         :param page_size: Number of results to return per page.
         :type page_size: int
         :param search: A search term.
         :type search: str
-        :param sector:
-        :type sector: int
+        :param sector_code: Filter by parent Sector GICS code (e.g., 10)
+        :type sector_code: str
+        :param sector_code_in: Multiple values may be separated by commas.
+        :type sector_code_in: List[str]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -96,10 +111,15 @@ class IndustryGroupsApi:
         """ # noqa: E501
 
         _param = self._industry_groups_list_serialize(
+            code=code,
+            code__iexact=code__iexact,
+            code__in=code__in,
+            name__icontains=name__icontains,
             page=page,
             page_size=page_size,
             search=search,
-            sector=sector,
+            sector_code=sector_code,
+            sector_code_in=sector_code_in,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -123,10 +143,15 @@ class IndustryGroupsApi:
     @validate_call
     async def industry_groups_list_with_http_info(
         self,
+        code: Optional[StrictStr] = None,
+        code__iexact: Optional[StrictStr] = None,
+        code__in: Annotated[Optional[List[StrictStr]], Field(description="Multiple values may be separated by commas.")] = None,
+        name__icontains: Optional[StrictStr] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
         search: Annotated[Optional[StrictStr], Field(description="A search term.")] = None,
-        sector: Optional[StrictInt] = None,
+        sector_code: Annotated[Optional[StrictStr], Field(description="Filter by parent Sector GICS code (e.g., 10)")] = None,
+        sector_code_in: Annotated[Optional[List[StrictStr]], Field(description="Multiple values may be separated by commas.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -144,14 +169,24 @@ class IndustryGroupsApi:
 
         Retrieve a list of all available GICS Industry Groups. Can be filtered by parent sector ID.
 
+        :param code:
+        :type code: str
+        :param code__iexact:
+        :type code__iexact: str
+        :param code__in: Multiple values may be separated by commas.
+        :type code__in: List[str]
+        :param name__icontains:
+        :type name__icontains: str
         :param page: A page number within the paginated result set.
         :type page: int
         :param page_size: Number of results to return per page.
         :type page_size: int
         :param search: A search term.
         :type search: str
-        :param sector:
-        :type sector: int
+        :param sector_code: Filter by parent Sector GICS code (e.g., 10)
+        :type sector_code: str
+        :param sector_code_in: Multiple values may be separated by commas.
+        :type sector_code_in: List[str]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -175,10 +210,15 @@ class IndustryGroupsApi:
         """ # noqa: E501
 
         _param = self._industry_groups_list_serialize(
+            code=code,
+            code__iexact=code__iexact,
+            code__in=code__in,
+            name__icontains=name__icontains,
             page=page,
             page_size=page_size,
             search=search,
-            sector=sector,
+            sector_code=sector_code,
+            sector_code_in=sector_code_in,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -202,10 +242,15 @@ class IndustryGroupsApi:
     @validate_call
     async def industry_groups_list_without_preload_content(
         self,
+        code: Optional[StrictStr] = None,
+        code__iexact: Optional[StrictStr] = None,
+        code__in: Annotated[Optional[List[StrictStr]], Field(description="Multiple values may be separated by commas.")] = None,
+        name__icontains: Optional[StrictStr] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
         search: Annotated[Optional[StrictStr], Field(description="A search term.")] = None,
-        sector: Optional[StrictInt] = None,
+        sector_code: Annotated[Optional[StrictStr], Field(description="Filter by parent Sector GICS code (e.g., 10)")] = None,
+        sector_code_in: Annotated[Optional[List[StrictStr]], Field(description="Multiple values may be separated by commas.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -223,14 +268,24 @@ class IndustryGroupsApi:
 
         Retrieve a list of all available GICS Industry Groups. Can be filtered by parent sector ID.
 
+        :param code:
+        :type code: str
+        :param code__iexact:
+        :type code__iexact: str
+        :param code__in: Multiple values may be separated by commas.
+        :type code__in: List[str]
+        :param name__icontains:
+        :type name__icontains: str
         :param page: A page number within the paginated result set.
         :type page: int
         :param page_size: Number of results to return per page.
         :type page_size: int
         :param search: A search term.
         :type search: str
-        :param sector:
-        :type sector: int
+        :param sector_code: Filter by parent Sector GICS code (e.g., 10)
+        :type sector_code: str
+        :param sector_code_in: Multiple values may be separated by commas.
+        :type sector_code_in: List[str]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -254,10 +309,15 @@ class IndustryGroupsApi:
         """ # noqa: E501
 
         _param = self._industry_groups_list_serialize(
+            code=code,
+            code__iexact=code__iexact,
+            code__in=code__in,
+            name__icontains=name__icontains,
             page=page,
             page_size=page_size,
             search=search,
-            sector=sector,
+            sector_code=sector_code,
+            sector_code_in=sector_code_in,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -276,10 +336,15 @@ class IndustryGroupsApi:
 
     def _industry_groups_list_serialize(
         self,
+        code,
+        code__iexact,
+        code__in,
+        name__icontains,
         page,
         page_size,
         search,
-        sector,
+        sector_code,
+        sector_code_in,
         _request_auth,
         _content_type,
         _headers,
@@ -289,6 +354,8 @@ class IndustryGroupsApi:
         _host = None
 
         _collection_formats: Dict[str, str] = {
+            'code__in': 'csv',
+            'sector_code_in': 'csv',
         }
 
         _path_params: Dict[str, str] = {}
@@ -302,6 +369,22 @@ class IndustryGroupsApi:
 
         # process the path parameters
         # process the query parameters
+        if code is not None:
+            
+            _query_params.append(('code', code))
+            
+        if code__iexact is not None:
+            
+            _query_params.append(('code__iexact', code__iexact))
+            
+        if code__in is not None:
+            
+            _query_params.append(('code__in', code__in))
+            
+        if name__icontains is not None:
+            
+            _query_params.append(('name__icontains', name__icontains))
+            
         if page is not None:
             
             _query_params.append(('page', page))
@@ -314,9 +397,13 @@ class IndustryGroupsApi:
             
             _query_params.append(('search', search))
             
-        if sector is not None:
+        if sector_code is not None:
             
-            _query_params.append(('sector', sector))
+            _query_params.append(('sector_code', sector_code))
+            
+        if sector_code_in is not None:
+            
+            _query_params.append(('sector_code_in', sector_code_in))
             
         # process the header parameters
         # process the form parameters

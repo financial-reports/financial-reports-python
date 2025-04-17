@@ -9,7 +9,7 @@ Method | HTTP request | Description
 
 
 # **industry_groups_list**
-> PaginatedIndustryGroupList industry_groups_list(page=page, page_size=page_size, search=search, sector=sector)
+> PaginatedIndustryGroupList industry_groups_list(code=code, code__iexact=code__iexact, code__in=code__in, name__icontains=name__icontains, page=page, page_size=page_size, search=search, sector_code=sector_code, sector_code_in=sector_code_in)
 
 Retrieve a list of all available GICS Industry Groups. Can be filtered by parent sector ID.
 
@@ -51,13 +51,18 @@ configuration.api_key['cookieAuth'] = os.environ["API_KEY"]
 async with financial_reports_generated_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = financial_reports_generated_client.IndustryGroupsApi(api_client)
+    code = 'code_example' # str |  (optional)
+    code__iexact = 'code__iexact_example' # str |  (optional)
+    code__in = ['code__in_example'] # List[str] | Multiple values may be separated by commas. (optional)
+    name__icontains = 'name__icontains_example' # str |  (optional)
     page = 56 # int | A page number within the paginated result set. (optional)
     page_size = 56 # int | Number of results to return per page. (optional)
     search = 'search_example' # str | A search term. (optional)
-    sector = 56 # int |  (optional)
+    sector_code = 'sector_code_example' # str | Filter by parent Sector GICS code (e.g., 10) (optional)
+    sector_code_in = ['sector_code_in_example'] # List[str] | Multiple values may be separated by commas. (optional)
 
     try:
-        api_response = await api_instance.industry_groups_list(page=page, page_size=page_size, search=search, sector=sector)
+        api_response = await api_instance.industry_groups_list(code=code, code__iexact=code__iexact, code__in=code__in, name__icontains=name__icontains, page=page, page_size=page_size, search=search, sector_code=sector_code, sector_code_in=sector_code_in)
         print("The response of IndustryGroupsApi->industry_groups_list:\n")
         pprint(api_response)
     except Exception as e:
@@ -71,10 +76,15 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **code** | **str**|  | [optional] 
+ **code__iexact** | **str**|  | [optional] 
+ **code__in** | [**List[str]**](str.md)| Multiple values may be separated by commas. | [optional] 
+ **name__icontains** | **str**|  | [optional] 
  **page** | **int**| A page number within the paginated result set. | [optional] 
  **page_size** | **int**| Number of results to return per page. | [optional] 
  **search** | **str**| A search term. | [optional] 
- **sector** | **int**|  | [optional] 
+ **sector_code** | **str**| Filter by parent Sector GICS code (e.g., 10) | [optional] 
+ **sector_code_in** | [**List[str]**](str.md)| Multiple values may be separated by commas. | [optional] 
 
 ### Return type
 

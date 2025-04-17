@@ -9,7 +9,7 @@ Method | HTTP request | Description
 
 
 # **sectors_list**
-> PaginatedSectorList sectors_list(page=page, page_size=page_size, search=search)
+> PaginatedSectorList sectors_list(code=code, code__iexact=code__iexact, code__in=code__in, name__icontains=name__icontains, page=page, page_size=page_size, search=search)
 
 Retrieve a list of all available GICS Sectors.
 
@@ -51,12 +51,16 @@ configuration.api_key['cookieAuth'] = os.environ["API_KEY"]
 async with financial_reports_generated_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = financial_reports_generated_client.SectorsApi(api_client)
+    code = 'code_example' # str |  (optional)
+    code__iexact = 'code__iexact_example' # str |  (optional)
+    code__in = ['code__in_example'] # List[str] | Multiple values may be separated by commas. (optional)
+    name__icontains = 'name__icontains_example' # str |  (optional)
     page = 56 # int | A page number within the paginated result set. (optional)
     page_size = 56 # int | Number of results to return per page. (optional)
     search = 'search_example' # str | A search term. (optional)
 
     try:
-        api_response = await api_instance.sectors_list(page=page, page_size=page_size, search=search)
+        api_response = await api_instance.sectors_list(code=code, code__iexact=code__iexact, code__in=code__in, name__icontains=name__icontains, page=page, page_size=page_size, search=search)
         print("The response of SectorsApi->sectors_list:\n")
         pprint(api_response)
     except Exception as e:
@@ -70,6 +74,10 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **code** | **str**|  | [optional] 
+ **code__iexact** | **str**|  | [optional] 
+ **code__in** | [**List[str]**](str.md)| Multiple values may be separated by commas. | [optional] 
+ **name__icontains** | **str**|  | [optional] 
  **page** | **int**| A page number within the paginated result set. | [optional] 
  **page_size** | **int**| Number of results to return per page. | [optional] 
  **search** | **str**| A search term. | [optional] 

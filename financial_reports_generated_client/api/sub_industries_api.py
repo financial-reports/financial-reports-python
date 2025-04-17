@@ -18,7 +18,7 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
 from pydantic import Field, StrictInt, StrictStr
-from typing import Optional
+from typing import List, Optional
 from typing_extensions import Annotated
 from financial_reports_generated_client.models.paginated_sub_industry_list import PaginatedSubIndustryList
 from financial_reports_generated_client.models.sub_industry import SubIndustry
@@ -44,10 +44,17 @@ class SubIndustriesApi:
     @validate_call
     async def sub_industries_list(
         self,
-        industry: Optional[StrictInt] = None,
+        code: Optional[StrictStr] = None,
+        code__iexact: Optional[StrictStr] = None,
+        code__in: Annotated[Optional[List[StrictStr]], Field(description="Multiple values may be separated by commas.")] = None,
+        industry_code: Annotated[Optional[StrictStr], Field(description="Filter by parent Industry GICS code (e.g., 101010)")] = None,
+        industry_code_in: Annotated[Optional[List[StrictStr]], Field(description="Multiple values may be separated by commas.")] = None,
+        industry_group_code: Annotated[Optional[StrictStr], Field(description="Filter by grandparent Industry Group GICS code (e.g., 1010)")] = None,
+        name__icontains: Optional[StrictStr] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
         search: Annotated[Optional[StrictStr], Field(description="A search term.")] = None,
+        sector_code: Annotated[Optional[StrictStr], Field(description="Filter by great-grandparent Sector GICS code (e.g., 10)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -65,14 +72,28 @@ class SubIndustriesApi:
 
         Retrieve a list of all available GICS Sub-Industries. Can be filtered by parent industry ID.
 
-        :param industry:
-        :type industry: int
+        :param code:
+        :type code: str
+        :param code__iexact:
+        :type code__iexact: str
+        :param code__in: Multiple values may be separated by commas.
+        :type code__in: List[str]
+        :param industry_code: Filter by parent Industry GICS code (e.g., 101010)
+        :type industry_code: str
+        :param industry_code_in: Multiple values may be separated by commas.
+        :type industry_code_in: List[str]
+        :param industry_group_code: Filter by grandparent Industry Group GICS code (e.g., 1010)
+        :type industry_group_code: str
+        :param name__icontains:
+        :type name__icontains: str
         :param page: A page number within the paginated result set.
         :type page: int
         :param page_size: Number of results to return per page.
         :type page_size: int
         :param search: A search term.
         :type search: str
+        :param sector_code: Filter by great-grandparent Sector GICS code (e.g., 10)
+        :type sector_code: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -96,10 +117,17 @@ class SubIndustriesApi:
         """ # noqa: E501
 
         _param = self._sub_industries_list_serialize(
-            industry=industry,
+            code=code,
+            code__iexact=code__iexact,
+            code__in=code__in,
+            industry_code=industry_code,
+            industry_code_in=industry_code_in,
+            industry_group_code=industry_group_code,
+            name__icontains=name__icontains,
             page=page,
             page_size=page_size,
             search=search,
+            sector_code=sector_code,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -123,10 +151,17 @@ class SubIndustriesApi:
     @validate_call
     async def sub_industries_list_with_http_info(
         self,
-        industry: Optional[StrictInt] = None,
+        code: Optional[StrictStr] = None,
+        code__iexact: Optional[StrictStr] = None,
+        code__in: Annotated[Optional[List[StrictStr]], Field(description="Multiple values may be separated by commas.")] = None,
+        industry_code: Annotated[Optional[StrictStr], Field(description="Filter by parent Industry GICS code (e.g., 101010)")] = None,
+        industry_code_in: Annotated[Optional[List[StrictStr]], Field(description="Multiple values may be separated by commas.")] = None,
+        industry_group_code: Annotated[Optional[StrictStr], Field(description="Filter by grandparent Industry Group GICS code (e.g., 1010)")] = None,
+        name__icontains: Optional[StrictStr] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
         search: Annotated[Optional[StrictStr], Field(description="A search term.")] = None,
+        sector_code: Annotated[Optional[StrictStr], Field(description="Filter by great-grandparent Sector GICS code (e.g., 10)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -144,14 +179,28 @@ class SubIndustriesApi:
 
         Retrieve a list of all available GICS Sub-Industries. Can be filtered by parent industry ID.
 
-        :param industry:
-        :type industry: int
+        :param code:
+        :type code: str
+        :param code__iexact:
+        :type code__iexact: str
+        :param code__in: Multiple values may be separated by commas.
+        :type code__in: List[str]
+        :param industry_code: Filter by parent Industry GICS code (e.g., 101010)
+        :type industry_code: str
+        :param industry_code_in: Multiple values may be separated by commas.
+        :type industry_code_in: List[str]
+        :param industry_group_code: Filter by grandparent Industry Group GICS code (e.g., 1010)
+        :type industry_group_code: str
+        :param name__icontains:
+        :type name__icontains: str
         :param page: A page number within the paginated result set.
         :type page: int
         :param page_size: Number of results to return per page.
         :type page_size: int
         :param search: A search term.
         :type search: str
+        :param sector_code: Filter by great-grandparent Sector GICS code (e.g., 10)
+        :type sector_code: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -175,10 +224,17 @@ class SubIndustriesApi:
         """ # noqa: E501
 
         _param = self._sub_industries_list_serialize(
-            industry=industry,
+            code=code,
+            code__iexact=code__iexact,
+            code__in=code__in,
+            industry_code=industry_code,
+            industry_code_in=industry_code_in,
+            industry_group_code=industry_group_code,
+            name__icontains=name__icontains,
             page=page,
             page_size=page_size,
             search=search,
+            sector_code=sector_code,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -202,10 +258,17 @@ class SubIndustriesApi:
     @validate_call
     async def sub_industries_list_without_preload_content(
         self,
-        industry: Optional[StrictInt] = None,
+        code: Optional[StrictStr] = None,
+        code__iexact: Optional[StrictStr] = None,
+        code__in: Annotated[Optional[List[StrictStr]], Field(description="Multiple values may be separated by commas.")] = None,
+        industry_code: Annotated[Optional[StrictStr], Field(description="Filter by parent Industry GICS code (e.g., 101010)")] = None,
+        industry_code_in: Annotated[Optional[List[StrictStr]], Field(description="Multiple values may be separated by commas.")] = None,
+        industry_group_code: Annotated[Optional[StrictStr], Field(description="Filter by grandparent Industry Group GICS code (e.g., 1010)")] = None,
+        name__icontains: Optional[StrictStr] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
         search: Annotated[Optional[StrictStr], Field(description="A search term.")] = None,
+        sector_code: Annotated[Optional[StrictStr], Field(description="Filter by great-grandparent Sector GICS code (e.g., 10)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -223,14 +286,28 @@ class SubIndustriesApi:
 
         Retrieve a list of all available GICS Sub-Industries. Can be filtered by parent industry ID.
 
-        :param industry:
-        :type industry: int
+        :param code:
+        :type code: str
+        :param code__iexact:
+        :type code__iexact: str
+        :param code__in: Multiple values may be separated by commas.
+        :type code__in: List[str]
+        :param industry_code: Filter by parent Industry GICS code (e.g., 101010)
+        :type industry_code: str
+        :param industry_code_in: Multiple values may be separated by commas.
+        :type industry_code_in: List[str]
+        :param industry_group_code: Filter by grandparent Industry Group GICS code (e.g., 1010)
+        :type industry_group_code: str
+        :param name__icontains:
+        :type name__icontains: str
         :param page: A page number within the paginated result set.
         :type page: int
         :param page_size: Number of results to return per page.
         :type page_size: int
         :param search: A search term.
         :type search: str
+        :param sector_code: Filter by great-grandparent Sector GICS code (e.g., 10)
+        :type sector_code: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -254,10 +331,17 @@ class SubIndustriesApi:
         """ # noqa: E501
 
         _param = self._sub_industries_list_serialize(
-            industry=industry,
+            code=code,
+            code__iexact=code__iexact,
+            code__in=code__in,
+            industry_code=industry_code,
+            industry_code_in=industry_code_in,
+            industry_group_code=industry_group_code,
+            name__icontains=name__icontains,
             page=page,
             page_size=page_size,
             search=search,
+            sector_code=sector_code,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -276,10 +360,17 @@ class SubIndustriesApi:
 
     def _sub_industries_list_serialize(
         self,
-        industry,
+        code,
+        code__iexact,
+        code__in,
+        industry_code,
+        industry_code_in,
+        industry_group_code,
+        name__icontains,
         page,
         page_size,
         search,
+        sector_code,
         _request_auth,
         _content_type,
         _headers,
@@ -289,6 +380,8 @@ class SubIndustriesApi:
         _host = None
 
         _collection_formats: Dict[str, str] = {
+            'code__in': 'csv',
+            'industry_code_in': 'csv',
         }
 
         _path_params: Dict[str, str] = {}
@@ -302,9 +395,33 @@ class SubIndustriesApi:
 
         # process the path parameters
         # process the query parameters
-        if industry is not None:
+        if code is not None:
             
-            _query_params.append(('industry', industry))
+            _query_params.append(('code', code))
+            
+        if code__iexact is not None:
+            
+            _query_params.append(('code__iexact', code__iexact))
+            
+        if code__in is not None:
+            
+            _query_params.append(('code__in', code__in))
+            
+        if industry_code is not None:
+            
+            _query_params.append(('industry_code', industry_code))
+            
+        if industry_code_in is not None:
+            
+            _query_params.append(('industry_code_in', industry_code_in))
+            
+        if industry_group_code is not None:
+            
+            _query_params.append(('industry_group_code', industry_group_code))
+            
+        if name__icontains is not None:
+            
+            _query_params.append(('name__icontains', name__icontains))
             
         if page is not None:
             
@@ -317,6 +434,10 @@ class SubIndustriesApi:
         if search is not None:
             
             _query_params.append(('search', search))
+            
+        if sector_code is not None:
+            
+            _query_params.append(('sector_code', sector_code))
             
         # process the header parameters
         # process the form parameters

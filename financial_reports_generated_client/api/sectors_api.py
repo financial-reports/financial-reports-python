@@ -18,7 +18,7 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
 from pydantic import Field, StrictInt, StrictStr
-from typing import Optional
+from typing import List, Optional
 from typing_extensions import Annotated
 from financial_reports_generated_client.models.paginated_sector_list import PaginatedSectorList
 from financial_reports_generated_client.models.sector import Sector
@@ -44,6 +44,10 @@ class SectorsApi:
     @validate_call
     async def sectors_list(
         self,
+        code: Optional[StrictStr] = None,
+        code__iexact: Optional[StrictStr] = None,
+        code__in: Annotated[Optional[List[StrictStr]], Field(description="Multiple values may be separated by commas.")] = None,
+        name__icontains: Optional[StrictStr] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
         search: Annotated[Optional[StrictStr], Field(description="A search term.")] = None,
@@ -64,6 +68,14 @@ class SectorsApi:
 
         Retrieve a list of all available GICS Sectors.
 
+        :param code:
+        :type code: str
+        :param code__iexact:
+        :type code__iexact: str
+        :param code__in: Multiple values may be separated by commas.
+        :type code__in: List[str]
+        :param name__icontains:
+        :type name__icontains: str
         :param page: A page number within the paginated result set.
         :type page: int
         :param page_size: Number of results to return per page.
@@ -93,6 +105,10 @@ class SectorsApi:
         """ # noqa: E501
 
         _param = self._sectors_list_serialize(
+            code=code,
+            code__iexact=code__iexact,
+            code__in=code__in,
+            name__icontains=name__icontains,
             page=page,
             page_size=page_size,
             search=search,
@@ -119,6 +135,10 @@ class SectorsApi:
     @validate_call
     async def sectors_list_with_http_info(
         self,
+        code: Optional[StrictStr] = None,
+        code__iexact: Optional[StrictStr] = None,
+        code__in: Annotated[Optional[List[StrictStr]], Field(description="Multiple values may be separated by commas.")] = None,
+        name__icontains: Optional[StrictStr] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
         search: Annotated[Optional[StrictStr], Field(description="A search term.")] = None,
@@ -139,6 +159,14 @@ class SectorsApi:
 
         Retrieve a list of all available GICS Sectors.
 
+        :param code:
+        :type code: str
+        :param code__iexact:
+        :type code__iexact: str
+        :param code__in: Multiple values may be separated by commas.
+        :type code__in: List[str]
+        :param name__icontains:
+        :type name__icontains: str
         :param page: A page number within the paginated result set.
         :type page: int
         :param page_size: Number of results to return per page.
@@ -168,6 +196,10 @@ class SectorsApi:
         """ # noqa: E501
 
         _param = self._sectors_list_serialize(
+            code=code,
+            code__iexact=code__iexact,
+            code__in=code__in,
+            name__icontains=name__icontains,
             page=page,
             page_size=page_size,
             search=search,
@@ -194,6 +226,10 @@ class SectorsApi:
     @validate_call
     async def sectors_list_without_preload_content(
         self,
+        code: Optional[StrictStr] = None,
+        code__iexact: Optional[StrictStr] = None,
+        code__in: Annotated[Optional[List[StrictStr]], Field(description="Multiple values may be separated by commas.")] = None,
+        name__icontains: Optional[StrictStr] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
         search: Annotated[Optional[StrictStr], Field(description="A search term.")] = None,
@@ -214,6 +250,14 @@ class SectorsApi:
 
         Retrieve a list of all available GICS Sectors.
 
+        :param code:
+        :type code: str
+        :param code__iexact:
+        :type code__iexact: str
+        :param code__in: Multiple values may be separated by commas.
+        :type code__in: List[str]
+        :param name__icontains:
+        :type name__icontains: str
         :param page: A page number within the paginated result set.
         :type page: int
         :param page_size: Number of results to return per page.
@@ -243,6 +287,10 @@ class SectorsApi:
         """ # noqa: E501
 
         _param = self._sectors_list_serialize(
+            code=code,
+            code__iexact=code__iexact,
+            code__in=code__in,
+            name__icontains=name__icontains,
             page=page,
             page_size=page_size,
             search=search,
@@ -264,6 +312,10 @@ class SectorsApi:
 
     def _sectors_list_serialize(
         self,
+        code,
+        code__iexact,
+        code__in,
+        name__icontains,
         page,
         page_size,
         search,
@@ -276,6 +328,7 @@ class SectorsApi:
         _host = None
 
         _collection_formats: Dict[str, str] = {
+            'code__in': 'csv',
         }
 
         _path_params: Dict[str, str] = {}
@@ -289,6 +342,22 @@ class SectorsApi:
 
         # process the path parameters
         # process the query parameters
+        if code is not None:
+            
+            _query_params.append(('code', code))
+            
+        if code__iexact is not None:
+            
+            _query_params.append(('code__iexact', code__iexact))
+            
+        if code__in is not None:
+            
+            _query_params.append(('code__in', code__in))
+            
+        if name__icontains is not None:
+            
+            _query_params.append(('name__icontains', name__icontains))
+            
         if page is not None:
             
             _query_params.append(('page', page))
