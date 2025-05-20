@@ -1,6 +1,5 @@
 # CompanyMinimal
 
-Provides a minimal representation of a Company, suitable for nesting.
 
 ## Properties
 

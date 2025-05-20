@@ -26,7 +26,7 @@ from typing_extensions import Self
 
 class ProcessedFiling(BaseModel):
     """
-    Serializer for the ProcessedFiling model, providing access to the processed content (e.g., markdown).
+    ProcessedFiling
     """ # noqa: E501
     id: StrictInt
     filing_id: StrictInt = Field(description="ID of the original Filing.")

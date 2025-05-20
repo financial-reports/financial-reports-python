@@ -30,36 +30,36 @@ from typing_extensions import Self
 
 class Company(BaseModel):
     """
-    Provides a detailed representation of a Company.
+    Company
     """ # noqa: E501
     id: StrictInt = Field(description="Unique identifier for the company.")
     name: StrictStr = Field(description="Company name.")
     lei: StrictStr = Field(description="Legal Entity Identifier (ISO 17442).")
-    country_code: StrictStr = Field(description="ISO 3166-1 alpha-2 country code of the company's primary registration or headquarters.")
-    sector: Sector = Field(description="Company's GICS Sector classification.")
-    industry_group: IndustryGroup = Field(description="Company's GICS Industry Group classification.")
-    industry: Industry = Field(description="Company's GICS Industry classification.")
-    sub_industry: SubIndustry = Field(description="Company's GICS Sub-Industry classification.")
+    country_code: Optional[StrictStr] = Field(description="ISO 3166-1 alpha-2 country code of the company's primary registration or headquarters.")
+    sector: Optional[Sector] = Field(description="Company's GICS Sector classification.")
+    industry_group: Optional[IndustryGroup] = Field(description="Company's GICS Industry Group classification.")
+    industry: Optional[Industry] = Field(description="Company's GICS Industry classification.")
+    sub_industry: Optional[SubIndustry] = Field(description="Company's GICS Sub-Industry classification.")
     ir_link: StrictStr = Field(description="Link to the company's Investor Relations page.")
     homepage_link: StrictStr = Field(description="Link to the company's main homepage.")
-    date_public: date = Field(description="Date the company first became public.")
+    date_public: Optional[date] = Field(description="Date the company first became public.")
     date_ipo: date = Field(description="Date of the company's Initial Public Offering.")
     main_stock_exchange: StrictStr = Field(description="Primary stock exchange where the company is listed.")
-    social_facebook: StrictStr = Field(description="Facebook profile/page identifier.")
-    social_instagram: StrictStr = Field(description="Instagram profile identifier.")
-    social_twitter: StrictStr = Field(description="Twitter handle (without @).")
-    social_linkedin: StrictStr = Field(description="LinkedIn company page identifier/URL path.")
-    social_youtube: StrictStr = Field(description="YouTube channel identifier.")
-    social_tiktok: StrictStr = Field(description="TikTok profile identifier.")
-    social_pinterest: StrictStr = Field(description="Pinterest profile identifier.")
-    social_xing: StrictStr = Field(description="Xing company profile identifier.")
-    social_glassdoor: StrictStr = Field(description="Glassdoor company identifier.")
+    social_facebook: Optional[StrictStr] = Field(description="Facebook profile/page identifier.")
+    social_instagram: Optional[StrictStr] = Field(description="Instagram profile identifier.")
+    social_twitter: Optional[StrictStr] = Field(description="Twitter handle (without @).")
+    social_linkedin: Optional[StrictStr] = Field(description="LinkedIn company page identifier/URL path.")
+    social_youtube: Optional[StrictStr] = Field(description="YouTube channel identifier.")
+    social_tiktok: Optional[StrictStr] = Field(description="TikTok profile identifier.")
+    social_pinterest: Optional[StrictStr] = Field(description="Pinterest profile identifier.")
+    social_xing: Optional[StrictStr] = Field(description="Xing company profile identifier.")
+    social_glassdoor: Optional[StrictStr] = Field(description="Glassdoor company identifier.")
     year_founded: Optional[date] = Field(description="Date the company was founded.")
-    corporate_video_id: StrictStr = Field(description="Identifier for a corporate video (e.g., YouTube ID).")
-    served_area: StrictStr = Field(description="Geographical area served by the company.")
-    headcount: StrictInt = Field(description="Approximate number of employees.")
-    contact_email: StrictStr = Field(description="General contact email address.")
-    ticker: StrictStr = Field(description="Primary stock ticker symbol.")
+    corporate_video_id: Optional[StrictStr] = Field(description="Identifier for a corporate video (e.g., YouTube ID).")
+    served_area: Optional[StrictStr] = Field(description="Geographical area served by the company.")
+    headcount: Optional[StrictInt] = Field(description="Approximate number of employees.")
+    contact_email: Optional[StrictStr] = Field(description="General contact email address.")
+    ticker: Optional[StrictStr] = Field(description="Primary stock ticker symbol.")
     is_listed: StrictBool = Field(description="Indicates if the company is currently publicly listed.")
     __properties: ClassVar[List[str]] = ["id", "name", "lei", "country_code", "sector", "industry_group", "industry", "sub_industry", "ir_link", "homepage_link", "date_public", "date_ipo", "main_stock_exchange", "social_facebook", "social_instagram", "social_twitter", "social_linkedin", "social_youtube", "social_tiktok", "social_pinterest", "social_xing", "social_glassdoor", "year_founded", "corporate_video_id", "served_area", "headcount", "contact_email", "ticker", "is_listed"]
 
@@ -172,10 +172,110 @@ class Company(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of sub_industry
         if self.sub_industry:
             _dict['sub_industry'] = self.sub_industry.to_dict()
+        # set to None if country_code (nullable) is None
+        # and model_fields_set contains the field
+        if self.country_code is None and "country_code" in self.model_fields_set:
+            _dict['country_code'] = None
+
+        # set to None if sector (nullable) is None
+        # and model_fields_set contains the field
+        if self.sector is None and "sector" in self.model_fields_set:
+            _dict['sector'] = None
+
+        # set to None if industry_group (nullable) is None
+        # and model_fields_set contains the field
+        if self.industry_group is None and "industry_group" in self.model_fields_set:
+            _dict['industry_group'] = None
+
+        # set to None if industry (nullable) is None
+        # and model_fields_set contains the field
+        if self.industry is None and "industry" in self.model_fields_set:
+            _dict['industry'] = None
+
+        # set to None if sub_industry (nullable) is None
+        # and model_fields_set contains the field
+        if self.sub_industry is None and "sub_industry" in self.model_fields_set:
+            _dict['sub_industry'] = None
+
+        # set to None if date_public (nullable) is None
+        # and model_fields_set contains the field
+        if self.date_public is None and "date_public" in self.model_fields_set:
+            _dict['date_public'] = None
+
+        # set to None if social_facebook (nullable) is None
+        # and model_fields_set contains the field
+        if self.social_facebook is None and "social_facebook" in self.model_fields_set:
+            _dict['social_facebook'] = None
+
+        # set to None if social_instagram (nullable) is None
+        # and model_fields_set contains the field
+        if self.social_instagram is None and "social_instagram" in self.model_fields_set:
+            _dict['social_instagram'] = None
+
+        # set to None if social_twitter (nullable) is None
+        # and model_fields_set contains the field
+        if self.social_twitter is None and "social_twitter" in self.model_fields_set:
+            _dict['social_twitter'] = None
+
+        # set to None if social_linkedin (nullable) is None
+        # and model_fields_set contains the field
+        if self.social_linkedin is None and "social_linkedin" in self.model_fields_set:
+            _dict['social_linkedin'] = None
+
+        # set to None if social_youtube (nullable) is None
+        # and model_fields_set contains the field
+        if self.social_youtube is None and "social_youtube" in self.model_fields_set:
+            _dict['social_youtube'] = None
+
+        # set to None if social_tiktok (nullable) is None
+        # and model_fields_set contains the field
+        if self.social_tiktok is None and "social_tiktok" in self.model_fields_set:
+            _dict['social_tiktok'] = None
+
+        # set to None if social_pinterest (nullable) is None
+        # and model_fields_set contains the field
+        if self.social_pinterest is None and "social_pinterest" in self.model_fields_set:
+            _dict['social_pinterest'] = None
+
+        # set to None if social_xing (nullable) is None
+        # and model_fields_set contains the field
+        if self.social_xing is None and "social_xing" in self.model_fields_set:
+            _dict['social_xing'] = None
+
+        # set to None if social_glassdoor (nullable) is None
+        # and model_fields_set contains the field
+        if self.social_glassdoor is None and "social_glassdoor" in self.model_fields_set:
+            _dict['social_glassdoor'] = None
+
         # set to None if year_founded (nullable) is None
         # and model_fields_set contains the field
         if self.year_founded is None and "year_founded" in self.model_fields_set:
             _dict['year_founded'] = None
+
+        # set to None if corporate_video_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.corporate_video_id is None and "corporate_video_id" in self.model_fields_set:
+            _dict['corporate_video_id'] = None
+
+        # set to None if served_area (nullable) is None
+        # and model_fields_set contains the field
+        if self.served_area is None and "served_area" in self.model_fields_set:
+            _dict['served_area'] = None
+
+        # set to None if headcount (nullable) is None
+        # and model_fields_set contains the field
+        if self.headcount is None and "headcount" in self.model_fields_set:
+            _dict['headcount'] = None
+
+        # set to None if contact_email (nullable) is None
+        # and model_fields_set contains the field
+        if self.contact_email is None and "contact_email" in self.model_fields_set:
+            _dict['contact_email'] = None
+
+        # set to None if ticker (nullable) is None
+        # and model_fields_set contains the field
+        if self.ticker is None and "ticker" in self.model_fields_set:
+            _dict['ticker'] = None
 
         return _dict
 

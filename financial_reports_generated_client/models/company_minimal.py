@@ -19,19 +19,19 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List
+from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
 class CompanyMinimal(BaseModel):
     """
-    Provides a minimal representation of a Company, suitable for nesting.
+    CompanyMinimal
     """ # noqa: E501
     id: StrictInt = Field(description="Unique identifier for the company.")
     name: StrictStr = Field(description="Company name.")
     lei: StrictStr = Field(description="Legal Entity Identifier (ISO 17442).")
-    sub_industry_code: StrictStr = Field(description="GICS Sub-Industry code classifying the company.")
-    country_code: StrictStr = Field(description="ISO 3166-1 alpha-2 country code of the company's primary registration or headquarters.")
+    sub_industry_code: Optional[StrictStr] = Field(description="GICS Sub-Industry code classifying the company.")
+    country_code: Optional[StrictStr] = Field(description="ISO 3166-1 alpha-2 country code of the company's primary registration or headquarters.")
     __properties: ClassVar[List[str]] = ["id", "name", "lei", "sub_industry_code", "country_code"]
 
     model_config = ConfigDict(
@@ -83,6 +83,16 @@ class CompanyMinimal(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if sub_industry_code (nullable) is None
+        # and model_fields_set contains the field
+        if self.sub_industry_code is None and "sub_industry_code" in self.model_fields_set:
+            _dict['sub_industry_code'] = None
+
+        # set to None if country_code (nullable) is None
+        # and model_fields_set contains the field
+        if self.country_code is None and "country_code" in self.model_fields_set:
+            _dict['country_code'] = None
+
         return _dict
 
     @classmethod

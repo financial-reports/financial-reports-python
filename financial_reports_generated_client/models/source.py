@@ -25,7 +25,7 @@ from typing_extensions import Self
 
 class Source(BaseModel):
     """
-    Serializer for Source model, representing the origin of the filing data.
+    Source
     """ # noqa: E501
     name: StrictStr = Field(description="Name of the data source.")
     url: StrictStr = Field(description="URL of the data source homepage or relevant section.")

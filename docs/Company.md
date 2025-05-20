@@ -1,6 +1,5 @@
 # Company
 
-Provides a detailed representation of a Company.
 
 ## Properties
 

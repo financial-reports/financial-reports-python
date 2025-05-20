@@ -25,7 +25,7 @@ from typing_extensions import Self
 
 class Language(BaseModel):
     """
-    Serializer for Language model, representing the language of a document.
+    Language
     """ # noqa: E501
     code: StrictStr = Field(description="ISO 639-1 language code (lowercase).")
     name: StrictStr = Field(description="Name of the language.")

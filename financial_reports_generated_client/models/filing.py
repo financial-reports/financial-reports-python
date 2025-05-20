@@ -30,7 +30,7 @@ from typing_extensions import Self
 
 class Filing(BaseModel):
     """
-    Serializer for regulatory filings.
+    Filing
     """ # noqa: E501
     id: StrictInt = Field(description="Unique identifier for the filing.")
     company: CompanyMinimal = Field(description="Basic details of the company that made the filing.")
@@ -40,10 +40,10 @@ class Filing(BaseModel):
     title: StrictStr = Field(description="Title of the filing document.")
     added_to_platform: datetime = Field(description="Timestamp when the filing was added to our system (UTC).")
     updated_date: datetime = Field(description="Timestamp when the filing record was last updated (UTC).")
-    dissemination_datetime: datetime = Field(description="Timestamp when the filing was disseminated by the source (UTC).")
-    release_datetime: datetime = Field(description="Timestamp when the filing was released (e.g., for press releases) (UTC).")
-    source: Source = Field(description="Source from which the filing was obtained.")
-    document: StrictStr = Field(description="Absolute URL link to the primary filing document (e.g., PDF, HTML).")
+    dissemination_datetime: Optional[datetime] = Field(description="Timestamp when the filing was disseminated by the source (UTC).")
+    release_datetime: Optional[datetime] = Field(description="Timestamp when the filing was released (e.g., for press releases) (UTC).")
+    source: Optional[Source] = Field(description="Source from which the filing was obtained.")
+    document: Optional[StrictStr] = Field(description="Absolute URL link to the primary filing document (e.g., PDF, HTML).")
     extracted_kpis: Optional[Any] = Field(description="Stores the structured financial KPIs extracted as JSON.")
     processed_filing_id: Optional[StrictInt] = Field(description="ID of the processed version of this filing, if available. Null otherwise.")
     __properties: ClassVar[List[str]] = ["id", "company", "filing_type", "language", "filing_date", "title", "added_to_platform", "updated_date", "dissemination_datetime", "release_datetime", "source", "document", "extracted_kpis", "processed_filing_id"]
@@ -127,6 +127,26 @@ class Filing(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of source
         if self.source:
             _dict['source'] = self.source.to_dict()
+        # set to None if dissemination_datetime (nullable) is None
+        # and model_fields_set contains the field
+        if self.dissemination_datetime is None and "dissemination_datetime" in self.model_fields_set:
+            _dict['dissemination_datetime'] = None
+
+        # set to None if release_datetime (nullable) is None
+        # and model_fields_set contains the field
+        if self.release_datetime is None and "release_datetime" in self.model_fields_set:
+            _dict['release_datetime'] = None
+
+        # set to None if source (nullable) is None
+        # and model_fields_set contains the field
+        if self.source is None and "source" in self.model_fields_set:
+            _dict['source'] = None
+
+        # set to None if document (nullable) is None
+        # and model_fields_set contains the field
+        if self.document is None and "document" in self.model_fields_set:
+            _dict['document'] = None
+
         # set to None if extracted_kpis (nullable) is None
         # and model_fields_set contains the field
         if self.extracted_kpis is None and "extracted_kpis" in self.model_fields_set:

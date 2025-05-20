@@ -26,7 +26,7 @@ from typing_extensions import Self
 
 class SubIndustry(BaseModel):
     """
-    Serializer for GICS Sub-Industry classification, including its parent Industry.
+    SubIndustry
     """ # noqa: E501
     code: StrictStr = Field(description="GICS Sub-Industry code.")
     name: StrictStr = Field(description="GICS Sub-Industry name.")

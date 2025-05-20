@@ -1,6 +1,5 @@
 # SubIndustry
 
-Serializer for GICS Sub-Industry classification, including its parent Industry.
 
 ## Properties
 

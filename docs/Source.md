@@ -1,6 +1,5 @@
 # Source
 
-Serializer for Source model, representing the origin of the filing data.
 
 ## Properties
 

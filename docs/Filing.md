@@ -1,6 +1,5 @@
 # Filing
 
-Serializer for regulatory filings.
 
 ## Properties
 

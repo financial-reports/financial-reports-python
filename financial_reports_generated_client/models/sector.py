@@ -25,7 +25,7 @@ from typing_extensions import Self
 
 class Sector(BaseModel):
     """
-    Serializer for GICS Sector classification.
+    Sector
     """ # noqa: E501
     code: StrictStr = Field(description="GICS Sector code.")
     name: StrictStr = Field(description="GICS Sector name.")

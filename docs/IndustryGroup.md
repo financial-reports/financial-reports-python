@@ -1,6 +1,5 @@
 # IndustryGroup
 
-Serializer for GICS Industry Group classification, including its parent Sector.
 
 ## Properties
 

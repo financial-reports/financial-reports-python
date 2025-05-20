@@ -1,6 +1,5 @@
 # FilingType
 
-Serializer for FilingType model, representing the type of a regulatory filing.
 
 ## Properties
 

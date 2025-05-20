@@ -1,6 +1,5 @@
 # ProcessedFiling
 
-Serializer for the ProcessedFiling model, providing access to the processed content (e.g., markdown).
 
 ## Properties
 

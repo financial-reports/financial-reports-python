@@ -1,6 +1,5 @@
 # Language
 
-Serializer for Language model, representing the language of a document.
 
 ## Properties
 

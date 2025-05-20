@@ -25,7 +25,7 @@ from typing_extensions import Self
 
 class FilingType(BaseModel):
     """
-    Serializer for FilingType model, representing the type of a regulatory filing.
+    FilingType
     """ # noqa: E501
     code: StrictStr = Field(description="Unique code identifying the filing type.")
     name: StrictStr = Field(description="Human-readable name of the filing type.")

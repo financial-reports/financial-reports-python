@@ -1,6 +1,5 @@
 # Sector
 
-Serializer for GICS Sector classification.
 
 ## Properties
 
