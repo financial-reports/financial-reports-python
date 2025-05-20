@@ -11,4 +11,5 @@ from financial_reports_generated_client.api.schema_api import SchemaApi
 from financial_reports_generated_client.api.sectors_api import SectorsApi
 from financial_reports_generated_client.api.sources_api import SourcesApi
 from financial_reports_generated_client.api.sub_industries_api import SubIndustriesApi
+from financial_reports_generated_client.api.watchlist_api import WatchlistApi
 

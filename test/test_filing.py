@@ -61,6 +61,7 @@ class TestFiling(unittest.TestCase):
                     url = '', 
                     description = '', ),
                 document = '',
+                extracted_kpis = None,
                 processed_filing_id = 56
             )
         else:
@@ -90,6 +91,7 @@ class TestFiling(unittest.TestCase):
                     url = '', 
                     description = '', ),
                 document = '',
+                extracted_kpis = None,
                 processed_filing_id = 56,
         )
         """

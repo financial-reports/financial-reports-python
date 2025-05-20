@@ -627,8 +627,7 @@ class FilingsApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'basicAuth', 
-            'cookieAuth'
+            'ApiKeyAuth'
         ]
 
         return self.api_client.param_serialize(
@@ -889,8 +888,7 @@ class FilingsApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'basicAuth', 
-            'cookieAuth'
+            'ApiKeyAuth'
         ]
 
         return self.api_client.param_serialize(

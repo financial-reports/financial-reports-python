@@ -47,11 +47,15 @@ class CompaniesApi:
         countries: Annotated[Optional[StrictStr], Field(description="Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values (e.g., US,GB,DE).")] = None,
         industry: Annotated[Optional[StrictStr], Field(description="Filter by GICS Industry code.")] = None,
         industry_group: Annotated[Optional[StrictStr], Field(description="Filter by GICS Industry Group code.")] = None,
+        isin: Annotated[Optional[StrictStr], Field(description="Find companies matching the provided ISIN.")] = None,
+        lei: Annotated[Optional[StrictStr], Field(description="Find a company by its LEI.")] = None,
+        ordering: Annotated[Optional[StrictStr], Field(description="Which field to use when ordering the results.")] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
         search: Annotated[Optional[StrictStr], Field(description="A search term.")] = None,
         sector: Annotated[Optional[StrictStr], Field(description="Filter by GICS Sector code.")] = None,
         sub_industry: Annotated[Optional[StrictStr], Field(description="Filter by GICS Sub-Industry code.")] = None,
+        ticker: Annotated[Optional[StrictStr], Field(description="Find a company by its Ticker.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -67,7 +71,7 @@ class CompaniesApi:
     ) -> PaginatedCompanyList:
         """companies_list
 
-        Retrieve a paginated list of companies.  Supports filtering via query parameters defined in the CompanyFilter and searching via the 'search' parameter (searches name, ISINs, and LEI).
+        Retrieve a paginated list of companies.  Supports filtering via query parameters defined in the CompanyFilter, searching via the 'search' parameter (searches name, ISINs, LEI, Ticker), and ordering via the 'ordering' parameter (allowed fields: name, date_ipo, year_founded, country_iso__name).
 
         :param countries: Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values (e.g., US,GB,DE).
         :type countries: str
@@ -75,6 +79,12 @@ class CompaniesApi:
         :type industry: str
         :param industry_group: Filter by GICS Industry Group code.
         :type industry_group: str
+        :param isin: Find companies matching the provided ISIN.
+        :type isin: str
+        :param lei: Find a company by its LEI.
+        :type lei: str
+        :param ordering: Which field to use when ordering the results.
+        :type ordering: str
         :param page: A page number within the paginated result set.
         :type page: int
         :param page_size: Number of results to return per page.
@@ -85,6 +95,8 @@ class CompaniesApi:
         :type sector: str
         :param sub_industry: Filter by GICS Sub-Industry code.
         :type sub_industry: str
+        :param ticker: Find a company by its Ticker.
+        :type ticker: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -111,11 +123,15 @@ class CompaniesApi:
             countries=countries,
             industry=industry,
             industry_group=industry_group,
+            isin=isin,
+            lei=lei,
+            ordering=ordering,
             page=page,
             page_size=page_size,
             search=search,
             sector=sector,
             sub_industry=sub_industry,
+            ticker=ticker,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -142,11 +158,15 @@ class CompaniesApi:
         countries: Annotated[Optional[StrictStr], Field(description="Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values (e.g., US,GB,DE).")] = None,
         industry: Annotated[Optional[StrictStr], Field(description="Filter by GICS Industry code.")] = None,
         industry_group: Annotated[Optional[StrictStr], Field(description="Filter by GICS Industry Group code.")] = None,
+        isin: Annotated[Optional[StrictStr], Field(description="Find companies matching the provided ISIN.")] = None,
+        lei: Annotated[Optional[StrictStr], Field(description="Find a company by its LEI.")] = None,
+        ordering: Annotated[Optional[StrictStr], Field(description="Which field to use when ordering the results.")] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
         search: Annotated[Optional[StrictStr], Field(description="A search term.")] = None,
         sector: Annotated[Optional[StrictStr], Field(description="Filter by GICS Sector code.")] = None,
         sub_industry: Annotated[Optional[StrictStr], Field(description="Filter by GICS Sub-Industry code.")] = None,
+        ticker: Annotated[Optional[StrictStr], Field(description="Find a company by its Ticker.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -162,7 +182,7 @@ class CompaniesApi:
     ) -> ApiResponse[PaginatedCompanyList]:
         """companies_list
 
-        Retrieve a paginated list of companies.  Supports filtering via query parameters defined in the CompanyFilter and searching via the 'search' parameter (searches name, ISINs, and LEI).
+        Retrieve a paginated list of companies.  Supports filtering via query parameters defined in the CompanyFilter, searching via the 'search' parameter (searches name, ISINs, LEI, Ticker), and ordering via the 'ordering' parameter (allowed fields: name, date_ipo, year_founded, country_iso__name).
 
         :param countries: Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values (e.g., US,GB,DE).
         :type countries: str
@@ -170,6 +190,12 @@ class CompaniesApi:
         :type industry: str
         :param industry_group: Filter by GICS Industry Group code.
         :type industry_group: str
+        :param isin: Find companies matching the provided ISIN.
+        :type isin: str
+        :param lei: Find a company by its LEI.
+        :type lei: str
+        :param ordering: Which field to use when ordering the results.
+        :type ordering: str
         :param page: A page number within the paginated result set.
         :type page: int
         :param page_size: Number of results to return per page.
@@ -180,6 +206,8 @@ class CompaniesApi:
         :type sector: str
         :param sub_industry: Filter by GICS Sub-Industry code.
         :type sub_industry: str
+        :param ticker: Find a company by its Ticker.
+        :type ticker: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -206,11 +234,15 @@ class CompaniesApi:
             countries=countries,
             industry=industry,
             industry_group=industry_group,
+            isin=isin,
+            lei=lei,
+            ordering=ordering,
             page=page,
             page_size=page_size,
             search=search,
             sector=sector,
             sub_industry=sub_industry,
+            ticker=ticker,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -237,11 +269,15 @@ class CompaniesApi:
         countries: Annotated[Optional[StrictStr], Field(description="Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values (e.g., US,GB,DE).")] = None,
         industry: Annotated[Optional[StrictStr], Field(description="Filter by GICS Industry code.")] = None,
         industry_group: Annotated[Optional[StrictStr], Field(description="Filter by GICS Industry Group code.")] = None,
+        isin: Annotated[Optional[StrictStr], Field(description="Find companies matching the provided ISIN.")] = None,
+        lei: Annotated[Optional[StrictStr], Field(description="Find a company by its LEI.")] = None,
+        ordering: Annotated[Optional[StrictStr], Field(description="Which field to use when ordering the results.")] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
         search: Annotated[Optional[StrictStr], Field(description="A search term.")] = None,
         sector: Annotated[Optional[StrictStr], Field(description="Filter by GICS Sector code.")] = None,
         sub_industry: Annotated[Optional[StrictStr], Field(description="Filter by GICS Sub-Industry code.")] = None,
+        ticker: Annotated[Optional[StrictStr], Field(description="Find a company by its Ticker.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -257,7 +293,7 @@ class CompaniesApi:
     ) -> RESTResponseType:
         """companies_list
 
-        Retrieve a paginated list of companies.  Supports filtering via query parameters defined in the CompanyFilter and searching via the 'search' parameter (searches name, ISINs, and LEI).
+        Retrieve a paginated list of companies.  Supports filtering via query parameters defined in the CompanyFilter, searching via the 'search' parameter (searches name, ISINs, LEI, Ticker), and ordering via the 'ordering' parameter (allowed fields: name, date_ipo, year_founded, country_iso__name).
 
         :param countries: Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values (e.g., US,GB,DE).
         :type countries: str
@@ -265,6 +301,12 @@ class CompaniesApi:
         :type industry: str
         :param industry_group: Filter by GICS Industry Group code.
         :type industry_group: str
+        :param isin: Find companies matching the provided ISIN.
+        :type isin: str
+        :param lei: Find a company by its LEI.
+        :type lei: str
+        :param ordering: Which field to use when ordering the results.
+        :type ordering: str
         :param page: A page number within the paginated result set.
         :type page: int
         :param page_size: Number of results to return per page.
@@ -275,6 +317,8 @@ class CompaniesApi:
         :type sector: str
         :param sub_industry: Filter by GICS Sub-Industry code.
         :type sub_industry: str
+        :param ticker: Find a company by its Ticker.
+        :type ticker: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -301,11 +345,15 @@ class CompaniesApi:
             countries=countries,
             industry=industry,
             industry_group=industry_group,
+            isin=isin,
+            lei=lei,
+            ordering=ordering,
             page=page,
             page_size=page_size,
             search=search,
             sector=sector,
             sub_industry=sub_industry,
+            ticker=ticker,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -327,11 +375,15 @@ class CompaniesApi:
         countries,
         industry,
         industry_group,
+        isin,
+        lei,
+        ordering,
         page,
         page_size,
         search,
         sector,
         sub_industry,
+        ticker,
         _request_auth,
         _content_type,
         _headers,
@@ -366,6 +418,18 @@ class CompaniesApi:
             
             _query_params.append(('industry_group', industry_group))
             
+        if isin is not None:
+            
+            _query_params.append(('isin', isin))
+            
+        if lei is not None:
+            
+            _query_params.append(('lei', lei))
+            
+        if ordering is not None:
+            
+            _query_params.append(('ordering', ordering))
+            
         if page is not None:
             
             _query_params.append(('page', page))
@@ -386,6 +450,10 @@ class CompaniesApi:
             
             _query_params.append(('sub_industry', sub_industry))
             
+        if ticker is not None:
+            
+            _query_params.append(('ticker', ticker))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
@@ -402,8 +470,7 @@ class CompaniesApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'basicAuth', 
-            'cookieAuth'
+            'ApiKeyAuth'
         ]
 
         return self.api_client.param_serialize(
@@ -443,7 +510,7 @@ class CompaniesApi:
     ) -> Company:
         """companies_retrieve
 
-        Retrieve detailed information for a single company by its ID.
+        Retrieve detailed information for a single company by its internal ID. Lookup by ISIN, LEI, or Ticker via this specific endpoint is not supported by default. Use the list endpoint with filters (`?isin=...`, `?lei=...`, `?ticker=...`) instead.
 
         :param id: (required)
         :type id: int
@@ -510,7 +577,7 @@ class CompaniesApi:
     ) -> ApiResponse[Company]:
         """companies_retrieve
 
-        Retrieve detailed information for a single company by its ID.
+        Retrieve detailed information for a single company by its internal ID. Lookup by ISIN, LEI, or Ticker via this specific endpoint is not supported by default. Use the list endpoint with filters (`?isin=...`, `?lei=...`, `?ticker=...`) instead.
 
         :param id: (required)
         :type id: int
@@ -577,7 +644,7 @@ class CompaniesApi:
     ) -> RESTResponseType:
         """companies_retrieve
 
-        Retrieve detailed information for a single company by its ID.
+        Retrieve detailed information for a single company by its internal ID. Lookup by ISIN, LEI, or Ticker via this specific endpoint is not supported by default. Use the list endpoint with filters (`?isin=...`, `?lei=...`, `?ticker=...`) instead.
 
         :param id: (required)
         :type id: int
@@ -664,8 +731,7 @@ class CompaniesApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'basicAuth', 
-            'cookieAuth'
+            'ApiKeyAuth'
         ]
 
         return self.api_client.param_serialize(

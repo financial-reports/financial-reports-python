@@ -43,9 +43,10 @@ class Filing(BaseModel):
     dissemination_datetime: datetime = Field(description="Timestamp when the filing was disseminated by the source (UTC).")
     release_datetime: datetime = Field(description="Timestamp when the filing was released (e.g., for press releases) (UTC).")
     source: Source = Field(description="Source from which the filing was obtained.")
-    document: StrictStr = Field(description="URL link to the primary filing document (e.g., PDF, HTML).")
+    document: StrictStr = Field(description="Absolute URL link to the primary filing document (e.g., PDF, HTML).")
+    extracted_kpis: Optional[Any] = Field(description="Stores the structured financial KPIs extracted as JSON.")
     processed_filing_id: Optional[StrictInt] = Field(description="ID of the processed version of this filing, if available. Null otherwise.")
-    __properties: ClassVar[List[str]] = ["id", "company", "filing_type", "language", "filing_date", "title", "added_to_platform", "updated_date", "dissemination_datetime", "release_datetime", "source", "document", "processed_filing_id"]
+    __properties: ClassVar[List[str]] = ["id", "company", "filing_type", "language", "filing_date", "title", "added_to_platform", "updated_date", "dissemination_datetime", "release_datetime", "source", "document", "extracted_kpis", "processed_filing_id"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -90,6 +91,7 @@ class Filing(BaseModel):
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
             "id",
@@ -104,6 +106,7 @@ class Filing(BaseModel):
             "release_datetime",
             "source",
             "document",
+            "extracted_kpis",
             "processed_filing_id",
         ])
 
@@ -124,6 +127,11 @@ class Filing(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of source
         if self.source:
             _dict['source'] = self.source.to_dict()
+        # set to None if extracted_kpis (nullable) is None
+        # and model_fields_set contains the field
+        if self.extracted_kpis is None and "extracted_kpis" in self.model_fields_set:
+            _dict['extracted_kpis'] = None
+
         # set to None if processed_filing_id (nullable) is None
         # and model_fields_set contains the field
         if self.processed_filing_id is None and "processed_filing_id" in self.model_fields_set:
@@ -153,6 +161,7 @@ class Filing(BaseModel):
             "release_datetime": obj.get("release_datetime"),
             "source": Source.from_dict(obj["source"]) if obj.get("source") is not None else None,
             "document": obj.get("document"),
+            "extracted_kpis": obj.get("extracted_kpis"),
             "processed_filing_id": obj.get("processed_filing_id")
         })
         return _obj

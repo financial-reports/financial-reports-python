@@ -17,7 +17,8 @@ Name | Type | Description | Notes
 **dissemination_datetime** | **datetime** | Timestamp when the filing was disseminated by the source (UTC). | [readonly] 
 **release_datetime** | **datetime** | Timestamp when the filing was released (e.g., for press releases) (UTC). | [readonly] 
 **source** | [**Source**](Source.md) | Source from which the filing was obtained. | [readonly] 
-**document** | **str** | URL link to the primary filing document (e.g., PDF, HTML). | [readonly] 
+**document** | **str** | Absolute URL link to the primary filing document (e.g., PDF, HTML). | [readonly] 
+**extracted_kpis** | **object** | Stores the structured financial KPIs extracted as JSON. | [readonly] 
 **processed_filing_id** | **int** | ID of the processed version of this filing, if available. Null otherwise. | [readonly] 
 
 ## Example

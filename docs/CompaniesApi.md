@@ -9,17 +9,17 @@ Method | HTTP request | Description
 
 
 # **companies_list**
-> PaginatedCompanyList companies_list(countries=countries, industry=industry, industry_group=industry_group, page=page, page_size=page_size, search=search, sector=sector, sub_industry=sub_industry)
+> PaginatedCompanyList companies_list(countries=countries, industry=industry, industry_group=industry_group, isin=isin, lei=lei, ordering=ordering, page=page, page_size=page_size, search=search, sector=sector, sub_industry=sub_industry, ticker=ticker)
 
 Retrieve a paginated list of companies.
 
-Supports filtering via query parameters defined in the CompanyFilter
-and searching via the 'search' parameter (searches name, ISINs, and LEI).
+Supports filtering via query parameters defined in the CompanyFilter,
+searching via the 'search' parameter (searches name, ISINs, LEI, Ticker),
+and ordering via the 'ordering' parameter (allowed fields: name, date_ipo, year_founded, country_iso__name).
 
 ### Example
 
-* Basic Authentication (basicAuth):
-* Api Key Authentication (cookieAuth):
+* Api Key Authentication (ApiKeyAuth):
 
 ```python
 import financial_reports_generated_client
@@ -38,17 +38,11 @@ configuration = financial_reports_generated_client.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-# Configure HTTP basic authorization: basicAuth
-configuration = financial_reports_generated_client.Configuration(
-    username = os.environ["USERNAME"],
-    password = os.environ["PASSWORD"]
-)
-
-# Configure API key authorization: cookieAuth
-configuration.api_key['cookieAuth'] = os.environ["API_KEY"]
+# Configure API key authorization: ApiKeyAuth
+configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['cookieAuth'] = 'Bearer'
+# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
 
 # Enter a context with an instance of the API client
 async with financial_reports_generated_client.ApiClient(configuration) as api_client:
@@ -57,14 +51,18 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
     countries = 'countries_example' # str | Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values (e.g., US,GB,DE). (optional)
     industry = 'industry_example' # str | Filter by GICS Industry code. (optional)
     industry_group = 'industry_group_example' # str | Filter by GICS Industry Group code. (optional)
+    isin = 'isin_example' # str | Find companies matching the provided ISIN. (optional)
+    lei = 'lei_example' # str | Find a company by its LEI. (optional)
+    ordering = 'ordering_example' # str | Which field to use when ordering the results. (optional)
     page = 56 # int | A page number within the paginated result set. (optional)
     page_size = 56 # int | Number of results to return per page. (optional)
     search = 'search_example' # str | A search term. (optional)
     sector = 'sector_example' # str | Filter by GICS Sector code. (optional)
     sub_industry = 'sub_industry_example' # str | Filter by GICS Sub-Industry code. (optional)
+    ticker = 'ticker_example' # str | Find a company by its Ticker. (optional)
 
     try:
-        api_response = await api_instance.companies_list(countries=countries, industry=industry, industry_group=industry_group, page=page, page_size=page_size, search=search, sector=sector, sub_industry=sub_industry)
+        api_response = await api_instance.companies_list(countries=countries, industry=industry, industry_group=industry_group, isin=isin, lei=lei, ordering=ordering, page=page, page_size=page_size, search=search, sector=sector, sub_industry=sub_industry, ticker=ticker)
         print("The response of CompaniesApi->companies_list:\n")
         pprint(api_response)
     except Exception as e:
@@ -81,11 +79,15 @@ Name | Type | Description  | Notes
  **countries** | **str**| Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values (e.g., US,GB,DE). | [optional] 
  **industry** | **str**| Filter by GICS Industry code. | [optional] 
  **industry_group** | **str**| Filter by GICS Industry Group code. | [optional] 
+ **isin** | **str**| Find companies matching the provided ISIN. | [optional] 
+ **lei** | **str**| Find a company by its LEI. | [optional] 
+ **ordering** | **str**| Which field to use when ordering the results. | [optional] 
  **page** | **int**| A page number within the paginated result set. | [optional] 
  **page_size** | **int**| Number of results to return per page. | [optional] 
  **search** | **str**| A search term. | [optional] 
  **sector** | **str**| Filter by GICS Sector code. | [optional] 
  **sub_industry** | **str**| Filter by GICS Sub-Industry code. | [optional] 
+ **ticker** | **str**| Find a company by its Ticker. | [optional] 
 
 ### Return type
 
@@ -93,7 +95,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicAuth](../README.md#basicAuth), [cookieAuth](../README.md#cookieAuth)
+[ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 
@@ -111,12 +113,13 @@ Name | Type | Description  | Notes
 # **companies_retrieve**
 > Company companies_retrieve(id)
 
-Retrieve detailed information for a single company by its ID.
+Retrieve detailed information for a single company by its internal ID.
+Lookup by ISIN, LEI, or Ticker via this specific endpoint is not supported by default.
+Use the list endpoint with filters (`?isin=...`, `?lei=...`, `?ticker=...`) instead.
 
 ### Example
 
-* Basic Authentication (basicAuth):
-* Api Key Authentication (cookieAuth):
+* Api Key Authentication (ApiKeyAuth):
 
 ```python
 import financial_reports_generated_client
@@ -135,17 +138,11 @@ configuration = financial_reports_generated_client.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-# Configure HTTP basic authorization: basicAuth
-configuration = financial_reports_generated_client.Configuration(
-    username = os.environ["USERNAME"],
-    password = os.environ["PASSWORD"]
-)
-
-# Configure API key authorization: cookieAuth
-configuration.api_key['cookieAuth'] = os.environ["API_KEY"]
+# Configure API key authorization: ApiKeyAuth
+configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['cookieAuth'] = 'Bearer'
+# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
 
 # Enter a context with an instance of the API client
 async with financial_reports_generated_client.ApiClient(configuration) as api_client:
@@ -176,7 +173,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicAuth](../README.md#basicAuth), [cookieAuth](../README.md#cookieAuth)
+[ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 

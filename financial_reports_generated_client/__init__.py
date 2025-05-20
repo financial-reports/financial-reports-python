@@ -15,7 +15,54 @@
 """  # noqa: E501
 
 
-__version__ = "0.2.3"
+__version__ = "0.3.4"
+
+# Define package exports
+__all__ = [
+    "CompaniesApi",
+    "FilingTypesApi",
+    "FilingsApi",
+    "IndustriesApi",
+    "IndustryGroupsApi",
+    "ProcessedFilingsApi",
+    "SchemaApi",
+    "SectorsApi",
+    "SourcesApi",
+    "SubIndustriesApi",
+    "WatchlistApi",
+    "ApiResponse",
+    "ApiClient",
+    "Configuration",
+    "OpenApiException",
+    "ApiTypeError",
+    "ApiValueError",
+    "ApiKeyError",
+    "ApiAttributeError",
+    "ApiException",
+    "Company",
+    "CompanyMinimal",
+    "ErrorDetail",
+    "Filing",
+    "FilingType",
+    "Industry",
+    "IndustryGroup",
+    "Language",
+    "PaginatedCompanyList",
+    "PaginatedFilingList",
+    "PaginatedFilingTypeList",
+    "PaginatedIndustryGroupList",
+    "PaginatedIndustryList",
+    "PaginatedSectorList",
+    "PaginatedSourceList",
+    "PaginatedSubIndustryList",
+    "ProcessedFiling",
+    "Sector",
+    "Source",
+    "SubIndustry",
+    "WatchlistAction",
+    "WatchlistCompany",
+    "WatchlistResponse",
+]
 
 # import apis into sdk package
 from financial_reports_generated_client.api.companies_api import CompaniesApi
@@ -28,6 +75,7 @@ from financial_reports_generated_client.api.schema_api import SchemaApi
 from financial_reports_generated_client.api.sectors_api import SectorsApi
 from financial_reports_generated_client.api.sources_api import SourcesApi
 from financial_reports_generated_client.api.sub_industries_api import SubIndustriesApi
+from financial_reports_generated_client.api.watchlist_api import WatchlistApi
 
 # import ApiClient
 from financial_reports_generated_client.api_response import ApiResponse
@@ -43,6 +91,7 @@ from financial_reports_generated_client.exceptions import ApiException
 # import models into sdk package
 from financial_reports_generated_client.models.company import Company
 from financial_reports_generated_client.models.company_minimal import CompanyMinimal
+from financial_reports_generated_client.models.error_detail import ErrorDetail
 from financial_reports_generated_client.models.filing import Filing
 from financial_reports_generated_client.models.filing_type import FilingType
 from financial_reports_generated_client.models.industry import Industry
@@ -60,3 +109,6 @@ from financial_reports_generated_client.models.processed_filing import Processed
 from financial_reports_generated_client.models.sector import Sector
 from financial_reports_generated_client.models.source import Source
 from financial_reports_generated_client.models.sub_industry import SubIndustry
+from financial_reports_generated_client.models.watchlist_action import WatchlistAction
+from financial_reports_generated_client.models.watchlist_company import WatchlistCompany
+from financial_reports_generated_client.models.watchlist_response import WatchlistResponse

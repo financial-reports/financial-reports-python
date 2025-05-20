@@ -113,8 +113,7 @@ HTTPSignatureAuthSetting = TypedDict(
 AuthSettings = TypedDict(
     "AuthSettings",
     {
-        "basicAuth": BasicAuthSetting,
-        "cookieAuth": APIKeyAuthSetting,
+        "ApiKeyAuth": APIKeyAuthSetting,
     },
     total=False,
 )
@@ -185,22 +184,6 @@ conf = financial_reports_generated_client.Configuration(
 
     The following cookie will be added to the HTTP request:
        Cookie: JSESSIONID abc123
-
-    HTTP Basic Authentication Example.
-    Given the following security scheme in the OpenAPI specification:
-      components:
-        securitySchemes:
-          http_basic_auth:
-            type: http
-            scheme: basic
-
-    Configure API client with HTTP basic authentication:
-
-conf = financial_reports_generated_client.Configuration(
-    username='the-user',
-    password='the-password',
-)
-
     """
 
     _default: ClassVar[Optional[Self]] = None
@@ -525,20 +508,13 @@ conf = financial_reports_generated_client.Configuration(
         :return: The Auth Settings information dict.
         """
         auth: AuthSettings = {}
-        if self.username is not None and self.password is not None:
-            auth['basicAuth'] = {
-                'type': 'basic',
-                'in': 'header',
-                'key': 'Authorization',
-                'value': self.get_basic_auth_token()
-            }
-        if 'cookieAuth' in self.api_key:
-            auth['cookieAuth'] = {
+        if 'ApiKeyAuth' in self.api_key:
+            auth['ApiKeyAuth'] = {
                 'type': 'api_key',
-                'in': 'cookie',
-                'key': 'sessionid',
+                'in': 'header',
+                'key': 'X-API-Key',
                 'value': self.get_api_key_with_prefix(
-                    'cookieAuth',
+                    'ApiKeyAuth',
                 ),
             }
         return auth
@@ -552,7 +528,7 @@ conf = financial_reports_generated_client.Configuration(
                "OS: {env}\n"\
                "Python Version: {pyversion}\n"\
                "Version of the API: 1.0.0\n"\
-               "SDK Package Version: 0.2.3".\
+               "SDK Package Version: 0.3.4".\
                format(env=sys.platform, pyversion=sys.version)
 
     def get_host_settings(self) -> List[HostSetting]:

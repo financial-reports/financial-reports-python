@@ -17,6 +17,7 @@
 # import models into model package
 from financial_reports_generated_client.models.company import Company
 from financial_reports_generated_client.models.company_minimal import CompanyMinimal
+from financial_reports_generated_client.models.error_detail import ErrorDetail
 from financial_reports_generated_client.models.filing import Filing
 from financial_reports_generated_client.models.filing_type import FilingType
 from financial_reports_generated_client.models.industry import Industry
@@ -34,3 +35,6 @@ from financial_reports_generated_client.models.processed_filing import Processed
 from financial_reports_generated_client.models.sector import Sector
 from financial_reports_generated_client.models.source import Source
 from financial_reports_generated_client.models.sub_industry import SubIndustry
+from financial_reports_generated_client.models.watchlist_action import WatchlistAction
+from financial_reports_generated_client.models.watchlist_company import WatchlistCompany
+from financial_reports_generated_client.models.watchlist_response import WatchlistResponse

@@ -300,8 +300,7 @@ class SourcesApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'basicAuth', 
-            'cookieAuth'
+            'ApiKeyAuth'
         ]
 
         return self.api_client.param_serialize(
@@ -562,8 +561,7 @@ class SourcesApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'basicAuth', 
-            'cookieAuth'
+            'ApiKeyAuth'
         ]
 
         return self.api_client.param_serialize(
