@@ -76,9 +76,9 @@ class FilingsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> PaginatedFilingList:
-        """filings_list
+        """List Filings
 
-        Retrieve a paginated list of filings.  Supports filtering via query parameters defined in the FilingFilter, searching via the 'search' parameter (searches company name and title), and ordering via the 'ordering' parameter (allowed fields: release_datetime, added_to_platform).
+        Retrieve a paginated list of regulatory filings. This endpoint supports extensive filtering via query parameters, including: - **Company Identification**: Filter by internal `company` ID, `company_isin` (case-insensitive), or company `lei`. - **Company Location**: Filter by `countries` using comma-separated ISO Alpha-2 codes (e.g., `US,GB`). - **Filing Attributes**: Filter by `source` ID, `language` (single ISO 639-1 code), `languages` (comma-separated ISO 639-1 codes), or filing `type` code. - **Date Ranges**: Filter by various date fields. All datetime filters expect an ISO 8601 format (e.g., `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DD`):     - `added_to_platform_from` / `added_to_platform_to`: Date the filing was added to the platform.     - `dissemination_datetime_from` / `dissemination_datetime_to`: Original dissemination date/time of the filing.     - `release_datetime_from` / `release_datetime_to`: Actual release date/time of the filing.  Additionally, you can use the `search` parameter to perform a text search across the company name and filing title. Results can be ordered using the `ordering` parameter with the fields: `release_datetime` and `added_to_platform` (e.g., `?ordering=-release_datetime`).
 
         :param added_to_platform_from: Filter by date added to platform (inclusive start date, YYYY-MM-DDTHH:MM:SSZ format).
         :type added_to_platform_from: datetime
@@ -165,6 +165,7 @@ class FilingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedFilingList",
+            '401': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -211,9 +212,9 @@ class FilingsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[PaginatedFilingList]:
-        """filings_list
+        """List Filings
 
-        Retrieve a paginated list of filings.  Supports filtering via query parameters defined in the FilingFilter, searching via the 'search' parameter (searches company name and title), and ordering via the 'ordering' parameter (allowed fields: release_datetime, added_to_platform).
+        Retrieve a paginated list of regulatory filings. This endpoint supports extensive filtering via query parameters, including: - **Company Identification**: Filter by internal `company` ID, `company_isin` (case-insensitive), or company `lei`. - **Company Location**: Filter by `countries` using comma-separated ISO Alpha-2 codes (e.g., `US,GB`). - **Filing Attributes**: Filter by `source` ID, `language` (single ISO 639-1 code), `languages` (comma-separated ISO 639-1 codes), or filing `type` code. - **Date Ranges**: Filter by various date fields. All datetime filters expect an ISO 8601 format (e.g., `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DD`):     - `added_to_platform_from` / `added_to_platform_to`: Date the filing was added to the platform.     - `dissemination_datetime_from` / `dissemination_datetime_to`: Original dissemination date/time of the filing.     - `release_datetime_from` / `release_datetime_to`: Actual release date/time of the filing.  Additionally, you can use the `search` parameter to perform a text search across the company name and filing title. Results can be ordered using the `ordering` parameter with the fields: `release_datetime` and `added_to_platform` (e.g., `?ordering=-release_datetime`).
 
         :param added_to_platform_from: Filter by date added to platform (inclusive start date, YYYY-MM-DDTHH:MM:SSZ format).
         :type added_to_platform_from: datetime
@@ -300,6 +301,7 @@ class FilingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedFilingList",
+            '401': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -346,9 +348,9 @@ class FilingsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """filings_list
+        """List Filings
 
-        Retrieve a paginated list of filings.  Supports filtering via query parameters defined in the FilingFilter, searching via the 'search' parameter (searches company name and title), and ordering via the 'ordering' parameter (allowed fields: release_datetime, added_to_platform).
+        Retrieve a paginated list of regulatory filings. This endpoint supports extensive filtering via query parameters, including: - **Company Identification**: Filter by internal `company` ID, `company_isin` (case-insensitive), or company `lei`. - **Company Location**: Filter by `countries` using comma-separated ISO Alpha-2 codes (e.g., `US,GB`). - **Filing Attributes**: Filter by `source` ID, `language` (single ISO 639-1 code), `languages` (comma-separated ISO 639-1 codes), or filing `type` code. - **Date Ranges**: Filter by various date fields. All datetime filters expect an ISO 8601 format (e.g., `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DD`):     - `added_to_platform_from` / `added_to_platform_to`: Date the filing was added to the platform.     - `dissemination_datetime_from` / `dissemination_datetime_to`: Original dissemination date/time of the filing.     - `release_datetime_from` / `release_datetime_to`: Actual release date/time of the filing.  Additionally, you can use the `search` parameter to perform a text search across the company name and filing title. Results can be ordered using the `ordering` parameter with the fields: `release_datetime` and `added_to_platform` (e.g., `?ordering=-release_datetime`).
 
         :param added_to_platform_from: Filter by date added to platform (inclusive start date, YYYY-MM-DDTHH:MM:SSZ format).
         :type added_to_platform_from: datetime
@@ -435,6 +437,7 @@ class FilingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedFilingList",
+            '401': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -665,7 +668,7 @@ class FilingsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> Filing:
-        """filings_retrieve
+        """Retrieve Filing Details
 
         Retrieve detailed information for a single filing by its ID.
 
@@ -703,6 +706,8 @@ class FilingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Filing",
+            '401': "ErrorDetail",
+            '404': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -732,7 +737,7 @@ class FilingsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[Filing]:
-        """filings_retrieve
+        """Retrieve Filing Details
 
         Retrieve detailed information for a single filing by its ID.
 
@@ -770,6 +775,8 @@ class FilingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Filing",
+            '401': "ErrorDetail",
+            '404': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -799,7 +806,7 @@ class FilingsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """filings_retrieve
+        """Retrieve Filing Details
 
         Retrieve detailed information for a single filing by its ID.
 
@@ -837,6 +844,8 @@ class FilingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Filing",
+            '401': "ErrorDetail",
+            '404': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,

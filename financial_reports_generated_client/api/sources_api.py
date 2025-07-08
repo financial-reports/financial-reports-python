@@ -59,9 +59,9 @@ class SourcesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> PaginatedSourceList:
-        """sources_list
+        """List Data Sources
 
-        Retrieve a list of all available data sources.
+        Retrieve a paginated list of all available data sources.
 
         :param page: A page number within the paginated result set.
         :type page: int
@@ -100,6 +100,7 @@ class SourcesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedSourceList",
+            '401': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -130,9 +131,9 @@ class SourcesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[PaginatedSourceList]:
-        """sources_list
+        """List Data Sources
 
-        Retrieve a list of all available data sources.
+        Retrieve a paginated list of all available data sources.
 
         :param page: A page number within the paginated result set.
         :type page: int
@@ -171,6 +172,7 @@ class SourcesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedSourceList",
+            '401': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -201,9 +203,9 @@ class SourcesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """sources_list
+        """List Data Sources
 
-        Retrieve a list of all available data sources.
+        Retrieve a paginated list of all available data sources.
 
         :param page: A page number within the paginated result set.
         :type page: int
@@ -242,6 +244,7 @@ class SourcesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedSourceList",
+            '401': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -338,9 +341,9 @@ class SourcesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> Source:
-        """sources_retrieve
+        """Retrieve Data Source
 
-        Retrieve details for a single data source by its primary key.
+        Retrieve details for a specific data source by its ID.
 
         :param id: (required)
         :type id: int
@@ -376,6 +379,8 @@ class SourcesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Source",
+            '401': "ErrorDetail",
+            '404': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -405,9 +410,9 @@ class SourcesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[Source]:
-        """sources_retrieve
+        """Retrieve Data Source
 
-        Retrieve details for a single data source by its primary key.
+        Retrieve details for a specific data source by its ID.
 
         :param id: (required)
         :type id: int
@@ -443,6 +448,8 @@ class SourcesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Source",
+            '401': "ErrorDetail",
+            '404': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -472,9 +479,9 @@ class SourcesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """sources_retrieve
+        """Retrieve Data Source
 
-        Retrieve details for a single data source by its primary key.
+        Retrieve details for a specific data source by its ID.
 
         :param id: (required)
         :type id: int
@@ -510,6 +517,8 @@ class SourcesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Source",
+            '401': "ErrorDetail",
+            '404': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,

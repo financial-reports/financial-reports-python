@@ -30,12 +30,14 @@ class TestCompaniesApi(unittest.IsolatedAsyncioTestCase):
     async def test_companies_list(self) -> None:
         """Test case for companies_list
 
+        List Companies
         """
         pass
 
     async def test_companies_retrieve(self) -> None:
         """Test case for companies_retrieve
 
+        Retrieve Company Details
         """
         pass
 

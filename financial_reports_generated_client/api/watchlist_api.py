@@ -60,7 +60,7 @@ class WatchlistApi:
     ) -> WatchlistResponse:
         """Add Company to Watchlist
 
-        Adds a specified company to the authenticated user's watchlist. The company ID must be provided in the request body.
+        Adds a specified company to the authenticated user's watchlist. The `company_id` must be provided in the request body.
 
         :param watchlist_action: (required)
         :type watchlist_action: WatchlistAction
@@ -129,7 +129,7 @@ class WatchlistApi:
     ) -> ApiResponse[WatchlistResponse]:
         """Add Company to Watchlist
 
-        Adds a specified company to the authenticated user's watchlist. The company ID must be provided in the request body.
+        Adds a specified company to the authenticated user's watchlist. The `company_id` must be provided in the request body.
 
         :param watchlist_action: (required)
         :type watchlist_action: WatchlistAction
@@ -198,7 +198,7 @@ class WatchlistApi:
     ) -> RESTResponseType:
         """Add Company to Watchlist
 
-        Adds a specified company to the authenticated user's watchlist. The company ID must be provided in the request body.
+        Adds a specified company to the authenticated user's watchlist. The `company_id` must be provided in the request body.
 
         :param watchlist_action: (required)
         :type watchlist_action: WatchlistAction
@@ -342,7 +342,7 @@ class WatchlistApi:
     ) -> WatchlistResponse:
         """Remove Company from Watchlist
 
-        Removes a specified company from the authenticated user's watchlist using the company ID from the URL path.
+        Removes a specified company from the authenticated user's watchlist using the `company_id` from the URL path.
 
         :param company_id: (required)
         :type company_id: int
@@ -412,7 +412,7 @@ class WatchlistApi:
     ) -> ApiResponse[WatchlistResponse]:
         """Remove Company from Watchlist
 
-        Removes a specified company from the authenticated user's watchlist using the company ID from the URL path.
+        Removes a specified company from the authenticated user's watchlist using the `company_id` from the URL path.
 
         :param company_id: (required)
         :type company_id: int
@@ -482,7 +482,7 @@ class WatchlistApi:
     ) -> RESTResponseType:
         """Remove Company from Watchlist
 
-        Removes a specified company from the authenticated user's watchlist using the company ID from the URL path.
+        Removes a specified company from the authenticated user's watchlist using the `company_id` from the URL path.
 
         :param company_id: (required)
         :type company_id: int

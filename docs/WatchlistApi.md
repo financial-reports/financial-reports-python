@@ -14,7 +14,7 @@ Method | HTTP request | Description
 
 Add Company to Watchlist
 
-Adds a specified company to the authenticated user's watchlist. The company ID must be provided in the request body.
+Adds a specified company to the authenticated user's watchlist. The `company_id` must be provided in the request body.
 
 ### Example
 
@@ -86,7 +86,7 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **201** | Company successfully added to the watchlist. |  -  |
-**400** | Bad Request: Could not add company. Reasons include: 1. Invalid input (e.g., company_id missing or invalid format - see specific field errors). 2. Company already in watchlist. 3. Company with the given ID does not exist. |  -  |
+**400** | Bad Request. Adding the company failed due to one of the following reasons: 1. **Validation Error**: The &#x60;company_id&#x60; was missing, improperly formatted, or refers to a company that does not exist. The response body will contain field-specific error messages (schema typically &#x60;WatchlistActionErrorSerializer&#x60; or DRF&#39;s default validation error structure like &#x60;{\&quot;company_id\&quot;: [\&quot;Error message.\&quot;]}&#x60;). 2. **Already Exists**: The specified company is already in the user&#39;s watchlist. The response body will indicate this specific error (schema: &#x60;WatchlistResponseSerializer&#x60;). |  -  |
 **401** | Authentication credentials were not provided or are invalid. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -96,7 +96,7 @@ Name | Type | Description  | Notes
 
 Remove Company from Watchlist
 
-Removes a specified company from the authenticated user's watchlist using the company ID from the URL path.
+Removes a specified company from the authenticated user's watchlist using the `company_id` from the URL path.
 
 ### Example
 
@@ -167,9 +167,9 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Company successfully removed from the watchlist. |  -  |
-**400** | Invalid company ID format (though type hinting in URL usually prevents this). |  -  |
+**400** | Bad Request: Invalid company ID format. This is generally unlikely if type hinting (e.g., &#x60;&lt;int:company_id&gt;&#x60;) is used in the URL pattern, as that would typically result in a 404 from the URL resolver for non-matching types. |  -  |
 **401** | Authentication credentials were not provided or are invalid. |  -  |
-**404** | Company not found in the watchlist or the company ID itself does not exist. |  -  |
+**404** | Not Found. The company could not be removed for one of the following reasons: 1. **Company Does Not Exist in System**: No company exists with the provided &#x60;company_id&#x60; in the main database. The response body will be a generic &#39;not found&#39; error (schema typically &#x60;ErrorDetailSerializer&#x60;, e.g., &#x60;{\&quot;detail\&quot;: \&quot;Not found.\&quot;}&#x60;). 2. **Company Not in Watchlist**: The company exists in the main database but was not found in the current user&#39;s watchlist. The response body will indicate this specific error (schema: &#x60;WatchlistResponseSerializer&#x60;). |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -244,8 +244,8 @@ This endpoint does not need any parameter.
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Successfully retrieved the watchlist. |  -  |
-**401** | Authentication credentials were not provided or are invalid (e.g., missing or invalid API Key). |  -  |
+**200** | Successfully retrieved the watchlist. Returns an empty list if the watchlist is empty. |  -  |
+**401** | Authentication credentials were not provided or are invalid. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

@@ -30,12 +30,14 @@ class TestFilingsApi(unittest.IsolatedAsyncioTestCase):
     async def test_filings_list(self) -> None:
         """Test case for filings_list
 
+        List Filings
         """
         pass
 
     async def test_filings_retrieve(self) -> None:
         """Test case for filings_retrieve
 
+        Retrieve Filing Details
         """
         pass
 

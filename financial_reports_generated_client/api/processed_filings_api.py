@@ -55,9 +55,9 @@ class ProcessedFilingsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ProcessedFiling:
-        """processed_filings_retrieve
+        """Retrieve Processed Filing Content
 
-        Retrieve the processed content for a single filing by the ProcessedFiling ID.
+        Retrieve the processed content (e.g., markdown) for a single filing by its ProcessedFiling ID.
 
         :param id: (required)
         :type id: int
@@ -93,6 +93,8 @@ class ProcessedFilingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ProcessedFiling",
+            '401': "ErrorDetail",
+            '404': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -122,9 +124,9 @@ class ProcessedFilingsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[ProcessedFiling]:
-        """processed_filings_retrieve
+        """Retrieve Processed Filing Content
 
-        Retrieve the processed content for a single filing by the ProcessedFiling ID.
+        Retrieve the processed content (e.g., markdown) for a single filing by its ProcessedFiling ID.
 
         :param id: (required)
         :type id: int
@@ -160,6 +162,8 @@ class ProcessedFilingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ProcessedFiling",
+            '401': "ErrorDetail",
+            '404': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -189,9 +193,9 @@ class ProcessedFilingsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """processed_filings_retrieve
+        """Retrieve Processed Filing Content
 
-        Retrieve the processed content for a single filing by the ProcessedFiling ID.
+        Retrieve the processed content (e.g., markdown) for a single filing by its ProcessedFiling ID.
 
         :param id: (required)
         :type id: int
@@ -227,6 +231,8 @@ class ProcessedFilingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ProcessedFiling",
+            '401': "ErrorDetail",
+            '404': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,

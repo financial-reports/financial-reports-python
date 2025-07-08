@@ -4,18 +4,27 @@ All URIs are relative to *https://api.financialreports.eu*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**filings_list**](FilingsApi.md#filings_list) | **GET** /filings/ | 
-[**filings_retrieve**](FilingsApi.md#filings_retrieve) | **GET** /filings/{id}/ | 
+[**filings_list**](FilingsApi.md#filings_list) | **GET** /filings/ | List Filings
+[**filings_retrieve**](FilingsApi.md#filings_retrieve) | **GET** /filings/{id}/ | Retrieve Filing Details
 
 
 # **filings_list**
 > PaginatedFilingList filings_list(added_to_platform_from=added_to_platform_from, added_to_platform_to=added_to_platform_to, company=company, company_isin=company_isin, countries=countries, dissemination_datetime_from=dissemination_datetime_from, dissemination_datetime_to=dissemination_datetime_to, language=language, languages=languages, lei=lei, ordering=ordering, page=page, page_size=page_size, release_datetime_from=release_datetime_from, release_datetime_to=release_datetime_to, search=search, source=source, type=type)
 
-Retrieve a paginated list of filings.
+List Filings
 
-Supports filtering via query parameters defined in the FilingFilter,
-searching via the 'search' parameter (searches company name and title),
-and ordering via the 'ordering' parameter (allowed fields: release_datetime, added_to_platform).
+Retrieve a paginated list of regulatory filings.
+This endpoint supports extensive filtering via query parameters, including:
+- **Company Identification**: Filter by internal `company` ID, `company_isin` (case-insensitive), or company `lei`.
+- **Company Location**: Filter by `countries` using comma-separated ISO Alpha-2 codes (e.g., `US,GB`).
+- **Filing Attributes**: Filter by `source` ID, `language` (single ISO 639-1 code), `languages` (comma-separated ISO 639-1 codes), or filing `type` code.
+- **Date Ranges**: Filter by various date fields. All datetime filters expect an ISO 8601 format (e.g., `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DD`):
+    - `added_to_platform_from` / `added_to_platform_to`: Date the filing was added to the platform.
+    - `dissemination_datetime_from` / `dissemination_datetime_to`: Original dissemination date/time of the filing.
+    - `release_datetime_from` / `release_datetime_to`: Actual release date/time of the filing.
+
+Additionally, you can use the `search` parameter to perform a text search across the company name and filing title.
+Results can be ordered using the `ordering` parameter with the fields: `release_datetime` and `added_to_platform` (e.g., `?ordering=-release_datetime`).
 
 ### Example
 
@@ -68,6 +77,7 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
     type = 'type_example' # str | Filter by Filing Type code (e.g., ANNREP). (optional)
 
     try:
+        # List Filings
         api_response = await api_instance.filings_list(added_to_platform_from=added_to_platform_from, added_to_platform_to=added_to_platform_to, company=company, company_isin=company_isin, countries=countries, dissemination_datetime_from=dissemination_datetime_from, dissemination_datetime_to=dissemination_datetime_to, language=language, languages=languages, lei=lei, ordering=ordering, page=page, page_size=page_size, release_datetime_from=release_datetime_from, release_datetime_to=release_datetime_to, search=search, source=source, type=type)
         print("The response of FilingsApi->filings_list:\n")
         pprint(api_response)
@@ -118,12 +128,15 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** |  |  -  |
+**200** | Successfully retrieved the list of filings. |  -  |
+**401** | Authentication credentials were not provided or are invalid. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **filings_retrieve**
 > Filing filings_retrieve(id)
+
+Retrieve Filing Details
 
 Retrieve detailed information for a single filing by its ID.
 
@@ -161,6 +174,7 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
     id = 56 # int | 
 
     try:
+        # Retrieve Filing Details
         api_response = await api_instance.filings_retrieve(id)
         print("The response of FilingsApi->filings_retrieve:\n")
         pprint(api_response)
@@ -194,7 +208,9 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** |  |  -  |
+**200** | Successfully retrieved the filing details. |  -  |
+**401** | Authentication credentials were not provided or are invalid. |  -  |
+**404** | Filing not found. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

@@ -30,12 +30,14 @@ class TestSourcesApi(unittest.IsolatedAsyncioTestCase):
     async def test_sources_list(self) -> None:
         """Test case for sources_list
 
+        List Data Sources
         """
         pass
 
     async def test_sources_retrieve(self) -> None:
         """Test case for sources_retrieve
 
+        Retrieve Data Source
         """
         pass
 

@@ -4,13 +4,15 @@ All URIs are relative to *https://api.financialreports.eu*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**processed_filings_retrieve**](ProcessedFilingsApi.md#processed_filings_retrieve) | **GET** /processed-filings/{id}/ | 
+[**processed_filings_retrieve**](ProcessedFilingsApi.md#processed_filings_retrieve) | **GET** /processed-filings/{id}/ | Retrieve Processed Filing Content
 
 
 # **processed_filings_retrieve**
 > ProcessedFiling processed_filings_retrieve(id)
 
-Retrieve the processed content for a single filing by the ProcessedFiling ID.
+Retrieve Processed Filing Content
+
+Retrieve the processed content (e.g., markdown) for a single filing by its ProcessedFiling ID.
 
 ### Example
 
@@ -46,6 +48,7 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
     id = 56 # int | 
 
     try:
+        # Retrieve Processed Filing Content
         api_response = await api_instance.processed_filings_retrieve(id)
         print("The response of ProcessedFilingsApi->processed_filings_retrieve:\n")
         pprint(api_response)
@@ -79,7 +82,9 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** |  |  -  |
+**200** | Successfully retrieved the processed filing content. |  -  |
+**401** | Authentication credentials were not provided or are invalid. |  -  |
+**404** | Processed filing not found. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

@@ -4,14 +4,16 @@ All URIs are relative to *https://api.financialreports.eu*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**sources_list**](SourcesApi.md#sources_list) | **GET** /sources/ | 
-[**sources_retrieve**](SourcesApi.md#sources_retrieve) | **GET** /sources/{id}/ | 
+[**sources_list**](SourcesApi.md#sources_list) | **GET** /sources/ | List Data Sources
+[**sources_retrieve**](SourcesApi.md#sources_retrieve) | **GET** /sources/{id}/ | Retrieve Data Source
 
 
 # **sources_list**
 > PaginatedSourceList sources_list(page=page, page_size=page_size)
 
-Retrieve a list of all available data sources.
+List Data Sources
+
+Retrieve a paginated list of all available data sources.
 
 ### Example
 
@@ -48,6 +50,7 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
     page_size = 56 # int | Number of results to return per page. (optional)
 
     try:
+        # List Data Sources
         api_response = await api_instance.sources_list(page=page, page_size=page_size)
         print("The response of SourcesApi->sources_list:\n")
         pprint(api_response)
@@ -82,14 +85,17 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** |  |  -  |
+**200** | Successfully retrieved the list of data sources. |  -  |
+**401** | Authentication credentials were not provided or are invalid. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **sources_retrieve**
 > Source sources_retrieve(id)
 
-Retrieve details for a single data source by its primary key.
+Retrieve Data Source
+
+Retrieve details for a specific data source by its ID.
 
 ### Example
 
@@ -125,6 +131,7 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
     id = 56 # int | 
 
     try:
+        # Retrieve Data Source
         api_response = await api_instance.sources_retrieve(id)
         print("The response of SourcesApi->sources_retrieve:\n")
         pprint(api_response)
@@ -158,7 +165,9 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** |  |  -  |
+**200** | Successfully retrieved the data source details. |  -  |
+**401** | Authentication credentials were not provided or are invalid. |  -  |
+**404** | Data source not found. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

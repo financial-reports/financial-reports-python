@@ -4,18 +4,23 @@ All URIs are relative to *https://api.financialreports.eu*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**companies_list**](CompaniesApi.md#companies_list) | **GET** /companies/ | 
-[**companies_retrieve**](CompaniesApi.md#companies_retrieve) | **GET** /companies/{id}/ | 
+[**companies_list**](CompaniesApi.md#companies_list) | **GET** /companies/ | List Companies
+[**companies_retrieve**](CompaniesApi.md#companies_retrieve) | **GET** /companies/{id}/ | Retrieve Company Details
 
 
 # **companies_list**
 > PaginatedCompanyList companies_list(countries=countries, industry=industry, industry_group=industry_group, isin=isin, lei=lei, ordering=ordering, page=page, page_size=page_size, search=search, sector=sector, sub_industry=sub_industry, ticker=ticker)
 
-Retrieve a paginated list of companies.
+List Companies
 
-Supports filtering via query parameters defined in the CompanyFilter,
-searching via the 'search' parameter (searches name, ISINs, LEI, Ticker),
-and ordering via the 'ordering' parameter (allowed fields: name, date_ipo, year_founded, country_iso__name).
+Retrieve a paginated list of companies.
+Supports filtering via various query parameters including:
+- GICS classifications: `sector`, `industry_group`, `industry`, `sub_industry` (by GICS codes).
+- Location: `countries` (comma-separated ISO Alpha-2 codes, e.g., `US,GB`).
+- Identifiers: `isin`, `lei`, `ticker` (all case-insensitive).
+
+Supports searching via the `search` parameter across company name, ISINs, LEI, and Ticker.
+Supports ordering via the `ordering` parameter. Allowed fields for ordering are: `name`, `date_ipo`, `year_founded`, and `country_iso__name`. For example, `?ordering=name` or `?ordering=-date_ipo` for descending order.
 
 ### Example
 
@@ -62,6 +67,7 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
     ticker = 'ticker_example' # str | Find a company by its Ticker. (optional)
 
     try:
+        # List Companies
         api_response = await api_instance.companies_list(countries=countries, industry=industry, industry_group=industry_group, isin=isin, lei=lei, ordering=ordering, page=page, page_size=page_size, search=search, sector=sector, sub_industry=sub_industry, ticker=ticker)
         print("The response of CompaniesApi->companies_list:\n")
         pprint(api_response)
@@ -106,16 +112,20 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** |  |  -  |
+**200** | Successfully retrieved the list of companies. |  -  |
+**401** | Authentication credentials were not provided or are invalid. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **companies_retrieve**
 > Company companies_retrieve(id)
 
+Retrieve Company Details
+
 Retrieve detailed information for a single company by its internal ID.
-Lookup by ISIN, LEI, or Ticker via this specific endpoint is not supported by default.
-Use the list endpoint with filters (`?isin=...`, `?lei=...`, `?ticker=...`) instead.
+Lookup by ISIN, LEI, or Ticker directly on this endpoint (e.g., using the identifier in the URL path) is not supported.
+To find a company using these identifiers, please use the list endpoint with the appropriate filter query parameters, for example:
+`?isin=US0378331005`, `?lei=HWUPKR0MPOU8FGXBT394`, or `?ticker=AAPL`.
 
 ### Example
 
@@ -151,6 +161,7 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
     id = 56 # int | 
 
     try:
+        # Retrieve Company Details
         api_response = await api_instance.companies_retrieve(id)
         print("The response of CompaniesApi->companies_retrieve:\n")
         pprint(api_response)
@@ -184,7 +195,9 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** |  |  -  |
+**200** | Successfully retrieved the company details. |  -  |
+**401** | Authentication credentials were not provided or are invalid. |  -  |
+**404** | Company not found. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

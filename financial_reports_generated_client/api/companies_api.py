@@ -69,9 +69,9 @@ class CompaniesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> PaginatedCompanyList:
-        """companies_list
+        """List Companies
 
-        Retrieve a paginated list of companies.  Supports filtering via query parameters defined in the CompanyFilter, searching via the 'search' parameter (searches name, ISINs, LEI, Ticker), and ordering via the 'ordering' parameter (allowed fields: name, date_ipo, year_founded, country_iso__name).
+        Retrieve a paginated list of companies. Supports filtering via various query parameters including: - GICS classifications: `sector`, `industry_group`, `industry`, `sub_industry` (by GICS codes). - Location: `countries` (comma-separated ISO Alpha-2 codes, e.g., `US,GB`). - Identifiers: `isin`, `lei`, `ticker` (all case-insensitive).  Supports searching via the `search` parameter across company name, ISINs, LEI, and Ticker. Supports ordering via the `ordering` parameter. Allowed fields for ordering are: `name`, `date_ipo`, `year_founded`, and `country_iso__name`. For example, `?ordering=name` or `?ordering=-date_ipo` for descending order.
 
         :param countries: Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values (e.g., US,GB,DE).
         :type countries: str
@@ -140,6 +140,7 @@ class CompaniesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedCompanyList",
+            '401': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -180,9 +181,9 @@ class CompaniesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[PaginatedCompanyList]:
-        """companies_list
+        """List Companies
 
-        Retrieve a paginated list of companies.  Supports filtering via query parameters defined in the CompanyFilter, searching via the 'search' parameter (searches name, ISINs, LEI, Ticker), and ordering via the 'ordering' parameter (allowed fields: name, date_ipo, year_founded, country_iso__name).
+        Retrieve a paginated list of companies. Supports filtering via various query parameters including: - GICS classifications: `sector`, `industry_group`, `industry`, `sub_industry` (by GICS codes). - Location: `countries` (comma-separated ISO Alpha-2 codes, e.g., `US,GB`). - Identifiers: `isin`, `lei`, `ticker` (all case-insensitive).  Supports searching via the `search` parameter across company name, ISINs, LEI, and Ticker. Supports ordering via the `ordering` parameter. Allowed fields for ordering are: `name`, `date_ipo`, `year_founded`, and `country_iso__name`. For example, `?ordering=name` or `?ordering=-date_ipo` for descending order.
 
         :param countries: Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values (e.g., US,GB,DE).
         :type countries: str
@@ -251,6 +252,7 @@ class CompaniesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedCompanyList",
+            '401': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -291,9 +293,9 @@ class CompaniesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """companies_list
+        """List Companies
 
-        Retrieve a paginated list of companies.  Supports filtering via query parameters defined in the CompanyFilter, searching via the 'search' parameter (searches name, ISINs, LEI, Ticker), and ordering via the 'ordering' parameter (allowed fields: name, date_ipo, year_founded, country_iso__name).
+        Retrieve a paginated list of companies. Supports filtering via various query parameters including: - GICS classifications: `sector`, `industry_group`, `industry`, `sub_industry` (by GICS codes). - Location: `countries` (comma-separated ISO Alpha-2 codes, e.g., `US,GB`). - Identifiers: `isin`, `lei`, `ticker` (all case-insensitive).  Supports searching via the `search` parameter across company name, ISINs, LEI, and Ticker. Supports ordering via the `ordering` parameter. Allowed fields for ordering are: `name`, `date_ipo`, `year_founded`, and `country_iso__name`. For example, `?ordering=name` or `?ordering=-date_ipo` for descending order.
 
         :param countries: Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values (e.g., US,GB,DE).
         :type countries: str
@@ -362,6 +364,7 @@ class CompaniesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedCompanyList",
+            '401': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -508,9 +511,9 @@ class CompaniesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> Company:
-        """companies_retrieve
+        """Retrieve Company Details
 
-        Retrieve detailed information for a single company by its internal ID. Lookup by ISIN, LEI, or Ticker via this specific endpoint is not supported by default. Use the list endpoint with filters (`?isin=...`, `?lei=...`, `?ticker=...`) instead.
+        Retrieve detailed information for a single company by its internal ID. Lookup by ISIN, LEI, or Ticker directly on this endpoint (e.g., using the identifier in the URL path) is not supported. To find a company using these identifiers, please use the list endpoint with the appropriate filter query parameters, for example: `?isin=US0378331005`, `?lei=HWUPKR0MPOU8FGXBT394`, or `?ticker=AAPL`.
 
         :param id: (required)
         :type id: int
@@ -546,6 +549,8 @@ class CompaniesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Company",
+            '401': "ErrorDetail",
+            '404': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -575,9 +580,9 @@ class CompaniesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[Company]:
-        """companies_retrieve
+        """Retrieve Company Details
 
-        Retrieve detailed information for a single company by its internal ID. Lookup by ISIN, LEI, or Ticker via this specific endpoint is not supported by default. Use the list endpoint with filters (`?isin=...`, `?lei=...`, `?ticker=...`) instead.
+        Retrieve detailed information for a single company by its internal ID. Lookup by ISIN, LEI, or Ticker directly on this endpoint (e.g., using the identifier in the URL path) is not supported. To find a company using these identifiers, please use the list endpoint with the appropriate filter query parameters, for example: `?isin=US0378331005`, `?lei=HWUPKR0MPOU8FGXBT394`, or `?ticker=AAPL`.
 
         :param id: (required)
         :type id: int
@@ -613,6 +618,8 @@ class CompaniesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Company",
+            '401': "ErrorDetail",
+            '404': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -642,9 +649,9 @@ class CompaniesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """companies_retrieve
+        """Retrieve Company Details
 
-        Retrieve detailed information for a single company by its internal ID. Lookup by ISIN, LEI, or Ticker via this specific endpoint is not supported by default. Use the list endpoint with filters (`?isin=...`, `?lei=...`, `?ticker=...`) instead.
+        Retrieve detailed information for a single company by its internal ID. Lookup by ISIN, LEI, or Ticker directly on this endpoint (e.g., using the identifier in the URL path) is not supported. To find a company using these identifiers, please use the list endpoint with the appropriate filter query parameters, for example: `?isin=US0378331005`, `?lei=HWUPKR0MPOU8FGXBT394`, or `?ticker=AAPL`.
 
         :param id: (required)
         :type id: int
@@ -680,6 +687,8 @@ class CompaniesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Company",
+            '401': "ErrorDetail",
+            '404': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,

@@ -30,6 +30,7 @@ class TestProcessedFilingsApi(unittest.IsolatedAsyncioTestCase):
     async def test_processed_filings_retrieve(self) -> None:
         """Test case for processed_filings_retrieve
 
+        Retrieve Processed Filing Content
         """
         pass
 

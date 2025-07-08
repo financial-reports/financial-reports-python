@@ -4,14 +4,16 @@ All URIs are relative to *https://api.financialreports.eu*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**filing_types_list**](FilingTypesApi.md#filing_types_list) | **GET** /filing-types/ | 
-[**filing_types_retrieve**](FilingTypesApi.md#filing_types_retrieve) | **GET** /filing-types/{id}/ | 
+[**filing_types_list**](FilingTypesApi.md#filing_types_list) | **GET** /filing-types/ | List Filing Types
+[**filing_types_retrieve**](FilingTypesApi.md#filing_types_retrieve) | **GET** /filing-types/{id}/ | Retrieve Filing Type
 
 
 # **filing_types_list**
 > PaginatedFilingTypeList filing_types_list(page=page, page_size=page_size, search=search)
 
-Retrieve a list of all available filing types.
+List Filing Types
+
+Retrieve a paginated list of all available filing types. Supports searching across `code` and `name` fields via the `search` query parameter.
 
 ### Example
 
@@ -49,6 +51,7 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
     search = 'search_example' # str | A search term. (optional)
 
     try:
+        # List Filing Types
         api_response = await api_instance.filing_types_list(page=page, page_size=page_size, search=search)
         print("The response of FilingTypesApi->filing_types_list:\n")
         pprint(api_response)
@@ -84,14 +87,17 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** |  |  -  |
+**200** | Successfully retrieved the list of filing types. |  -  |
+**401** | Authentication credentials were not provided or are invalid. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **filing_types_retrieve**
 > FilingType filing_types_retrieve(id)
 
-Retrieve details for a single filing type by its primary key (likely ID, depends on model).
+Retrieve Filing Type
+
+Retrieve details for a specific filing type by its ID.
 
 ### Example
 
@@ -127,6 +133,7 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
     id = 56 # int | 
 
     try:
+        # Retrieve Filing Type
         api_response = await api_instance.filing_types_retrieve(id)
         print("The response of FilingTypesApi->filing_types_retrieve:\n")
         pprint(api_response)
@@ -160,7 +167,9 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** |  |  -  |
+**200** | Successfully retrieved the filing type details. |  -  |
+**401** | Authentication credentials were not provided or are invalid. |  -  |
+**404** | Filing type not found. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
