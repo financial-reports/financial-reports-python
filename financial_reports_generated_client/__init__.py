@@ -5,7 +5,7 @@
 """
     Financial Reports API
 
-    API for accessing company filings, financial data, industry classifications, and related information.
+    Welcome to the Financial Reports API, your gateway to European company filings, financial data, and corporate information. All API requests must be authenticated. Authentication is performed by including your unique API key in the **X-API-Key** HTTP header. Please use the \"Authorize\" button to set your key and try out the endpoints.
 
     The version of the OpenAPI document: 1.0.0
     Contact: api@financialreports.eu
@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "1.2.7"
+__version__ = "1.2.8"
 
 # Define package exports
 __all__ = [
@@ -27,7 +27,6 @@ __all__ = [
     "LanguagesApi",
     "SourcesApi",
     "WatchlistApi",
-    "HealthApi",
     "SchemaApi",
     "ApiResponse",
     "ApiClient",
@@ -75,7 +74,6 @@ from financial_reports_generated_client.api.isic_classifications_api import ISIC
 from financial_reports_generated_client.api.languages_api import LanguagesApi as LanguagesApi
 from financial_reports_generated_client.api.sources_api import SourcesApi as SourcesApi
 from financial_reports_generated_client.api.watchlist_api import WatchlistApi as WatchlistApi
-from financial_reports_generated_client.api.health_api import HealthApi as HealthApi
 from financial_reports_generated_client.api.schema_api import SchemaApi as SchemaApi
 
 # import ApiClient

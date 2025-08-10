@@ -3,7 +3,7 @@
 """
     Financial Reports API
 
-    API for accessing company filings, financial data, industry classifications, and related information.
+    Welcome to the Financial Reports API, your gateway to European company filings, financial data, and corporate information. All API requests must be authenticated. Authentication is performed by including your unique API key in the **X-API-Key** HTTP header. Please use the \"Authorize\" button to set your key and try out the endpoints.
 
     The version of the OpenAPI document: 1.0.0
     Contact: api@financialreports.eu
@@ -60,7 +60,7 @@ class WatchlistApi:
     ) -> WatchlistResponse:
         """Add Company to Watchlist
 
-        Adds a specified company to the authenticated user's watchlist. The `company_id` must be provided in the request body.
+        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Adds a specified company to the authenticated user's watchlist.
 
         :param watchlist_action: (required)
         :type watchlist_action: WatchlistAction
@@ -129,7 +129,7 @@ class WatchlistApi:
     ) -> ApiResponse[WatchlistResponse]:
         """Add Company to Watchlist
 
-        Adds a specified company to the authenticated user's watchlist. The `company_id` must be provided in the request body.
+        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Adds a specified company to the authenticated user's watchlist.
 
         :param watchlist_action: (required)
         :type watchlist_action: WatchlistAction
@@ -198,7 +198,7 @@ class WatchlistApi:
     ) -> RESTResponseType:
         """Add Company to Watchlist
 
-        Adds a specified company to the authenticated user's watchlist. The `company_id` must be provided in the request body.
+        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Adds a specified company to the authenticated user's watchlist.
 
         :param watchlist_action: (required)
         :type watchlist_action: WatchlistAction
@@ -342,7 +342,7 @@ class WatchlistApi:
     ) -> WatchlistResponse:
         """Remove Company from Watchlist
 
-        Removes a specified company from the authenticated user's watchlist using the `company_id` from the URL path.
+        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Removes a specified company from the authenticated user's watchlist using the `company_id` from the URL path.
 
         :param company_id: (required)
         :type company_id: int
@@ -378,7 +378,6 @@ class WatchlistApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "WatchlistResponse",
-            '400': "WatchlistResponse",
             '401': "ErrorDetail",
             '404': "WatchlistResponse",
         }
@@ -412,7 +411,7 @@ class WatchlistApi:
     ) -> ApiResponse[WatchlistResponse]:
         """Remove Company from Watchlist
 
-        Removes a specified company from the authenticated user's watchlist using the `company_id` from the URL path.
+        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Removes a specified company from the authenticated user's watchlist using the `company_id` from the URL path.
 
         :param company_id: (required)
         :type company_id: int
@@ -448,7 +447,6 @@ class WatchlistApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "WatchlistResponse",
-            '400': "WatchlistResponse",
             '401': "ErrorDetail",
             '404': "WatchlistResponse",
         }
@@ -482,7 +480,7 @@ class WatchlistApi:
     ) -> RESTResponseType:
         """Remove Company from Watchlist
 
-        Removes a specified company from the authenticated user's watchlist using the `company_id` from the URL path.
+        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Removes a specified company from the authenticated user's watchlist using the `company_id` from the URL path.
 
         :param company_id: (required)
         :type company_id: int
@@ -518,7 +516,6 @@ class WatchlistApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "WatchlistResponse",
-            '400': "WatchlistResponse",
             '401': "ErrorDetail",
             '404': "WatchlistResponse",
         }
@@ -611,7 +608,7 @@ class WatchlistApi:
     ) -> List[WatchlistCompany]:
         """Get User's Watchlist
 
-        Fetches all companies currently in the authenticated user's watchlist.
+        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Fetches all companies currently in the authenticated user's watchlist.
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -675,7 +672,7 @@ class WatchlistApi:
     ) -> ApiResponse[List[WatchlistCompany]]:
         """Get User's Watchlist
 
-        Fetches all companies currently in the authenticated user's watchlist.
+        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Fetches all companies currently in the authenticated user's watchlist.
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -739,7 +736,7 @@ class WatchlistApi:
     ) -> RESTResponseType:
         """Get User's Watchlist
 
-        Fetches all companies currently in the authenticated user's watchlist.
+        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Fetches all companies currently in the authenticated user's watchlist.
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request

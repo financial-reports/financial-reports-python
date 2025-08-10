@@ -13,14 +13,10 @@ Method | HTTP request | Description
 
 List Companies
 
-Retrieve a paginated list of companies.
-Supports filtering via various query parameters including:
-- ISIC classifications: `sector`, `industry_group`, `industry`, `sub_industry` (by ISIC codes).
-- Location: `countries` (comma-separated ISO Alpha-2 codes, e.g., `US,GB`).
-- Identifiers: `isin`, `lei`, `ticker` (all case-insensitive).
+**Access Level Required:** Requires **Level 1** Plan or higher.
 
-Supports searching via the `search` parameter across company name, ISINs, LEI, and Ticker.
-Supports ordering via the `ordering` parameter. Allowed fields for ordering are: `name`, `date_ipo`, `year_founded`, and `country_iso__name`. For example, `?ordering=name` or `?ordering=-date_ipo` for descending order.
+---
+Retrieve a paginated list of companies.
 
 ### Example
 
@@ -53,18 +49,18 @@ configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
 async with financial_reports_generated_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = financial_reports_generated_client.CompaniesApi(api_client)
-    countries = 'countries_example' # str | Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values (e.g., US,GB,DE). (optional)
+    countries = 'countries_example' # str | Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values. (optional)
     industry = 'industry_example' # str | Filter by ISIC Group code. (optional)
     industry_group = 'industry_group_example' # str | Filter by ISIC Division code. (optional)
-    isin = 'isin_example' # str | Find companies matching the provided ISIN. (optional)
-    lei = 'lei_example' # str | Find a company by its LEI. (optional)
+    isin = 'isin_example' # str | Filter by Company ISIN. Case-insensitive. (optional)
+    lei = 'lei_example' # str | Filter by Company Legal Entity Identifier (LEI). Case-insensitive. (optional)
     ordering = 'ordering_example' # str | Which field to use when ordering the results. (optional)
     page = 56 # int | A page number within the paginated result set. (optional)
     page_size = 56 # int | Number of results to return per page. (optional)
     search = 'search_example' # str | A search term. (optional)
     sector = 'sector_example' # str | Filter by ISIC Section code. (optional)
     sub_industry = 'sub_industry_example' # str | Filter by ISIC Class code. (optional)
-    ticker = 'ticker_example' # str | Find a company by its Ticker. (optional)
+    ticker = 'ticker_example' # str | Filter by Company primary stock Ticker symbol. Case-insensitive. (optional)
 
     try:
         # List Companies
@@ -82,18 +78,18 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **countries** | **str**| Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values (e.g., US,GB,DE). | [optional] 
+ **countries** | **str**| Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values. | [optional] 
  **industry** | **str**| Filter by ISIC Group code. | [optional] 
  **industry_group** | **str**| Filter by ISIC Division code. | [optional] 
- **isin** | **str**| Find companies matching the provided ISIN. | [optional] 
- **lei** | **str**| Find a company by its LEI. | [optional] 
+ **isin** | **str**| Filter by Company ISIN. Case-insensitive. | [optional] 
+ **lei** | **str**| Filter by Company Legal Entity Identifier (LEI). Case-insensitive. | [optional] 
  **ordering** | **str**| Which field to use when ordering the results. | [optional] 
  **page** | **int**| A page number within the paginated result set. | [optional] 
  **page_size** | **int**| Number of results to return per page. | [optional] 
  **search** | **str**| A search term. | [optional] 
  **sector** | **str**| Filter by ISIC Section code. | [optional] 
  **sub_industry** | **str**| Filter by ISIC Class code. | [optional] 
- **ticker** | **str**| Find a company by its Ticker. | [optional] 
+ **ticker** | **str**| Filter by Company primary stock Ticker symbol. Case-insensitive. | [optional] 
 
 ### Return type
 
@@ -112,8 +108,8 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Successfully retrieved the list of companies. |  -  |
-**401** | Authentication credentials were not provided or are invalid. |  -  |
+**200** | Success |  -  |
+**401** | Unauthorized |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -122,10 +118,10 @@ Name | Type | Description  | Notes
 
 Retrieve Company Details
 
+**Access Level Required:** Requires **Level 1** Plan or higher.
+
+---
 Retrieve detailed information for a single company by its internal ID.
-Lookup by ISIN, LEI, or Ticker directly on this endpoint (e.g., using the identifier in the URL path) is not supported.
-To find a company using these identifiers, please use the list endpoint with the appropriate filter query parameters, for example:
-`?isin=US0378331005`, `?lei=HWUPKR0MPOU8FGXBT394`, or `?ticker=AAPL`.
 
 ### Example
 
@@ -195,9 +191,9 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Successfully retrieved the company details. |  -  |
-**401** | Authentication credentials were not provided or are invalid. |  -  |
-**404** | Company not found. |  -  |
+**200** | Success |  -  |
+**401** | Unauthorized |  -  |
+**404** | Not Found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

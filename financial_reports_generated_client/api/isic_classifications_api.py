@@ -3,7 +3,7 @@
 """
     Financial Reports API
 
-    API for accessing company filings, financial data, industry classifications, and related information.
+    Welcome to the Financial Reports API, your gateway to European company filings, financial data, and corporate information. All API requests must be authenticated. Authentication is performed by including your unique API key in the **X-API-Key** HTTP header. Please use the \"Authorize\" button to set your key and try out the endpoints.
 
     The version of the OpenAPI document: 1.0.0
     Contact: api@financialreports.eu
@@ -54,12 +54,10 @@ class ISICClassificationsApi:
         code__iexact: Optional[StrictStr] = None,
         code__in: Annotated[Optional[List[StrictStr]], Field(description="Multiple values may be separated by commas.")] = None,
         industry_code: Annotated[Optional[StrictStr], Field(description="Filter by parent ISIC Group code (e.g., 011)")] = None,
-        industry_code_in: Annotated[Optional[List[StrictStr]], Field(description="Multiple values may be separated by commas.")] = None,
         industry_group_code: Annotated[Optional[StrictStr], Field(description="Filter by grandparent ISIC Division code (e.g., 01)")] = None,
         name__icontains: Optional[StrictStr] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
-        search: Annotated[Optional[StrictStr], Field(description="A search term.")] = None,
         sector_code: Annotated[Optional[StrictStr], Field(description="Filter by great-grandparent ISIC Section code (e.g., A)")] = None,
         _request_timeout: Union[
             None,
@@ -76,7 +74,7 @@ class ISICClassificationsApi:
     ) -> PaginatedISICClassList:
         """List ISIC Classes
 
-        Retrieve a paginated list of ISIC Classes. Supports filtering by `code`, `name`, parent `industry_code`, list of `industry_code_in`, grandparent `industry_group_code`, and great-grandparent `sector_code`.
+        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve a paginated list of ISIC Classes.
 
         :param code:
         :type code: str
@@ -86,8 +84,6 @@ class ISICClassificationsApi:
         :type code__in: List[str]
         :param industry_code: Filter by parent ISIC Group code (e.g., 011)
         :type industry_code: str
-        :param industry_code_in: Multiple values may be separated by commas.
-        :type industry_code_in: List[str]
         :param industry_group_code: Filter by grandparent ISIC Division code (e.g., 01)
         :type industry_group_code: str
         :param name__icontains:
@@ -96,8 +92,6 @@ class ISICClassificationsApi:
         :type page: int
         :param page_size: Number of results to return per page.
         :type page_size: int
-        :param search: A search term.
-        :type search: str
         :param sector_code: Filter by great-grandparent ISIC Section code (e.g., A)
         :type sector_code: str
         :param _request_timeout: timeout setting for this request. If one
@@ -127,12 +121,10 @@ class ISICClassificationsApi:
             code__iexact=code__iexact,
             code__in=code__in,
             industry_code=industry_code,
-            industry_code_in=industry_code_in,
             industry_group_code=industry_group_code,
             name__icontains=name__icontains,
             page=page,
             page_size=page_size,
-            search=search,
             sector_code=sector_code,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -142,7 +134,6 @@ class ISICClassificationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedISICClassList",
-            '401': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -162,12 +153,10 @@ class ISICClassificationsApi:
         code__iexact: Optional[StrictStr] = None,
         code__in: Annotated[Optional[List[StrictStr]], Field(description="Multiple values may be separated by commas.")] = None,
         industry_code: Annotated[Optional[StrictStr], Field(description="Filter by parent ISIC Group code (e.g., 011)")] = None,
-        industry_code_in: Annotated[Optional[List[StrictStr]], Field(description="Multiple values may be separated by commas.")] = None,
         industry_group_code: Annotated[Optional[StrictStr], Field(description="Filter by grandparent ISIC Division code (e.g., 01)")] = None,
         name__icontains: Optional[StrictStr] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
-        search: Annotated[Optional[StrictStr], Field(description="A search term.")] = None,
         sector_code: Annotated[Optional[StrictStr], Field(description="Filter by great-grandparent ISIC Section code (e.g., A)")] = None,
         _request_timeout: Union[
             None,
@@ -184,7 +173,7 @@ class ISICClassificationsApi:
     ) -> ApiResponse[PaginatedISICClassList]:
         """List ISIC Classes
 
-        Retrieve a paginated list of ISIC Classes. Supports filtering by `code`, `name`, parent `industry_code`, list of `industry_code_in`, grandparent `industry_group_code`, and great-grandparent `sector_code`.
+        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve a paginated list of ISIC Classes.
 
         :param code:
         :type code: str
@@ -194,8 +183,6 @@ class ISICClassificationsApi:
         :type code__in: List[str]
         :param industry_code: Filter by parent ISIC Group code (e.g., 011)
         :type industry_code: str
-        :param industry_code_in: Multiple values may be separated by commas.
-        :type industry_code_in: List[str]
         :param industry_group_code: Filter by grandparent ISIC Division code (e.g., 01)
         :type industry_group_code: str
         :param name__icontains:
@@ -204,8 +191,6 @@ class ISICClassificationsApi:
         :type page: int
         :param page_size: Number of results to return per page.
         :type page_size: int
-        :param search: A search term.
-        :type search: str
         :param sector_code: Filter by great-grandparent ISIC Section code (e.g., A)
         :type sector_code: str
         :param _request_timeout: timeout setting for this request. If one
@@ -235,12 +220,10 @@ class ISICClassificationsApi:
             code__iexact=code__iexact,
             code__in=code__in,
             industry_code=industry_code,
-            industry_code_in=industry_code_in,
             industry_group_code=industry_group_code,
             name__icontains=name__icontains,
             page=page,
             page_size=page_size,
-            search=search,
             sector_code=sector_code,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -250,7 +233,6 @@ class ISICClassificationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedISICClassList",
-            '401': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -270,12 +252,10 @@ class ISICClassificationsApi:
         code__iexact: Optional[StrictStr] = None,
         code__in: Annotated[Optional[List[StrictStr]], Field(description="Multiple values may be separated by commas.")] = None,
         industry_code: Annotated[Optional[StrictStr], Field(description="Filter by parent ISIC Group code (e.g., 011)")] = None,
-        industry_code_in: Annotated[Optional[List[StrictStr]], Field(description="Multiple values may be separated by commas.")] = None,
         industry_group_code: Annotated[Optional[StrictStr], Field(description="Filter by grandparent ISIC Division code (e.g., 01)")] = None,
         name__icontains: Optional[StrictStr] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
-        search: Annotated[Optional[StrictStr], Field(description="A search term.")] = None,
         sector_code: Annotated[Optional[StrictStr], Field(description="Filter by great-grandparent ISIC Section code (e.g., A)")] = None,
         _request_timeout: Union[
             None,
@@ -292,7 +272,7 @@ class ISICClassificationsApi:
     ) -> RESTResponseType:
         """List ISIC Classes
 
-        Retrieve a paginated list of ISIC Classes. Supports filtering by `code`, `name`, parent `industry_code`, list of `industry_code_in`, grandparent `industry_group_code`, and great-grandparent `sector_code`.
+        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve a paginated list of ISIC Classes.
 
         :param code:
         :type code: str
@@ -302,8 +282,6 @@ class ISICClassificationsApi:
         :type code__in: List[str]
         :param industry_code: Filter by parent ISIC Group code (e.g., 011)
         :type industry_code: str
-        :param industry_code_in: Multiple values may be separated by commas.
-        :type industry_code_in: List[str]
         :param industry_group_code: Filter by grandparent ISIC Division code (e.g., 01)
         :type industry_group_code: str
         :param name__icontains:
@@ -312,8 +290,6 @@ class ISICClassificationsApi:
         :type page: int
         :param page_size: Number of results to return per page.
         :type page_size: int
-        :param search: A search term.
-        :type search: str
         :param sector_code: Filter by great-grandparent ISIC Section code (e.g., A)
         :type sector_code: str
         :param _request_timeout: timeout setting for this request. If one
@@ -343,12 +319,10 @@ class ISICClassificationsApi:
             code__iexact=code__iexact,
             code__in=code__in,
             industry_code=industry_code,
-            industry_code_in=industry_code_in,
             industry_group_code=industry_group_code,
             name__icontains=name__icontains,
             page=page,
             page_size=page_size,
-            search=search,
             sector_code=sector_code,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -358,7 +332,6 @@ class ISICClassificationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedISICClassList",
-            '401': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -373,12 +346,10 @@ class ISICClassificationsApi:
         code__iexact,
         code__in,
         industry_code,
-        industry_code_in,
         industry_group_code,
         name__icontains,
         page,
         page_size,
-        search,
         sector_code,
         _request_auth,
         _content_type,
@@ -390,7 +361,6 @@ class ISICClassificationsApi:
 
         _collection_formats: Dict[str, str] = {
             'code__in': 'csv',
-            'industry_code_in': 'csv',
         }
 
         _path_params: Dict[str, str] = {}
@@ -420,10 +390,6 @@ class ISICClassificationsApi:
             
             _query_params.append(('industry_code', industry_code))
             
-        if industry_code_in is not None:
-            
-            _query_params.append(('industry_code_in', industry_code_in))
-            
         if industry_group_code is not None:
             
             _query_params.append(('industry_group_code', industry_group_code))
@@ -439,10 +405,6 @@ class ISICClassificationsApi:
         if page_size is not None:
             
             _query_params.append(('page_size', page_size))
-            
-        if search is not None:
-            
-            _query_params.append(('search', search))
             
         if sector_code is not None:
             
@@ -504,7 +466,7 @@ class ISICClassificationsApi:
     ) -> ISICClass:
         """Retrieve ISIC Class
 
-        Retrieve details for a specific ISIC Class by its ID.
+        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve details for a specific ISIC Class by its ID.
 
         :param id: A unique integer value identifying this sub industry. (required)
         :type id: int
@@ -540,8 +502,6 @@ class ISICClassificationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ISICClass",
-            '401': "ErrorDetail",
-            '404': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -573,7 +533,7 @@ class ISICClassificationsApi:
     ) -> ApiResponse[ISICClass]:
         """Retrieve ISIC Class
 
-        Retrieve details for a specific ISIC Class by its ID.
+        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve details for a specific ISIC Class by its ID.
 
         :param id: A unique integer value identifying this sub industry. (required)
         :type id: int
@@ -609,8 +569,6 @@ class ISICClassificationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ISICClass",
-            '401': "ErrorDetail",
-            '404': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -642,7 +600,7 @@ class ISICClassificationsApi:
     ) -> RESTResponseType:
         """Retrieve ISIC Class
 
-        Retrieve details for a specific ISIC Class by its ID.
+        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve details for a specific ISIC Class by its ID.
 
         :param id: A unique integer value identifying this sub industry. (required)
         :type id: int
@@ -678,8 +636,6 @@ class ISICClassificationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ISICClass",
-            '401': "ErrorDetail",
-            '404': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -761,9 +717,7 @@ class ISICClassificationsApi:
         name__icontains: Optional[StrictStr] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
-        search: Annotated[Optional[StrictStr], Field(description="A search term.")] = None,
         sector_code: Annotated[Optional[StrictStr], Field(description="Filter by parent ISIC Section code (e.g., A)")] = None,
-        sector_code_in: Annotated[Optional[List[StrictStr]], Field(description="Multiple values may be separated by commas.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -779,7 +733,7 @@ class ISICClassificationsApi:
     ) -> PaginatedISICDivisionList:
         """List ISIC Divisions
 
-        Retrieve a paginated list of ISIC Divisions. Supports filtering by `code`, `name`, parent `sector_code`, and a list of parent `sector_code_in`.
+        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve a paginated list of ISIC Divisions.
 
         :param code:
         :type code: str
@@ -793,12 +747,8 @@ class ISICClassificationsApi:
         :type page: int
         :param page_size: Number of results to return per page.
         :type page_size: int
-        :param search: A search term.
-        :type search: str
         :param sector_code: Filter by parent ISIC Section code (e.g., A)
         :type sector_code: str
-        :param sector_code_in: Multiple values may be separated by commas.
-        :type sector_code_in: List[str]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -828,9 +778,7 @@ class ISICClassificationsApi:
             name__icontains=name__icontains,
             page=page,
             page_size=page_size,
-            search=search,
             sector_code=sector_code,
-            sector_code_in=sector_code_in,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -839,7 +787,6 @@ class ISICClassificationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedISICDivisionList",
-            '401': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -861,9 +808,7 @@ class ISICClassificationsApi:
         name__icontains: Optional[StrictStr] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
-        search: Annotated[Optional[StrictStr], Field(description="A search term.")] = None,
         sector_code: Annotated[Optional[StrictStr], Field(description="Filter by parent ISIC Section code (e.g., A)")] = None,
-        sector_code_in: Annotated[Optional[List[StrictStr]], Field(description="Multiple values may be separated by commas.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -879,7 +824,7 @@ class ISICClassificationsApi:
     ) -> ApiResponse[PaginatedISICDivisionList]:
         """List ISIC Divisions
 
-        Retrieve a paginated list of ISIC Divisions. Supports filtering by `code`, `name`, parent `sector_code`, and a list of parent `sector_code_in`.
+        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve a paginated list of ISIC Divisions.
 
         :param code:
         :type code: str
@@ -893,12 +838,8 @@ class ISICClassificationsApi:
         :type page: int
         :param page_size: Number of results to return per page.
         :type page_size: int
-        :param search: A search term.
-        :type search: str
         :param sector_code: Filter by parent ISIC Section code (e.g., A)
         :type sector_code: str
-        :param sector_code_in: Multiple values may be separated by commas.
-        :type sector_code_in: List[str]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -928,9 +869,7 @@ class ISICClassificationsApi:
             name__icontains=name__icontains,
             page=page,
             page_size=page_size,
-            search=search,
             sector_code=sector_code,
-            sector_code_in=sector_code_in,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -939,7 +878,6 @@ class ISICClassificationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedISICDivisionList",
-            '401': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -961,9 +899,7 @@ class ISICClassificationsApi:
         name__icontains: Optional[StrictStr] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
-        search: Annotated[Optional[StrictStr], Field(description="A search term.")] = None,
         sector_code: Annotated[Optional[StrictStr], Field(description="Filter by parent ISIC Section code (e.g., A)")] = None,
-        sector_code_in: Annotated[Optional[List[StrictStr]], Field(description="Multiple values may be separated by commas.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -979,7 +915,7 @@ class ISICClassificationsApi:
     ) -> RESTResponseType:
         """List ISIC Divisions
 
-        Retrieve a paginated list of ISIC Divisions. Supports filtering by `code`, `name`, parent `sector_code`, and a list of parent `sector_code_in`.
+        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve a paginated list of ISIC Divisions.
 
         :param code:
         :type code: str
@@ -993,12 +929,8 @@ class ISICClassificationsApi:
         :type page: int
         :param page_size: Number of results to return per page.
         :type page_size: int
-        :param search: A search term.
-        :type search: str
         :param sector_code: Filter by parent ISIC Section code (e.g., A)
         :type sector_code: str
-        :param sector_code_in: Multiple values may be separated by commas.
-        :type sector_code_in: List[str]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1028,9 +960,7 @@ class ISICClassificationsApi:
             name__icontains=name__icontains,
             page=page,
             page_size=page_size,
-            search=search,
             sector_code=sector_code,
-            sector_code_in=sector_code_in,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1039,7 +969,6 @@ class ISICClassificationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedISICDivisionList",
-            '401': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1056,9 +985,7 @@ class ISICClassificationsApi:
         name__icontains,
         page,
         page_size,
-        search,
         sector_code,
-        sector_code_in,
         _request_auth,
         _content_type,
         _headers,
@@ -1069,7 +996,6 @@ class ISICClassificationsApi:
 
         _collection_formats: Dict[str, str] = {
             'code__in': 'csv',
-            'sector_code_in': 'csv',
         }
 
         _path_params: Dict[str, str] = {}
@@ -1107,17 +1033,9 @@ class ISICClassificationsApi:
             
             _query_params.append(('page_size', page_size))
             
-        if search is not None:
-            
-            _query_params.append(('search', search))
-            
         if sector_code is not None:
             
             _query_params.append(('sector_code', sector_code))
-            
-        if sector_code_in is not None:
-            
-            _query_params.append(('sector_code_in', sector_code_in))
             
         # process the header parameters
         # process the form parameters
@@ -1175,7 +1093,7 @@ class ISICClassificationsApi:
     ) -> ISICDivision:
         """Retrieve ISIC Division
 
-        Retrieve details for a specific ISIC Division by its ID.
+        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve details for a specific ISIC Division by its ID.
 
         :param id: A unique integer value identifying this industry group. (required)
         :type id: int
@@ -1211,8 +1129,6 @@ class ISICClassificationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ISICDivision",
-            '401': "ErrorDetail",
-            '404': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1244,7 +1160,7 @@ class ISICClassificationsApi:
     ) -> ApiResponse[ISICDivision]:
         """Retrieve ISIC Division
 
-        Retrieve details for a specific ISIC Division by its ID.
+        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve details for a specific ISIC Division by its ID.
 
         :param id: A unique integer value identifying this industry group. (required)
         :type id: int
@@ -1280,8 +1196,6 @@ class ISICClassificationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ISICDivision",
-            '401': "ErrorDetail",
-            '404': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1313,7 +1227,7 @@ class ISICClassificationsApi:
     ) -> RESTResponseType:
         """Retrieve ISIC Division
 
-        Retrieve details for a specific ISIC Division by its ID.
+        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve details for a specific ISIC Division by its ID.
 
         :param id: A unique integer value identifying this industry group. (required)
         :type id: int
@@ -1349,8 +1263,6 @@ class ISICClassificationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ISICDivision",
-            '401': "ErrorDetail",
-            '404': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1430,11 +1342,9 @@ class ISICClassificationsApi:
         code__iexact: Optional[StrictStr] = None,
         code__in: Annotated[Optional[List[StrictStr]], Field(description="Multiple values may be separated by commas.")] = None,
         industry_group_code: Annotated[Optional[StrictStr], Field(description="Filter by parent ISIC Division code (e.g., 01)")] = None,
-        industry_group_code_in: Annotated[Optional[List[StrictStr]], Field(description="Multiple values may be separated by commas.")] = None,
         name__icontains: Optional[StrictStr] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
-        search: Annotated[Optional[StrictStr], Field(description="A search term.")] = None,
         sector_code: Annotated[Optional[StrictStr], Field(description="Filter by grandparent ISIC Section code (e.g., A)")] = None,
         _request_timeout: Union[
             None,
@@ -1451,7 +1361,7 @@ class ISICClassificationsApi:
     ) -> PaginatedISICGroupList:
         """List ISIC Groups
 
-        Retrieve a paginated list of ISIC Groups. Supports filtering by `code`, `name`, parent `industry_group_code`, list of `industry_group_code_in`, and grandparent `sector_code`.
+        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve a paginated list of ISIC Groups.
 
         :param code:
         :type code: str
@@ -1461,16 +1371,12 @@ class ISICClassificationsApi:
         :type code__in: List[str]
         :param industry_group_code: Filter by parent ISIC Division code (e.g., 01)
         :type industry_group_code: str
-        :param industry_group_code_in: Multiple values may be separated by commas.
-        :type industry_group_code_in: List[str]
         :param name__icontains:
         :type name__icontains: str
         :param page: A page number within the paginated result set.
         :type page: int
         :param page_size: Number of results to return per page.
         :type page_size: int
-        :param search: A search term.
-        :type search: str
         :param sector_code: Filter by grandparent ISIC Section code (e.g., A)
         :type sector_code: str
         :param _request_timeout: timeout setting for this request. If one
@@ -1500,11 +1406,9 @@ class ISICClassificationsApi:
             code__iexact=code__iexact,
             code__in=code__in,
             industry_group_code=industry_group_code,
-            industry_group_code_in=industry_group_code_in,
             name__icontains=name__icontains,
             page=page,
             page_size=page_size,
-            search=search,
             sector_code=sector_code,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -1514,7 +1418,6 @@ class ISICClassificationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedISICGroupList",
-            '401': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1534,11 +1437,9 @@ class ISICClassificationsApi:
         code__iexact: Optional[StrictStr] = None,
         code__in: Annotated[Optional[List[StrictStr]], Field(description="Multiple values may be separated by commas.")] = None,
         industry_group_code: Annotated[Optional[StrictStr], Field(description="Filter by parent ISIC Division code (e.g., 01)")] = None,
-        industry_group_code_in: Annotated[Optional[List[StrictStr]], Field(description="Multiple values may be separated by commas.")] = None,
         name__icontains: Optional[StrictStr] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
-        search: Annotated[Optional[StrictStr], Field(description="A search term.")] = None,
         sector_code: Annotated[Optional[StrictStr], Field(description="Filter by grandparent ISIC Section code (e.g., A)")] = None,
         _request_timeout: Union[
             None,
@@ -1555,7 +1456,7 @@ class ISICClassificationsApi:
     ) -> ApiResponse[PaginatedISICGroupList]:
         """List ISIC Groups
 
-        Retrieve a paginated list of ISIC Groups. Supports filtering by `code`, `name`, parent `industry_group_code`, list of `industry_group_code_in`, and grandparent `sector_code`.
+        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve a paginated list of ISIC Groups.
 
         :param code:
         :type code: str
@@ -1565,16 +1466,12 @@ class ISICClassificationsApi:
         :type code__in: List[str]
         :param industry_group_code: Filter by parent ISIC Division code (e.g., 01)
         :type industry_group_code: str
-        :param industry_group_code_in: Multiple values may be separated by commas.
-        :type industry_group_code_in: List[str]
         :param name__icontains:
         :type name__icontains: str
         :param page: A page number within the paginated result set.
         :type page: int
         :param page_size: Number of results to return per page.
         :type page_size: int
-        :param search: A search term.
-        :type search: str
         :param sector_code: Filter by grandparent ISIC Section code (e.g., A)
         :type sector_code: str
         :param _request_timeout: timeout setting for this request. If one
@@ -1604,11 +1501,9 @@ class ISICClassificationsApi:
             code__iexact=code__iexact,
             code__in=code__in,
             industry_group_code=industry_group_code,
-            industry_group_code_in=industry_group_code_in,
             name__icontains=name__icontains,
             page=page,
             page_size=page_size,
-            search=search,
             sector_code=sector_code,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -1618,7 +1513,6 @@ class ISICClassificationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedISICGroupList",
-            '401': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1638,11 +1532,9 @@ class ISICClassificationsApi:
         code__iexact: Optional[StrictStr] = None,
         code__in: Annotated[Optional[List[StrictStr]], Field(description="Multiple values may be separated by commas.")] = None,
         industry_group_code: Annotated[Optional[StrictStr], Field(description="Filter by parent ISIC Division code (e.g., 01)")] = None,
-        industry_group_code_in: Annotated[Optional[List[StrictStr]], Field(description="Multiple values may be separated by commas.")] = None,
         name__icontains: Optional[StrictStr] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
-        search: Annotated[Optional[StrictStr], Field(description="A search term.")] = None,
         sector_code: Annotated[Optional[StrictStr], Field(description="Filter by grandparent ISIC Section code (e.g., A)")] = None,
         _request_timeout: Union[
             None,
@@ -1659,7 +1551,7 @@ class ISICClassificationsApi:
     ) -> RESTResponseType:
         """List ISIC Groups
 
-        Retrieve a paginated list of ISIC Groups. Supports filtering by `code`, `name`, parent `industry_group_code`, list of `industry_group_code_in`, and grandparent `sector_code`.
+        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve a paginated list of ISIC Groups.
 
         :param code:
         :type code: str
@@ -1669,16 +1561,12 @@ class ISICClassificationsApi:
         :type code__in: List[str]
         :param industry_group_code: Filter by parent ISIC Division code (e.g., 01)
         :type industry_group_code: str
-        :param industry_group_code_in: Multiple values may be separated by commas.
-        :type industry_group_code_in: List[str]
         :param name__icontains:
         :type name__icontains: str
         :param page: A page number within the paginated result set.
         :type page: int
         :param page_size: Number of results to return per page.
         :type page_size: int
-        :param search: A search term.
-        :type search: str
         :param sector_code: Filter by grandparent ISIC Section code (e.g., A)
         :type sector_code: str
         :param _request_timeout: timeout setting for this request. If one
@@ -1708,11 +1596,9 @@ class ISICClassificationsApi:
             code__iexact=code__iexact,
             code__in=code__in,
             industry_group_code=industry_group_code,
-            industry_group_code_in=industry_group_code_in,
             name__icontains=name__icontains,
             page=page,
             page_size=page_size,
-            search=search,
             sector_code=sector_code,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -1722,7 +1608,6 @@ class ISICClassificationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedISICGroupList",
-            '401': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1737,11 +1622,9 @@ class ISICClassificationsApi:
         code__iexact,
         code__in,
         industry_group_code,
-        industry_group_code_in,
         name__icontains,
         page,
         page_size,
-        search,
         sector_code,
         _request_auth,
         _content_type,
@@ -1753,7 +1636,6 @@ class ISICClassificationsApi:
 
         _collection_formats: Dict[str, str] = {
             'code__in': 'csv',
-            'industry_group_code_in': 'csv',
         }
 
         _path_params: Dict[str, str] = {}
@@ -1783,10 +1665,6 @@ class ISICClassificationsApi:
             
             _query_params.append(('industry_group_code', industry_group_code))
             
-        if industry_group_code_in is not None:
-            
-            _query_params.append(('industry_group_code_in', industry_group_code_in))
-            
         if name__icontains is not None:
             
             _query_params.append(('name__icontains', name__icontains))
@@ -1798,10 +1676,6 @@ class ISICClassificationsApi:
         if page_size is not None:
             
             _query_params.append(('page_size', page_size))
-            
-        if search is not None:
-            
-            _query_params.append(('search', search))
             
         if sector_code is not None:
             
@@ -1863,7 +1737,7 @@ class ISICClassificationsApi:
     ) -> ISICGroup:
         """Retrieve ISIC Group
 
-        Retrieve details for a specific ISIC Group by its ID.
+        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve details for a specific ISIC Group by its ID.
 
         :param id: A unique integer value identifying this industry. (required)
         :type id: int
@@ -1899,8 +1773,6 @@ class ISICClassificationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ISICGroup",
-            '401': "ErrorDetail",
-            '404': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1932,7 +1804,7 @@ class ISICClassificationsApi:
     ) -> ApiResponse[ISICGroup]:
         """Retrieve ISIC Group
 
-        Retrieve details for a specific ISIC Group by its ID.
+        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve details for a specific ISIC Group by its ID.
 
         :param id: A unique integer value identifying this industry. (required)
         :type id: int
@@ -1968,8 +1840,6 @@ class ISICClassificationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ISICGroup",
-            '401': "ErrorDetail",
-            '404': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -2001,7 +1871,7 @@ class ISICClassificationsApi:
     ) -> RESTResponseType:
         """Retrieve ISIC Group
 
-        Retrieve details for a specific ISIC Group by its ID.
+        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve details for a specific ISIC Group by its ID.
 
         :param id: A unique integer value identifying this industry. (required)
         :type id: int
@@ -2037,8 +1907,6 @@ class ISICClassificationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ISICGroup",
-            '401': "ErrorDetail",
-            '404': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -2120,7 +1988,6 @@ class ISICClassificationsApi:
         name__icontains: Optional[StrictStr] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
-        search: Annotated[Optional[StrictStr], Field(description="A search term.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2136,7 +2003,7 @@ class ISICClassificationsApi:
     ) -> PaginatedISICSectionList:
         """List ISIC Sections
 
-        Retrieve a paginated list of ISIC Sections. Supports filtering by `code` (exact, case-insensitive, or multiple values) and partial `name` search.
+        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve a paginated list of ISIC Sections.
 
         :param code:
         :type code: str
@@ -2150,8 +2017,6 @@ class ISICClassificationsApi:
         :type page: int
         :param page_size: Number of results to return per page.
         :type page_size: int
-        :param search: A search term.
-        :type search: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2181,7 +2046,6 @@ class ISICClassificationsApi:
             name__icontains=name__icontains,
             page=page,
             page_size=page_size,
-            search=search,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2190,7 +2054,6 @@ class ISICClassificationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedISICSectionList",
-            '401': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -2212,7 +2075,6 @@ class ISICClassificationsApi:
         name__icontains: Optional[StrictStr] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
-        search: Annotated[Optional[StrictStr], Field(description="A search term.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2228,7 +2090,7 @@ class ISICClassificationsApi:
     ) -> ApiResponse[PaginatedISICSectionList]:
         """List ISIC Sections
 
-        Retrieve a paginated list of ISIC Sections. Supports filtering by `code` (exact, case-insensitive, or multiple values) and partial `name` search.
+        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve a paginated list of ISIC Sections.
 
         :param code:
         :type code: str
@@ -2242,8 +2104,6 @@ class ISICClassificationsApi:
         :type page: int
         :param page_size: Number of results to return per page.
         :type page_size: int
-        :param search: A search term.
-        :type search: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2273,7 +2133,6 @@ class ISICClassificationsApi:
             name__icontains=name__icontains,
             page=page,
             page_size=page_size,
-            search=search,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2282,7 +2141,6 @@ class ISICClassificationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedISICSectionList",
-            '401': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -2304,7 +2162,6 @@ class ISICClassificationsApi:
         name__icontains: Optional[StrictStr] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
-        search: Annotated[Optional[StrictStr], Field(description="A search term.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2320,7 +2177,7 @@ class ISICClassificationsApi:
     ) -> RESTResponseType:
         """List ISIC Sections
 
-        Retrieve a paginated list of ISIC Sections. Supports filtering by `code` (exact, case-insensitive, or multiple values) and partial `name` search.
+        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve a paginated list of ISIC Sections.
 
         :param code:
         :type code: str
@@ -2334,8 +2191,6 @@ class ISICClassificationsApi:
         :type page: int
         :param page_size: Number of results to return per page.
         :type page_size: int
-        :param search: A search term.
-        :type search: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2365,7 +2220,6 @@ class ISICClassificationsApi:
             name__icontains=name__icontains,
             page=page,
             page_size=page_size,
-            search=search,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2374,7 +2228,6 @@ class ISICClassificationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedISICSectionList",
-            '401': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -2391,7 +2244,6 @@ class ISICClassificationsApi:
         name__icontains,
         page,
         page_size,
-        search,
         _request_auth,
         _content_type,
         _headers,
@@ -2438,10 +2290,6 @@ class ISICClassificationsApi:
         if page_size is not None:
             
             _query_params.append(('page_size', page_size))
-            
-        if search is not None:
-            
-            _query_params.append(('search', search))
             
         # process the header parameters
         # process the form parameters
@@ -2499,7 +2347,7 @@ class ISICClassificationsApi:
     ) -> ISICSection:
         """Retrieve ISIC Section
 
-        Retrieve details for a specific ISIC Section by its ID (primary key).
+        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve details for a specific ISIC Section by its ID.
 
         :param id: A unique integer value identifying this sector. (required)
         :type id: int
@@ -2535,8 +2383,6 @@ class ISICClassificationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ISICSection",
-            '401': "ErrorDetail",
-            '404': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -2568,7 +2414,7 @@ class ISICClassificationsApi:
     ) -> ApiResponse[ISICSection]:
         """Retrieve ISIC Section
 
-        Retrieve details for a specific ISIC Section by its ID (primary key).
+        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve details for a specific ISIC Section by its ID.
 
         :param id: A unique integer value identifying this sector. (required)
         :type id: int
@@ -2604,8 +2450,6 @@ class ISICClassificationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ISICSection",
-            '401': "ErrorDetail",
-            '404': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -2637,7 +2481,7 @@ class ISICClassificationsApi:
     ) -> RESTResponseType:
         """Retrieve ISIC Section
 
-        Retrieve details for a specific ISIC Section by its ID (primary key).
+        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve details for a specific ISIC Section by its ID.
 
         :param id: A unique integer value identifying this sector. (required)
         :type id: int
@@ -2673,8 +2517,6 @@ class ISICClassificationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ISICSection",
-            '401': "ErrorDetail",
-            '404': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,

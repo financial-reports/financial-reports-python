@@ -3,7 +3,7 @@
 """
     Financial Reports API
 
-    API for accessing company filings, financial data, industry classifications, and related information.
+    Welcome to the Financial Reports API, your gateway to European company filings, financial data, and corporate information. All API requests must be authenticated. Authentication is performed by including your unique API key in the **X-API-Key** HTTP header. Please use the \"Authorize\" button to set your key and try out the endpoints.
 
     The version of the OpenAPI document: 1.0.0
     Contact: api@financialreports.eu
@@ -528,7 +528,7 @@ conf = financial_reports_generated_client.Configuration(
                "OS: {env}\n"\
                "Python Version: {pyversion}\n"\
                "Version of the API: 1.0.0\n"\
-               "SDK Package Version: 1.2.7".\
+               "SDK Package Version: 1.2.8".\
                format(env=sys.platform, pyversion=sys.version)
 
     def get_host_settings(self) -> List[HostSetting]:

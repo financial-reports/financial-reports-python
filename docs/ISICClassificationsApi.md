@@ -15,11 +15,14 @@ Method | HTTP request | Description
 
 
 # **isic_classes_list**
-> PaginatedISICClassList isic_classes_list(code=code, code__iexact=code__iexact, code__in=code__in, industry_code=industry_code, industry_code_in=industry_code_in, industry_group_code=industry_group_code, name__icontains=name__icontains, page=page, page_size=page_size, search=search, sector_code=sector_code)
+> PaginatedISICClassList isic_classes_list(code=code, code__iexact=code__iexact, code__in=code__in, industry_code=industry_code, industry_group_code=industry_group_code, name__icontains=name__icontains, page=page, page_size=page_size, sector_code=sector_code)
 
 List ISIC Classes
 
-Retrieve a paginated list of ISIC Classes. Supports filtering by `code`, `name`, parent `industry_code`, list of `industry_code_in`, grandparent `industry_group_code`, and great-grandparent `sector_code`.
+**Access Level Required:** Requires **Level 1** Plan or higher.
+
+---
+Retrieve a paginated list of ISIC Classes.
 
 ### Example
 
@@ -56,17 +59,15 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
     code__iexact = 'code__iexact_example' # str |  (optional)
     code__in = ['code__in_example'] # List[str] | Multiple values may be separated by commas. (optional)
     industry_code = 'industry_code_example' # str | Filter by parent ISIC Group code (e.g., 011) (optional)
-    industry_code_in = ['industry_code_in_example'] # List[str] | Multiple values may be separated by commas. (optional)
     industry_group_code = 'industry_group_code_example' # str | Filter by grandparent ISIC Division code (e.g., 01) (optional)
     name__icontains = 'name__icontains_example' # str |  (optional)
     page = 56 # int | A page number within the paginated result set. (optional)
     page_size = 56 # int | Number of results to return per page. (optional)
-    search = 'search_example' # str | A search term. (optional)
     sector_code = 'sector_code_example' # str | Filter by great-grandparent ISIC Section code (e.g., A) (optional)
 
     try:
         # List ISIC Classes
-        api_response = await api_instance.isic_classes_list(code=code, code__iexact=code__iexact, code__in=code__in, industry_code=industry_code, industry_code_in=industry_code_in, industry_group_code=industry_group_code, name__icontains=name__icontains, page=page, page_size=page_size, search=search, sector_code=sector_code)
+        api_response = await api_instance.isic_classes_list(code=code, code__iexact=code__iexact, code__in=code__in, industry_code=industry_code, industry_group_code=industry_group_code, name__icontains=name__icontains, page=page, page_size=page_size, sector_code=sector_code)
         print("The response of ISICClassificationsApi->isic_classes_list:\n")
         pprint(api_response)
     except Exception as e:
@@ -84,12 +85,10 @@ Name | Type | Description  | Notes
  **code__iexact** | **str**|  | [optional] 
  **code__in** | [**List[str]**](str.md)| Multiple values may be separated by commas. | [optional] 
  **industry_code** | **str**| Filter by parent ISIC Group code (e.g., 011) | [optional] 
- **industry_code_in** | [**List[str]**](str.md)| Multiple values may be separated by commas. | [optional] 
  **industry_group_code** | **str**| Filter by grandparent ISIC Division code (e.g., 01) | [optional] 
  **name__icontains** | **str**|  | [optional] 
  **page** | **int**| A page number within the paginated result set. | [optional] 
  **page_size** | **int**| Number of results to return per page. | [optional] 
- **search** | **str**| A search term. | [optional] 
  **sector_code** | **str**| Filter by great-grandparent ISIC Section code (e.g., A) | [optional] 
 
 ### Return type
@@ -109,8 +108,7 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Successfully retrieved the list of sub-industries. |  -  |
-**401** | Authentication credentials were not provided or are invalid. |  -  |
+**200** | Success |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -119,6 +117,9 @@ Name | Type | Description  | Notes
 
 Retrieve ISIC Class
 
+**Access Level Required:** Requires **Level 1** Plan or higher.
+
+---
 Retrieve details for a specific ISIC Class by its ID.
 
 ### Example
@@ -189,18 +190,19 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Successfully retrieved the sub-industry details. |  -  |
-**401** | Authentication credentials were not provided or are invalid. |  -  |
-**404** | Sub-Industry not found. |  -  |
+**200** | Success |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **isic_divisions_list**
-> PaginatedISICDivisionList isic_divisions_list(code=code, code__iexact=code__iexact, code__in=code__in, name__icontains=name__icontains, page=page, page_size=page_size, search=search, sector_code=sector_code, sector_code_in=sector_code_in)
+> PaginatedISICDivisionList isic_divisions_list(code=code, code__iexact=code__iexact, code__in=code__in, name__icontains=name__icontains, page=page, page_size=page_size, sector_code=sector_code)
 
 List ISIC Divisions
 
-Retrieve a paginated list of ISIC Divisions. Supports filtering by `code`, `name`, parent `sector_code`, and a list of parent `sector_code_in`.
+**Access Level Required:** Requires **Level 1** Plan or higher.
+
+---
+Retrieve a paginated list of ISIC Divisions.
 
 ### Example
 
@@ -239,13 +241,11 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
     name__icontains = 'name__icontains_example' # str |  (optional)
     page = 56 # int | A page number within the paginated result set. (optional)
     page_size = 56 # int | Number of results to return per page. (optional)
-    search = 'search_example' # str | A search term. (optional)
     sector_code = 'sector_code_example' # str | Filter by parent ISIC Section code (e.g., A) (optional)
-    sector_code_in = ['sector_code_in_example'] # List[str] | Multiple values may be separated by commas. (optional)
 
     try:
         # List ISIC Divisions
-        api_response = await api_instance.isic_divisions_list(code=code, code__iexact=code__iexact, code__in=code__in, name__icontains=name__icontains, page=page, page_size=page_size, search=search, sector_code=sector_code, sector_code_in=sector_code_in)
+        api_response = await api_instance.isic_divisions_list(code=code, code__iexact=code__iexact, code__in=code__in, name__icontains=name__icontains, page=page, page_size=page_size, sector_code=sector_code)
         print("The response of ISICClassificationsApi->isic_divisions_list:\n")
         pprint(api_response)
     except Exception as e:
@@ -265,9 +265,7 @@ Name | Type | Description  | Notes
  **name__icontains** | **str**|  | [optional] 
  **page** | **int**| A page number within the paginated result set. | [optional] 
  **page_size** | **int**| Number of results to return per page. | [optional] 
- **search** | **str**| A search term. | [optional] 
  **sector_code** | **str**| Filter by parent ISIC Section code (e.g., A) | [optional] 
- **sector_code_in** | [**List[str]**](str.md)| Multiple values may be separated by commas. | [optional] 
 
 ### Return type
 
@@ -286,8 +284,7 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Successfully retrieved the list of industry groups. |  -  |
-**401** | Authentication credentials were not provided or are invalid. |  -  |
+**200** | Success |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -296,6 +293,9 @@ Name | Type | Description  | Notes
 
 Retrieve ISIC Division
 
+**Access Level Required:** Requires **Level 1** Plan or higher.
+
+---
 Retrieve details for a specific ISIC Division by its ID.
 
 ### Example
@@ -366,18 +366,19 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Successfully retrieved the industry group details. |  -  |
-**401** | Authentication credentials were not provided or are invalid. |  -  |
-**404** | Industry Group not found. |  -  |
+**200** | Success |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **isic_groups_list**
-> PaginatedISICGroupList isic_groups_list(code=code, code__iexact=code__iexact, code__in=code__in, industry_group_code=industry_group_code, industry_group_code_in=industry_group_code_in, name__icontains=name__icontains, page=page, page_size=page_size, search=search, sector_code=sector_code)
+> PaginatedISICGroupList isic_groups_list(code=code, code__iexact=code__iexact, code__in=code__in, industry_group_code=industry_group_code, name__icontains=name__icontains, page=page, page_size=page_size, sector_code=sector_code)
 
 List ISIC Groups
 
-Retrieve a paginated list of ISIC Groups. Supports filtering by `code`, `name`, parent `industry_group_code`, list of `industry_group_code_in`, and grandparent `sector_code`.
+**Access Level Required:** Requires **Level 1** Plan or higher.
+
+---
+Retrieve a paginated list of ISIC Groups.
 
 ### Example
 
@@ -414,16 +415,14 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
     code__iexact = 'code__iexact_example' # str |  (optional)
     code__in = ['code__in_example'] # List[str] | Multiple values may be separated by commas. (optional)
     industry_group_code = 'industry_group_code_example' # str | Filter by parent ISIC Division code (e.g., 01) (optional)
-    industry_group_code_in = ['industry_group_code_in_example'] # List[str] | Multiple values may be separated by commas. (optional)
     name__icontains = 'name__icontains_example' # str |  (optional)
     page = 56 # int | A page number within the paginated result set. (optional)
     page_size = 56 # int | Number of results to return per page. (optional)
-    search = 'search_example' # str | A search term. (optional)
     sector_code = 'sector_code_example' # str | Filter by grandparent ISIC Section code (e.g., A) (optional)
 
     try:
         # List ISIC Groups
-        api_response = await api_instance.isic_groups_list(code=code, code__iexact=code__iexact, code__in=code__in, industry_group_code=industry_group_code, industry_group_code_in=industry_group_code_in, name__icontains=name__icontains, page=page, page_size=page_size, search=search, sector_code=sector_code)
+        api_response = await api_instance.isic_groups_list(code=code, code__iexact=code__iexact, code__in=code__in, industry_group_code=industry_group_code, name__icontains=name__icontains, page=page, page_size=page_size, sector_code=sector_code)
         print("The response of ISICClassificationsApi->isic_groups_list:\n")
         pprint(api_response)
     except Exception as e:
@@ -441,11 +440,9 @@ Name | Type | Description  | Notes
  **code__iexact** | **str**|  | [optional] 
  **code__in** | [**List[str]**](str.md)| Multiple values may be separated by commas. | [optional] 
  **industry_group_code** | **str**| Filter by parent ISIC Division code (e.g., 01) | [optional] 
- **industry_group_code_in** | [**List[str]**](str.md)| Multiple values may be separated by commas. | [optional] 
  **name__icontains** | **str**|  | [optional] 
  **page** | **int**| A page number within the paginated result set. | [optional] 
  **page_size** | **int**| Number of results to return per page. | [optional] 
- **search** | **str**| A search term. | [optional] 
  **sector_code** | **str**| Filter by grandparent ISIC Section code (e.g., A) | [optional] 
 
 ### Return type
@@ -465,8 +462,7 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Successfully retrieved the list of industries. |  -  |
-**401** | Authentication credentials were not provided or are invalid. |  -  |
+**200** | Success |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -475,6 +471,9 @@ Name | Type | Description  | Notes
 
 Retrieve ISIC Group
 
+**Access Level Required:** Requires **Level 1** Plan or higher.
+
+---
 Retrieve details for a specific ISIC Group by its ID.
 
 ### Example
@@ -545,18 +544,19 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Successfully retrieved the industry details. |  -  |
-**401** | Authentication credentials were not provided or are invalid. |  -  |
-**404** | Industry not found. |  -  |
+**200** | Success |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **isic_sections_list**
-> PaginatedISICSectionList isic_sections_list(code=code, code__iexact=code__iexact, code__in=code__in, name__icontains=name__icontains, page=page, page_size=page_size, search=search)
+> PaginatedISICSectionList isic_sections_list(code=code, code__iexact=code__iexact, code__in=code__in, name__icontains=name__icontains, page=page, page_size=page_size)
 
 List ISIC Sections
 
-Retrieve a paginated list of ISIC Sections. Supports filtering by `code` (exact, case-insensitive, or multiple values) and partial `name` search.
+**Access Level Required:** Requires **Level 1** Plan or higher.
+
+---
+Retrieve a paginated list of ISIC Sections.
 
 ### Example
 
@@ -595,11 +595,10 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
     name__icontains = 'name__icontains_example' # str |  (optional)
     page = 56 # int | A page number within the paginated result set. (optional)
     page_size = 56 # int | Number of results to return per page. (optional)
-    search = 'search_example' # str | A search term. (optional)
 
     try:
         # List ISIC Sections
-        api_response = await api_instance.isic_sections_list(code=code, code__iexact=code__iexact, code__in=code__in, name__icontains=name__icontains, page=page, page_size=page_size, search=search)
+        api_response = await api_instance.isic_sections_list(code=code, code__iexact=code__iexact, code__in=code__in, name__icontains=name__icontains, page=page, page_size=page_size)
         print("The response of ISICClassificationsApi->isic_sections_list:\n")
         pprint(api_response)
     except Exception as e:
@@ -619,7 +618,6 @@ Name | Type | Description  | Notes
  **name__icontains** | **str**|  | [optional] 
  **page** | **int**| A page number within the paginated result set. | [optional] 
  **page_size** | **int**| Number of results to return per page. | [optional] 
- **search** | **str**| A search term. | [optional] 
 
 ### Return type
 
@@ -638,8 +636,7 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Successfully retrieved the list of sections. |  -  |
-**401** | Authentication credentials were not provided or are invalid. |  -  |
+**200** | Success |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -648,7 +645,10 @@ Name | Type | Description  | Notes
 
 Retrieve ISIC Section
 
-Retrieve details for a specific ISIC Section by its ID (primary key).
+**Access Level Required:** Requires **Level 1** Plan or higher.
+
+---
+Retrieve details for a specific ISIC Section by its ID.
 
 ### Example
 
@@ -718,9 +718,7 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Successfully retrieved the section details. |  -  |
-**401** | Authentication credentials were not provided or are invalid. |  -  |
-**404** | Section not found. |  -  |
+**200** | Success |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

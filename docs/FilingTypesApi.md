@@ -13,7 +13,10 @@ Method | HTTP request | Description
 
 List Filing Types
 
-Retrieve a paginated list of all available filing types. Supports searching across `code` and `name` fields via the `search` query parameter.
+**Access Level Required:** Requires **Level 1** Plan or higher.
+
+---
+Retrieve a paginated list of all available filing types.
 
 ### Example
 
@@ -87,8 +90,7 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Successfully retrieved the list of filing types. |  -  |
-**401** | Authentication credentials were not provided or are invalid. |  -  |
+**200** | Success |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -97,6 +99,9 @@ Name | Type | Description  | Notes
 
 Retrieve Filing Type
 
+**Access Level Required:** Requires **Level 1** Plan or higher.
+
+---
 Retrieve details for a specific filing type by its ID.
 
 ### Example
@@ -167,9 +172,7 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Successfully retrieved the filing type details. |  -  |
-**401** | Authentication credentials were not provided or are invalid. |  -  |
-**404** | Filing type not found. |  -  |
+**200** | Success |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

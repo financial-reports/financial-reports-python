@@ -3,7 +3,7 @@
 """
     Financial Reports API
 
-    API for accessing company filings, financial data, industry classifications, and related information.
+    Welcome to the Financial Reports API, your gateway to European company filings, financial data, and corporate information. All API requests must be authenticated. Authentication is performed by including your unique API key in the **X-API-Key** HTTP header. Please use the \"Authorize\" button to set your key and try out the endpoints.
 
     The version of the OpenAPI document: 1.0.0
     Contact: api@financialreports.eu
@@ -44,18 +44,18 @@ class CompaniesApi:
     @validate_call
     async def companies_list(
         self,
-        countries: Annotated[Optional[StrictStr], Field(description="Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values (e.g., US,GB,DE).")] = None,
+        countries: Annotated[Optional[StrictStr], Field(description="Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values.")] = None,
         industry: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Group code.")] = None,
         industry_group: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Division code.")] = None,
-        isin: Annotated[Optional[StrictStr], Field(description="Find companies matching the provided ISIN.")] = None,
-        lei: Annotated[Optional[StrictStr], Field(description="Find a company by its LEI.")] = None,
+        isin: Annotated[Optional[StrictStr], Field(description="Filter by Company ISIN. Case-insensitive.")] = None,
+        lei: Annotated[Optional[StrictStr], Field(description="Filter by Company Legal Entity Identifier (LEI). Case-insensitive.")] = None,
         ordering: Annotated[Optional[StrictStr], Field(description="Which field to use when ordering the results.")] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
         search: Annotated[Optional[StrictStr], Field(description="A search term.")] = None,
         sector: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Section code.")] = None,
         sub_industry: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Class code.")] = None,
-        ticker: Annotated[Optional[StrictStr], Field(description="Find a company by its Ticker.")] = None,
+        ticker: Annotated[Optional[StrictStr], Field(description="Filter by Company primary stock Ticker symbol. Case-insensitive.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -71,17 +71,17 @@ class CompaniesApi:
     ) -> PaginatedCompanyMinimalList:
         """List Companies
 
-        Retrieve a paginated list of companies. Supports filtering via various query parameters including: - ISIC classifications: `sector`, `industry_group`, `industry`, `sub_industry` (by ISIC codes). - Location: `countries` (comma-separated ISO Alpha-2 codes, e.g., `US,GB`). - Identifiers: `isin`, `lei`, `ticker` (all case-insensitive).  Supports searching via the `search` parameter across company name, ISINs, LEI, and Ticker. Supports ordering via the `ordering` parameter. Allowed fields for ordering are: `name`, `date_ipo`, `year_founded`, and `country_iso__name`. For example, `?ordering=name` or `?ordering=-date_ipo` for descending order.
+        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve a paginated list of companies.
 
-        :param countries: Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values (e.g., US,GB,DE).
+        :param countries: Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values.
         :type countries: str
         :param industry: Filter by ISIC Group code.
         :type industry: str
         :param industry_group: Filter by ISIC Division code.
         :type industry_group: str
-        :param isin: Find companies matching the provided ISIN.
+        :param isin: Filter by Company ISIN. Case-insensitive.
         :type isin: str
-        :param lei: Find a company by its LEI.
+        :param lei: Filter by Company Legal Entity Identifier (LEI). Case-insensitive.
         :type lei: str
         :param ordering: Which field to use when ordering the results.
         :type ordering: str
@@ -95,7 +95,7 @@ class CompaniesApi:
         :type sector: str
         :param sub_industry: Filter by ISIC Class code.
         :type sub_industry: str
-        :param ticker: Find a company by its Ticker.
+        :param ticker: Filter by Company primary stock Ticker symbol. Case-insensitive.
         :type ticker: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -156,18 +156,18 @@ class CompaniesApi:
     @validate_call
     async def companies_list_with_http_info(
         self,
-        countries: Annotated[Optional[StrictStr], Field(description="Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values (e.g., US,GB,DE).")] = None,
+        countries: Annotated[Optional[StrictStr], Field(description="Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values.")] = None,
         industry: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Group code.")] = None,
         industry_group: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Division code.")] = None,
-        isin: Annotated[Optional[StrictStr], Field(description="Find companies matching the provided ISIN.")] = None,
-        lei: Annotated[Optional[StrictStr], Field(description="Find a company by its LEI.")] = None,
+        isin: Annotated[Optional[StrictStr], Field(description="Filter by Company ISIN. Case-insensitive.")] = None,
+        lei: Annotated[Optional[StrictStr], Field(description="Filter by Company Legal Entity Identifier (LEI). Case-insensitive.")] = None,
         ordering: Annotated[Optional[StrictStr], Field(description="Which field to use when ordering the results.")] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
         search: Annotated[Optional[StrictStr], Field(description="A search term.")] = None,
         sector: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Section code.")] = None,
         sub_industry: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Class code.")] = None,
-        ticker: Annotated[Optional[StrictStr], Field(description="Find a company by its Ticker.")] = None,
+        ticker: Annotated[Optional[StrictStr], Field(description="Filter by Company primary stock Ticker symbol. Case-insensitive.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -183,17 +183,17 @@ class CompaniesApi:
     ) -> ApiResponse[PaginatedCompanyMinimalList]:
         """List Companies
 
-        Retrieve a paginated list of companies. Supports filtering via various query parameters including: - ISIC classifications: `sector`, `industry_group`, `industry`, `sub_industry` (by ISIC codes). - Location: `countries` (comma-separated ISO Alpha-2 codes, e.g., `US,GB`). - Identifiers: `isin`, `lei`, `ticker` (all case-insensitive).  Supports searching via the `search` parameter across company name, ISINs, LEI, and Ticker. Supports ordering via the `ordering` parameter. Allowed fields for ordering are: `name`, `date_ipo`, `year_founded`, and `country_iso__name`. For example, `?ordering=name` or `?ordering=-date_ipo` for descending order.
+        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve a paginated list of companies.
 
-        :param countries: Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values (e.g., US,GB,DE).
+        :param countries: Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values.
         :type countries: str
         :param industry: Filter by ISIC Group code.
         :type industry: str
         :param industry_group: Filter by ISIC Division code.
         :type industry_group: str
-        :param isin: Find companies matching the provided ISIN.
+        :param isin: Filter by Company ISIN. Case-insensitive.
         :type isin: str
-        :param lei: Find a company by its LEI.
+        :param lei: Filter by Company Legal Entity Identifier (LEI). Case-insensitive.
         :type lei: str
         :param ordering: Which field to use when ordering the results.
         :type ordering: str
@@ -207,7 +207,7 @@ class CompaniesApi:
         :type sector: str
         :param sub_industry: Filter by ISIC Class code.
         :type sub_industry: str
-        :param ticker: Find a company by its Ticker.
+        :param ticker: Filter by Company primary stock Ticker symbol. Case-insensitive.
         :type ticker: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -268,18 +268,18 @@ class CompaniesApi:
     @validate_call
     async def companies_list_without_preload_content(
         self,
-        countries: Annotated[Optional[StrictStr], Field(description="Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values (e.g., US,GB,DE).")] = None,
+        countries: Annotated[Optional[StrictStr], Field(description="Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values.")] = None,
         industry: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Group code.")] = None,
         industry_group: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Division code.")] = None,
-        isin: Annotated[Optional[StrictStr], Field(description="Find companies matching the provided ISIN.")] = None,
-        lei: Annotated[Optional[StrictStr], Field(description="Find a company by its LEI.")] = None,
+        isin: Annotated[Optional[StrictStr], Field(description="Filter by Company ISIN. Case-insensitive.")] = None,
+        lei: Annotated[Optional[StrictStr], Field(description="Filter by Company Legal Entity Identifier (LEI). Case-insensitive.")] = None,
         ordering: Annotated[Optional[StrictStr], Field(description="Which field to use when ordering the results.")] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
         search: Annotated[Optional[StrictStr], Field(description="A search term.")] = None,
         sector: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Section code.")] = None,
         sub_industry: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Class code.")] = None,
-        ticker: Annotated[Optional[StrictStr], Field(description="Find a company by its Ticker.")] = None,
+        ticker: Annotated[Optional[StrictStr], Field(description="Filter by Company primary stock Ticker symbol. Case-insensitive.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -295,17 +295,17 @@ class CompaniesApi:
     ) -> RESTResponseType:
         """List Companies
 
-        Retrieve a paginated list of companies. Supports filtering via various query parameters including: - ISIC classifications: `sector`, `industry_group`, `industry`, `sub_industry` (by ISIC codes). - Location: `countries` (comma-separated ISO Alpha-2 codes, e.g., `US,GB`). - Identifiers: `isin`, `lei`, `ticker` (all case-insensitive).  Supports searching via the `search` parameter across company name, ISINs, LEI, and Ticker. Supports ordering via the `ordering` parameter. Allowed fields for ordering are: `name`, `date_ipo`, `year_founded`, and `country_iso__name`. For example, `?ordering=name` or `?ordering=-date_ipo` for descending order.
+        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve a paginated list of companies.
 
-        :param countries: Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values (e.g., US,GB,DE).
+        :param countries: Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values.
         :type countries: str
         :param industry: Filter by ISIC Group code.
         :type industry: str
         :param industry_group: Filter by ISIC Division code.
         :type industry_group: str
-        :param isin: Find companies matching the provided ISIN.
+        :param isin: Filter by Company ISIN. Case-insensitive.
         :type isin: str
-        :param lei: Find a company by its LEI.
+        :param lei: Filter by Company Legal Entity Identifier (LEI). Case-insensitive.
         :type lei: str
         :param ordering: Which field to use when ordering the results.
         :type ordering: str
@@ -319,7 +319,7 @@ class CompaniesApi:
         :type sector: str
         :param sub_industry: Filter by ISIC Class code.
         :type sub_industry: str
-        :param ticker: Find a company by its Ticker.
+        :param ticker: Filter by Company primary stock Ticker symbol. Case-insensitive.
         :type ticker: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -513,7 +513,7 @@ class CompaniesApi:
     ) -> Company:
         """Retrieve Company Details
 
-        Retrieve detailed information for a single company by its internal ID. Lookup by ISIN, LEI, or Ticker directly on this endpoint (e.g., using the identifier in the URL path) is not supported. To find a company using these identifiers, please use the list endpoint with the appropriate filter query parameters, for example: `?isin=US0378331005`, `?lei=HWUPKR0MPOU8FGXBT394`, or `?ticker=AAPL`.
+        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve detailed information for a single company by its internal ID.
 
         :param id: A unique integer value identifying this company. (required)
         :type id: int
@@ -582,7 +582,7 @@ class CompaniesApi:
     ) -> ApiResponse[Company]:
         """Retrieve Company Details
 
-        Retrieve detailed information for a single company by its internal ID. Lookup by ISIN, LEI, or Ticker directly on this endpoint (e.g., using the identifier in the URL path) is not supported. To find a company using these identifiers, please use the list endpoint with the appropriate filter query parameters, for example: `?isin=US0378331005`, `?lei=HWUPKR0MPOU8FGXBT394`, or `?ticker=AAPL`.
+        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve detailed information for a single company by its internal ID.
 
         :param id: A unique integer value identifying this company. (required)
         :type id: int
@@ -651,7 +651,7 @@ class CompaniesApi:
     ) -> RESTResponseType:
         """Retrieve Company Details
 
-        Retrieve detailed information for a single company by its internal ID. Lookup by ISIN, LEI, or Ticker directly on this endpoint (e.g., using the identifier in the URL path) is not supported. To find a company using these identifiers, please use the list endpoint with the appropriate filter query parameters, for example: `?isin=US0378331005`, `?lei=HWUPKR0MPOU8FGXBT394`, or `?ticker=AAPL`.
+        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve detailed information for a single company by its internal ID.
 
         :param id: A unique integer value identifying this company. (required)
         :type id: int

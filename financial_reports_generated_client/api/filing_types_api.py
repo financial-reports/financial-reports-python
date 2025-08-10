@@ -3,7 +3,7 @@
 """
     Financial Reports API
 
-    API for accessing company filings, financial data, industry classifications, and related information.
+    Welcome to the Financial Reports API, your gateway to European company filings, financial data, and corporate information. All API requests must be authenticated. Authentication is performed by including your unique API key in the **X-API-Key** HTTP header. Please use the \"Authorize\" button to set your key and try out the endpoints.
 
     The version of the OpenAPI document: 1.0.0
     Contact: api@financialreports.eu
@@ -62,7 +62,7 @@ class FilingTypesApi:
     ) -> PaginatedFilingTypeList:
         """List Filing Types
 
-        Retrieve a paginated list of all available filing types. Supports searching across `code` and `name` fields via the `search` query parameter.
+        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve a paginated list of all available filing types.
 
         :param page: A page number within the paginated result set.
         :type page: int
@@ -104,7 +104,6 @@ class FilingTypesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedFilingTypeList",
-            '401': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -138,7 +137,7 @@ class FilingTypesApi:
     ) -> ApiResponse[PaginatedFilingTypeList]:
         """List Filing Types
 
-        Retrieve a paginated list of all available filing types. Supports searching across `code` and `name` fields via the `search` query parameter.
+        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve a paginated list of all available filing types.
 
         :param page: A page number within the paginated result set.
         :type page: int
@@ -180,7 +179,6 @@ class FilingTypesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedFilingTypeList",
-            '401': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -214,7 +212,7 @@ class FilingTypesApi:
     ) -> RESTResponseType:
         """List Filing Types
 
-        Retrieve a paginated list of all available filing types. Supports searching across `code` and `name` fields via the `search` query parameter.
+        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve a paginated list of all available filing types.
 
         :param page: A page number within the paginated result set.
         :type page: int
@@ -256,7 +254,6 @@ class FilingTypesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedFilingTypeList",
-            '401': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -360,7 +357,7 @@ class FilingTypesApi:
     ) -> FilingType:
         """Retrieve Filing Type
 
-        Retrieve details for a specific filing type by its ID.
+        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve details for a specific filing type by its ID.
 
         :param id: A unique integer value identifying this filing type. (required)
         :type id: int
@@ -396,8 +393,6 @@ class FilingTypesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "FilingType",
-            '401': "ErrorDetail",
-            '404': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -429,7 +424,7 @@ class FilingTypesApi:
     ) -> ApiResponse[FilingType]:
         """Retrieve Filing Type
 
-        Retrieve details for a specific filing type by its ID.
+        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve details for a specific filing type by its ID.
 
         :param id: A unique integer value identifying this filing type. (required)
         :type id: int
@@ -465,8 +460,6 @@ class FilingTypesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "FilingType",
-            '401': "ErrorDetail",
-            '404': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -498,7 +491,7 @@ class FilingTypesApi:
     ) -> RESTResponseType:
         """Retrieve Filing Type
 
-        Retrieve details for a specific filing type by its ID.
+        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve details for a specific filing type by its ID.
 
         :param id: A unique integer value identifying this filing type. (required)
         :type id: int
@@ -534,8 +527,6 @@ class FilingTypesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "FilingType",
-            '401': "ErrorDetail",
-            '404': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,

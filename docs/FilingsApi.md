@@ -10,22 +10,14 @@ Method | HTTP request | Description
 
 
 # **filings_list**
-> PaginatedFilingSummaryList filings_list(added_to_platform_from=added_to_platform_from, added_to_platform_to=added_to_platform_to, company=company, company_isin=company_isin, countries=countries, dissemination_datetime_from=dissemination_datetime_from, dissemination_datetime_to=dissemination_datetime_to, language=language, languages=languages, lei=lei, ordering=ordering, page=page, page_size=page_size, release_datetime_from=release_datetime_from, release_datetime_to=release_datetime_to, search=search, source=source, type=type, updated_date_from=updated_date_from, updated_date_to=updated_date_to)
+> PaginatedFilingSummaryList filings_list(added_to_platform_from=added_to_platform_from, added_to_platform_to=added_to_platform_to, company=company, company_isin=company_isin, countries=countries, language=language, languages=languages, lei=lei, ordering=ordering, page=page, page_size=page_size, release_datetime_from=release_datetime_from, release_datetime_to=release_datetime_to, search=search, source=source, type=type)
 
 List Filings
 
-Retrieve a paginated list of regulatory filings.
-This endpoint supports extensive filtering via query parameters, including:
-- **Company Identification**: Filter by internal `company` ID, `company_isin` (case-insensitive), or company `lei`.
-- **Company Location**: Filter by `countries` using comma-separated ISO Alpha-2 codes (e.g., `US,GB`).
-- **Filing Attributes**: Filter by `source` ID, `language` (single ISO 639-1 code), `languages` (comma-separated ISO 639-1 codes), or filing `type` code.
-- **Date Ranges**: Filter by various date fields. All datetime filters expect an ISO 8601 format (e.g., `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DD`):
-    - `added_to_platform_from` / `added_to_platform_to`: Date the filing was added to the platform.
-    - `dissemination_datetime_from` / `dissemination_datetime_to`: Original dissemination date/time of the filing.
-    - `release_datetime_from` / `release_datetime_to`: Actual release date/time of the filing.
+**Access Level Required:** Requires **Level 1** Plan or higher.
 
-Additionally, you can use the `search` parameter to perform a text search across the company name and filing title.
-Results can be ordered using the `ordering` parameter with the fields: `release_datetime` and `added_to_platform` (e.g., `?ordering=-release_datetime`).
+---
+Retrieve a paginated list of regulatory filings.
 
 ### Example
 
@@ -63,8 +55,6 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
     company = 56 # int | Filter by internal Company ID. (optional)
     company_isin = 'company_isin_example' # str | Filter by Company ISIN. Case-insensitive. (optional)
     countries = 'countries_example' # str | Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values (e.g., US,GB,DE). (optional)
-    dissemination_datetime_from = '2013-10-20T19:20:30+01:00' # datetime | Filter by dissemination datetime (inclusive start, YYYY-MM-DDTHH:MM:SSZ format). (optional)
-    dissemination_datetime_to = '2013-10-20T19:20:30+01:00' # datetime | Filter by dissemination datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format). (optional)
     language = 'language_example' # str | Filter by a single filing language ISO 639-1 code (e.g., en). (optional)
     languages = 'languages_example' # str | Filter by filing language ISO 639-1 code(s). Comma-separated for multiple values (e.g., en,de). (optional)
     lei = 'lei_example' # str | Filter by Company Legal Entity Identifier (LEI). (optional)
@@ -76,12 +66,10 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
     search = 'search_example' # str | A search term. (optional)
     source = 56 # int |  (optional)
     type = 'type_example' # str | Filter by Filing Type code (e.g., ANNREP). (optional)
-    updated_date_from = '2013-10-20T19:20:30+01:00' # datetime | Filter by last update datetime (inclusive start, YYYY-MM-DDTHH:MM:SSZ format). (optional)
-    updated_date_to = '2013-10-20T19:20:30+01:00' # datetime | Filter by last update datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format). (optional)
 
     try:
         # List Filings
-        api_response = await api_instance.filings_list(added_to_platform_from=added_to_platform_from, added_to_platform_to=added_to_platform_to, company=company, company_isin=company_isin, countries=countries, dissemination_datetime_from=dissemination_datetime_from, dissemination_datetime_to=dissemination_datetime_to, language=language, languages=languages, lei=lei, ordering=ordering, page=page, page_size=page_size, release_datetime_from=release_datetime_from, release_datetime_to=release_datetime_to, search=search, source=source, type=type, updated_date_from=updated_date_from, updated_date_to=updated_date_to)
+        api_response = await api_instance.filings_list(added_to_platform_from=added_to_platform_from, added_to_platform_to=added_to_platform_to, company=company, company_isin=company_isin, countries=countries, language=language, languages=languages, lei=lei, ordering=ordering, page=page, page_size=page_size, release_datetime_from=release_datetime_from, release_datetime_to=release_datetime_to, search=search, source=source, type=type)
         print("The response of FilingsApi->filings_list:\n")
         pprint(api_response)
     except Exception as e:
@@ -100,8 +88,6 @@ Name | Type | Description  | Notes
  **company** | **int**| Filter by internal Company ID. | [optional] 
  **company_isin** | **str**| Filter by Company ISIN. Case-insensitive. | [optional] 
  **countries** | **str**| Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values (e.g., US,GB,DE). | [optional] 
- **dissemination_datetime_from** | **datetime**| Filter by dissemination datetime (inclusive start, YYYY-MM-DDTHH:MM:SSZ format). | [optional] 
- **dissemination_datetime_to** | **datetime**| Filter by dissemination datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format). | [optional] 
  **language** | **str**| Filter by a single filing language ISO 639-1 code (e.g., en). | [optional] 
  **languages** | **str**| Filter by filing language ISO 639-1 code(s). Comma-separated for multiple values (e.g., en,de). | [optional] 
  **lei** | **str**| Filter by Company Legal Entity Identifier (LEI). | [optional] 
@@ -113,8 +99,6 @@ Name | Type | Description  | Notes
  **search** | **str**| A search term. | [optional] 
  **source** | **int**|  | [optional] 
  **type** | **str**| Filter by Filing Type code (e.g., ANNREP). | [optional] 
- **updated_date_from** | **datetime**| Filter by last update datetime (inclusive start, YYYY-MM-DDTHH:MM:SSZ format). | [optional] 
- **updated_date_to** | **datetime**| Filter by last update datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format). | [optional] 
 
 ### Return type
 
@@ -133,16 +117,19 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Successfully retrieved the list of filings. |  -  |
-**401** | Authentication credentials were not provided or are invalid. |  -  |
+**200** | Success |  -  |
+**401** | Unauthorized |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **filings_markdown_retrieve**
-> str filings_markdown_retrieve(filing_id)
+> filings_markdown_retrieve(filing_id)
 
 Retrieve Filing Markdown
 
+**Access Level Required:** Access to full filing content in Markdown requires a **Level 2** Plan or higher.
+
+---
 Retrieve the raw processed content of a single filing in Markdown format.
 
 ### Example
@@ -179,9 +166,7 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
 
     try:
         # Retrieve Filing Markdown
-        api_response = await api_instance.filings_markdown_retrieve(filing_id)
-        print("The response of FilingsApi->filings_markdown_retrieve:\n")
-        pprint(api_response)
+        await api_instance.filings_markdown_retrieve(filing_id)
     except Exception as e:
         print("Exception when calling FilingsApi->filings_markdown_retrieve: %s\n" % e)
 ```
@@ -197,7 +182,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**str**
+void (empty response body)
 
 ### Authorization
 
@@ -206,13 +191,14 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: text/plain
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** |  |  -  |
+**200** | Markdown content as plain text. |  -  |
+**403** | Forbidden. Your plan does not include access to this endpoint. |  -  |
 **404** | Not Found. The filing or its processed content does not exist. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -222,6 +208,9 @@ Name | Type | Description  | Notes
 
 Retrieve Filing Details
 
+**Access Level Required:** Requires **Level 1** Plan or higher.
+
+---
 Retrieve detailed information for a single filing by its ID.
 
 ### Example
@@ -292,9 +281,9 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Successfully retrieved the filing details. |  -  |
-**401** | Authentication credentials were not provided or are invalid. |  -  |
-**404** | Filing not found. |  -  |
+**200** | Success |  -  |
+**401** | Unauthorized |  -  |
+**404** | Not Found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

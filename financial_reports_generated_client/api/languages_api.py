@@ -3,7 +3,7 @@
 """
     Financial Reports API
 
-    API for accessing company filings, financial data, industry classifications, and related information.
+    Welcome to the Financial Reports API, your gateway to European company filings, financial data, and corporate information. All API requests must be authenticated. Authentication is performed by including your unique API key in the **X-API-Key** HTTP header. Please use the \"Authorize\" button to set your key and try out the endpoints.
 
     The version of the OpenAPI document: 1.0.0
     Contact: api@financialreports.eu
@@ -61,7 +61,7 @@ class LanguagesApi:
     ) -> PaginatedLanguageList:
         """List Languages
 
-        Retrieve a list of all supported languages for filings.
+        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve a list of all supported languages for filings.
 
         :param page: A page number within the paginated result set.
         :type page: int
@@ -132,7 +132,7 @@ class LanguagesApi:
     ) -> ApiResponse[PaginatedLanguageList]:
         """List Languages
 
-        Retrieve a list of all supported languages for filings.
+        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve a list of all supported languages for filings.
 
         :param page: A page number within the paginated result set.
         :type page: int
@@ -203,7 +203,7 @@ class LanguagesApi:
     ) -> RESTResponseType:
         """List Languages
 
-        Retrieve a list of all supported languages for filings.
+        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve a list of all supported languages for filings.
 
         :param page: A page number within the paginated result set.
         :type page: int
@@ -340,7 +340,7 @@ class LanguagesApi:
     ) -> Language:
         """Retrieve Language
 
-        Retrieve details for a specific language by its ID.
+        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve details for a specific language by its ID.
 
         :param id: A unique integer value identifying this Language. (required)
         :type id: int
@@ -407,7 +407,7 @@ class LanguagesApi:
     ) -> ApiResponse[Language]:
         """Retrieve Language
 
-        Retrieve details for a specific language by its ID.
+        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve details for a specific language by its ID.
 
         :param id: A unique integer value identifying this Language. (required)
         :type id: int
@@ -474,7 +474,7 @@ class LanguagesApi:
     ) -> RESTResponseType:
         """Retrieve Language
 
-        Retrieve details for a specific language by its ID.
+        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve details for a specific language by its ID.
 
         :param id: A unique integer value identifying this Language. (required)
         :type id: int

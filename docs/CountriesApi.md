@@ -13,6 +13,9 @@ Method | HTTP request | Description
 
 List Countries
 
+**Access Level Required:** Requires **Level 1** Plan or higher.
+
+---
 Retrieve a list of all supported countries.
 
 ### Example
@@ -85,7 +88,7 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** |  |  -  |
+**200** | Success |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -94,6 +97,9 @@ Name | Type | Description  | Notes
 
 Retrieve Country
 
+**Access Level Required:** Requires **Level 1** Plan or higher.
+
+---
 Retrieve details for a specific country by its ID.
 
 ### Example
@@ -164,7 +170,7 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** |  |  -  |
+**200** | Success |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

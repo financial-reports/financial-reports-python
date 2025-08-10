@@ -3,7 +3,7 @@
 """
     Financial Reports API
 
-    API for accessing company filings, financial data, industry classifications, and related information.
+    Welcome to the Financial Reports API, your gateway to European company filings, financial data, and corporate information. All API requests must be authenticated. Authentication is performed by including your unique API key in the **X-API-Key** HTTP header. Please use the \"Authorize\" button to set your key and try out the endpoints.
 
     The version of the OpenAPI document: 1.0.0
     Contact: api@financialreports.eu
@@ -50,8 +50,6 @@ class FilingsApi:
         company: Annotated[Optional[StrictInt], Field(description="Filter by internal Company ID.")] = None,
         company_isin: Annotated[Optional[StrictStr], Field(description="Filter by Company ISIN. Case-insensitive.")] = None,
         countries: Annotated[Optional[StrictStr], Field(description="Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values (e.g., US,GB,DE).")] = None,
-        dissemination_datetime_from: Annotated[Optional[datetime], Field(description="Filter by dissemination datetime (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
-        dissemination_datetime_to: Annotated[Optional[datetime], Field(description="Filter by dissemination datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         language: Annotated[Optional[StrictStr], Field(description="Filter by a single filing language ISO 639-1 code (e.g., en).")] = None,
         languages: Annotated[Optional[StrictStr], Field(description="Filter by filing language ISO 639-1 code(s). Comma-separated for multiple values (e.g., en,de).")] = None,
         lei: Annotated[Optional[StrictStr], Field(description="Filter by Company Legal Entity Identifier (LEI).")] = None,
@@ -63,8 +61,6 @@ class FilingsApi:
         search: Annotated[Optional[StrictStr], Field(description="A search term.")] = None,
         source: Optional[StrictInt] = None,
         type: Annotated[Optional[StrictStr], Field(description="Filter by Filing Type code (e.g., ANNREP).")] = None,
-        updated_date_from: Annotated[Optional[datetime], Field(description="Filter by last update datetime (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
-        updated_date_to: Annotated[Optional[datetime], Field(description="Filter by last update datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -80,7 +76,7 @@ class FilingsApi:
     ) -> PaginatedFilingSummaryList:
         """List Filings
 
-        Retrieve a paginated list of regulatory filings. This endpoint supports extensive filtering via query parameters, including: - **Company Identification**: Filter by internal `company` ID, `company_isin` (case-insensitive), or company `lei`. - **Company Location**: Filter by `countries` using comma-separated ISO Alpha-2 codes (e.g., `US,GB`). - **Filing Attributes**: Filter by `source` ID, `language` (single ISO 639-1 code), `languages` (comma-separated ISO 639-1 codes), or filing `type` code. - **Date Ranges**: Filter by various date fields. All datetime filters expect an ISO 8601 format (e.g., `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DD`):     - `added_to_platform_from` / `added_to_platform_to`: Date the filing was added to the platform.     - `dissemination_datetime_from` / `dissemination_datetime_to`: Original dissemination date/time of the filing.     - `release_datetime_from` / `release_datetime_to`: Actual release date/time of the filing.  Additionally, you can use the `search` parameter to perform a text search across the company name and filing title. Results can be ordered using the `ordering` parameter with the fields: `release_datetime` and `added_to_platform` (e.g., `?ordering=-release_datetime`).
+        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve a paginated list of regulatory filings.
 
         :param added_to_platform_from: Filter by date added to platform (inclusive start date, YYYY-MM-DDTHH:MM:SSZ format).
         :type added_to_platform_from: datetime
@@ -92,10 +88,6 @@ class FilingsApi:
         :type company_isin: str
         :param countries: Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values (e.g., US,GB,DE).
         :type countries: str
-        :param dissemination_datetime_from: Filter by dissemination datetime (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).
-        :type dissemination_datetime_from: datetime
-        :param dissemination_datetime_to: Filter by dissemination datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).
-        :type dissemination_datetime_to: datetime
         :param language: Filter by a single filing language ISO 639-1 code (e.g., en).
         :type language: str
         :param languages: Filter by filing language ISO 639-1 code(s). Comma-separated for multiple values (e.g., en,de).
@@ -118,10 +110,6 @@ class FilingsApi:
         :type source: int
         :param type: Filter by Filing Type code (e.g., ANNREP).
         :type type: str
-        :param updated_date_from: Filter by last update datetime (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).
-        :type updated_date_from: datetime
-        :param updated_date_to: Filter by last update datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).
-        :type updated_date_to: datetime
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -150,8 +138,6 @@ class FilingsApi:
             company=company,
             company_isin=company_isin,
             countries=countries,
-            dissemination_datetime_from=dissemination_datetime_from,
-            dissemination_datetime_to=dissemination_datetime_to,
             language=language,
             languages=languages,
             lei=lei,
@@ -163,8 +149,6 @@ class FilingsApi:
             search=search,
             source=source,
             type=type,
-            updated_date_from=updated_date_from,
-            updated_date_to=updated_date_to,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -194,8 +178,6 @@ class FilingsApi:
         company: Annotated[Optional[StrictInt], Field(description="Filter by internal Company ID.")] = None,
         company_isin: Annotated[Optional[StrictStr], Field(description="Filter by Company ISIN. Case-insensitive.")] = None,
         countries: Annotated[Optional[StrictStr], Field(description="Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values (e.g., US,GB,DE).")] = None,
-        dissemination_datetime_from: Annotated[Optional[datetime], Field(description="Filter by dissemination datetime (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
-        dissemination_datetime_to: Annotated[Optional[datetime], Field(description="Filter by dissemination datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         language: Annotated[Optional[StrictStr], Field(description="Filter by a single filing language ISO 639-1 code (e.g., en).")] = None,
         languages: Annotated[Optional[StrictStr], Field(description="Filter by filing language ISO 639-1 code(s). Comma-separated for multiple values (e.g., en,de).")] = None,
         lei: Annotated[Optional[StrictStr], Field(description="Filter by Company Legal Entity Identifier (LEI).")] = None,
@@ -207,8 +189,6 @@ class FilingsApi:
         search: Annotated[Optional[StrictStr], Field(description="A search term.")] = None,
         source: Optional[StrictInt] = None,
         type: Annotated[Optional[StrictStr], Field(description="Filter by Filing Type code (e.g., ANNREP).")] = None,
-        updated_date_from: Annotated[Optional[datetime], Field(description="Filter by last update datetime (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
-        updated_date_to: Annotated[Optional[datetime], Field(description="Filter by last update datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -224,7 +204,7 @@ class FilingsApi:
     ) -> ApiResponse[PaginatedFilingSummaryList]:
         """List Filings
 
-        Retrieve a paginated list of regulatory filings. This endpoint supports extensive filtering via query parameters, including: - **Company Identification**: Filter by internal `company` ID, `company_isin` (case-insensitive), or company `lei`. - **Company Location**: Filter by `countries` using comma-separated ISO Alpha-2 codes (e.g., `US,GB`). - **Filing Attributes**: Filter by `source` ID, `language` (single ISO 639-1 code), `languages` (comma-separated ISO 639-1 codes), or filing `type` code. - **Date Ranges**: Filter by various date fields. All datetime filters expect an ISO 8601 format (e.g., `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DD`):     - `added_to_platform_from` / `added_to_platform_to`: Date the filing was added to the platform.     - `dissemination_datetime_from` / `dissemination_datetime_to`: Original dissemination date/time of the filing.     - `release_datetime_from` / `release_datetime_to`: Actual release date/time of the filing.  Additionally, you can use the `search` parameter to perform a text search across the company name and filing title. Results can be ordered using the `ordering` parameter with the fields: `release_datetime` and `added_to_platform` (e.g., `?ordering=-release_datetime`).
+        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve a paginated list of regulatory filings.
 
         :param added_to_platform_from: Filter by date added to platform (inclusive start date, YYYY-MM-DDTHH:MM:SSZ format).
         :type added_to_platform_from: datetime
@@ -236,10 +216,6 @@ class FilingsApi:
         :type company_isin: str
         :param countries: Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values (e.g., US,GB,DE).
         :type countries: str
-        :param dissemination_datetime_from: Filter by dissemination datetime (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).
-        :type dissemination_datetime_from: datetime
-        :param dissemination_datetime_to: Filter by dissemination datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).
-        :type dissemination_datetime_to: datetime
         :param language: Filter by a single filing language ISO 639-1 code (e.g., en).
         :type language: str
         :param languages: Filter by filing language ISO 639-1 code(s). Comma-separated for multiple values (e.g., en,de).
@@ -262,10 +238,6 @@ class FilingsApi:
         :type source: int
         :param type: Filter by Filing Type code (e.g., ANNREP).
         :type type: str
-        :param updated_date_from: Filter by last update datetime (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).
-        :type updated_date_from: datetime
-        :param updated_date_to: Filter by last update datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).
-        :type updated_date_to: datetime
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -294,8 +266,6 @@ class FilingsApi:
             company=company,
             company_isin=company_isin,
             countries=countries,
-            dissemination_datetime_from=dissemination_datetime_from,
-            dissemination_datetime_to=dissemination_datetime_to,
             language=language,
             languages=languages,
             lei=lei,
@@ -307,8 +277,6 @@ class FilingsApi:
             search=search,
             source=source,
             type=type,
-            updated_date_from=updated_date_from,
-            updated_date_to=updated_date_to,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -338,8 +306,6 @@ class FilingsApi:
         company: Annotated[Optional[StrictInt], Field(description="Filter by internal Company ID.")] = None,
         company_isin: Annotated[Optional[StrictStr], Field(description="Filter by Company ISIN. Case-insensitive.")] = None,
         countries: Annotated[Optional[StrictStr], Field(description="Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values (e.g., US,GB,DE).")] = None,
-        dissemination_datetime_from: Annotated[Optional[datetime], Field(description="Filter by dissemination datetime (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
-        dissemination_datetime_to: Annotated[Optional[datetime], Field(description="Filter by dissemination datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         language: Annotated[Optional[StrictStr], Field(description="Filter by a single filing language ISO 639-1 code (e.g., en).")] = None,
         languages: Annotated[Optional[StrictStr], Field(description="Filter by filing language ISO 639-1 code(s). Comma-separated for multiple values (e.g., en,de).")] = None,
         lei: Annotated[Optional[StrictStr], Field(description="Filter by Company Legal Entity Identifier (LEI).")] = None,
@@ -351,8 +317,6 @@ class FilingsApi:
         search: Annotated[Optional[StrictStr], Field(description="A search term.")] = None,
         source: Optional[StrictInt] = None,
         type: Annotated[Optional[StrictStr], Field(description="Filter by Filing Type code (e.g., ANNREP).")] = None,
-        updated_date_from: Annotated[Optional[datetime], Field(description="Filter by last update datetime (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
-        updated_date_to: Annotated[Optional[datetime], Field(description="Filter by last update datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -368,7 +332,7 @@ class FilingsApi:
     ) -> RESTResponseType:
         """List Filings
 
-        Retrieve a paginated list of regulatory filings. This endpoint supports extensive filtering via query parameters, including: - **Company Identification**: Filter by internal `company` ID, `company_isin` (case-insensitive), or company `lei`. - **Company Location**: Filter by `countries` using comma-separated ISO Alpha-2 codes (e.g., `US,GB`). - **Filing Attributes**: Filter by `source` ID, `language` (single ISO 639-1 code), `languages` (comma-separated ISO 639-1 codes), or filing `type` code. - **Date Ranges**: Filter by various date fields. All datetime filters expect an ISO 8601 format (e.g., `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DD`):     - `added_to_platform_from` / `added_to_platform_to`: Date the filing was added to the platform.     - `dissemination_datetime_from` / `dissemination_datetime_to`: Original dissemination date/time of the filing.     - `release_datetime_from` / `release_datetime_to`: Actual release date/time of the filing.  Additionally, you can use the `search` parameter to perform a text search across the company name and filing title. Results can be ordered using the `ordering` parameter with the fields: `release_datetime` and `added_to_platform` (e.g., `?ordering=-release_datetime`).
+        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve a paginated list of regulatory filings.
 
         :param added_to_platform_from: Filter by date added to platform (inclusive start date, YYYY-MM-DDTHH:MM:SSZ format).
         :type added_to_platform_from: datetime
@@ -380,10 +344,6 @@ class FilingsApi:
         :type company_isin: str
         :param countries: Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values (e.g., US,GB,DE).
         :type countries: str
-        :param dissemination_datetime_from: Filter by dissemination datetime (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).
-        :type dissemination_datetime_from: datetime
-        :param dissemination_datetime_to: Filter by dissemination datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).
-        :type dissemination_datetime_to: datetime
         :param language: Filter by a single filing language ISO 639-1 code (e.g., en).
         :type language: str
         :param languages: Filter by filing language ISO 639-1 code(s). Comma-separated for multiple values (e.g., en,de).
@@ -406,10 +366,6 @@ class FilingsApi:
         :type source: int
         :param type: Filter by Filing Type code (e.g., ANNREP).
         :type type: str
-        :param updated_date_from: Filter by last update datetime (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).
-        :type updated_date_from: datetime
-        :param updated_date_to: Filter by last update datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).
-        :type updated_date_to: datetime
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -438,8 +394,6 @@ class FilingsApi:
             company=company,
             company_isin=company_isin,
             countries=countries,
-            dissemination_datetime_from=dissemination_datetime_from,
-            dissemination_datetime_to=dissemination_datetime_to,
             language=language,
             languages=languages,
             lei=lei,
@@ -451,8 +405,6 @@ class FilingsApi:
             search=search,
             source=source,
             type=type,
-            updated_date_from=updated_date_from,
-            updated_date_to=updated_date_to,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -477,8 +429,6 @@ class FilingsApi:
         company,
         company_isin,
         countries,
-        dissemination_datetime_from,
-        dissemination_datetime_to,
         language,
         languages,
         lei,
@@ -490,8 +440,6 @@ class FilingsApi:
         search,
         source,
         type,
-        updated_date_from,
-        updated_date_to,
         _request_auth,
         _content_type,
         _headers,
@@ -551,32 +499,6 @@ class FilingsApi:
         if countries is not None:
             
             _query_params.append(('countries', countries))
-            
-        if dissemination_datetime_from is not None:
-            if isinstance(dissemination_datetime_from, datetime):
-                _query_params.append(
-                    (
-                        'dissemination_datetime_from',
-                        dissemination_datetime_from.strftime(
-                            self.api_client.configuration.datetime_format
-                        )
-                    )
-                )
-            else:
-                _query_params.append(('dissemination_datetime_from', dissemination_datetime_from))
-            
-        if dissemination_datetime_to is not None:
-            if isinstance(dissemination_datetime_to, datetime):
-                _query_params.append(
-                    (
-                        'dissemination_datetime_to',
-                        dissemination_datetime_to.strftime(
-                            self.api_client.configuration.datetime_format
-                        )
-                    )
-                )
-            else:
-                _query_params.append(('dissemination_datetime_to', dissemination_datetime_to))
             
         if language is not None:
             
@@ -640,32 +562,6 @@ class FilingsApi:
             
             _query_params.append(('type', type))
             
-        if updated_date_from is not None:
-            if isinstance(updated_date_from, datetime):
-                _query_params.append(
-                    (
-                        'updated_date_from',
-                        updated_date_from.strftime(
-                            self.api_client.configuration.datetime_format
-                        )
-                    )
-                )
-            else:
-                _query_params.append(('updated_date_from', updated_date_from))
-            
-        if updated_date_to is not None:
-            if isinstance(updated_date_to, datetime):
-                _query_params.append(
-                    (
-                        'updated_date_to',
-                        updated_date_to.strftime(
-                            self.api_client.configuration.datetime_format
-                        )
-                    )
-                )
-            else:
-                _query_params.append(('updated_date_to', updated_date_to))
-            
         # process the header parameters
         # process the form parameters
         # process the body parameter
@@ -719,10 +615,10 @@ class FilingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> str:
+    ) -> None:
         """Retrieve Filing Markdown
 
-        Retrieve the raw processed content of a single filing in Markdown format.
+        **Access Level Required:** Access to full filing content in Markdown requires a **Level 2** Plan or higher.  --- Retrieve the raw processed content of a single filing in Markdown format.
 
         :param filing_id: (required)
         :type filing_id: int
@@ -757,8 +653,9 @@ class FilingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "str",
-            '404': None,
+            '200': None,
+            '403': "ErrorDetail",
+            '404': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -787,10 +684,10 @@ class FilingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[str]:
+    ) -> ApiResponse[None]:
         """Retrieve Filing Markdown
 
-        Retrieve the raw processed content of a single filing in Markdown format.
+        **Access Level Required:** Access to full filing content in Markdown requires a **Level 2** Plan or higher.  --- Retrieve the raw processed content of a single filing in Markdown format.
 
         :param filing_id: (required)
         :type filing_id: int
@@ -825,8 +722,9 @@ class FilingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "str",
-            '404': None,
+            '200': None,
+            '403': "ErrorDetail",
+            '404': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -858,7 +756,7 @@ class FilingsApi:
     ) -> RESTResponseType:
         """Retrieve Filing Markdown
 
-        Retrieve the raw processed content of a single filing in Markdown format.
+        **Access Level Required:** Access to full filing content in Markdown requires a **Level 2** Plan or higher.  --- Retrieve the raw processed content of a single filing in Markdown format.
 
         :param filing_id: (required)
         :type filing_id: int
@@ -893,8 +791,9 @@ class FilingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "str",
-            '404': None,
+            '200': None,
+            '403': "ErrorDetail",
+            '404': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -939,7 +838,7 @@ class FilingsApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'text/plain'
+                    'application/json'
                 ]
             )
 
@@ -986,7 +885,7 @@ class FilingsApi:
     ) -> Filing:
         """Retrieve Filing Details
 
-        Retrieve detailed information for a single filing by its ID.
+        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve detailed information for a single filing by its ID.
 
         :param id: A unique integer value identifying this filing. (required)
         :type id: int
@@ -1055,7 +954,7 @@ class FilingsApi:
     ) -> ApiResponse[Filing]:
         """Retrieve Filing Details
 
-        Retrieve detailed information for a single filing by its ID.
+        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve detailed information for a single filing by its ID.
 
         :param id: A unique integer value identifying this filing. (required)
         :type id: int
@@ -1124,7 +1023,7 @@ class FilingsApi:
     ) -> RESTResponseType:
         """Retrieve Filing Details
 
-        Retrieve detailed information for a single filing by its ID.
+        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve detailed information for a single filing by its ID.
 
         :param id: A unique integer value identifying this filing. (required)
         :type id: int

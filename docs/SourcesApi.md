@@ -13,6 +13,9 @@ Method | HTTP request | Description
 
 List Data Sources
 
+**Access Level Required:** Requires **Level 1** Plan or higher.
+
+---
 Retrieve a paginated list of all available data sources.
 
 ### Example
@@ -85,8 +88,7 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Successfully retrieved the list of data sources. |  -  |
-**401** | Authentication credentials were not provided or are invalid. |  -  |
+**200** | Success |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -95,6 +97,9 @@ Name | Type | Description  | Notes
 
 Retrieve Data Source
 
+**Access Level Required:** Requires **Level 1** Plan or higher.
+
+---
 Retrieve details for a specific data source by its ID.
 
 ### Example
@@ -165,9 +170,7 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Successfully retrieved the data source details. |  -  |
-**401** | Authentication credentials were not provided or are invalid. |  -  |
-**404** | Data source not found. |  -  |
+**200** | Success |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
