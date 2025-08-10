@@ -344,7 +344,7 @@ class FilingTypesApi:
     @validate_call
     async def filing_types_retrieve(
         self,
-        id: StrictInt,
+        id: Annotated[StrictInt, Field(description="A unique integer value identifying this filing type.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -362,7 +362,7 @@ class FilingTypesApi:
 
         Retrieve details for a specific filing type by its ID.
 
-        :param id: (required)
+        :param id: A unique integer value identifying this filing type. (required)
         :type id: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -413,7 +413,7 @@ class FilingTypesApi:
     @validate_call
     async def filing_types_retrieve_with_http_info(
         self,
-        id: StrictInt,
+        id: Annotated[StrictInt, Field(description="A unique integer value identifying this filing type.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -431,7 +431,7 @@ class FilingTypesApi:
 
         Retrieve details for a specific filing type by its ID.
 
-        :param id: (required)
+        :param id: A unique integer value identifying this filing type. (required)
         :type id: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -482,7 +482,7 @@ class FilingTypesApi:
     @validate_call
     async def filing_types_retrieve_without_preload_content(
         self,
-        id: StrictInt,
+        id: Annotated[StrictInt, Field(description="A unique integer value identifying this filing type.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -500,7 +500,7 @@ class FilingTypesApi:
 
         Retrieve details for a specific filing type by its ID.
 
-        :param id: (required)
+        :param id: A unique integer value identifying this filing type. (required)
         :type id: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request

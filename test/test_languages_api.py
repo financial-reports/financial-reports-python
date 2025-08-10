@@ -15,36 +15,29 @@
 
 import unittest
 
-from financial_reports_generated_client.api.filings_api import FilingsApi
+from financial_reports_generated_client.api.languages_api import LanguagesApi
 
 
-class TestFilingsApi(unittest.IsolatedAsyncioTestCase):
-    """FilingsApi unit test stubs"""
+class TestLanguagesApi(unittest.IsolatedAsyncioTestCase):
+    """LanguagesApi unit test stubs"""
 
     async def asyncSetUp(self) -> None:
-        self.api = FilingsApi()
+        self.api = LanguagesApi()
 
     async def asyncTearDown(self) -> None:
         await self.api.api_client.close()
 
-    async def test_filings_list(self) -> None:
-        """Test case for filings_list
+    async def test_languages_list(self) -> None:
+        """Test case for languages_list
 
-        List Filings
+        List Languages
         """
         pass
 
-    async def test_filings_markdown_retrieve(self) -> None:
-        """Test case for filings_markdown_retrieve
+    async def test_languages_retrieve(self) -> None:
+        """Test case for languages_retrieve
 
-        Retrieve Filing Markdown
-        """
-        pass
-
-    async def test_filings_retrieve(self) -> None:
-        """Test case for filings_retrieve
-
-        Retrieve Filing Details
+        Retrieve Language
         """
         pass
 

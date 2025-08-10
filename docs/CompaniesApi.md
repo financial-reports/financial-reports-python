@@ -9,7 +9,7 @@ Method | HTTP request | Description
 
 
 # **companies_list**
-> PaginatedCompanyList companies_list(countries=countries, industry=industry, industry_group=industry_group, isin=isin, lei=lei, ordering=ordering, page=page, page_size=page_size, search=search, sector=sector, sub_industry=sub_industry, ticker=ticker)
+> PaginatedCompanyMinimalList companies_list(countries=countries, industry=industry, industry_group=industry_group, isin=isin, lei=lei, ordering=ordering, page=page, page_size=page_size, search=search, sector=sector, sub_industry=sub_industry, ticker=ticker)
 
 List Companies
 
@@ -28,7 +28,7 @@ Supports ordering via the `ordering` parameter. Allowed fields for ordering are:
 
 ```python
 import financial_reports_generated_client
-from financial_reports_generated_client.models.paginated_company_list import PaginatedCompanyList
+from financial_reports_generated_client.models.paginated_company_minimal_list import PaginatedCompanyMinimalList
 from financial_reports_generated_client.rest import ApiException
 from pprint import pprint
 
@@ -97,7 +97,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**PaginatedCompanyList**](PaginatedCompanyList.md)
+[**PaginatedCompanyMinimalList**](PaginatedCompanyMinimalList.md)
 
 ### Authorization
 
@@ -158,7 +158,7 @@ configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
 async with financial_reports_generated_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = financial_reports_generated_client.CompaniesApi(api_client)
-    id = 56 # int | 
+    id = 56 # int | A unique integer value identifying this company.
 
     try:
         # Retrieve Company Details
@@ -176,7 +176,7 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **int**|  | 
+ **id** | **int**| A unique integer value identifying this company. | 
 
 ### Return type
 

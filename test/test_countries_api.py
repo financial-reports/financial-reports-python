@@ -15,36 +15,29 @@
 
 import unittest
 
-from financial_reports_generated_client.api.filings_api import FilingsApi
+from financial_reports_generated_client.api.countries_api import CountriesApi
 
 
-class TestFilingsApi(unittest.IsolatedAsyncioTestCase):
-    """FilingsApi unit test stubs"""
+class TestCountriesApi(unittest.IsolatedAsyncioTestCase):
+    """CountriesApi unit test stubs"""
 
     async def asyncSetUp(self) -> None:
-        self.api = FilingsApi()
+        self.api = CountriesApi()
 
     async def asyncTearDown(self) -> None:
         await self.api.api_client.close()
 
-    async def test_filings_list(self) -> None:
-        """Test case for filings_list
+    async def test_countries_list(self) -> None:
+        """Test case for countries_list
 
-        List Filings
+        List Countries
         """
         pass
 
-    async def test_filings_markdown_retrieve(self) -> None:
-        """Test case for filings_markdown_retrieve
+    async def test_countries_retrieve(self) -> None:
+        """Test case for countries_retrieve
 
-        Retrieve Filing Markdown
-        """
-        pass
-
-    async def test_filings_retrieve(self) -> None:
-        """Test case for filings_retrieve
-
-        Retrieve Filing Details
+        Retrieve Country
         """
         pass
 

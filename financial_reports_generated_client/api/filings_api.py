@@ -22,7 +22,7 @@ from pydantic import Field, StrictInt, StrictStr
 from typing import Optional
 from typing_extensions import Annotated
 from financial_reports_generated_client.models.filing import Filing
-from financial_reports_generated_client.models.paginated_filing_list import PaginatedFilingList
+from financial_reports_generated_client.models.paginated_filing_summary_list import PaginatedFilingSummaryList
 
 from financial_reports_generated_client.api_client import ApiClient, RequestSerialized
 from financial_reports_generated_client.api_response import ApiResponse
@@ -63,6 +63,8 @@ class FilingsApi:
         search: Annotated[Optional[StrictStr], Field(description="A search term.")] = None,
         source: Optional[StrictInt] = None,
         type: Annotated[Optional[StrictStr], Field(description="Filter by Filing Type code (e.g., ANNREP).")] = None,
+        updated_date_from: Annotated[Optional[datetime], Field(description="Filter by last update datetime (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
+        updated_date_to: Annotated[Optional[datetime], Field(description="Filter by last update datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -75,7 +77,7 @@ class FilingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> PaginatedFilingList:
+    ) -> PaginatedFilingSummaryList:
         """List Filings
 
         Retrieve a paginated list of regulatory filings. This endpoint supports extensive filtering via query parameters, including: - **Company Identification**: Filter by internal `company` ID, `company_isin` (case-insensitive), or company `lei`. - **Company Location**: Filter by `countries` using comma-separated ISO Alpha-2 codes (e.g., `US,GB`). - **Filing Attributes**: Filter by `source` ID, `language` (single ISO 639-1 code), `languages` (comma-separated ISO 639-1 codes), or filing `type` code. - **Date Ranges**: Filter by various date fields. All datetime filters expect an ISO 8601 format (e.g., `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DD`):     - `added_to_platform_from` / `added_to_platform_to`: Date the filing was added to the platform.     - `dissemination_datetime_from` / `dissemination_datetime_to`: Original dissemination date/time of the filing.     - `release_datetime_from` / `release_datetime_to`: Actual release date/time of the filing.  Additionally, you can use the `search` parameter to perform a text search across the company name and filing title. Results can be ordered using the `ordering` parameter with the fields: `release_datetime` and `added_to_platform` (e.g., `?ordering=-release_datetime`).
@@ -116,6 +118,10 @@ class FilingsApi:
         :type source: int
         :param type: Filter by Filing Type code (e.g., ANNREP).
         :type type: str
+        :param updated_date_from: Filter by last update datetime (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).
+        :type updated_date_from: datetime
+        :param updated_date_to: Filter by last update datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).
+        :type updated_date_to: datetime
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -157,6 +163,8 @@ class FilingsApi:
             search=search,
             source=source,
             type=type,
+            updated_date_from=updated_date_from,
+            updated_date_to=updated_date_to,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -164,7 +172,7 @@ class FilingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "PaginatedFilingList",
+            '200': "PaginatedFilingSummaryList",
             '401': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
@@ -199,6 +207,8 @@ class FilingsApi:
         search: Annotated[Optional[StrictStr], Field(description="A search term.")] = None,
         source: Optional[StrictInt] = None,
         type: Annotated[Optional[StrictStr], Field(description="Filter by Filing Type code (e.g., ANNREP).")] = None,
+        updated_date_from: Annotated[Optional[datetime], Field(description="Filter by last update datetime (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
+        updated_date_to: Annotated[Optional[datetime], Field(description="Filter by last update datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -211,7 +221,7 @@ class FilingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[PaginatedFilingList]:
+    ) -> ApiResponse[PaginatedFilingSummaryList]:
         """List Filings
 
         Retrieve a paginated list of regulatory filings. This endpoint supports extensive filtering via query parameters, including: - **Company Identification**: Filter by internal `company` ID, `company_isin` (case-insensitive), or company `lei`. - **Company Location**: Filter by `countries` using comma-separated ISO Alpha-2 codes (e.g., `US,GB`). - **Filing Attributes**: Filter by `source` ID, `language` (single ISO 639-1 code), `languages` (comma-separated ISO 639-1 codes), or filing `type` code. - **Date Ranges**: Filter by various date fields. All datetime filters expect an ISO 8601 format (e.g., `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DD`):     - `added_to_platform_from` / `added_to_platform_to`: Date the filing was added to the platform.     - `dissemination_datetime_from` / `dissemination_datetime_to`: Original dissemination date/time of the filing.     - `release_datetime_from` / `release_datetime_to`: Actual release date/time of the filing.  Additionally, you can use the `search` parameter to perform a text search across the company name and filing title. Results can be ordered using the `ordering` parameter with the fields: `release_datetime` and `added_to_platform` (e.g., `?ordering=-release_datetime`).
@@ -252,6 +262,10 @@ class FilingsApi:
         :type source: int
         :param type: Filter by Filing Type code (e.g., ANNREP).
         :type type: str
+        :param updated_date_from: Filter by last update datetime (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).
+        :type updated_date_from: datetime
+        :param updated_date_to: Filter by last update datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).
+        :type updated_date_to: datetime
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -293,6 +307,8 @@ class FilingsApi:
             search=search,
             source=source,
             type=type,
+            updated_date_from=updated_date_from,
+            updated_date_to=updated_date_to,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -300,7 +316,7 @@ class FilingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "PaginatedFilingList",
+            '200': "PaginatedFilingSummaryList",
             '401': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
@@ -335,6 +351,8 @@ class FilingsApi:
         search: Annotated[Optional[StrictStr], Field(description="A search term.")] = None,
         source: Optional[StrictInt] = None,
         type: Annotated[Optional[StrictStr], Field(description="Filter by Filing Type code (e.g., ANNREP).")] = None,
+        updated_date_from: Annotated[Optional[datetime], Field(description="Filter by last update datetime (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
+        updated_date_to: Annotated[Optional[datetime], Field(description="Filter by last update datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -388,6 +406,10 @@ class FilingsApi:
         :type source: int
         :param type: Filter by Filing Type code (e.g., ANNREP).
         :type type: str
+        :param updated_date_from: Filter by last update datetime (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).
+        :type updated_date_from: datetime
+        :param updated_date_to: Filter by last update datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).
+        :type updated_date_to: datetime
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -429,6 +451,8 @@ class FilingsApi:
             search=search,
             source=source,
             type=type,
+            updated_date_from=updated_date_from,
+            updated_date_to=updated_date_to,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -436,7 +460,7 @@ class FilingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "PaginatedFilingList",
+            '200': "PaginatedFilingSummaryList",
             '401': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
@@ -466,6 +490,8 @@ class FilingsApi:
         search,
         source,
         type,
+        updated_date_from,
+        updated_date_to,
         _request_auth,
         _content_type,
         _headers,
@@ -614,6 +640,32 @@ class FilingsApi:
             
             _query_params.append(('type', type))
             
+        if updated_date_from is not None:
+            if isinstance(updated_date_from, datetime):
+                _query_params.append(
+                    (
+                        'updated_date_from',
+                        updated_date_from.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('updated_date_from', updated_date_from))
+            
+        if updated_date_to is not None:
+            if isinstance(updated_date_to, datetime):
+                _query_params.append(
+                    (
+                        'updated_date_to',
+                        updated_date_to.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('updated_date_to', updated_date_to))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
@@ -652,9 +704,273 @@ class FilingsApi:
 
 
     @validate_call
+    async def filings_markdown_retrieve(
+        self,
+        filing_id: StrictInt,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> str:
+        """Retrieve Filing Markdown
+
+        Retrieve the raw processed content of a single filing in Markdown format.
+
+        :param filing_id: (required)
+        :type filing_id: int
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._filings_markdown_retrieve_serialize(
+            filing_id=filing_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "str",
+            '404': None,
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    async def filings_markdown_retrieve_with_http_info(
+        self,
+        filing_id: StrictInt,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[str]:
+        """Retrieve Filing Markdown
+
+        Retrieve the raw processed content of a single filing in Markdown format.
+
+        :param filing_id: (required)
+        :type filing_id: int
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._filings_markdown_retrieve_serialize(
+            filing_id=filing_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "str",
+            '404': None,
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    async def filings_markdown_retrieve_without_preload_content(
+        self,
+        filing_id: StrictInt,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Retrieve Filing Markdown
+
+        Retrieve the raw processed content of a single filing in Markdown format.
+
+        :param filing_id: (required)
+        :type filing_id: int
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._filings_markdown_retrieve_serialize(
+            filing_id=filing_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "str",
+            '404': None,
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _filings_markdown_retrieve_serialize(
+        self,
+        filing_id,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if filing_id is not None:
+            _path_params['filing_id'] = filing_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'text/plain'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'ApiKeyAuth'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/filings/{filing_id}/markdown/',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
     async def filings_retrieve(
         self,
-        id: StrictInt,
+        id: Annotated[StrictInt, Field(description="A unique integer value identifying this filing.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -672,7 +988,7 @@ class FilingsApi:
 
         Retrieve detailed information for a single filing by its ID.
 
-        :param id: (required)
+        :param id: A unique integer value identifying this filing. (required)
         :type id: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -723,7 +1039,7 @@ class FilingsApi:
     @validate_call
     async def filings_retrieve_with_http_info(
         self,
-        id: StrictInt,
+        id: Annotated[StrictInt, Field(description="A unique integer value identifying this filing.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -741,7 +1057,7 @@ class FilingsApi:
 
         Retrieve detailed information for a single filing by its ID.
 
-        :param id: (required)
+        :param id: A unique integer value identifying this filing. (required)
         :type id: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -792,7 +1108,7 @@ class FilingsApi:
     @validate_call
     async def filings_retrieve_without_preload_content(
         self,
-        id: StrictInt,
+        id: Annotated[StrictInt, Field(description="A unique integer value identifying this filing.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -810,7 +1126,7 @@ class FilingsApi:
 
         Retrieve detailed information for a single filing by its ID.
 
-        :param id: (required)
+        :param id: A unique integer value identifying this filing. (required)
         :type id: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request

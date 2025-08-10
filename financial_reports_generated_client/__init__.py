@@ -20,10 +20,11 @@ __version__ = "1.2.6"
 # Define package exports
 __all__ = [
     "CompaniesApi",
+    "CountriesApi",
     "FilingTypesApi",
     "FilingsApi",
     "ISICClassificationsApi",
-    "ProcessedFilingsApi",
+    "LanguagesApi",
     "SourcesApi",
     "WatchlistApi",
     "HealthApi",
@@ -39,23 +40,26 @@ __all__ = [
     "ApiException",
     "Company",
     "CompanyMinimal",
+    "Country",
     "ErrorDetail",
     "Filing",
+    "FilingSummary",
     "FilingType",
     "ISICClass",
     "ISICDivision",
     "ISICGroup",
     "ISICSection",
     "Language",
-    "PaginatedCompanyList",
-    "PaginatedFilingList",
+    "PaginatedCompanyMinimalList",
+    "PaginatedCountryList",
+    "PaginatedFilingSummaryList",
     "PaginatedFilingTypeList",
     "PaginatedISICClassList",
     "PaginatedISICDivisionList",
     "PaginatedISICGroupList",
     "PaginatedISICSectionList",
+    "PaginatedLanguageList",
     "PaginatedSourceList",
-    "ProcessedFiling",
     "Source",
     "WatchlistAction",
     "WatchlistCompany",
@@ -64,10 +68,11 @@ __all__ = [
 
 # import apis into sdk package
 from financial_reports_generated_client.api.companies_api import CompaniesApi as CompaniesApi
+from financial_reports_generated_client.api.countries_api import CountriesApi as CountriesApi
 from financial_reports_generated_client.api.filing_types_api import FilingTypesApi as FilingTypesApi
 from financial_reports_generated_client.api.filings_api import FilingsApi as FilingsApi
 from financial_reports_generated_client.api.isic_classifications_api import ISICClassificationsApi as ISICClassificationsApi
-from financial_reports_generated_client.api.processed_filings_api import ProcessedFilingsApi as ProcessedFilingsApi
+from financial_reports_generated_client.api.languages_api import LanguagesApi as LanguagesApi
 from financial_reports_generated_client.api.sources_api import SourcesApi as SourcesApi
 from financial_reports_generated_client.api.watchlist_api import WatchlistApi as WatchlistApi
 from financial_reports_generated_client.api.health_api import HealthApi as HealthApi
@@ -87,23 +92,26 @@ from financial_reports_generated_client.exceptions import ApiException as ApiExc
 # import models into sdk package
 from financial_reports_generated_client.models.company import Company as Company
 from financial_reports_generated_client.models.company_minimal import CompanyMinimal as CompanyMinimal
+from financial_reports_generated_client.models.country import Country as Country
 from financial_reports_generated_client.models.error_detail import ErrorDetail as ErrorDetail
 from financial_reports_generated_client.models.filing import Filing as Filing
+from financial_reports_generated_client.models.filing_summary import FilingSummary as FilingSummary
 from financial_reports_generated_client.models.filing_type import FilingType as FilingType
 from financial_reports_generated_client.models.isic_class import ISICClass as ISICClass
 from financial_reports_generated_client.models.isic_division import ISICDivision as ISICDivision
 from financial_reports_generated_client.models.isic_group import ISICGroup as ISICGroup
 from financial_reports_generated_client.models.isic_section import ISICSection as ISICSection
 from financial_reports_generated_client.models.language import Language as Language
-from financial_reports_generated_client.models.paginated_company_list import PaginatedCompanyList as PaginatedCompanyList
-from financial_reports_generated_client.models.paginated_filing_list import PaginatedFilingList as PaginatedFilingList
+from financial_reports_generated_client.models.paginated_company_minimal_list import PaginatedCompanyMinimalList as PaginatedCompanyMinimalList
+from financial_reports_generated_client.models.paginated_country_list import PaginatedCountryList as PaginatedCountryList
+from financial_reports_generated_client.models.paginated_filing_summary_list import PaginatedFilingSummaryList as PaginatedFilingSummaryList
 from financial_reports_generated_client.models.paginated_filing_type_list import PaginatedFilingTypeList as PaginatedFilingTypeList
 from financial_reports_generated_client.models.paginated_isic_class_list import PaginatedISICClassList as PaginatedISICClassList
 from financial_reports_generated_client.models.paginated_isic_division_list import PaginatedISICDivisionList as PaginatedISICDivisionList
 from financial_reports_generated_client.models.paginated_isic_group_list import PaginatedISICGroupList as PaginatedISICGroupList
 from financial_reports_generated_client.models.paginated_isic_section_list import PaginatedISICSectionList as PaginatedISICSectionList
+from financial_reports_generated_client.models.paginated_language_list import PaginatedLanguageList as PaginatedLanguageList
 from financial_reports_generated_client.models.paginated_source_list import PaginatedSourceList as PaginatedSourceList
-from financial_reports_generated_client.models.processed_filing import ProcessedFiling as ProcessedFiling
 from financial_reports_generated_client.models.source import Source as Source
 from financial_reports_generated_client.models.watchlist_action import WatchlistAction as WatchlistAction
 from financial_reports_generated_client.models.watchlist_company import WatchlistCompany as WatchlistCompany

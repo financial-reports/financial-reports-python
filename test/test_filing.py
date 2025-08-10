@@ -61,8 +61,7 @@ class TestFiling(unittest.TestCase):
                     url = '', 
                     description = '', ),
                 document = '',
-                extracted_kpis = None,
-                processed_filing_id = 56
+                markdown_url = ''
             )
         else:
             return Filing(
@@ -81,18 +80,14 @@ class TestFiling(unittest.TestCase):
                     code = '', 
                     name = '', ),
                 filing_date = datetime.datetime.strptime('1975-12-30', '%Y-%m-%d').date(),
-                title = '',
                 added_to_platform = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
                 updated_date = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
-                dissemination_datetime = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
-                release_datetime = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
                 source = financial_reports_generated_client.models.source.Source(
                     name = '', 
                     url = '', 
                     description = '', ),
                 document = '',
-                extracted_kpis = None,
-                processed_filing_id = 56,
+                markdown_url = '',
         )
         """
 

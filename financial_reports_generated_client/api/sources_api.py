@@ -327,7 +327,7 @@ class SourcesApi:
     @validate_call
     async def sources_retrieve(
         self,
-        id: StrictInt,
+        id: Annotated[StrictInt, Field(description="A unique integer value identifying this source.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -345,7 +345,7 @@ class SourcesApi:
 
         Retrieve details for a specific data source by its ID.
 
-        :param id: (required)
+        :param id: A unique integer value identifying this source. (required)
         :type id: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -396,7 +396,7 @@ class SourcesApi:
     @validate_call
     async def sources_retrieve_with_http_info(
         self,
-        id: StrictInt,
+        id: Annotated[StrictInt, Field(description="A unique integer value identifying this source.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -414,7 +414,7 @@ class SourcesApi:
 
         Retrieve details for a specific data source by its ID.
 
-        :param id: (required)
+        :param id: A unique integer value identifying this source. (required)
         :type id: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -465,7 +465,7 @@ class SourcesApi:
     @validate_call
     async def sources_retrieve_without_preload_content(
         self,
-        id: StrictInt,
+        id: Annotated[StrictInt, Field(description="A unique integer value identifying this source.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -483,7 +483,7 @@ class SourcesApi:
 
         Retrieve details for a specific data source by its ID.
 
-        :param id: (required)
+        :param id: A unique integer value identifying this source. (required)
         :type id: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request

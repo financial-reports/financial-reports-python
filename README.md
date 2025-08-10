@@ -109,9 +109,12 @@ Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 *CompaniesApi* | [**companies_list**](docs/CompaniesApi.md#companies_list) | **GET** /companies/ | List Companies
 *CompaniesApi* | [**companies_retrieve**](docs/CompaniesApi.md#companies_retrieve) | **GET** /companies/{id}/ | Retrieve Company Details
+*CountriesApi* | [**countries_list**](docs/CountriesApi.md#countries_list) | **GET** /countries/ | List Countries
+*CountriesApi* | [**countries_retrieve**](docs/CountriesApi.md#countries_retrieve) | **GET** /countries/{id}/ | Retrieve Country
 *FilingTypesApi* | [**filing_types_list**](docs/FilingTypesApi.md#filing_types_list) | **GET** /filing-types/ | List Filing Types
 *FilingTypesApi* | [**filing_types_retrieve**](docs/FilingTypesApi.md#filing_types_retrieve) | **GET** /filing-types/{id}/ | Retrieve Filing Type
 *FilingsApi* | [**filings_list**](docs/FilingsApi.md#filings_list) | **GET** /filings/ | List Filings
+*FilingsApi* | [**filings_markdown_retrieve**](docs/FilingsApi.md#filings_markdown_retrieve) | **GET** /filings/{filing_id}/markdown/ | Retrieve Filing Markdown
 *FilingsApi* | [**filings_retrieve**](docs/FilingsApi.md#filings_retrieve) | **GET** /filings/{id}/ | Retrieve Filing Details
 *ISICClassificationsApi* | [**isic_classes_list**](docs/ISICClassificationsApi.md#isic_classes_list) | **GET** /isic-classes/ | List ISIC Classes
 *ISICClassificationsApi* | [**isic_classes_retrieve**](docs/ISICClassificationsApi.md#isic_classes_retrieve) | **GET** /isic-classes/{id}/ | Retrieve ISIC Class
@@ -121,7 +124,8 @@ Class | Method | HTTP request | Description
 *ISICClassificationsApi* | [**isic_groups_retrieve**](docs/ISICClassificationsApi.md#isic_groups_retrieve) | **GET** /isic-groups/{id}/ | Retrieve ISIC Group
 *ISICClassificationsApi* | [**isic_sections_list**](docs/ISICClassificationsApi.md#isic_sections_list) | **GET** /isic-sections/ | List ISIC Sections
 *ISICClassificationsApi* | [**isic_sections_retrieve**](docs/ISICClassificationsApi.md#isic_sections_retrieve) | **GET** /isic-sections/{id}/ | Retrieve ISIC Section
-*ProcessedFilingsApi* | [**processed_filings_retrieve**](docs/ProcessedFilingsApi.md#processed_filings_retrieve) | **GET** /processed-filings/{id}/ | Retrieve Processed Filing Content
+*LanguagesApi* | [**languages_list**](docs/LanguagesApi.md#languages_list) | **GET** /languages/ | List Languages
+*LanguagesApi* | [**languages_retrieve**](docs/LanguagesApi.md#languages_retrieve) | **GET** /languages/{id}/ | Retrieve Language
 *SourcesApi* | [**sources_list**](docs/SourcesApi.md#sources_list) | **GET** /sources/ | List Data Sources
 *SourcesApi* | [**sources_retrieve**](docs/SourcesApi.md#sources_retrieve) | **GET** /sources/{id}/ | Retrieve Data Source
 *WatchlistApi* | [**watchlist_companies_create**](docs/WatchlistApi.md#watchlist_companies_create) | **POST** /watchlist/companies/ | Add Company to Watchlist
@@ -135,23 +139,26 @@ Class | Method | HTTP request | Description
 
  - [Company](docs/Company.md)
  - [CompanyMinimal](docs/CompanyMinimal.md)
+ - [Country](docs/Country.md)
  - [ErrorDetail](docs/ErrorDetail.md)
  - [Filing](docs/Filing.md)
+ - [FilingSummary](docs/FilingSummary.md)
  - [FilingType](docs/FilingType.md)
  - [ISICClass](docs/ISICClass.md)
  - [ISICDivision](docs/ISICDivision.md)
  - [ISICGroup](docs/ISICGroup.md)
  - [ISICSection](docs/ISICSection.md)
  - [Language](docs/Language.md)
- - [PaginatedCompanyList](docs/PaginatedCompanyList.md)
- - [PaginatedFilingList](docs/PaginatedFilingList.md)
+ - [PaginatedCompanyMinimalList](docs/PaginatedCompanyMinimalList.md)
+ - [PaginatedCountryList](docs/PaginatedCountryList.md)
+ - [PaginatedFilingSummaryList](docs/PaginatedFilingSummaryList.md)
  - [PaginatedFilingTypeList](docs/PaginatedFilingTypeList.md)
  - [PaginatedISICClassList](docs/PaginatedISICClassList.md)
  - [PaginatedISICDivisionList](docs/PaginatedISICDivisionList.md)
  - [PaginatedISICGroupList](docs/PaginatedISICGroupList.md)
  - [PaginatedISICSectionList](docs/PaginatedISICSectionList.md)
+ - [PaginatedLanguageList](docs/PaginatedLanguageList.md)
  - [PaginatedSourceList](docs/PaginatedSourceList.md)
- - [ProcessedFiling](docs/ProcessedFiling.md)
  - [Source](docs/Source.md)
  - [WatchlistAction](docs/WatchlistAction.md)
  - [WatchlistCompany](docs/WatchlistCompany.md)

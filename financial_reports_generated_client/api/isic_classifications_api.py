@@ -488,7 +488,7 @@ class ISICClassificationsApi:
     @validate_call
     async def isic_classes_retrieve(
         self,
-        id: StrictInt,
+        id: Annotated[StrictInt, Field(description="A unique integer value identifying this sub industry.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -506,7 +506,7 @@ class ISICClassificationsApi:
 
         Retrieve details for a specific ISIC Class by its ID.
 
-        :param id: (required)
+        :param id: A unique integer value identifying this sub industry. (required)
         :type id: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -557,7 +557,7 @@ class ISICClassificationsApi:
     @validate_call
     async def isic_classes_retrieve_with_http_info(
         self,
-        id: StrictInt,
+        id: Annotated[StrictInt, Field(description="A unique integer value identifying this sub industry.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -575,7 +575,7 @@ class ISICClassificationsApi:
 
         Retrieve details for a specific ISIC Class by its ID.
 
-        :param id: (required)
+        :param id: A unique integer value identifying this sub industry. (required)
         :type id: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -626,7 +626,7 @@ class ISICClassificationsApi:
     @validate_call
     async def isic_classes_retrieve_without_preload_content(
         self,
-        id: StrictInt,
+        id: Annotated[StrictInt, Field(description="A unique integer value identifying this sub industry.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -644,7 +644,7 @@ class ISICClassificationsApi:
 
         Retrieve details for a specific ISIC Class by its ID.
 
-        :param id: (required)
+        :param id: A unique integer value identifying this sub industry. (required)
         :type id: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1159,7 +1159,7 @@ class ISICClassificationsApi:
     @validate_call
     async def isic_divisions_retrieve(
         self,
-        id: StrictInt,
+        id: Annotated[StrictInt, Field(description="A unique integer value identifying this industry group.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1177,7 +1177,7 @@ class ISICClassificationsApi:
 
         Retrieve details for a specific ISIC Division by its ID.
 
-        :param id: (required)
+        :param id: A unique integer value identifying this industry group. (required)
         :type id: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1228,7 +1228,7 @@ class ISICClassificationsApi:
     @validate_call
     async def isic_divisions_retrieve_with_http_info(
         self,
-        id: StrictInt,
+        id: Annotated[StrictInt, Field(description="A unique integer value identifying this industry group.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1246,7 +1246,7 @@ class ISICClassificationsApi:
 
         Retrieve details for a specific ISIC Division by its ID.
 
-        :param id: (required)
+        :param id: A unique integer value identifying this industry group. (required)
         :type id: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1297,7 +1297,7 @@ class ISICClassificationsApi:
     @validate_call
     async def isic_divisions_retrieve_without_preload_content(
         self,
-        id: StrictInt,
+        id: Annotated[StrictInt, Field(description="A unique integer value identifying this industry group.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1315,7 +1315,7 @@ class ISICClassificationsApi:
 
         Retrieve details for a specific ISIC Division by its ID.
 
-        :param id: (required)
+        :param id: A unique integer value identifying this industry group. (required)
         :type id: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1847,7 +1847,7 @@ class ISICClassificationsApi:
     @validate_call
     async def isic_groups_retrieve(
         self,
-        id: StrictInt,
+        id: Annotated[StrictInt, Field(description="A unique integer value identifying this industry.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1865,7 +1865,7 @@ class ISICClassificationsApi:
 
         Retrieve details for a specific ISIC Group by its ID.
 
-        :param id: (required)
+        :param id: A unique integer value identifying this industry. (required)
         :type id: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1916,7 +1916,7 @@ class ISICClassificationsApi:
     @validate_call
     async def isic_groups_retrieve_with_http_info(
         self,
-        id: StrictInt,
+        id: Annotated[StrictInt, Field(description="A unique integer value identifying this industry.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1934,7 +1934,7 @@ class ISICClassificationsApi:
 
         Retrieve details for a specific ISIC Group by its ID.
 
-        :param id: (required)
+        :param id: A unique integer value identifying this industry. (required)
         :type id: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1985,7 +1985,7 @@ class ISICClassificationsApi:
     @validate_call
     async def isic_groups_retrieve_without_preload_content(
         self,
-        id: StrictInt,
+        id: Annotated[StrictInt, Field(description="A unique integer value identifying this industry.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2003,7 +2003,7 @@ class ISICClassificationsApi:
 
         Retrieve details for a specific ISIC Group by its ID.
 
-        :param id: (required)
+        :param id: A unique integer value identifying this industry. (required)
         :type id: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -2483,7 +2483,7 @@ class ISICClassificationsApi:
     @validate_call
     async def isic_sections_retrieve(
         self,
-        id: StrictInt,
+        id: Annotated[StrictInt, Field(description="A unique integer value identifying this sector.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2501,7 +2501,7 @@ class ISICClassificationsApi:
 
         Retrieve details for a specific ISIC Section by its ID (primary key).
 
-        :param id: (required)
+        :param id: A unique integer value identifying this sector. (required)
         :type id: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -2552,7 +2552,7 @@ class ISICClassificationsApi:
     @validate_call
     async def isic_sections_retrieve_with_http_info(
         self,
-        id: StrictInt,
+        id: Annotated[StrictInt, Field(description="A unique integer value identifying this sector.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2570,7 +2570,7 @@ class ISICClassificationsApi:
 
         Retrieve details for a specific ISIC Section by its ID (primary key).
 
-        :param id: (required)
+        :param id: A unique integer value identifying this sector. (required)
         :type id: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -2621,7 +2621,7 @@ class ISICClassificationsApi:
     @validate_call
     async def isic_sections_retrieve_without_preload_content(
         self,
-        id: StrictInt,
+        id: Annotated[StrictInt, Field(description="A unique integer value identifying this sector.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2639,7 +2639,7 @@ class ISICClassificationsApi:
 
         Retrieve details for a specific ISIC Section by its ID (primary key).
 
-        :param id: (required)
+        :param id: A unique integer value identifying this sector. (required)
         :type id: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request

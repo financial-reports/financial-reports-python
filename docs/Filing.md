@@ -5,20 +5,19 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **int** | Unique identifier for the filing. | [readonly] 
-**company** | [**CompanyMinimal**](CompanyMinimal.md) | Basic details of the company that made the filing. | [readonly] 
-**filing_type** | [**FilingType**](FilingType.md) | Details of the filing type. | [readonly] 
-**language** | [**Language**](Language.md) | Language of the filing document. | [readonly] 
-**filing_date** | **date** | The official date the document was filed. | [readonly] 
-**title** | **str** | Title of the filing document. | [readonly] 
-**added_to_platform** | **datetime** | Timestamp when the filing was added to our system (UTC). | [readonly] 
-**updated_date** | **datetime** | Timestamp when the filing record was last updated (UTC). | [readonly] 
-**dissemination_datetime** | **datetime** | Timestamp when the filing was disseminated by the source (UTC). | [readonly] 
-**release_datetime** | **datetime** | Timestamp when the filing was released (e.g., for press releases) (UTC). | [readonly] 
-**source** | [**Source**](Source.md) | Source from which the filing was obtained. | [readonly] 
-**document** | **str** | Absolute URL link to the primary filing document (e.g., PDF, HTML). | [readonly] 
-**extracted_kpis** | **object** | Stores the structured financial KPIs extracted as JSON. | [readonly] 
-**processed_filing_id** | **int** | ID of the processed version of this filing, if available. Null otherwise. | [readonly] 
+**id** | **int** |  | [readonly] 
+**company** | [**CompanyMinimal**](CompanyMinimal.md) |  | [readonly] 
+**filing_type** | [**FilingType**](FilingType.md) |  | [readonly] 
+**language** | [**Language**](Language.md) |  | [readonly] 
+**filing_date** | **date** | The official date of the filing (soon to be deprecated). | 
+**title** | **str** | Optional title for the filing | [optional] 
+**added_to_platform** | **datetime** | Date and time when the filing was added to our platform | [readonly] 
+**updated_date** | **datetime** | The date and time this filing record was last modified. | [readonly] 
+**dissemination_datetime** | **datetime** | Time the document was released to the public and sent to the authority | [optional] 
+**release_datetime** | **datetime** | Time the document was published on the authority page | [optional] 
+**source** | [**Source**](Source.md) |  | [readonly] 
+**document** | **str** |  | [readonly] 
+**markdown_url** | **str** |  | [readonly] 
 
 ## Example
 

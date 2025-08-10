@@ -152,7 +152,7 @@ configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
 async with financial_reports_generated_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = financial_reports_generated_client.ISICClassificationsApi(api_client)
-    id = 56 # int | 
+    id = 56 # int | A unique integer value identifying this sub industry.
 
     try:
         # Retrieve ISIC Class
@@ -170,7 +170,7 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **int**|  | 
+ **id** | **int**| A unique integer value identifying this sub industry. | 
 
 ### Return type
 
@@ -329,7 +329,7 @@ configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
 async with financial_reports_generated_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = financial_reports_generated_client.ISICClassificationsApi(api_client)
-    id = 56 # int | 
+    id = 56 # int | A unique integer value identifying this industry group.
 
     try:
         # Retrieve ISIC Division
@@ -347,7 +347,7 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **int**|  | 
+ **id** | **int**| A unique integer value identifying this industry group. | 
 
 ### Return type
 
@@ -508,7 +508,7 @@ configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
 async with financial_reports_generated_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = financial_reports_generated_client.ISICClassificationsApi(api_client)
-    id = 56 # int | 
+    id = 56 # int | A unique integer value identifying this industry.
 
     try:
         # Retrieve ISIC Group
@@ -526,7 +526,7 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **int**|  | 
+ **id** | **int**| A unique integer value identifying this industry. | 
 
 ### Return type
 
@@ -681,7 +681,7 @@ configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
 async with financial_reports_generated_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = financial_reports_generated_client.ISICClassificationsApi(api_client)
-    id = 56 # int | 
+    id = 56 # int | A unique integer value identifying this sector.
 
     try:
         # Retrieve ISIC Section
@@ -699,7 +699,7 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **int**|  | 
+ **id** | **int**| A unique integer value identifying this sector. | 
 
 ### Return type
 

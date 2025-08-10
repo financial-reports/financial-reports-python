@@ -128,7 +128,7 @@ configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
 async with financial_reports_generated_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = financial_reports_generated_client.SourcesApi(api_client)
-    id = 56 # int | 
+    id = 56 # int | A unique integer value identifying this source.
 
     try:
         # Retrieve Data Source
@@ -146,7 +146,7 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **int**|  | 
+ **id** | **int**| A unique integer value identifying this source. | 
 
 ### Return type
 

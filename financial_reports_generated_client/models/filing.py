@@ -21,6 +21,7 @@ import json
 from datetime import date, datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
+from typing_extensions import Annotated
 from financial_reports_generated_client.models.company_minimal import CompanyMinimal
 from financial_reports_generated_client.models.filing_type import FilingType
 from financial_reports_generated_client.models.language import Language
@@ -32,21 +33,20 @@ class Filing(BaseModel):
     """
     Filing
     """ # noqa: E501
-    id: StrictInt = Field(description="Unique identifier for the filing.")
-    company: CompanyMinimal = Field(description="Basic details of the company that made the filing.")
-    filing_type: FilingType = Field(description="Details of the filing type.")
-    language: Language = Field(description="Language of the filing document.")
-    filing_date: date = Field(description="The official date the document was filed.")
-    title: StrictStr = Field(description="Title of the filing document.")
-    added_to_platform: datetime = Field(description="Timestamp when the filing was added to our system (UTC).")
-    updated_date: datetime = Field(description="Timestamp when the filing record was last updated (UTC).")
-    dissemination_datetime: Optional[datetime] = Field(description="Timestamp when the filing was disseminated by the source (UTC).")
-    release_datetime: Optional[datetime] = Field(description="Timestamp when the filing was released (e.g., for press releases) (UTC).")
-    source: Optional[Source] = Field(description="Source from which the filing was obtained.")
-    document: Optional[StrictStr] = Field(description="Absolute URL link to the primary filing document (e.g., PDF, HTML).")
-    extracted_kpis: Optional[Any] = Field(description="Stores the structured financial KPIs extracted as JSON.")
-    processed_filing_id: Optional[StrictInt] = Field(description="ID of the processed version of this filing, if available. Null otherwise.")
-    __properties: ClassVar[List[str]] = ["id", "company", "filing_type", "language", "filing_date", "title", "added_to_platform", "updated_date", "dissemination_datetime", "release_datetime", "source", "document", "extracted_kpis", "processed_filing_id"]
+    id: StrictInt
+    company: CompanyMinimal
+    filing_type: FilingType
+    language: Language
+    filing_date: date = Field(description="The official date of the filing (soon to be deprecated).")
+    title: Optional[Annotated[str, Field(strict=True, max_length=200)]] = Field(default=None, description="Optional title for the filing")
+    added_to_platform: datetime = Field(description="Date and time when the filing was added to our platform")
+    updated_date: datetime = Field(description="The date and time this filing record was last modified.")
+    dissemination_datetime: Optional[datetime] = Field(default=None, description="Time the document was released to the public and sent to the authority")
+    release_datetime: Optional[datetime] = Field(default=None, description="Time the document was published on the authority page")
+    source: Optional[Source]
+    document: Optional[StrictStr]
+    markdown_url: Optional[StrictStr]
+    __properties: ClassVar[List[str]] = ["id", "company", "filing_type", "language", "filing_date", "title", "added_to_platform", "updated_date", "dissemination_datetime", "release_datetime", "source", "document", "markdown_url"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -87,27 +87,17 @@ class Filing(BaseModel):
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
-        * OpenAPI `readOnly` fields are excluded.
-        * OpenAPI `readOnly` fields are excluded.
-        * OpenAPI `readOnly` fields are excluded.
-        * OpenAPI `readOnly` fields are excluded.
-        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
             "id",
             "company",
             "filing_type",
             "language",
-            "filing_date",
-            "title",
             "added_to_platform",
             "updated_date",
-            "dissemination_datetime",
-            "release_datetime",
             "source",
             "document",
-            "extracted_kpis",
-            "processed_filing_id",
+            "markdown_url",
         ])
 
         _dict = self.model_dump(
@@ -147,15 +137,10 @@ class Filing(BaseModel):
         if self.document is None and "document" in self.model_fields_set:
             _dict['document'] = None
 
-        # set to None if extracted_kpis (nullable) is None
+        # set to None if markdown_url (nullable) is None
         # and model_fields_set contains the field
-        if self.extracted_kpis is None and "extracted_kpis" in self.model_fields_set:
-            _dict['extracted_kpis'] = None
-
-        # set to None if processed_filing_id (nullable) is None
-        # and model_fields_set contains the field
-        if self.processed_filing_id is None and "processed_filing_id" in self.model_fields_set:
-            _dict['processed_filing_id'] = None
+        if self.markdown_url is None and "markdown_url" in self.model_fields_set:
+            _dict['markdown_url'] = None
 
         return _dict
 
@@ -181,8 +166,7 @@ class Filing(BaseModel):
             "release_datetime": obj.get("release_datetime"),
             "source": Source.from_dict(obj["source"]) if obj.get("source") is not None else None,
             "document": obj.get("document"),
-            "extracted_kpis": obj.get("extracted_kpis"),
-            "processed_filing_id": obj.get("processed_filing_id")
+            "markdown_url": obj.get("markdown_url")
         })
         return _obj
 
