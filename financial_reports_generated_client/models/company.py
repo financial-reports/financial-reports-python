@@ -21,10 +21,10 @@ import json
 from datetime import date
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from financial_reports_generated_client.models.industry import Industry
-from financial_reports_generated_client.models.industry_group import IndustryGroup
-from financial_reports_generated_client.models.sector import Sector
-from financial_reports_generated_client.models.sub_industry import SubIndustry
+from financial_reports_generated_client.models.isic_class import ISICClass
+from financial_reports_generated_client.models.isic_division import ISICDivision
+from financial_reports_generated_client.models.isic_group import ISICGroup
+from financial_reports_generated_client.models.isic_section import ISICSection
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -36,10 +36,10 @@ class Company(BaseModel):
     name: StrictStr = Field(description="Company name.")
     lei: StrictStr = Field(description="Legal Entity Identifier (ISO 17442).")
     country_code: Optional[StrictStr] = Field(description="ISO 3166-1 alpha-2 country code of the company's primary registration or headquarters.")
-    sector: Optional[Sector] = Field(description="Company's GICS Sector classification.")
-    industry_group: Optional[IndustryGroup] = Field(description="Company's GICS Industry Group classification.")
-    industry: Optional[Industry] = Field(description="Company's GICS Industry classification.")
-    sub_industry: Optional[SubIndustry] = Field(description="Company's GICS Sub-Industry classification.")
+    sector: Optional[ISICSection] = Field(description="Company's ISIC Section classification.")
+    industry_group: Optional[ISICDivision] = Field(description="Company's ISIC Division classification.")
+    industry: Optional[ISICGroup] = Field(description="Company's ISIC Group classification.")
+    sub_industry: Optional[ISICClass] = Field(description="Company's ISIC Class classification.")
     ir_link: StrictStr = Field(description="Link to the company's Investor Relations page.")
     homepage_link: StrictStr = Field(description="Link to the company's main homepage.")
     date_public: Optional[date] = Field(description="Date the company first became public.")
@@ -293,10 +293,10 @@ class Company(BaseModel):
             "name": obj.get("name"),
             "lei": obj.get("lei"),
             "country_code": obj.get("country_code"),
-            "sector": Sector.from_dict(obj["sector"]) if obj.get("sector") is not None else None,
-            "industry_group": IndustryGroup.from_dict(obj["industry_group"]) if obj.get("industry_group") is not None else None,
-            "industry": Industry.from_dict(obj["industry"]) if obj.get("industry") is not None else None,
-            "sub_industry": SubIndustry.from_dict(obj["sub_industry"]) if obj.get("sub_industry") is not None else None,
+            "sector": ISICSection.from_dict(obj["sector"]) if obj.get("sector") is not None else None,
+            "industry_group": ISICDivision.from_dict(obj["industry_group"]) if obj.get("industry_group") is not None else None,
+            "industry": ISICGroup.from_dict(obj["industry"]) if obj.get("industry") is not None else None,
+            "sub_industry": ISICClass.from_dict(obj["sub_industry"]) if obj.get("sub_industry") is not None else None,
             "ir_link": obj.get("ir_link"),
             "homepage_link": obj.get("homepage_link"),
             "date_public": obj.get("date_public"),

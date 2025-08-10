@@ -18,21 +18,21 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
+from financial_reports_generated_client.models.isic_group import ISICGroup
 from typing import Optional, Set
 from typing_extensions import Self
 
-class CompanyMinimal(BaseModel):
+class PaginatedISICGroupList(BaseModel):
     """
-    CompanyMinimal
+    PaginatedISICGroupList
     """ # noqa: E501
-    id: StrictInt = Field(description="Unique identifier for the company.")
-    name: StrictStr = Field(description="Company name.")
-    lei: StrictStr = Field(description="Legal Entity Identifier (ISO 17442).")
-    sub_industry_code: Optional[StrictStr] = Field(description="ISIC classification code classifying the company.")
-    country_code: Optional[StrictStr] = Field(description="ISO 3166-1 alpha-2 country code of the company's primary registration or headquarters.")
-    __properties: ClassVar[List[str]] = ["id", "name", "lei", "sub_industry_code", "country_code"]
+    count: StrictInt
+    next: Optional[StrictStr] = None
+    previous: Optional[StrictStr] = None
+    results: List[ISICGroup]
+    __properties: ClassVar[List[str]] = ["count", "next", "previous", "results"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -52,7 +52,7 @@ class CompanyMinimal(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of CompanyMinimal from a JSON string"""
+        """Create an instance of PaginatedISICGroupList from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -64,18 +64,8 @@ class CompanyMinimal(BaseModel):
         * `None` is only added to the output dict for nullable fields that
           were set at model initialization. Other fields with value `None`
           are ignored.
-        * OpenAPI `readOnly` fields are excluded.
-        * OpenAPI `readOnly` fields are excluded.
-        * OpenAPI `readOnly` fields are excluded.
-        * OpenAPI `readOnly` fields are excluded.
-        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
-            "id",
-            "name",
-            "lei",
-            "sub_industry_code",
-            "country_code",
         ])
 
         _dict = self.model_dump(
@@ -83,21 +73,28 @@ class CompanyMinimal(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if sub_industry_code (nullable) is None
+        # override the default output from pydantic by calling `to_dict()` of each item in results (list)
+        _items = []
+        if self.results:
+            for _item_results in self.results:
+                if _item_results:
+                    _items.append(_item_results.to_dict())
+            _dict['results'] = _items
+        # set to None if next (nullable) is None
         # and model_fields_set contains the field
-        if self.sub_industry_code is None and "sub_industry_code" in self.model_fields_set:
-            _dict['sub_industry_code'] = None
+        if self.next is None and "next" in self.model_fields_set:
+            _dict['next'] = None
 
-        # set to None if country_code (nullable) is None
+        # set to None if previous (nullable) is None
         # and model_fields_set contains the field
-        if self.country_code is None and "country_code" in self.model_fields_set:
-            _dict['country_code'] = None
+        if self.previous is None and "previous" in self.model_fields_set:
+            _dict['previous'] = None
 
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of CompanyMinimal from a dict"""
+        """Create an instance of PaginatedISICGroupList from a dict"""
         if obj is None:
             return None
 
@@ -105,11 +102,10 @@ class CompanyMinimal(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "id": obj.get("id"),
-            "name": obj.get("name"),
-            "lei": obj.get("lei"),
-            "sub_industry_code": obj.get("sub_industry_code"),
-            "country_code": obj.get("country_code")
+            "count": obj.get("count"),
+            "next": obj.get("next"),
+            "previous": obj.get("previous"),
+            "results": [ISICGroup.from_dict(_item) for _item in obj["results"]] if obj.get("results") is not None else None
         })
         return _obj
 

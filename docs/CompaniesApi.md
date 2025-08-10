@@ -15,7 +15,7 @@ List Companies
 
 Retrieve a paginated list of companies.
 Supports filtering via various query parameters including:
-- GICS classifications: `sector`, `industry_group`, `industry`, `sub_industry` (by GICS codes).
+- ISIC classifications: `sector`, `industry_group`, `industry`, `sub_industry` (by ISIC codes).
 - Location: `countries` (comma-separated ISO Alpha-2 codes, e.g., `US,GB`).
 - Identifiers: `isin`, `lei`, `ticker` (all case-insensitive).
 
@@ -54,16 +54,16 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
     # Create an instance of the API class
     api_instance = financial_reports_generated_client.CompaniesApi(api_client)
     countries = 'countries_example' # str | Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values (e.g., US,GB,DE). (optional)
-    industry = 'industry_example' # str | Filter by GICS Industry code. (optional)
-    industry_group = 'industry_group_example' # str | Filter by GICS Industry Group code. (optional)
+    industry = 'industry_example' # str | Filter by ISIC Group code. (optional)
+    industry_group = 'industry_group_example' # str | Filter by ISIC Division code. (optional)
     isin = 'isin_example' # str | Find companies matching the provided ISIN. (optional)
     lei = 'lei_example' # str | Find a company by its LEI. (optional)
     ordering = 'ordering_example' # str | Which field to use when ordering the results. (optional)
     page = 56 # int | A page number within the paginated result set. (optional)
     page_size = 56 # int | Number of results to return per page. (optional)
     search = 'search_example' # str | A search term. (optional)
-    sector = 'sector_example' # str | Filter by GICS Sector code. (optional)
-    sub_industry = 'sub_industry_example' # str | Filter by GICS Sub-Industry code. (optional)
+    sector = 'sector_example' # str | Filter by ISIC Section code. (optional)
+    sub_industry = 'sub_industry_example' # str | Filter by ISIC Class code. (optional)
     ticker = 'ticker_example' # str | Find a company by its Ticker. (optional)
 
     try:
@@ -83,16 +83,16 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **countries** | **str**| Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values (e.g., US,GB,DE). | [optional] 
- **industry** | **str**| Filter by GICS Industry code. | [optional] 
- **industry_group** | **str**| Filter by GICS Industry Group code. | [optional] 
+ **industry** | **str**| Filter by ISIC Group code. | [optional] 
+ **industry_group** | **str**| Filter by ISIC Division code. | [optional] 
  **isin** | **str**| Find companies matching the provided ISIN. | [optional] 
  **lei** | **str**| Find a company by its LEI. | [optional] 
  **ordering** | **str**| Which field to use when ordering the results. | [optional] 
  **page** | **int**| A page number within the paginated result set. | [optional] 
  **page_size** | **int**| Number of results to return per page. | [optional] 
  **search** | **str**| A search term. | [optional] 
- **sector** | **str**| Filter by GICS Sector code. | [optional] 
- **sub_industry** | **str**| Filter by GICS Sub-Industry code. | [optional] 
+ **sector** | **str**| Filter by ISIC Section code. | [optional] 
+ **sub_industry** | **str**| Filter by ISIC Class code. | [optional] 
  **ticker** | **str**| Find a company by its Ticker. | [optional] 
 
 ### Return type

@@ -18,21 +18,18 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
 from typing_extensions import Self
 
-class CompanyMinimal(BaseModel):
+class ISICSection(BaseModel):
     """
-    CompanyMinimal
+    ISICSection
     """ # noqa: E501
-    id: StrictInt = Field(description="Unique identifier for the company.")
-    name: StrictStr = Field(description="Company name.")
-    lei: StrictStr = Field(description="Legal Entity Identifier (ISO 17442).")
-    sub_industry_code: Optional[StrictStr] = Field(description="ISIC classification code classifying the company.")
-    country_code: Optional[StrictStr] = Field(description="ISO 3166-1 alpha-2 country code of the company's primary registration or headquarters.")
-    __properties: ClassVar[List[str]] = ["id", "name", "lei", "sub_industry_code", "country_code"]
+    code: StrictStr = Field(description="ISIC Section code.")
+    name: StrictStr = Field(description="ISIC Section name.")
+    __properties: ClassVar[List[str]] = ["code", "name"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -52,7 +49,7 @@ class CompanyMinimal(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of CompanyMinimal from a JSON string"""
+        """Create an instance of ISICSection from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -66,16 +63,10 @@ class CompanyMinimal(BaseModel):
           are ignored.
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
-        * OpenAPI `readOnly` fields are excluded.
-        * OpenAPI `readOnly` fields are excluded.
-        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
-            "id",
+            "code",
             "name",
-            "lei",
-            "sub_industry_code",
-            "country_code",
         ])
 
         _dict = self.model_dump(
@@ -83,21 +74,11 @@ class CompanyMinimal(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if sub_industry_code (nullable) is None
-        # and model_fields_set contains the field
-        if self.sub_industry_code is None and "sub_industry_code" in self.model_fields_set:
-            _dict['sub_industry_code'] = None
-
-        # set to None if country_code (nullable) is None
-        # and model_fields_set contains the field
-        if self.country_code is None and "country_code" in self.model_fields_set:
-            _dict['country_code'] = None
-
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of CompanyMinimal from a dict"""
+        """Create an instance of ISICSection from a dict"""
         if obj is None:
             return None
 
@@ -105,11 +86,8 @@ class CompanyMinimal(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "id": obj.get("id"),
-            "name": obj.get("name"),
-            "lei": obj.get("lei"),
-            "sub_industry_code": obj.get("sub_industry_code"),
-            "country_code": obj.get("country_code")
+            "code": obj.get("code"),
+            "name": obj.get("name")
         })
         return _obj
 

@@ -15,17 +15,18 @@
 """  # noqa: E501
 
 
-__version__ = "1.1.8"
+__version__ = "1.2.4"
 
 # Define package exports
 __all__ = [
     "CompaniesApi",
     "FilingTypesApi",
     "FilingsApi",
-    "GICSClassificationsApi",
+    "ISICClassificationsApi",
     "ProcessedFilingsApi",
     "SourcesApi",
     "WatchlistApi",
+    "HealthApi",
     "SchemaApi",
     "ApiResponse",
     "ApiClient",
@@ -41,21 +42,21 @@ __all__ = [
     "ErrorDetail",
     "Filing",
     "FilingType",
-    "Industry",
-    "IndustryGroup",
+    "ISICClass",
+    "ISICDivision",
+    "ISICGroup",
+    "ISICSection",
     "Language",
     "PaginatedCompanyList",
     "PaginatedFilingList",
     "PaginatedFilingTypeList",
-    "PaginatedIndustryGroupList",
-    "PaginatedIndustryList",
-    "PaginatedSectorList",
+    "PaginatedISICClassList",
+    "PaginatedISICDivisionList",
+    "PaginatedISICGroupList",
+    "PaginatedISICSectionList",
     "PaginatedSourceList",
-    "PaginatedSubIndustryList",
     "ProcessedFiling",
-    "Sector",
     "Source",
-    "SubIndustry",
     "WatchlistAction",
     "WatchlistCompany",
     "WatchlistResponse",
@@ -65,10 +66,11 @@ __all__ = [
 from financial_reports_generated_client.api.companies_api import CompaniesApi as CompaniesApi
 from financial_reports_generated_client.api.filing_types_api import FilingTypesApi as FilingTypesApi
 from financial_reports_generated_client.api.filings_api import FilingsApi as FilingsApi
-from financial_reports_generated_client.api.gics_classifications_api import GICSClassificationsApi as GICSClassificationsApi
+from financial_reports_generated_client.api.isic_classifications_api import ISICClassificationsApi as ISICClassificationsApi
 from financial_reports_generated_client.api.processed_filings_api import ProcessedFilingsApi as ProcessedFilingsApi
 from financial_reports_generated_client.api.sources_api import SourcesApi as SourcesApi
 from financial_reports_generated_client.api.watchlist_api import WatchlistApi as WatchlistApi
+from financial_reports_generated_client.api.health_api import HealthApi as HealthApi
 from financial_reports_generated_client.api.schema_api import SchemaApi as SchemaApi
 
 # import ApiClient
@@ -88,21 +90,21 @@ from financial_reports_generated_client.models.company_minimal import CompanyMin
 from financial_reports_generated_client.models.error_detail import ErrorDetail as ErrorDetail
 from financial_reports_generated_client.models.filing import Filing as Filing
 from financial_reports_generated_client.models.filing_type import FilingType as FilingType
-from financial_reports_generated_client.models.industry import Industry as Industry
-from financial_reports_generated_client.models.industry_group import IndustryGroup as IndustryGroup
+from financial_reports_generated_client.models.isic_class import ISICClass as ISICClass
+from financial_reports_generated_client.models.isic_division import ISICDivision as ISICDivision
+from financial_reports_generated_client.models.isic_group import ISICGroup as ISICGroup
+from financial_reports_generated_client.models.isic_section import ISICSection as ISICSection
 from financial_reports_generated_client.models.language import Language as Language
 from financial_reports_generated_client.models.paginated_company_list import PaginatedCompanyList as PaginatedCompanyList
 from financial_reports_generated_client.models.paginated_filing_list import PaginatedFilingList as PaginatedFilingList
 from financial_reports_generated_client.models.paginated_filing_type_list import PaginatedFilingTypeList as PaginatedFilingTypeList
-from financial_reports_generated_client.models.paginated_industry_group_list import PaginatedIndustryGroupList as PaginatedIndustryGroupList
-from financial_reports_generated_client.models.paginated_industry_list import PaginatedIndustryList as PaginatedIndustryList
-from financial_reports_generated_client.models.paginated_sector_list import PaginatedSectorList as PaginatedSectorList
+from financial_reports_generated_client.models.paginated_isic_class_list import PaginatedISICClassList as PaginatedISICClassList
+from financial_reports_generated_client.models.paginated_isic_division_list import PaginatedISICDivisionList as PaginatedISICDivisionList
+from financial_reports_generated_client.models.paginated_isic_group_list import PaginatedISICGroupList as PaginatedISICGroupList
+from financial_reports_generated_client.models.paginated_isic_section_list import PaginatedISICSectionList as PaginatedISICSectionList
 from financial_reports_generated_client.models.paginated_source_list import PaginatedSourceList as PaginatedSourceList
-from financial_reports_generated_client.models.paginated_sub_industry_list import PaginatedSubIndustryList as PaginatedSubIndustryList
 from financial_reports_generated_client.models.processed_filing import ProcessedFiling as ProcessedFiling
-from financial_reports_generated_client.models.sector import Sector as Sector
 from financial_reports_generated_client.models.source import Source as Source
-from financial_reports_generated_client.models.sub_industry import SubIndustry as SubIndustry
 from financial_reports_generated_client.models.watchlist_action import WatchlistAction as WatchlistAction
 from financial_reports_generated_client.models.watchlist_company import WatchlistCompany as WatchlistCompany
 from financial_reports_generated_client.models.watchlist_response import WatchlistResponse as WatchlistResponse

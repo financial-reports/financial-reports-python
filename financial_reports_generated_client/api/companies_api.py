@@ -45,16 +45,16 @@ class CompaniesApi:
     async def companies_list(
         self,
         countries: Annotated[Optional[StrictStr], Field(description="Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values (e.g., US,GB,DE).")] = None,
-        industry: Annotated[Optional[StrictStr], Field(description="Filter by GICS Industry code.")] = None,
-        industry_group: Annotated[Optional[StrictStr], Field(description="Filter by GICS Industry Group code.")] = None,
+        industry: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Group code.")] = None,
+        industry_group: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Division code.")] = None,
         isin: Annotated[Optional[StrictStr], Field(description="Find companies matching the provided ISIN.")] = None,
         lei: Annotated[Optional[StrictStr], Field(description="Find a company by its LEI.")] = None,
         ordering: Annotated[Optional[StrictStr], Field(description="Which field to use when ordering the results.")] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
         search: Annotated[Optional[StrictStr], Field(description="A search term.")] = None,
-        sector: Annotated[Optional[StrictStr], Field(description="Filter by GICS Sector code.")] = None,
-        sub_industry: Annotated[Optional[StrictStr], Field(description="Filter by GICS Sub-Industry code.")] = None,
+        sector: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Section code.")] = None,
+        sub_industry: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Class code.")] = None,
         ticker: Annotated[Optional[StrictStr], Field(description="Find a company by its Ticker.")] = None,
         _request_timeout: Union[
             None,
@@ -71,13 +71,13 @@ class CompaniesApi:
     ) -> PaginatedCompanyList:
         """List Companies
 
-        Retrieve a paginated list of companies. Supports filtering via various query parameters including: - GICS classifications: `sector`, `industry_group`, `industry`, `sub_industry` (by GICS codes). - Location: `countries` (comma-separated ISO Alpha-2 codes, e.g., `US,GB`). - Identifiers: `isin`, `lei`, `ticker` (all case-insensitive).  Supports searching via the `search` parameter across company name, ISINs, LEI, and Ticker. Supports ordering via the `ordering` parameter. Allowed fields for ordering are: `name`, `date_ipo`, `year_founded`, and `country_iso__name`. For example, `?ordering=name` or `?ordering=-date_ipo` for descending order.
+        Retrieve a paginated list of companies. Supports filtering via various query parameters including: - ISIC classifications: `sector`, `industry_group`, `industry`, `sub_industry` (by ISIC codes). - Location: `countries` (comma-separated ISO Alpha-2 codes, e.g., `US,GB`). - Identifiers: `isin`, `lei`, `ticker` (all case-insensitive).  Supports searching via the `search` parameter across company name, ISINs, LEI, and Ticker. Supports ordering via the `ordering` parameter. Allowed fields for ordering are: `name`, `date_ipo`, `year_founded`, and `country_iso__name`. For example, `?ordering=name` or `?ordering=-date_ipo` for descending order.
 
         :param countries: Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values (e.g., US,GB,DE).
         :type countries: str
-        :param industry: Filter by GICS Industry code.
+        :param industry: Filter by ISIC Group code.
         :type industry: str
-        :param industry_group: Filter by GICS Industry Group code.
+        :param industry_group: Filter by ISIC Division code.
         :type industry_group: str
         :param isin: Find companies matching the provided ISIN.
         :type isin: str
@@ -91,9 +91,9 @@ class CompaniesApi:
         :type page_size: int
         :param search: A search term.
         :type search: str
-        :param sector: Filter by GICS Sector code.
+        :param sector: Filter by ISIC Section code.
         :type sector: str
-        :param sub_industry: Filter by GICS Sub-Industry code.
+        :param sub_industry: Filter by ISIC Class code.
         :type sub_industry: str
         :param ticker: Find a company by its Ticker.
         :type ticker: str
@@ -157,16 +157,16 @@ class CompaniesApi:
     async def companies_list_with_http_info(
         self,
         countries: Annotated[Optional[StrictStr], Field(description="Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values (e.g., US,GB,DE).")] = None,
-        industry: Annotated[Optional[StrictStr], Field(description="Filter by GICS Industry code.")] = None,
-        industry_group: Annotated[Optional[StrictStr], Field(description="Filter by GICS Industry Group code.")] = None,
+        industry: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Group code.")] = None,
+        industry_group: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Division code.")] = None,
         isin: Annotated[Optional[StrictStr], Field(description="Find companies matching the provided ISIN.")] = None,
         lei: Annotated[Optional[StrictStr], Field(description="Find a company by its LEI.")] = None,
         ordering: Annotated[Optional[StrictStr], Field(description="Which field to use when ordering the results.")] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
         search: Annotated[Optional[StrictStr], Field(description="A search term.")] = None,
-        sector: Annotated[Optional[StrictStr], Field(description="Filter by GICS Sector code.")] = None,
-        sub_industry: Annotated[Optional[StrictStr], Field(description="Filter by GICS Sub-Industry code.")] = None,
+        sector: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Section code.")] = None,
+        sub_industry: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Class code.")] = None,
         ticker: Annotated[Optional[StrictStr], Field(description="Find a company by its Ticker.")] = None,
         _request_timeout: Union[
             None,
@@ -183,13 +183,13 @@ class CompaniesApi:
     ) -> ApiResponse[PaginatedCompanyList]:
         """List Companies
 
-        Retrieve a paginated list of companies. Supports filtering via various query parameters including: - GICS classifications: `sector`, `industry_group`, `industry`, `sub_industry` (by GICS codes). - Location: `countries` (comma-separated ISO Alpha-2 codes, e.g., `US,GB`). - Identifiers: `isin`, `lei`, `ticker` (all case-insensitive).  Supports searching via the `search` parameter across company name, ISINs, LEI, and Ticker. Supports ordering via the `ordering` parameter. Allowed fields for ordering are: `name`, `date_ipo`, `year_founded`, and `country_iso__name`. For example, `?ordering=name` or `?ordering=-date_ipo` for descending order.
+        Retrieve a paginated list of companies. Supports filtering via various query parameters including: - ISIC classifications: `sector`, `industry_group`, `industry`, `sub_industry` (by ISIC codes). - Location: `countries` (comma-separated ISO Alpha-2 codes, e.g., `US,GB`). - Identifiers: `isin`, `lei`, `ticker` (all case-insensitive).  Supports searching via the `search` parameter across company name, ISINs, LEI, and Ticker. Supports ordering via the `ordering` parameter. Allowed fields for ordering are: `name`, `date_ipo`, `year_founded`, and `country_iso__name`. For example, `?ordering=name` or `?ordering=-date_ipo` for descending order.
 
         :param countries: Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values (e.g., US,GB,DE).
         :type countries: str
-        :param industry: Filter by GICS Industry code.
+        :param industry: Filter by ISIC Group code.
         :type industry: str
-        :param industry_group: Filter by GICS Industry Group code.
+        :param industry_group: Filter by ISIC Division code.
         :type industry_group: str
         :param isin: Find companies matching the provided ISIN.
         :type isin: str
@@ -203,9 +203,9 @@ class CompaniesApi:
         :type page_size: int
         :param search: A search term.
         :type search: str
-        :param sector: Filter by GICS Sector code.
+        :param sector: Filter by ISIC Section code.
         :type sector: str
-        :param sub_industry: Filter by GICS Sub-Industry code.
+        :param sub_industry: Filter by ISIC Class code.
         :type sub_industry: str
         :param ticker: Find a company by its Ticker.
         :type ticker: str
@@ -269,16 +269,16 @@ class CompaniesApi:
     async def companies_list_without_preload_content(
         self,
         countries: Annotated[Optional[StrictStr], Field(description="Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values (e.g., US,GB,DE).")] = None,
-        industry: Annotated[Optional[StrictStr], Field(description="Filter by GICS Industry code.")] = None,
-        industry_group: Annotated[Optional[StrictStr], Field(description="Filter by GICS Industry Group code.")] = None,
+        industry: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Group code.")] = None,
+        industry_group: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Division code.")] = None,
         isin: Annotated[Optional[StrictStr], Field(description="Find companies matching the provided ISIN.")] = None,
         lei: Annotated[Optional[StrictStr], Field(description="Find a company by its LEI.")] = None,
         ordering: Annotated[Optional[StrictStr], Field(description="Which field to use when ordering the results.")] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
         search: Annotated[Optional[StrictStr], Field(description="A search term.")] = None,
-        sector: Annotated[Optional[StrictStr], Field(description="Filter by GICS Sector code.")] = None,
-        sub_industry: Annotated[Optional[StrictStr], Field(description="Filter by GICS Sub-Industry code.")] = None,
+        sector: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Section code.")] = None,
+        sub_industry: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Class code.")] = None,
         ticker: Annotated[Optional[StrictStr], Field(description="Find a company by its Ticker.")] = None,
         _request_timeout: Union[
             None,
@@ -295,13 +295,13 @@ class CompaniesApi:
     ) -> RESTResponseType:
         """List Companies
 
-        Retrieve a paginated list of companies. Supports filtering via various query parameters including: - GICS classifications: `sector`, `industry_group`, `industry`, `sub_industry` (by GICS codes). - Location: `countries` (comma-separated ISO Alpha-2 codes, e.g., `US,GB`). - Identifiers: `isin`, `lei`, `ticker` (all case-insensitive).  Supports searching via the `search` parameter across company name, ISINs, LEI, and Ticker. Supports ordering via the `ordering` parameter. Allowed fields for ordering are: `name`, `date_ipo`, `year_founded`, and `country_iso__name`. For example, `?ordering=name` or `?ordering=-date_ipo` for descending order.
+        Retrieve a paginated list of companies. Supports filtering via various query parameters including: - ISIC classifications: `sector`, `industry_group`, `industry`, `sub_industry` (by ISIC codes). - Location: `countries` (comma-separated ISO Alpha-2 codes, e.g., `US,GB`). - Identifiers: `isin`, `lei`, `ticker` (all case-insensitive).  Supports searching via the `search` parameter across company name, ISINs, LEI, and Ticker. Supports ordering via the `ordering` parameter. Allowed fields for ordering are: `name`, `date_ipo`, `year_founded`, and `country_iso__name`. For example, `?ordering=name` or `?ordering=-date_ipo` for descending order.
 
         :param countries: Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values (e.g., US,GB,DE).
         :type countries: str
-        :param industry: Filter by GICS Industry code.
+        :param industry: Filter by ISIC Group code.
         :type industry: str
-        :param industry_group: Filter by GICS Industry Group code.
+        :param industry_group: Filter by ISIC Division code.
         :type industry_group: str
         :param isin: Find companies matching the provided ISIN.
         :type isin: str
@@ -315,9 +315,9 @@ class CompaniesApi:
         :type page_size: int
         :param search: A search term.
         :type search: str
-        :param sector: Filter by GICS Sector code.
+        :param sector: Filter by ISIC Section code.
         :type sector: str
-        :param sub_industry: Filter by GICS Sub-Industry code.
+        :param sub_industry: Filter by ISIC Class code.
         :type sub_industry: str
         :param ticker: Find a company by its Ticker.
         :type ticker: str
