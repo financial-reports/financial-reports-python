@@ -17,7 +17,7 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import Field, StrictInt, StrictStr
+from pydantic import Field, StrictInt, StrictStr, field_validator
 from typing import Optional
 from typing_extensions import Annotated
 from financial_reports_generated_client.models.company import Company
@@ -56,6 +56,7 @@ class CompaniesApi:
         sector: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Section code.")] = None,
         sub_industry: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Class code.")] = None,
         ticker: Annotated[Optional[StrictStr], Field(description="Filter by Company primary stock Ticker symbol. Case-insensitive.")] = None,
+        view: Annotated[Optional[StrictStr], Field(description="Controls the level of detail. Omit for a default 'summary' view, or use 'full' to include all details for each company.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -97,6 +98,8 @@ class CompaniesApi:
         :type sub_industry: str
         :param ticker: Filter by Company primary stock Ticker symbol. Case-insensitive.
         :type ticker: str
+        :param view: Controls the level of detail. Omit for a default 'summary' view, or use 'full' to include all details for each company.
+        :type view: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -132,6 +135,7 @@ class CompaniesApi:
             sector=sector,
             sub_industry=sub_industry,
             ticker=ticker,
+            view=view,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -168,6 +172,7 @@ class CompaniesApi:
         sector: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Section code.")] = None,
         sub_industry: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Class code.")] = None,
         ticker: Annotated[Optional[StrictStr], Field(description="Filter by Company primary stock Ticker symbol. Case-insensitive.")] = None,
+        view: Annotated[Optional[StrictStr], Field(description="Controls the level of detail. Omit for a default 'summary' view, or use 'full' to include all details for each company.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -209,6 +214,8 @@ class CompaniesApi:
         :type sub_industry: str
         :param ticker: Filter by Company primary stock Ticker symbol. Case-insensitive.
         :type ticker: str
+        :param view: Controls the level of detail. Omit for a default 'summary' view, or use 'full' to include all details for each company.
+        :type view: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -244,6 +251,7 @@ class CompaniesApi:
             sector=sector,
             sub_industry=sub_industry,
             ticker=ticker,
+            view=view,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -280,6 +288,7 @@ class CompaniesApi:
         sector: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Section code.")] = None,
         sub_industry: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Class code.")] = None,
         ticker: Annotated[Optional[StrictStr], Field(description="Filter by Company primary stock Ticker symbol. Case-insensitive.")] = None,
+        view: Annotated[Optional[StrictStr], Field(description="Controls the level of detail. Omit for a default 'summary' view, or use 'full' to include all details for each company.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -321,6 +330,8 @@ class CompaniesApi:
         :type sub_industry: str
         :param ticker: Filter by Company primary stock Ticker symbol. Case-insensitive.
         :type ticker: str
+        :param view: Controls the level of detail. Omit for a default 'summary' view, or use 'full' to include all details for each company.
+        :type view: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -356,6 +367,7 @@ class CompaniesApi:
             sector=sector,
             sub_industry=sub_industry,
             ticker=ticker,
+            view=view,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -387,6 +399,7 @@ class CompaniesApi:
         sector,
         sub_industry,
         ticker,
+        view,
         _request_auth,
         _content_type,
         _headers,
@@ -456,6 +469,10 @@ class CompaniesApi:
         if ticker is not None:
             
             _query_params.append(('ticker', ticker))
+            
+        if view is not None:
+            
+            _query_params.append(('view', view))
             
         # process the header parameters
         # process the form parameters

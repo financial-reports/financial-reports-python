@@ -9,7 +9,7 @@ Method | HTTP request | Description
 
 
 # **companies_list**
-> PaginatedCompanyMinimalList companies_list(countries=countries, industry=industry, industry_group=industry_group, isin=isin, lei=lei, ordering=ordering, page=page, page_size=page_size, search=search, sector=sector, sub_industry=sub_industry, ticker=ticker)
+> PaginatedCompanyMinimalList companies_list(countries=countries, industry=industry, industry_group=industry_group, isin=isin, lei=lei, ordering=ordering, page=page, page_size=page_size, search=search, sector=sector, sub_industry=sub_industry, ticker=ticker, view=view)
 
 List Companies
 
@@ -61,10 +61,11 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
     sector = 'sector_example' # str | Filter by ISIC Section code. (optional)
     sub_industry = 'sub_industry_example' # str | Filter by ISIC Class code. (optional)
     ticker = 'ticker_example' # str | Filter by Company primary stock Ticker symbol. Case-insensitive. (optional)
+    view = summary # str | Controls the level of detail. Omit for a default 'summary' view, or use 'full' to include all details for each company. (optional) (default to summary)
 
     try:
         # List Companies
-        api_response = await api_instance.companies_list(countries=countries, industry=industry, industry_group=industry_group, isin=isin, lei=lei, ordering=ordering, page=page, page_size=page_size, search=search, sector=sector, sub_industry=sub_industry, ticker=ticker)
+        api_response = await api_instance.companies_list(countries=countries, industry=industry, industry_group=industry_group, isin=isin, lei=lei, ordering=ordering, page=page, page_size=page_size, search=search, sector=sector, sub_industry=sub_industry, ticker=ticker, view=view)
         print("The response of CompaniesApi->companies_list:\n")
         pprint(api_response)
     except Exception as e:
@@ -90,6 +91,7 @@ Name | Type | Description  | Notes
  **sector** | **str**| Filter by ISIC Section code. | [optional] 
  **sub_industry** | **str**| Filter by ISIC Class code. | [optional] 
  **ticker** | **str**| Filter by Company primary stock Ticker symbol. Case-insensitive. | [optional] 
+ **view** | **str**| Controls the level of detail. Omit for a default &#39;summary&#39; view, or use &#39;full&#39; to include all details for each company. | [optional] [default to summary]
 
 ### Return type
 
@@ -108,7 +110,7 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Success |  -  |
+**200** | Success. The response structure will be the full Company object if &#x60;view&#x3D;full&#x60; is used. |  -  |
 **401** | Unauthorized |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

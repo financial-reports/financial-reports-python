@@ -34,6 +34,7 @@ class Company(BaseModel):
     """ # noqa: E501
     id: StrictInt = Field(description="Unique identifier for the company.")
     name: StrictStr = Field(description="Company name.")
+    isins: List[StrictStr] = Field(description="List of International Securities Identification Numbers (ISINs) associated with the company.")
     lei: StrictStr = Field(description="Legal Entity Identifier (ISO 17442).")
     country_code: Optional[StrictStr] = Field(description="ISO 3166-1 alpha-2 country code of the company's primary registration or headquarters.")
     sector: Optional[ISICSection] = Field(description="Company's ISIC Section classification.")
@@ -61,7 +62,7 @@ class Company(BaseModel):
     contact_email: Optional[StrictStr] = Field(description="General contact email address.")
     ticker: Optional[StrictStr] = Field(description="Primary stock ticker symbol.")
     is_listed: StrictBool = Field(description="Indicates if the company is currently publicly listed.")
-    __properties: ClassVar[List[str]] = ["id", "name", "lei", "country_code", "sector", "industry_group", "industry", "sub_industry", "ir_link", "homepage_link", "date_public", "date_ipo", "main_stock_exchange", "social_facebook", "social_instagram", "social_twitter", "social_linkedin", "social_youtube", "social_tiktok", "social_pinterest", "social_xing", "social_glassdoor", "year_founded", "corporate_video_id", "served_area", "headcount", "contact_email", "ticker", "is_listed"]
+    __properties: ClassVar[List[str]] = ["id", "name", "isins", "lei", "country_code", "sector", "industry_group", "industry", "sub_industry", "ir_link", "homepage_link", "date_public", "date_ipo", "main_stock_exchange", "social_facebook", "social_instagram", "social_twitter", "social_linkedin", "social_youtube", "social_tiktok", "social_pinterest", "social_xing", "social_glassdoor", "year_founded", "corporate_video_id", "served_area", "headcount", "contact_email", "ticker", "is_listed"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -122,10 +123,12 @@ class Company(BaseModel):
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
             "id",
             "name",
+            "isins",
             "lei",
             "country_code",
             "sector",
@@ -291,6 +294,7 @@ class Company(BaseModel):
         _obj = cls.model_validate({
             "id": obj.get("id"),
             "name": obj.get("name"),
+            "isins": obj.get("isins"),
             "lei": obj.get("lei"),
             "country_code": obj.get("country_code"),
             "sector": ISICSection.from_dict(obj["sector"]) if obj.get("sector") is not None else None,

@@ -38,6 +38,9 @@ class TestCompanyMinimal(unittest.TestCase):
             return CompanyMinimal(
                 id = 56,
                 name = '',
+                isins = [
+                    ''
+                    ],
                 lei = '',
                 sub_industry_code = '',
                 country_code = ''
@@ -46,6 +49,9 @@ class TestCompanyMinimal(unittest.TestCase):
             return CompanyMinimal(
                 id = 56,
                 name = '',
+                isins = [
+                    ''
+                    ],
                 lei = '',
                 sub_industry_code = '',
                 country_code = '',

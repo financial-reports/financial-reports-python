@@ -38,6 +38,9 @@ class TestCompany(unittest.TestCase):
             return Company(
                 id = 56,
                 name = '',
+                isins = [
+                    ''
+                    ],
                 lei = '',
                 country_code = '',
                 sector = financial_reports_generated_client.models.isic_section.ISICSection(
@@ -81,6 +84,9 @@ class TestCompany(unittest.TestCase):
             return Company(
                 id = 56,
                 name = '',
+                isins = [
+                    ''
+                    ],
                 lei = '',
                 country_code = '',
                 sector = financial_reports_generated_client.models.isic_section.ISICSection(

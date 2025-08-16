@@ -42,6 +42,9 @@ class TestFilingSummary(unittest.TestCase):
                 company = financial_reports_generated_client.models.company_minimal.CompanyMinimal(
                     id = 56, 
                     name = '', 
+                    isins = [
+                        ''
+                        ], 
                     lei = '', 
                     sub_industry_code = '', 
                     country_code = '', ),
@@ -56,6 +59,9 @@ class TestFilingSummary(unittest.TestCase):
                 company = financial_reports_generated_client.models.company_minimal.CompanyMinimal(
                     id = 56, 
                     name = '', 
+                    isins = [
+                        ''
+                        ], 
                     lei = '', 
                     sub_industry_code = '', 
                     country_code = '', ),

@@ -29,10 +29,11 @@ class CompanyMinimal(BaseModel):
     """ # noqa: E501
     id: StrictInt = Field(description="Unique identifier for the company.")
     name: StrictStr = Field(description="Company name.")
+    isins: List[StrictStr] = Field(description="List of International Securities Identification Numbers (ISINs) associated with the company.")
     lei: StrictStr = Field(description="Legal Entity Identifier (ISO 17442).")
     sub_industry_code: Optional[StrictStr] = Field(description="ISIC classification code classifying the company.")
     country_code: Optional[StrictStr] = Field(description="ISO 3166-1 alpha-2 country code of the company's primary registration or headquarters.")
-    __properties: ClassVar[List[str]] = ["id", "name", "lei", "sub_industry_code", "country_code"]
+    __properties: ClassVar[List[str]] = ["id", "name", "isins", "lei", "sub_industry_code", "country_code"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -69,10 +70,12 @@ class CompanyMinimal(BaseModel):
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
             "id",
             "name",
+            "isins",
             "lei",
             "sub_industry_code",
             "country_code",
@@ -107,6 +110,7 @@ class CompanyMinimal(BaseModel):
         _obj = cls.model_validate({
             "id": obj.get("id"),
             "name": obj.get("name"),
+            "isins": obj.get("isins"),
             "lei": obj.get("lei"),
             "sub_industry_code": obj.get("sub_industry_code"),
             "country_code": obj.get("country_code")
