@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "1.2.9"
+__version__ = "1.3.0"
 
 # Define package exports
 __all__ = [
@@ -114,3 +114,4 @@ from financial_reports_generated_client.models.source import Source as Source
 from financial_reports_generated_client.models.watchlist_action import WatchlistAction as WatchlistAction
 from financial_reports_generated_client.models.watchlist_company import WatchlistCompany as WatchlistCompany
 from financial_reports_generated_client.models.watchlist_response import WatchlistResponse as WatchlistResponse
+

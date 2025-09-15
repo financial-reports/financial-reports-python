@@ -18,7 +18,7 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
 from datetime import datetime
-from pydantic import Field, StrictInt, StrictStr
+from pydantic import Field, StrictInt, StrictStr, field_validator
 from typing import Optional
 from typing_extensions import Annotated
 from financial_reports_generated_client.models.filing import Filing
@@ -60,7 +60,10 @@ class FilingsApi:
         release_datetime_to: Annotated[Optional[datetime], Field(description="Filter by release datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         search: Annotated[Optional[StrictStr], Field(description="A search term.")] = None,
         source: Optional[StrictInt] = None,
-        type: Annotated[Optional[StrictStr], Field(description="Filter by Filing Type code (e.g., ANNREP).")] = None,
+        type: Annotated[Optional[StrictStr], Field(description="Filter by Filing Type code (e.g., 10-K).")] = None,
+        updated_date_from: Annotated[Optional[datetime], Field(description="Filter by the date a filing was last updated on the platform (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
+        updated_date_to: Annotated[Optional[datetime], Field(description="Filter by the date a filing was last updated on the platform (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
+        view: Annotated[Optional[StrictStr], Field(description="Controls the level of detail. Omit for a default 'summary' view, or use 'full' to include all details for each filing.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -108,8 +111,14 @@ class FilingsApi:
         :type search: str
         :param source:
         :type source: int
-        :param type: Filter by Filing Type code (e.g., ANNREP).
+        :param type: Filter by Filing Type code (e.g., 10-K).
         :type type: str
+        :param updated_date_from: Filter by the date a filing was last updated on the platform (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).
+        :type updated_date_from: datetime
+        :param updated_date_to: Filter by the date a filing was last updated on the platform (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).
+        :type updated_date_to: datetime
+        :param view: Controls the level of detail. Omit for a default 'summary' view, or use 'full' to include all details for each filing.
+        :type view: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -149,6 +158,9 @@ class FilingsApi:
             search=search,
             source=source,
             type=type,
+            updated_date_from=updated_date_from,
+            updated_date_to=updated_date_to,
+            view=view,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -188,7 +200,10 @@ class FilingsApi:
         release_datetime_to: Annotated[Optional[datetime], Field(description="Filter by release datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         search: Annotated[Optional[StrictStr], Field(description="A search term.")] = None,
         source: Optional[StrictInt] = None,
-        type: Annotated[Optional[StrictStr], Field(description="Filter by Filing Type code (e.g., ANNREP).")] = None,
+        type: Annotated[Optional[StrictStr], Field(description="Filter by Filing Type code (e.g., 10-K).")] = None,
+        updated_date_from: Annotated[Optional[datetime], Field(description="Filter by the date a filing was last updated on the platform (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
+        updated_date_to: Annotated[Optional[datetime], Field(description="Filter by the date a filing was last updated on the platform (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
+        view: Annotated[Optional[StrictStr], Field(description="Controls the level of detail. Omit for a default 'summary' view, or use 'full' to include all details for each filing.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -236,8 +251,14 @@ class FilingsApi:
         :type search: str
         :param source:
         :type source: int
-        :param type: Filter by Filing Type code (e.g., ANNREP).
+        :param type: Filter by Filing Type code (e.g., 10-K).
         :type type: str
+        :param updated_date_from: Filter by the date a filing was last updated on the platform (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).
+        :type updated_date_from: datetime
+        :param updated_date_to: Filter by the date a filing was last updated on the platform (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).
+        :type updated_date_to: datetime
+        :param view: Controls the level of detail. Omit for a default 'summary' view, or use 'full' to include all details for each filing.
+        :type view: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -277,6 +298,9 @@ class FilingsApi:
             search=search,
             source=source,
             type=type,
+            updated_date_from=updated_date_from,
+            updated_date_to=updated_date_to,
+            view=view,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -316,7 +340,10 @@ class FilingsApi:
         release_datetime_to: Annotated[Optional[datetime], Field(description="Filter by release datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         search: Annotated[Optional[StrictStr], Field(description="A search term.")] = None,
         source: Optional[StrictInt] = None,
-        type: Annotated[Optional[StrictStr], Field(description="Filter by Filing Type code (e.g., ANNREP).")] = None,
+        type: Annotated[Optional[StrictStr], Field(description="Filter by Filing Type code (e.g., 10-K).")] = None,
+        updated_date_from: Annotated[Optional[datetime], Field(description="Filter by the date a filing was last updated on the platform (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
+        updated_date_to: Annotated[Optional[datetime], Field(description="Filter by the date a filing was last updated on the platform (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
+        view: Annotated[Optional[StrictStr], Field(description="Controls the level of detail. Omit for a default 'summary' view, or use 'full' to include all details for each filing.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -364,8 +391,14 @@ class FilingsApi:
         :type search: str
         :param source:
         :type source: int
-        :param type: Filter by Filing Type code (e.g., ANNREP).
+        :param type: Filter by Filing Type code (e.g., 10-K).
         :type type: str
+        :param updated_date_from: Filter by the date a filing was last updated on the platform (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).
+        :type updated_date_from: datetime
+        :param updated_date_to: Filter by the date a filing was last updated on the platform (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).
+        :type updated_date_to: datetime
+        :param view: Controls the level of detail. Omit for a default 'summary' view, or use 'full' to include all details for each filing.
+        :type view: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -405,6 +438,9 @@ class FilingsApi:
             search=search,
             source=source,
             type=type,
+            updated_date_from=updated_date_from,
+            updated_date_to=updated_date_to,
+            view=view,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -440,6 +476,9 @@ class FilingsApi:
         search,
         source,
         type,
+        updated_date_from,
+        updated_date_to,
+        view,
         _request_auth,
         _content_type,
         _headers,
@@ -561,6 +600,36 @@ class FilingsApi:
         if type is not None:
             
             _query_params.append(('type', type))
+            
+        if updated_date_from is not None:
+            if isinstance(updated_date_from, datetime):
+                _query_params.append(
+                    (
+                        'updated_date_from',
+                        updated_date_from.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('updated_date_from', updated_date_from))
+            
+        if updated_date_to is not None:
+            if isinstance(updated_date_to, datetime):
+                _query_params.append(
+                    (
+                        'updated_date_to',
+                        updated_date_to.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('updated_date_to', updated_date_to))
+            
+        if view is not None:
+            
+            _query_params.append(('view', view))
             
         # process the header parameters
         # process the form parameters

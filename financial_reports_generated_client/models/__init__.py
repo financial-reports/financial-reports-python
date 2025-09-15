@@ -13,7 +13,6 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 # import models into model package
 from financial_reports_generated_client.models.company import Company
 from financial_reports_generated_client.models.company_minimal import CompanyMinimal
@@ -41,3 +40,4 @@ from financial_reports_generated_client.models.source import Source
 from financial_reports_generated_client.models.watchlist_action import WatchlistAction
 from financial_reports_generated_client.models.watchlist_company import WatchlistCompany
 from financial_reports_generated_client.models.watchlist_response import WatchlistResponse
+

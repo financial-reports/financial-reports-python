@@ -38,6 +38,7 @@ class TestCompany(unittest.TestCase):
             return Company(
                 id = 56,
                 name = '',
+                tagline = '',
                 isins = [
                     ''
                     ],
@@ -84,6 +85,7 @@ class TestCompany(unittest.TestCase):
             return Company(
                 id = 56,
                 name = '',
+                tagline = '',
                 isins = [
                     ''
                     ],

@@ -38,6 +38,7 @@ class TestCompanyMinimal(unittest.TestCase):
             return CompanyMinimal(
                 id = 56,
                 name = '',
+                tagline = '',
                 isins = [
                     ''
                     ],
@@ -49,6 +50,7 @@ class TestCompanyMinimal(unittest.TestCase):
             return CompanyMinimal(
                 id = 56,
                 name = '',
+                tagline = '',
                 isins = [
                     ''
                     ],

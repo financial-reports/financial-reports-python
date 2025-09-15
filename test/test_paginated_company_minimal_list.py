@@ -43,6 +43,7 @@ class TestPaginatedCompanyMinimalList(unittest.TestCase):
                     financial_reports_generated_client.models.company_minimal.CompanyMinimal(
                         id = 56, 
                         name = '', 
+                        tagline = '', 
                         isins = [
                             ''
                             ], 
@@ -58,6 +59,7 @@ class TestPaginatedCompanyMinimalList(unittest.TestCase):
                     financial_reports_generated_client.models.company_minimal.CompanyMinimal(
                         id = 56, 
                         name = '', 
+                        tagline = '', 
                         isins = [
                             ''
                             ], 

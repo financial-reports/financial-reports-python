@@ -40,6 +40,7 @@ class TestFiling(unittest.TestCase):
                 company = financial_reports_generated_client.models.company_minimal.CompanyMinimal(
                     id = 56, 
                     name = '', 
+                    tagline = '', 
                     isins = [
                         ''
                         ], 
@@ -72,6 +73,7 @@ class TestFiling(unittest.TestCase):
                 company = financial_reports_generated_client.models.company_minimal.CompanyMinimal(
                     id = 56, 
                     name = '', 
+                    tagline = '', 
                     isins = [
                         ''
                         ], 
