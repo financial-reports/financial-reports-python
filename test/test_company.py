@@ -39,11 +39,16 @@ class TestCompany(unittest.TestCase):
                 id = 56,
                 name = '',
                 tagline = '',
+                description = '',
+                description_last_updated = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
                 isins = [
                     ''
                     ],
                 lei = '',
                 country_code = '',
+                address = '',
+                city = '',
+                zip_code = '',
                 sector = financial_reports_generated_client.models.isic_section.ISICSection(
                     code = '', 
                     name = '', ),
@@ -61,9 +66,11 @@ class TestCompany(unittest.TestCase):
                     industry = null, ),
                 ir_link = '',
                 homepage_link = '',
+                logo = '',
                 date_public = datetime.datetime.strptime('1975-12-30', '%Y-%m-%d').date(),
                 date_ipo = datetime.datetime.strptime('1975-12-30', '%Y-%m-%d').date(),
                 main_stock_exchange = '',
+                is_listed = True,
                 social_facebook = '',
                 social_instagram = '',
                 social_twitter = '',
@@ -79,18 +86,43 @@ class TestCompany(unittest.TestCase):
                 headcount = 56,
                 contact_email = '',
                 ticker = '',
-                is_listed = True
+                local_company_id = '',
+                shares_outstanding = 56,
+                designated_sponsor = [
+                    financial_reports_generated_client.models.designated_sponsor.DesignatedSponsor(
+                        id = 56, 
+                        name = '', )
+                    ],
+                listed_stock_exchange = [
+                    financial_reports_generated_client.models.listed_stock_exchange.ListedStockExchange(
+                        id = 56, 
+                        name = '', 
+                        ticker = '', 
+                        website = '', )
+                    ],
+                stock_index = [
+                    financial_reports_generated_client.models.stock_index.StockIndex(
+                        id = 56, 
+                        name = '', 
+                        ticker = '', 
+                        isin = '', )
+                    ]
             )
         else:
             return Company(
                 id = 56,
                 name = '',
                 tagline = '',
+                description = '',
+                description_last_updated = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
                 isins = [
                     ''
                     ],
                 lei = '',
                 country_code = '',
+                address = '',
+                city = '',
+                zip_code = '',
                 sector = financial_reports_generated_client.models.isic_section.ISICSection(
                     code = '', 
                     name = '', ),
@@ -108,9 +140,11 @@ class TestCompany(unittest.TestCase):
                     industry = null, ),
                 ir_link = '',
                 homepage_link = '',
+                logo = '',
                 date_public = datetime.datetime.strptime('1975-12-30', '%Y-%m-%d').date(),
                 date_ipo = datetime.datetime.strptime('1975-12-30', '%Y-%m-%d').date(),
                 main_stock_exchange = '',
+                is_listed = True,
                 social_facebook = '',
                 social_instagram = '',
                 social_twitter = '',
@@ -126,7 +160,27 @@ class TestCompany(unittest.TestCase):
                 headcount = 56,
                 contact_email = '',
                 ticker = '',
-                is_listed = True,
+                local_company_id = '',
+                shares_outstanding = 56,
+                designated_sponsor = [
+                    financial_reports_generated_client.models.designated_sponsor.DesignatedSponsor(
+                        id = 56, 
+                        name = '', )
+                    ],
+                listed_stock_exchange = [
+                    financial_reports_generated_client.models.listed_stock_exchange.ListedStockExchange(
+                        id = 56, 
+                        name = '', 
+                        ticker = '', 
+                        website = '', )
+                    ],
+                stock_index = [
+                    financial_reports_generated_client.models.stock_index.StockIndex(
+                        id = 56, 
+                        name = '', 
+                        ticker = '', 
+                        isin = '', )
+                    ],
         )
         """
 

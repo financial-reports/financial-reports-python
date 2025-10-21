@@ -114,6 +114,7 @@ AuthSettings = TypedDict(
     "AuthSettings",
     {
         "ApiKeyAuth": APIKeyAuthSetting,
+        "cookieAuth": APIKeyAuthSetting,
     },
     total=False,
 )
@@ -517,6 +518,15 @@ conf = financial_reports_generated_client.Configuration(
                     'ApiKeyAuth',
                 ),
             }
+        if 'cookieAuth' in self.api_key:
+            auth['cookieAuth'] = {
+                'type': 'api_key',
+                'in': 'cookie',
+                'key': 'sessionid',
+                'value': self.get_api_key_with_prefix(
+                    'cookieAuth',
+                ),
+            }
         return auth
 
     def to_debug_report(self) -> str:
@@ -528,7 +538,7 @@ conf = financial_reports_generated_client.Configuration(
                "OS: {env}\n"\
                "Python Version: {pyversion}\n"\
                "Version of the API: 1.0.0\n"\
-               "SDK Package Version: 1.3.0".\
+               "SDK Package Version: 1.3.1".\
                format(env=sys.platform, pyversion=sys.version)
 
     def get_host_settings(self) -> List[HostSetting]:

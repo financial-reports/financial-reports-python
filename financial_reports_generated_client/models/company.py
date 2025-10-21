@@ -18,13 +18,16 @@ import pprint
 import re  # noqa: F401
 import json
 
-from datetime import date
+from datetime import date, datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
+from financial_reports_generated_client.models.designated_sponsor import DesignatedSponsor
 from financial_reports_generated_client.models.isic_class import ISICClass
 from financial_reports_generated_client.models.isic_division import ISICDivision
 from financial_reports_generated_client.models.isic_group import ISICGroup
 from financial_reports_generated_client.models.isic_section import ISICSection
+from financial_reports_generated_client.models.listed_stock_exchange import ListedStockExchange
+from financial_reports_generated_client.models.stock_index import StockIndex
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -35,18 +38,25 @@ class Company(BaseModel):
     id: StrictInt = Field(description="Unique identifier for the company.")
     name: StrictStr = Field(description="Company name.")
     tagline: StrictStr = Field(description="A short, one-liner describing the company's value proposition.")
+    description: StrictStr = Field(description="A detailed description or 'About Us' text for the company.")
+    description_last_updated: Optional[datetime] = Field(description="Timestamp of the last update to the company's description.")
     isins: List[StrictStr] = Field(description="List of International Securities Identification Numbers (ISINs) associated with the company.")
     lei: StrictStr = Field(description="Legal Entity Identifier (ISO 17442).")
     country_code: Optional[StrictStr] = Field(description="ISO 3166-1 alpha-2 country code of the company's primary registration or headquarters.")
+    address: StrictStr = Field(description="The company's primary street address.")
+    city: StrictStr = Field(description="The city where the company's headquarters is located.")
+    zip_code: StrictStr = Field(description="The postal or ZIP code for the company's address.")
     sector: Optional[ISICSection] = Field(description="Company's ISIC Section classification.")
     industry_group: Optional[ISICDivision] = Field(description="Company's ISIC Division classification.")
     industry: Optional[ISICGroup] = Field(description="Company's ISIC Group classification.")
     sub_industry: Optional[ISICClass] = Field(description="Company's ISIC Class classification.")
     ir_link: StrictStr = Field(description="Link to the company's Investor Relations page.")
     homepage_link: StrictStr = Field(description="Link to the company's main homepage.")
+    logo: Optional[StrictStr] = Field(description="URL of the company's logo file.")
     date_public: Optional[date] = Field(description="Date the company first became public.")
     date_ipo: date = Field(description="Date of the company's Initial Public Offering.")
     main_stock_exchange: StrictStr = Field(description="Primary stock exchange where the company is listed.")
+    is_listed: StrictBool = Field(description="Indicates if the company is currently publicly listed.")
     social_facebook: Optional[StrictStr] = Field(description="Facebook profile/page identifier.")
     social_instagram: Optional[StrictStr] = Field(description="Instagram profile identifier.")
     social_twitter: Optional[StrictStr] = Field(description="Twitter handle (without @).")
@@ -62,8 +72,12 @@ class Company(BaseModel):
     headcount: Optional[StrictInt] = Field(description="Approximate number of employees.")
     contact_email: Optional[StrictStr] = Field(description="General contact email address.")
     ticker: Optional[StrictStr] = Field(description="Primary stock ticker symbol.")
-    is_listed: StrictBool = Field(description="Indicates if the company is currently publicly listed.")
-    __properties: ClassVar[List[str]] = ["id", "name", "tagline", "isins", "lei", "country_code", "sector", "industry_group", "industry", "sub_industry", "ir_link", "homepage_link", "date_public", "date_ipo", "main_stock_exchange", "social_facebook", "social_instagram", "social_twitter", "social_linkedin", "social_youtube", "social_tiktok", "social_pinterest", "social_xing", "social_glassdoor", "year_founded", "corporate_video_id", "served_area", "headcount", "contact_email", "ticker", "is_listed"]
+    local_company_id: StrictStr = Field(description="Local registration or jurisdiction-specific ID (e.g., HRB 24902, CIK 123456).")
+    shares_outstanding: Optional[StrictInt] = Field(description="The total number of a corporation's stock shares that have been authorized and issued.")
+    designated_sponsor: List[DesignatedSponsor] = Field(description="Financial institutions that act as market makers for the company's stock.")
+    listed_stock_exchange: List[ListedStockExchange] = Field(description="A list of stock exchanges where the company is listed.")
+    stock_index: List[StockIndex] = Field(description="A list of stock indices the company is a component of.")
+    __properties: ClassVar[List[str]] = ["id", "name", "tagline", "description", "description_last_updated", "isins", "lei", "country_code", "address", "city", "zip_code", "sector", "industry_group", "industry", "sub_industry", "ir_link", "homepage_link", "logo", "date_public", "date_ipo", "main_stock_exchange", "is_listed", "social_facebook", "social_instagram", "social_twitter", "social_linkedin", "social_youtube", "social_tiktok", "social_pinterest", "social_xing", "social_glassdoor", "year_founded", "corporate_video_id", "served_area", "headcount", "contact_email", "ticker", "local_company_id", "shares_outstanding", "designated_sponsor", "listed_stock_exchange", "stock_index"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -126,23 +140,41 @@ class Company(BaseModel):
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
             "id",
             "name",
             "tagline",
+            "description",
+            "description_last_updated",
             "isins",
             "lei",
             "country_code",
+            "address",
+            "city",
+            "zip_code",
             "sector",
             "industry_group",
             "industry",
             "sub_industry",
             "ir_link",
             "homepage_link",
+            "logo",
             "date_public",
             "date_ipo",
             "main_stock_exchange",
+            "is_listed",
             "social_facebook",
             "social_instagram",
             "social_twitter",
@@ -158,7 +190,11 @@ class Company(BaseModel):
             "headcount",
             "contact_email",
             "ticker",
-            "is_listed",
+            "local_company_id",
+            "shares_outstanding",
+            "designated_sponsor",
+            "listed_stock_exchange",
+            "stock_index",
         ])
 
         _dict = self.model_dump(
@@ -178,6 +214,32 @@ class Company(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of sub_industry
         if self.sub_industry:
             _dict['sub_industry'] = self.sub_industry.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of each item in designated_sponsor (list)
+        _items = []
+        if self.designated_sponsor:
+            for _item_designated_sponsor in self.designated_sponsor:
+                if _item_designated_sponsor:
+                    _items.append(_item_designated_sponsor.to_dict())
+            _dict['designated_sponsor'] = _items
+        # override the default output from pydantic by calling `to_dict()` of each item in listed_stock_exchange (list)
+        _items = []
+        if self.listed_stock_exchange:
+            for _item_listed_stock_exchange in self.listed_stock_exchange:
+                if _item_listed_stock_exchange:
+                    _items.append(_item_listed_stock_exchange.to_dict())
+            _dict['listed_stock_exchange'] = _items
+        # override the default output from pydantic by calling `to_dict()` of each item in stock_index (list)
+        _items = []
+        if self.stock_index:
+            for _item_stock_index in self.stock_index:
+                if _item_stock_index:
+                    _items.append(_item_stock_index.to_dict())
+            _dict['stock_index'] = _items
+        # set to None if description_last_updated (nullable) is None
+        # and model_fields_set contains the field
+        if self.description_last_updated is None and "description_last_updated" in self.model_fields_set:
+            _dict['description_last_updated'] = None
+
         # set to None if country_code (nullable) is None
         # and model_fields_set contains the field
         if self.country_code is None and "country_code" in self.model_fields_set:
@@ -202,6 +264,11 @@ class Company(BaseModel):
         # and model_fields_set contains the field
         if self.sub_industry is None and "sub_industry" in self.model_fields_set:
             _dict['sub_industry'] = None
+
+        # set to None if logo (nullable) is None
+        # and model_fields_set contains the field
+        if self.logo is None and "logo" in self.model_fields_set:
+            _dict['logo'] = None
 
         # set to None if date_public (nullable) is None
         # and model_fields_set contains the field
@@ -283,6 +350,11 @@ class Company(BaseModel):
         if self.ticker is None and "ticker" in self.model_fields_set:
             _dict['ticker'] = None
 
+        # set to None if shares_outstanding (nullable) is None
+        # and model_fields_set contains the field
+        if self.shares_outstanding is None and "shares_outstanding" in self.model_fields_set:
+            _dict['shares_outstanding'] = None
+
         return _dict
 
     @classmethod
@@ -298,18 +370,25 @@ class Company(BaseModel):
             "id": obj.get("id"),
             "name": obj.get("name"),
             "tagline": obj.get("tagline"),
+            "description": obj.get("description"),
+            "description_last_updated": obj.get("description_last_updated"),
             "isins": obj.get("isins"),
             "lei": obj.get("lei"),
             "country_code": obj.get("country_code"),
+            "address": obj.get("address"),
+            "city": obj.get("city"),
+            "zip_code": obj.get("zip_code"),
             "sector": ISICSection.from_dict(obj["sector"]) if obj.get("sector") is not None else None,
             "industry_group": ISICDivision.from_dict(obj["industry_group"]) if obj.get("industry_group") is not None else None,
             "industry": ISICGroup.from_dict(obj["industry"]) if obj.get("industry") is not None else None,
             "sub_industry": ISICClass.from_dict(obj["sub_industry"]) if obj.get("sub_industry") is not None else None,
             "ir_link": obj.get("ir_link"),
             "homepage_link": obj.get("homepage_link"),
+            "logo": obj.get("logo"),
             "date_public": obj.get("date_public"),
             "date_ipo": obj.get("date_ipo"),
             "main_stock_exchange": obj.get("main_stock_exchange"),
+            "is_listed": obj.get("is_listed"),
             "social_facebook": obj.get("social_facebook"),
             "social_instagram": obj.get("social_instagram"),
             "social_twitter": obj.get("social_twitter"),
@@ -325,7 +404,11 @@ class Company(BaseModel):
             "headcount": obj.get("headcount"),
             "contact_email": obj.get("contact_email"),
             "ticker": obj.get("ticker"),
-            "is_listed": obj.get("is_listed")
+            "local_company_id": obj.get("local_company_id"),
+            "shares_outstanding": obj.get("shares_outstanding"),
+            "designated_sponsor": [DesignatedSponsor.from_dict(_item) for _item in obj["designated_sponsor"]] if obj.get("designated_sponsor") is not None else None,
+            "listed_stock_exchange": [ListedStockExchange.from_dict(_item) for _item in obj["listed_stock_exchange"]] if obj.get("listed_stock_exchange") is not None else None,
+            "stock_index": [StockIndex.from_dict(_item) for _item in obj["stock_index"]] if obj.get("stock_index") is not None else None
         })
         return _obj
 
