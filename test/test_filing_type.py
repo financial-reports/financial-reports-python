@@ -36,12 +36,14 @@ class TestFilingType(unittest.TestCase):
         model = FilingType()
         if include_optional:
             return FilingType(
+                id = 56,
                 code = '',
                 name = '',
                 description = ''
             )
         else:
             return FilingType(
+                id = 56,
                 code = '',
                 name = '',
                 description = '',

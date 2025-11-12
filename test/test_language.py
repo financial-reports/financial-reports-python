@@ -36,11 +36,13 @@ class TestLanguage(unittest.TestCase):
         model = Language()
         if include_optional:
             return Language(
+                id = 56,
                 code = '',
                 name = ''
             )
         else:
             return Language(
+                id = 56,
                 code = '',
                 name = '',
         )

@@ -18,8 +18,8 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
 from datetime import datetime
-from pydantic import Field, StrictInt, StrictStr, field_validator
-from typing import Optional
+from pydantic import Field, StrictBool, StrictFloat, StrictInt, StrictStr, field_validator
+from typing import Optional, Union
 from typing_extensions import Annotated
 from financial_reports_generated_client.models.filing import Filing
 from financial_reports_generated_client.models.paginated_filing_summary_list import PaginatedFilingSummaryList
@@ -53,13 +53,15 @@ class FilingsApi:
         language: Annotated[Optional[StrictStr], Field(description="Filter by a single filing language ISO 639-1 code (e.g., en).")] = None,
         languages: Annotated[Optional[StrictStr], Field(description="Filter by filing language ISO 639-1 code(s). Comma-separated for multiple values (e.g., en,de).")] = None,
         lei: Annotated[Optional[StrictStr], Field(description="Filter by Company Legal Entity Identifier (LEI).")] = None,
-        ordering: Annotated[Optional[StrictStr], Field(description="Which field to use when ordering the results.")] = None,
+        on_watchlist: Annotated[Optional[StrictBool], Field(description="Filter by companies on the user's watchlist. Use 'true' to see only watchlist companies, 'false' to exclude them. Omitting the parameter returns all companies.")] = None,
+        ordering: Annotated[Optional[StrictStr], Field(description="Which field to use when ordering the results. Available fields: `id`, `release_datetime`, `added_to_platform`. Prefix with '-' for descending order (e.g., `-release_datetime`).")] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
         release_datetime_from: Annotated[Optional[datetime], Field(description="Filter by release datetime (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         release_datetime_to: Annotated[Optional[datetime], Field(description="Filter by release datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         search: Annotated[Optional[StrictStr], Field(description="A search term.")] = None,
-        source: Optional[StrictInt] = None,
+        source: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Filter by a single data source ID.")] = None,
+        sources: Annotated[Optional[StrictStr], Field(description="Filter by data source ID(s). Comma-separated for multiple values (e.g., 38,40,51).")] = None,
         type: Annotated[Optional[StrictStr], Field(description="Filter by Filing Type code (e.g., 10-K).")] = None,
         updated_date_from: Annotated[Optional[datetime], Field(description="Filter by the date a filing was last updated on the platform (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         updated_date_to: Annotated[Optional[datetime], Field(description="Filter by the date a filing was last updated on the platform (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
@@ -97,7 +99,9 @@ class FilingsApi:
         :type languages: str
         :param lei: Filter by Company Legal Entity Identifier (LEI).
         :type lei: str
-        :param ordering: Which field to use when ordering the results.
+        :param on_watchlist: Filter by companies on the user's watchlist. Use 'true' to see only watchlist companies, 'false' to exclude them. Omitting the parameter returns all companies.
+        :type on_watchlist: bool
+        :param ordering: Which field to use when ordering the results. Available fields: `id`, `release_datetime`, `added_to_platform`. Prefix with '-' for descending order (e.g., `-release_datetime`).
         :type ordering: str
         :param page: A page number within the paginated result set.
         :type page: int
@@ -109,8 +113,10 @@ class FilingsApi:
         :type release_datetime_to: datetime
         :param search: A search term.
         :type search: str
-        :param source:
-        :type source: int
+        :param source: Filter by a single data source ID.
+        :type source: float
+        :param sources: Filter by data source ID(s). Comma-separated for multiple values (e.g., 38,40,51).
+        :type sources: str
         :param type: Filter by Filing Type code (e.g., 10-K).
         :type type: str
         :param updated_date_from: Filter by the date a filing was last updated on the platform (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).
@@ -150,6 +156,7 @@ class FilingsApi:
             language=language,
             languages=languages,
             lei=lei,
+            on_watchlist=on_watchlist,
             ordering=ordering,
             page=page,
             page_size=page_size,
@@ -157,6 +164,7 @@ class FilingsApi:
             release_datetime_to=release_datetime_to,
             search=search,
             source=source,
+            sources=sources,
             type=type,
             updated_date_from=updated_date_from,
             updated_date_to=updated_date_to,
@@ -193,13 +201,15 @@ class FilingsApi:
         language: Annotated[Optional[StrictStr], Field(description="Filter by a single filing language ISO 639-1 code (e.g., en).")] = None,
         languages: Annotated[Optional[StrictStr], Field(description="Filter by filing language ISO 639-1 code(s). Comma-separated for multiple values (e.g., en,de).")] = None,
         lei: Annotated[Optional[StrictStr], Field(description="Filter by Company Legal Entity Identifier (LEI).")] = None,
-        ordering: Annotated[Optional[StrictStr], Field(description="Which field to use when ordering the results.")] = None,
+        on_watchlist: Annotated[Optional[StrictBool], Field(description="Filter by companies on the user's watchlist. Use 'true' to see only watchlist companies, 'false' to exclude them. Omitting the parameter returns all companies.")] = None,
+        ordering: Annotated[Optional[StrictStr], Field(description="Which field to use when ordering the results. Available fields: `id`, `release_datetime`, `added_to_platform`. Prefix with '-' for descending order (e.g., `-release_datetime`).")] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
         release_datetime_from: Annotated[Optional[datetime], Field(description="Filter by release datetime (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         release_datetime_to: Annotated[Optional[datetime], Field(description="Filter by release datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         search: Annotated[Optional[StrictStr], Field(description="A search term.")] = None,
-        source: Optional[StrictInt] = None,
+        source: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Filter by a single data source ID.")] = None,
+        sources: Annotated[Optional[StrictStr], Field(description="Filter by data source ID(s). Comma-separated for multiple values (e.g., 38,40,51).")] = None,
         type: Annotated[Optional[StrictStr], Field(description="Filter by Filing Type code (e.g., 10-K).")] = None,
         updated_date_from: Annotated[Optional[datetime], Field(description="Filter by the date a filing was last updated on the platform (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         updated_date_to: Annotated[Optional[datetime], Field(description="Filter by the date a filing was last updated on the platform (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
@@ -237,7 +247,9 @@ class FilingsApi:
         :type languages: str
         :param lei: Filter by Company Legal Entity Identifier (LEI).
         :type lei: str
-        :param ordering: Which field to use when ordering the results.
+        :param on_watchlist: Filter by companies on the user's watchlist. Use 'true' to see only watchlist companies, 'false' to exclude them. Omitting the parameter returns all companies.
+        :type on_watchlist: bool
+        :param ordering: Which field to use when ordering the results. Available fields: `id`, `release_datetime`, `added_to_platform`. Prefix with '-' for descending order (e.g., `-release_datetime`).
         :type ordering: str
         :param page: A page number within the paginated result set.
         :type page: int
@@ -249,8 +261,10 @@ class FilingsApi:
         :type release_datetime_to: datetime
         :param search: A search term.
         :type search: str
-        :param source:
-        :type source: int
+        :param source: Filter by a single data source ID.
+        :type source: float
+        :param sources: Filter by data source ID(s). Comma-separated for multiple values (e.g., 38,40,51).
+        :type sources: str
         :param type: Filter by Filing Type code (e.g., 10-K).
         :type type: str
         :param updated_date_from: Filter by the date a filing was last updated on the platform (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).
@@ -290,6 +304,7 @@ class FilingsApi:
             language=language,
             languages=languages,
             lei=lei,
+            on_watchlist=on_watchlist,
             ordering=ordering,
             page=page,
             page_size=page_size,
@@ -297,6 +312,7 @@ class FilingsApi:
             release_datetime_to=release_datetime_to,
             search=search,
             source=source,
+            sources=sources,
             type=type,
             updated_date_from=updated_date_from,
             updated_date_to=updated_date_to,
@@ -333,13 +349,15 @@ class FilingsApi:
         language: Annotated[Optional[StrictStr], Field(description="Filter by a single filing language ISO 639-1 code (e.g., en).")] = None,
         languages: Annotated[Optional[StrictStr], Field(description="Filter by filing language ISO 639-1 code(s). Comma-separated for multiple values (e.g., en,de).")] = None,
         lei: Annotated[Optional[StrictStr], Field(description="Filter by Company Legal Entity Identifier (LEI).")] = None,
-        ordering: Annotated[Optional[StrictStr], Field(description="Which field to use when ordering the results.")] = None,
+        on_watchlist: Annotated[Optional[StrictBool], Field(description="Filter by companies on the user's watchlist. Use 'true' to see only watchlist companies, 'false' to exclude them. Omitting the parameter returns all companies.")] = None,
+        ordering: Annotated[Optional[StrictStr], Field(description="Which field to use when ordering the results. Available fields: `id`, `release_datetime`, `added_to_platform`. Prefix with '-' for descending order (e.g., `-release_datetime`).")] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
         release_datetime_from: Annotated[Optional[datetime], Field(description="Filter by release datetime (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         release_datetime_to: Annotated[Optional[datetime], Field(description="Filter by release datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         search: Annotated[Optional[StrictStr], Field(description="A search term.")] = None,
-        source: Optional[StrictInt] = None,
+        source: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Filter by a single data source ID.")] = None,
+        sources: Annotated[Optional[StrictStr], Field(description="Filter by data source ID(s). Comma-separated for multiple values (e.g., 38,40,51).")] = None,
         type: Annotated[Optional[StrictStr], Field(description="Filter by Filing Type code (e.g., 10-K).")] = None,
         updated_date_from: Annotated[Optional[datetime], Field(description="Filter by the date a filing was last updated on the platform (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         updated_date_to: Annotated[Optional[datetime], Field(description="Filter by the date a filing was last updated on the platform (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
@@ -377,7 +395,9 @@ class FilingsApi:
         :type languages: str
         :param lei: Filter by Company Legal Entity Identifier (LEI).
         :type lei: str
-        :param ordering: Which field to use when ordering the results.
+        :param on_watchlist: Filter by companies on the user's watchlist. Use 'true' to see only watchlist companies, 'false' to exclude them. Omitting the parameter returns all companies.
+        :type on_watchlist: bool
+        :param ordering: Which field to use when ordering the results. Available fields: `id`, `release_datetime`, `added_to_platform`. Prefix with '-' for descending order (e.g., `-release_datetime`).
         :type ordering: str
         :param page: A page number within the paginated result set.
         :type page: int
@@ -389,8 +409,10 @@ class FilingsApi:
         :type release_datetime_to: datetime
         :param search: A search term.
         :type search: str
-        :param source:
-        :type source: int
+        :param source: Filter by a single data source ID.
+        :type source: float
+        :param sources: Filter by data source ID(s). Comma-separated for multiple values (e.g., 38,40,51).
+        :type sources: str
         :param type: Filter by Filing Type code (e.g., 10-K).
         :type type: str
         :param updated_date_from: Filter by the date a filing was last updated on the platform (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).
@@ -430,6 +452,7 @@ class FilingsApi:
             language=language,
             languages=languages,
             lei=lei,
+            on_watchlist=on_watchlist,
             ordering=ordering,
             page=page,
             page_size=page_size,
@@ -437,6 +460,7 @@ class FilingsApi:
             release_datetime_to=release_datetime_to,
             search=search,
             source=source,
+            sources=sources,
             type=type,
             updated_date_from=updated_date_from,
             updated_date_to=updated_date_to,
@@ -468,6 +492,7 @@ class FilingsApi:
         language,
         languages,
         lei,
+        on_watchlist,
         ordering,
         page,
         page_size,
@@ -475,6 +500,7 @@ class FilingsApi:
         release_datetime_to,
         search,
         source,
+        sources,
         type,
         updated_date_from,
         updated_date_to,
@@ -551,6 +577,10 @@ class FilingsApi:
             
             _query_params.append(('lei', lei))
             
+        if on_watchlist is not None:
+            
+            _query_params.append(('on_watchlist', on_watchlist))
+            
         if ordering is not None:
             
             _query_params.append(('ordering', ordering))
@@ -596,6 +626,10 @@ class FilingsApi:
         if source is not None:
             
             _query_params.append(('source', source))
+            
+        if sources is not None:
+            
+            _query_params.append(('sources', sources))
             
         if type is not None:
             

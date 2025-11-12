@@ -5,11 +5,13 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **str** |  | [readonly] 
+**id** | **UUID** |  | [readonly] 
 **status** | [**StatusEnum**](StatusEnum.md) |  | [optional] 
 **result_file_url** | **str** |  | [readonly] 
 **error_message** | **str** |  | [optional] 
 **record_count** | **int** |  | [optional] 
+**records_processed** | **int** | Number of records processed so far. | [optional] 
+**estimated_completion_time** | **datetime** |  | [optional] 
 
 ## Example
 

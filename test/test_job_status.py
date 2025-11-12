@@ -40,7 +40,9 @@ class TestJobStatus(unittest.TestCase):
                 status = 'PENDING',
                 result_file_url = '',
                 error_message = '',
-                record_count = 0
+                record_count = 0,
+                records_processed = 0,
+                estimated_completion_time = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f')
             )
         else:
             return JobStatus(

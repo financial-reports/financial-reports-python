@@ -17,7 +17,7 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import Field, StrictInt, StrictStr, field_validator
+from pydantic import Field, StrictBool, StrictInt, StrictStr, field_validator
 from typing import Optional
 from typing_extensions import Annotated
 from financial_reports_generated_client.models.company import Company
@@ -49,7 +49,8 @@ class CompaniesApi:
         industry_group: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Division code.")] = None,
         isin: Annotated[Optional[StrictStr], Field(description="Filter by Company ISIN. Case-insensitive.")] = None,
         lei: Annotated[Optional[StrictStr], Field(description="Filter by Company Legal Entity Identifier (LEI). Case-insensitive.")] = None,
-        ordering: Annotated[Optional[StrictStr], Field(description="Which field to use when ordering the results.")] = None,
+        on_watchlist: Annotated[Optional[StrictBool], Field(description="Filter by companies on the user's watchlist. Use 'true' to see only watchlist companies, 'false' to exclude them. Omitting the parameter returns all companies.")] = None,
+        ordering: Annotated[Optional[StrictStr], Field(description="Which field to use when ordering the results. Available fields: `id`, `name`, `date_ipo`, `year_founded`, `country_iso__name`. Prefix with '-' for descending order (e.g., `-name`).")] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
         search: Annotated[Optional[StrictStr], Field(description="A search term.")] = None,
@@ -84,7 +85,9 @@ class CompaniesApi:
         :type isin: str
         :param lei: Filter by Company Legal Entity Identifier (LEI). Case-insensitive.
         :type lei: str
-        :param ordering: Which field to use when ordering the results.
+        :param on_watchlist: Filter by companies on the user's watchlist. Use 'true' to see only watchlist companies, 'false' to exclude them. Omitting the parameter returns all companies.
+        :type on_watchlist: bool
+        :param ordering: Which field to use when ordering the results. Available fields: `id`, `name`, `date_ipo`, `year_founded`, `country_iso__name`. Prefix with '-' for descending order (e.g., `-name`).
         :type ordering: str
         :param page: A page number within the paginated result set.
         :type page: int
@@ -128,6 +131,7 @@ class CompaniesApi:
             industry_group=industry_group,
             isin=isin,
             lei=lei,
+            on_watchlist=on_watchlist,
             ordering=ordering,
             page=page,
             page_size=page_size,
@@ -165,7 +169,8 @@ class CompaniesApi:
         industry_group: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Division code.")] = None,
         isin: Annotated[Optional[StrictStr], Field(description="Filter by Company ISIN. Case-insensitive.")] = None,
         lei: Annotated[Optional[StrictStr], Field(description="Filter by Company Legal Entity Identifier (LEI). Case-insensitive.")] = None,
-        ordering: Annotated[Optional[StrictStr], Field(description="Which field to use when ordering the results.")] = None,
+        on_watchlist: Annotated[Optional[StrictBool], Field(description="Filter by companies on the user's watchlist. Use 'true' to see only watchlist companies, 'false' to exclude them. Omitting the parameter returns all companies.")] = None,
+        ordering: Annotated[Optional[StrictStr], Field(description="Which field to use when ordering the results. Available fields: `id`, `name`, `date_ipo`, `year_founded`, `country_iso__name`. Prefix with '-' for descending order (e.g., `-name`).")] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
         search: Annotated[Optional[StrictStr], Field(description="A search term.")] = None,
@@ -200,7 +205,9 @@ class CompaniesApi:
         :type isin: str
         :param lei: Filter by Company Legal Entity Identifier (LEI). Case-insensitive.
         :type lei: str
-        :param ordering: Which field to use when ordering the results.
+        :param on_watchlist: Filter by companies on the user's watchlist. Use 'true' to see only watchlist companies, 'false' to exclude them. Omitting the parameter returns all companies.
+        :type on_watchlist: bool
+        :param ordering: Which field to use when ordering the results. Available fields: `id`, `name`, `date_ipo`, `year_founded`, `country_iso__name`. Prefix with '-' for descending order (e.g., `-name`).
         :type ordering: str
         :param page: A page number within the paginated result set.
         :type page: int
@@ -244,6 +251,7 @@ class CompaniesApi:
             industry_group=industry_group,
             isin=isin,
             lei=lei,
+            on_watchlist=on_watchlist,
             ordering=ordering,
             page=page,
             page_size=page_size,
@@ -281,7 +289,8 @@ class CompaniesApi:
         industry_group: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Division code.")] = None,
         isin: Annotated[Optional[StrictStr], Field(description="Filter by Company ISIN. Case-insensitive.")] = None,
         lei: Annotated[Optional[StrictStr], Field(description="Filter by Company Legal Entity Identifier (LEI). Case-insensitive.")] = None,
-        ordering: Annotated[Optional[StrictStr], Field(description="Which field to use when ordering the results.")] = None,
+        on_watchlist: Annotated[Optional[StrictBool], Field(description="Filter by companies on the user's watchlist. Use 'true' to see only watchlist companies, 'false' to exclude them. Omitting the parameter returns all companies.")] = None,
+        ordering: Annotated[Optional[StrictStr], Field(description="Which field to use when ordering the results. Available fields: `id`, `name`, `date_ipo`, `year_founded`, `country_iso__name`. Prefix with '-' for descending order (e.g., `-name`).")] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
         search: Annotated[Optional[StrictStr], Field(description="A search term.")] = None,
@@ -316,7 +325,9 @@ class CompaniesApi:
         :type isin: str
         :param lei: Filter by Company Legal Entity Identifier (LEI). Case-insensitive.
         :type lei: str
-        :param ordering: Which field to use when ordering the results.
+        :param on_watchlist: Filter by companies on the user's watchlist. Use 'true' to see only watchlist companies, 'false' to exclude them. Omitting the parameter returns all companies.
+        :type on_watchlist: bool
+        :param ordering: Which field to use when ordering the results. Available fields: `id`, `name`, `date_ipo`, `year_founded`, `country_iso__name`. Prefix with '-' for descending order (e.g., `-name`).
         :type ordering: str
         :param page: A page number within the paginated result set.
         :type page: int
@@ -360,6 +371,7 @@ class CompaniesApi:
             industry_group=industry_group,
             isin=isin,
             lei=lei,
+            on_watchlist=on_watchlist,
             ordering=ordering,
             page=page,
             page_size=page_size,
@@ -392,6 +404,7 @@ class CompaniesApi:
         industry_group,
         isin,
         lei,
+        on_watchlist,
         ordering,
         page,
         page_size,
@@ -441,6 +454,10 @@ class CompaniesApi:
         if lei is not None:
             
             _query_params.append(('lei', lei))
+            
+        if on_watchlist is not None:
+            
+            _query_params.append(('on_watchlist', on_watchlist))
             
         if ordering is not None:
             

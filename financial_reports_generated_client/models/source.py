@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
 from typing_extensions import Self
@@ -27,10 +27,11 @@ class Source(BaseModel):
     """
     Source
     """ # noqa: E501
+    id: StrictInt
     name: StrictStr = Field(description="Name of the data source.")
     url: StrictStr = Field(description="URL of the data source homepage or relevant section.")
     description: StrictStr = Field(description="Description of the data source.")
-    __properties: ClassVar[List[str]] = ["name", "url", "description"]
+    __properties: ClassVar[List[str]] = ["id", "name", "url", "description"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -65,8 +66,10 @@ class Source(BaseModel):
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
+            "id",
             "name",
             "url",
             "description",
@@ -89,6 +92,7 @@ class Source(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
+            "id": obj.get("id"),
             "name": obj.get("name"),
             "url": obj.get("url"),
             "description": obj.get("description")

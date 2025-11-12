@@ -41,6 +41,7 @@ class TestPaginatedLanguageList(unittest.TestCase):
                 previous = 'http://api.example.org/accounts/?page=2',
                 results = [
                     financial_reports_generated_client.models.language.Language(
+                        id = 56, 
                         code = '', 
                         name = '', )
                     ]
@@ -50,6 +51,7 @@ class TestPaginatedLanguageList(unittest.TestCase):
                 count = 123,
                 results = [
                     financial_reports_generated_client.models.language.Language(
+                        id = 56, 
                         code = '', 
                         name = '', )
                     ],

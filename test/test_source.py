@@ -36,12 +36,14 @@ class TestSource(unittest.TestCase):
         model = Source()
         if include_optional:
             return Source(
+                id = 56,
                 name = '',
                 url = '',
                 description = ''
             )
         else:
             return Source(
+                id = 56,
                 name = '',
                 url = '',
                 description = '',

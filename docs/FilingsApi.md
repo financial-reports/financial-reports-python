@@ -10,7 +10,7 @@ Method | HTTP request | Description
 
 
 # **filings_list**
-> PaginatedFilingSummaryList filings_list(added_to_platform_from=added_to_platform_from, added_to_platform_to=added_to_platform_to, company=company, company_isin=company_isin, countries=countries, language=language, languages=languages, lei=lei, ordering=ordering, page=page, page_size=page_size, release_datetime_from=release_datetime_from, release_datetime_to=release_datetime_to, search=search, source=source, type=type, updated_date_from=updated_date_from, updated_date_to=updated_date_to, view=view)
+> PaginatedFilingSummaryList filings_list(added_to_platform_from=added_to_platform_from, added_to_platform_to=added_to_platform_to, company=company, company_isin=company_isin, countries=countries, language=language, languages=languages, lei=lei, on_watchlist=on_watchlist, ordering=ordering, page=page, page_size=page_size, release_datetime_from=release_datetime_from, release_datetime_to=release_datetime_to, search=search, source=source, sources=sources, type=type, updated_date_from=updated_date_from, updated_date_to=updated_date_to, view=view)
 
 List Filings
 
@@ -58,13 +58,15 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
     language = 'language_example' # str | Filter by a single filing language ISO 639-1 code (e.g., en). (optional)
     languages = 'languages_example' # str | Filter by filing language ISO 639-1 code(s). Comma-separated for multiple values (e.g., en,de). (optional)
     lei = 'lei_example' # str | Filter by Company Legal Entity Identifier (LEI). (optional)
-    ordering = 'ordering_example' # str | Which field to use when ordering the results. (optional)
+    on_watchlist = True # bool | Filter by companies on the user's watchlist. Use 'true' to see only watchlist companies, 'false' to exclude them. Omitting the parameter returns all companies. (optional)
+    ordering = 'ordering_example' # str | Which field to use when ordering the results. Available fields: `id`, `release_datetime`, `added_to_platform`. Prefix with '-' for descending order (e.g., `-release_datetime`). (optional)
     page = 56 # int | A page number within the paginated result set. (optional)
     page_size = 56 # int | Number of results to return per page. (optional)
     release_datetime_from = '2013-10-20T19:20:30+01:00' # datetime | Filter by release datetime (inclusive start, YYYY-MM-DDTHH:MM:SSZ format). (optional)
     release_datetime_to = '2013-10-20T19:20:30+01:00' # datetime | Filter by release datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format). (optional)
     search = 'search_example' # str | A search term. (optional)
-    source = 56 # int |  (optional)
+    source = 3.4 # float | Filter by a single data source ID. (optional)
+    sources = 'sources_example' # str | Filter by data source ID(s). Comma-separated for multiple values (e.g., 38,40,51). (optional)
     type = 'type_example' # str | Filter by Filing Type code (e.g., 10-K). (optional)
     updated_date_from = '2013-10-20T19:20:30+01:00' # datetime | Filter by the date a filing was last updated on the platform (inclusive start, YYYY-MM-DDTHH:MM:SSZ format). (optional)
     updated_date_to = '2013-10-20T19:20:30+01:00' # datetime | Filter by the date a filing was last updated on the platform (inclusive end, YYYY-MM-DDTHH:MM:SSZ format). (optional)
@@ -72,7 +74,7 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
 
     try:
         # List Filings
-        api_response = await api_instance.filings_list(added_to_platform_from=added_to_platform_from, added_to_platform_to=added_to_platform_to, company=company, company_isin=company_isin, countries=countries, language=language, languages=languages, lei=lei, ordering=ordering, page=page, page_size=page_size, release_datetime_from=release_datetime_from, release_datetime_to=release_datetime_to, search=search, source=source, type=type, updated_date_from=updated_date_from, updated_date_to=updated_date_to, view=view)
+        api_response = await api_instance.filings_list(added_to_platform_from=added_to_platform_from, added_to_platform_to=added_to_platform_to, company=company, company_isin=company_isin, countries=countries, language=language, languages=languages, lei=lei, on_watchlist=on_watchlist, ordering=ordering, page=page, page_size=page_size, release_datetime_from=release_datetime_from, release_datetime_to=release_datetime_to, search=search, source=source, sources=sources, type=type, updated_date_from=updated_date_from, updated_date_to=updated_date_to, view=view)
         print("The response of FilingsApi->filings_list:\n")
         pprint(api_response)
     except Exception as e:
@@ -94,13 +96,15 @@ Name | Type | Description  | Notes
  **language** | **str**| Filter by a single filing language ISO 639-1 code (e.g., en). | [optional] 
  **languages** | **str**| Filter by filing language ISO 639-1 code(s). Comma-separated for multiple values (e.g., en,de). | [optional] 
  **lei** | **str**| Filter by Company Legal Entity Identifier (LEI). | [optional] 
- **ordering** | **str**| Which field to use when ordering the results. | [optional] 
+ **on_watchlist** | **bool**| Filter by companies on the user&#39;s watchlist. Use &#39;true&#39; to see only watchlist companies, &#39;false&#39; to exclude them. Omitting the parameter returns all companies. | [optional] 
+ **ordering** | **str**| Which field to use when ordering the results. Available fields: &#x60;id&#x60;, &#x60;release_datetime&#x60;, &#x60;added_to_platform&#x60;. Prefix with &#39;-&#39; for descending order (e.g., &#x60;-release_datetime&#x60;). | [optional] 
  **page** | **int**| A page number within the paginated result set. | [optional] 
  **page_size** | **int**| Number of results to return per page. | [optional] 
  **release_datetime_from** | **datetime**| Filter by release datetime (inclusive start, YYYY-MM-DDTHH:MM:SSZ format). | [optional] 
  **release_datetime_to** | **datetime**| Filter by release datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format). | [optional] 
  **search** | **str**| A search term. | [optional] 
- **source** | **int**|  | [optional] 
+ **source** | **float**| Filter by a single data source ID. | [optional] 
+ **sources** | **str**| Filter by data source ID(s). Comma-separated for multiple values (e.g., 38,40,51). | [optional] 
  **type** | **str**| Filter by Filing Type code (e.g., 10-K). | [optional] 
  **updated_date_from** | **datetime**| Filter by the date a filing was last updated on the platform (inclusive start, YYYY-MM-DDTHH:MM:SSZ format). | [optional] 
  **updated_date_to** | **datetime**| Filter by the date a filing was last updated on the platform (inclusive end, YYYY-MM-DDTHH:MM:SSZ format). | [optional] 

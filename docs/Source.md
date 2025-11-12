@@ -5,6 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**id** | **int** |  | [readonly] 
 **name** | **str** | Name of the data source. | [readonly] 
 **url** | **str** | URL of the data source homepage or relevant section. | [readonly] 
 **description** | **str** | Description of the data source. | [readonly] 

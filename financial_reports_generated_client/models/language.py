@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
 from typing_extensions import Self
@@ -27,9 +27,10 @@ class Language(BaseModel):
     """
     Language
     """ # noqa: E501
+    id: StrictInt
     code: StrictStr = Field(description="ISO 639-1 language code (lowercase).")
     name: StrictStr = Field(description="Name of the language.")
-    __properties: ClassVar[List[str]] = ["code", "name"]
+    __properties: ClassVar[List[str]] = ["id", "code", "name"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -63,8 +64,10 @@ class Language(BaseModel):
           are ignored.
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
+            "id",
             "code",
             "name",
         ])
@@ -86,6 +89,7 @@ class Language(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
+            "id": obj.get("id"),
             "code": obj.get("code"),
             "name": obj.get("name")
         })

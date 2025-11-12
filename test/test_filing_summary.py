@@ -50,6 +50,7 @@ class TestFilingSummary(unittest.TestCase):
                     sub_industry_code = '', 
                     country_code = '', ),
                 filing_type = financial_reports_generated_client.models.filing_type.FilingType(
+                    id = 56, 
                     code = '', 
                     name = '', 
                     description = '', )
@@ -68,6 +69,7 @@ class TestFilingSummary(unittest.TestCase):
                     sub_industry_code = '', 
                     country_code = '', ),
                 filing_type = financial_reports_generated_client.models.filing_type.FilingType(
+                    id = 56, 
                     code = '', 
                     name = '', 
                     description = '', ),

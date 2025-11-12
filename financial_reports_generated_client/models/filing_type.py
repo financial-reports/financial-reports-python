@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
 from typing_extensions import Self
@@ -27,10 +27,11 @@ class FilingType(BaseModel):
     """
     FilingType
     """ # noqa: E501
+    id: StrictInt
     code: StrictStr = Field(description="Unique code identifying the filing type.")
     name: StrictStr = Field(description="Human-readable name of the filing type.")
     description: StrictStr = Field(description="Detailed description of the filing type.")
-    __properties: ClassVar[List[str]] = ["code", "name", "description"]
+    __properties: ClassVar[List[str]] = ["id", "code", "name", "description"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -65,8 +66,10 @@ class FilingType(BaseModel):
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
+            "id",
             "code",
             "name",
             "description",
@@ -89,6 +92,7 @@ class FilingType(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
+            "id": obj.get("id"),
             "code": obj.get("code"),
             "name": obj.get("name"),
             "description": obj.get("description")

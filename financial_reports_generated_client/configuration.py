@@ -164,6 +164,8 @@ class Configuration:
     :param retries: Number of retries for API requests.
     :param ca_cert_data: verify the peer using concatenated CA certificate data
       in PEM (str) or DER (bytes) format.
+    :param cert_file: the path to a client certificate file, for mTLS.
+    :param key_file: the path to a client key file, for mTLS. 
 
     :Example:
 
@@ -205,6 +207,8 @@ conf = financial_reports_generated_client.Configuration(
         ssl_ca_cert: Optional[str]=None,
         retries: Optional[int] = None,
         ca_cert_data: Optional[Union[str, bytes]] = None,
+        cert_file: Optional[str]=None,
+        key_file: Optional[str]=None,
         *,
         debug: Optional[bool] = None,
     ) -> None:
@@ -286,10 +290,10 @@ conf = financial_reports_generated_client.Configuration(
         """Set this to verify the peer using PEM (str) or DER (bytes)
            certificate data.
         """
-        self.cert_file = None
+        self.cert_file = cert_file
         """client certificate file
         """
-        self.key_file = None
+        self.key_file = key_file
         """client key file
         """
         self.assert_hostname = None
@@ -538,7 +542,7 @@ conf = financial_reports_generated_client.Configuration(
                "OS: {env}\n"\
                "Python Version: {pyversion}\n"\
                "Version of the API: 1.0.0\n"\
-               "SDK Package Version: 1.3.1".\
+               "SDK Package Version: 1.3.2".\
                format(env=sys.platform, pyversion=sys.version)
 
     def get_host_settings(self) -> List[HostSetting]:

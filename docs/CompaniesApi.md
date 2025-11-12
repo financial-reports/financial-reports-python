@@ -9,7 +9,7 @@ Method | HTTP request | Description
 
 
 # **companies_list**
-> PaginatedCompanyMinimalList companies_list(countries=countries, industry=industry, industry_group=industry_group, isin=isin, lei=lei, ordering=ordering, page=page, page_size=page_size, search=search, sector=sector, sub_industry=sub_industry, ticker=ticker, view=view)
+> PaginatedCompanyMinimalList companies_list(countries=countries, industry=industry, industry_group=industry_group, isin=isin, lei=lei, on_watchlist=on_watchlist, ordering=ordering, page=page, page_size=page_size, search=search, sector=sector, sub_industry=sub_industry, ticker=ticker, view=view)
 
 List Companies
 
@@ -54,7 +54,8 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
     industry_group = 'industry_group_example' # str | Filter by ISIC Division code. (optional)
     isin = 'isin_example' # str | Filter by Company ISIN. Case-insensitive. (optional)
     lei = 'lei_example' # str | Filter by Company Legal Entity Identifier (LEI). Case-insensitive. (optional)
-    ordering = 'ordering_example' # str | Which field to use when ordering the results. (optional)
+    on_watchlist = True # bool | Filter by companies on the user's watchlist. Use 'true' to see only watchlist companies, 'false' to exclude them. Omitting the parameter returns all companies. (optional)
+    ordering = 'ordering_example' # str | Which field to use when ordering the results. Available fields: `id`, `name`, `date_ipo`, `year_founded`, `country_iso__name`. Prefix with '-' for descending order (e.g., `-name`). (optional)
     page = 56 # int | A page number within the paginated result set. (optional)
     page_size = 56 # int | Number of results to return per page. (optional)
     search = 'search_example' # str | A search term. (optional)
@@ -65,7 +66,7 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
 
     try:
         # List Companies
-        api_response = await api_instance.companies_list(countries=countries, industry=industry, industry_group=industry_group, isin=isin, lei=lei, ordering=ordering, page=page, page_size=page_size, search=search, sector=sector, sub_industry=sub_industry, ticker=ticker, view=view)
+        api_response = await api_instance.companies_list(countries=countries, industry=industry, industry_group=industry_group, isin=isin, lei=lei, on_watchlist=on_watchlist, ordering=ordering, page=page, page_size=page_size, search=search, sector=sector, sub_industry=sub_industry, ticker=ticker, view=view)
         print("The response of CompaniesApi->companies_list:\n")
         pprint(api_response)
     except Exception as e:
@@ -84,7 +85,8 @@ Name | Type | Description  | Notes
  **industry_group** | **str**| Filter by ISIC Division code. | [optional] 
  **isin** | **str**| Filter by Company ISIN. Case-insensitive. | [optional] 
  **lei** | **str**| Filter by Company Legal Entity Identifier (LEI). Case-insensitive. | [optional] 
- **ordering** | **str**| Which field to use when ordering the results. | [optional] 
+ **on_watchlist** | **bool**| Filter by companies on the user&#39;s watchlist. Use &#39;true&#39; to see only watchlist companies, &#39;false&#39; to exclude them. Omitting the parameter returns all companies. | [optional] 
+ **ordering** | **str**| Which field to use when ordering the results. Available fields: &#x60;id&#x60;, &#x60;name&#x60;, &#x60;date_ipo&#x60;, &#x60;year_founded&#x60;, &#x60;country_iso__name&#x60;. Prefix with &#39;-&#39; for descending order (e.g., &#x60;-name&#x60;). | [optional] 
  **page** | **int**| A page number within the paginated result set. | [optional] 
  **page_size** | **int**| Number of results to return per page. | [optional] 
  **search** | **str**| A search term. | [optional] 

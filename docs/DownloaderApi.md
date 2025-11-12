@@ -48,7 +48,7 @@ configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
 async with financial_reports_generated_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = financial_reports_generated_client.DownloaderApi(api_client)
-    job_id = 'job_id_example' # str | 
+    job_id = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
 
     try:
         api_response = await api_instance.downloader_jobs_status_retrieve(job_id)
@@ -65,7 +65,7 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **job_id** | **str**|  | 
+ **job_id** | **UUID**|  | 
 
 ### Return type
 

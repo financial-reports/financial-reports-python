@@ -41,6 +41,7 @@ class TestPaginatedFilingTypeList(unittest.TestCase):
                 previous = 'http://api.example.org/accounts/?page=2',
                 results = [
                     financial_reports_generated_client.models.filing_type.FilingType(
+                        id = 56, 
                         code = '', 
                         name = '', 
                         description = '', )
@@ -51,6 +52,7 @@ class TestPaginatedFilingTypeList(unittest.TestCase):
                 count = 123,
                 results = [
                     financial_reports_generated_client.models.filing_type.FilingType(
+                        id = 56, 
                         code = '', 
                         name = '', 
                         description = '', )

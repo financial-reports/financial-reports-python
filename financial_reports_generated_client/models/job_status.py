@@ -18,6 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
+from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
@@ -35,7 +36,9 @@ class JobStatus(BaseModel):
     result_file_url: StrictStr
     error_message: Optional[StrictStr] = None
     record_count: Optional[Annotated[int, Field(le=2147483647, strict=True, ge=0)]] = None
-    __properties: ClassVar[List[str]] = ["id", "status", "result_file_url", "error_message", "record_count"]
+    records_processed: Optional[Annotated[int, Field(le=2147483647, strict=True, ge=0)]] = Field(default=None, description="Number of records processed so far.")
+    estimated_completion_time: Optional[datetime] = None
+    __properties: ClassVar[List[str]] = ["id", "status", "result_file_url", "error_message", "record_count", "records_processed", "estimated_completion_time"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -85,6 +88,11 @@ class JobStatus(BaseModel):
         if self.record_count is None and "record_count" in self.model_fields_set:
             _dict['record_count'] = None
 
+        # set to None if estimated_completion_time (nullable) is None
+        # and model_fields_set contains the field
+        if self.estimated_completion_time is None and "estimated_completion_time" in self.model_fields_set:
+            _dict['estimated_completion_time'] = None
+
         return _dict
 
     @classmethod
@@ -101,7 +109,9 @@ class JobStatus(BaseModel):
             "status": obj.get("status"),
             "result_file_url": obj.get("result_file_url"),
             "error_message": obj.get("error_message"),
-            "record_count": obj.get("record_count")
+            "record_count": obj.get("record_count"),
+            "records_processed": obj.get("records_processed"),
+            "estimated_completion_time": obj.get("estimated_completion_time")
         })
         return _obj
 

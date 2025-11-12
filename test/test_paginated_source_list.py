@@ -41,6 +41,7 @@ class TestPaginatedSourceList(unittest.TestCase):
                 previous = 'http://api.example.org/accounts/?page=2',
                 results = [
                     financial_reports_generated_client.models.source.Source(
+                        id = 56, 
                         name = '', 
                         url = '', 
                         description = '', )
@@ -51,6 +52,7 @@ class TestPaginatedSourceList(unittest.TestCase):
                 count = 123,
                 results = [
                     financial_reports_generated_client.models.source.Source(
+                        id = 56, 
                         name = '', 
                         url = '', 
                         description = '', )

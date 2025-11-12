@@ -59,7 +59,7 @@ class DownloaderApi:
 
 
         :param job_id: (required)
-        :type job_id: str
+        :type job_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -125,7 +125,7 @@ class DownloaderApi:
 
 
         :param job_id: (required)
-        :type job_id: str
+        :type job_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -191,7 +191,7 @@ class DownloaderApi:
 
 
         :param job_id: (required)
-        :type job_id: str
+        :type job_id: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
