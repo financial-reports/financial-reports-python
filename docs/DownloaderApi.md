@@ -13,7 +13,6 @@ Method | HTTP request | Description
 ### Example
 
 * Api Key Authentication (cookieAuth):
-* Api Key Authentication (ApiKeyAuth):
 
 ```python
 import financial_reports_generated_client
@@ -37,12 +36,6 @@ configuration.api_key['cookieAuth'] = os.environ["API_KEY"]
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['cookieAuth'] = 'Bearer'
-
-# Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
 
 # Enter a context with an instance of the API client
 async with financial_reports_generated_client.ApiClient(configuration) as api_client:
@@ -73,7 +66,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[cookieAuth](../README.md#cookieAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+[cookieAuth](../README.md#cookieAuth)
 
 ### HTTP request headers
 

@@ -275,8 +275,7 @@ class DownloaderApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'cookieAuth', 
-            'ApiKeyAuth'
+            'cookieAuth'
         ]
 
         return self.api_client.param_serialize(
