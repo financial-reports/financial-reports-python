@@ -72,13 +72,11 @@ class CompanyMinimal(BaseModel):
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
-        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
             "id",
             "name",
             "tagline",
-            "isins",
             "lei",
             "sub_industry_code",
             "country_code",

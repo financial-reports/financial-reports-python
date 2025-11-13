@@ -46,10 +46,10 @@ class Company(BaseModel):
     address: StrictStr = Field(description="The company's primary street address.")
     city: StrictStr = Field(description="The city where the company's headquarters is located.")
     zip_code: StrictStr = Field(description="The postal or ZIP code for the company's address.")
-    sector: Optional[ISICSection] = Field(description="Company's ISIC Section classification.")
-    industry_group: Optional[ISICDivision] = Field(description="Company's ISIC Division classification.")
-    industry: Optional[ISICGroup] = Field(description="Company's ISIC Group classification.")
-    sub_industry: Optional[ISICClass] = Field(description="Company's ISIC Class classification.")
+    sector: Optional[ISICSection]
+    industry_group: Optional[ISICDivision]
+    industry: Optional[ISICGroup]
+    sub_industry: Optional[ISICClass]
     ir_link: StrictStr = Field(description="Link to the company's Investor Relations page.")
     homepage_link: StrictStr = Field(description="Link to the company's main homepage.")
     logo: Optional[StrictStr] = Field(description="URL of the company's logo file.")
@@ -147,10 +147,6 @@ class Company(BaseModel):
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
-        * OpenAPI `readOnly` fields are excluded.
-        * OpenAPI `readOnly` fields are excluded.
-        * OpenAPI `readOnly` fields are excluded.
-        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
             "id",
@@ -158,7 +154,6 @@ class Company(BaseModel):
             "tagline",
             "description",
             "description_last_updated",
-            "isins",
             "lei",
             "country_code",
             "address",
@@ -192,9 +187,6 @@ class Company(BaseModel):
             "ticker",
             "local_company_id",
             "shares_outstanding",
-            "designated_sponsor",
-            "listed_stock_exchange",
-            "stock_index",
         ])
 
         _dict = self.model_dump(

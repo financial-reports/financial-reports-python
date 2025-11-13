@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **id** | **int** | Unique identifier for the company. | [readonly] 
 **name** | **str** | Company name. | [readonly] 
 **tagline** | **str** | A short, one-liner describing the company&#39;s value proposition. | [readonly] 
-**isins** | **List[str]** | List of International Securities Identification Numbers (ISINs) associated with the company. | [readonly] 
+**isins** | **List[str]** | List of International Securities Identification Numbers (ISINs) associated with the company. | 
 **lei** | **str** | Legal Entity Identifier (ISO 17442). | [readonly] 
 **sub_industry_code** | **str** | ISIC classification code classifying the company. | [readonly] 
 **country_code** | **str** | ISO 3166-1 alpha-2 country code of the company&#39;s primary registration or headquarters. | [readonly] 

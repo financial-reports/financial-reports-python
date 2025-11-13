@@ -12,7 +12,6 @@ Method | HTTP request | Description
 
 ### Example
 
-* Api Key Authentication (cookieAuth):
 
 ```python
 import financial_reports_generated_client
@@ -26,16 +25,6 @@ configuration = financial_reports_generated_client.Configuration(
     host = "https://api.financialreports.eu"
 )
 
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: cookieAuth
-configuration.api_key['cookieAuth'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['cookieAuth'] = 'Bearer'
 
 # Enter a context with an instance of the API client
 async with financial_reports_generated_client.ApiClient(configuration) as api_client:
@@ -66,7 +55,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[cookieAuth](../README.md#cookieAuth)
+No authorization required
 
 ### HTTP request headers
 
