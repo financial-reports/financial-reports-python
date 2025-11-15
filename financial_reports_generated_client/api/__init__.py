@@ -9,6 +9,5 @@ from financial_reports_generated_client.api.isic_classifications_api import ISIC
 from financial_reports_generated_client.api.languages_api import LanguagesApi
 from financial_reports_generated_client.api.sources_api import SourcesApi
 from financial_reports_generated_client.api.watchlist_api import WatchlistApi
-from financial_reports_generated_client.api.downloader_api import DownloaderApi
-from financial_reports_generated_client.api.schema_api import SchemaApi
+from financial_reports_generated_client.api.webhooks_management_api import WebhooksManagementApi
 

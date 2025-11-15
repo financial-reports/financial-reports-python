@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "1.3.4"
+__version__ = "1.3.5"
 
 # Define package exports
 __all__ = [
@@ -27,8 +27,7 @@ __all__ = [
     "LanguagesApi",
     "SourcesApi",
     "WatchlistApi",
-    "DownloaderApi",
-    "SchemaApi",
+    "WebhooksManagementApi",
     "ApiResponse",
     "ApiClient",
     "Configuration",
@@ -44,13 +43,13 @@ __all__ = [
     "DesignatedSponsor",
     "ErrorDetail",
     "Filing",
+    "FilingProcessedPayload",
     "FilingSummary",
     "FilingType",
     "ISICClass",
     "ISICDivision",
     "ISICGroup",
     "ISICSection",
-    "JobStatus",
     "Language",
     "ListedStockExchange",
     "PaginatedCompanyMinimalList",
@@ -63,12 +62,17 @@ __all__ = [
     "PaginatedISICSectionList",
     "PaginatedLanguageList",
     "PaginatedSourceList",
+    "PaginatedWebhookList",
+    "PatchedWebhook",
     "Source",
-    "StatusEnum",
     "StockIndex",
     "WatchlistAction",
     "WatchlistCompany",
     "WatchlistResponse",
+    "Webhook",
+    "WebhookCompanyPayload",
+    "WebhookFilingPayload",
+    "WebhookRegenerateSecret",
 ]
 
 # import apis into sdk package
@@ -80,8 +84,7 @@ from financial_reports_generated_client.api.isic_classifications_api import ISIC
 from financial_reports_generated_client.api.languages_api import LanguagesApi as LanguagesApi
 from financial_reports_generated_client.api.sources_api import SourcesApi as SourcesApi
 from financial_reports_generated_client.api.watchlist_api import WatchlistApi as WatchlistApi
-from financial_reports_generated_client.api.downloader_api import DownloaderApi as DownloaderApi
-from financial_reports_generated_client.api.schema_api import SchemaApi as SchemaApi
+from financial_reports_generated_client.api.webhooks_management_api import WebhooksManagementApi as WebhooksManagementApi
 
 # import ApiClient
 from financial_reports_generated_client.api_response import ApiResponse as ApiResponse
@@ -101,13 +104,13 @@ from financial_reports_generated_client.models.country import Country as Country
 from financial_reports_generated_client.models.designated_sponsor import DesignatedSponsor as DesignatedSponsor
 from financial_reports_generated_client.models.error_detail import ErrorDetail as ErrorDetail
 from financial_reports_generated_client.models.filing import Filing as Filing
+from financial_reports_generated_client.models.filing_processed_payload import FilingProcessedPayload as FilingProcessedPayload
 from financial_reports_generated_client.models.filing_summary import FilingSummary as FilingSummary
 from financial_reports_generated_client.models.filing_type import FilingType as FilingType
 from financial_reports_generated_client.models.isic_class import ISICClass as ISICClass
 from financial_reports_generated_client.models.isic_division import ISICDivision as ISICDivision
 from financial_reports_generated_client.models.isic_group import ISICGroup as ISICGroup
 from financial_reports_generated_client.models.isic_section import ISICSection as ISICSection
-from financial_reports_generated_client.models.job_status import JobStatus as JobStatus
 from financial_reports_generated_client.models.language import Language as Language
 from financial_reports_generated_client.models.listed_stock_exchange import ListedStockExchange as ListedStockExchange
 from financial_reports_generated_client.models.paginated_company_minimal_list import PaginatedCompanyMinimalList as PaginatedCompanyMinimalList
@@ -120,10 +123,15 @@ from financial_reports_generated_client.models.paginated_isic_group_list import 
 from financial_reports_generated_client.models.paginated_isic_section_list import PaginatedISICSectionList as PaginatedISICSectionList
 from financial_reports_generated_client.models.paginated_language_list import PaginatedLanguageList as PaginatedLanguageList
 from financial_reports_generated_client.models.paginated_source_list import PaginatedSourceList as PaginatedSourceList
+from financial_reports_generated_client.models.paginated_webhook_list import PaginatedWebhookList as PaginatedWebhookList
+from financial_reports_generated_client.models.patched_webhook import PatchedWebhook as PatchedWebhook
 from financial_reports_generated_client.models.source import Source as Source
-from financial_reports_generated_client.models.status_enum import StatusEnum as StatusEnum
 from financial_reports_generated_client.models.stock_index import StockIndex as StockIndex
 from financial_reports_generated_client.models.watchlist_action import WatchlistAction as WatchlistAction
 from financial_reports_generated_client.models.watchlist_company import WatchlistCompany as WatchlistCompany
 from financial_reports_generated_client.models.watchlist_response import WatchlistResponse as WatchlistResponse
+from financial_reports_generated_client.models.webhook import Webhook as Webhook
+from financial_reports_generated_client.models.webhook_company_payload import WebhookCompanyPayload as WebhookCompanyPayload
+from financial_reports_generated_client.models.webhook_filing_payload import WebhookFilingPayload as WebhookFilingPayload
+from financial_reports_generated_client.models.webhook_regenerate_secret import WebhookRegenerateSecret as WebhookRegenerateSecret
 
