@@ -63,6 +63,7 @@ class FilingsApi:
         source: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Filter by a single data source ID.")] = None,
         sources: Annotated[Optional[StrictStr], Field(description="Filter by data source ID(s). Comma-separated for multiple values (e.g., 38,40,51).")] = None,
         type: Annotated[Optional[StrictStr], Field(description="Filter by Filing Type code (e.g., 10-K).")] = None,
+        types: Annotated[Optional[StrictStr], Field(description="Filter by multiple Filing Type codes. Comma-separated (e.g., 10-K,10-Q).")] = None,
         updated_date_from: Annotated[Optional[datetime], Field(description="Filter by the date a filing was last updated on the platform (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         updated_date_to: Annotated[Optional[datetime], Field(description="Filter by the date a filing was last updated on the platform (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         view: Annotated[Optional[StrictStr], Field(description="Controls the level of detail. Omit for a default 'summary' view, or use 'full' to include all details for each filing.")] = None,
@@ -119,6 +120,8 @@ class FilingsApi:
         :type sources: str
         :param type: Filter by Filing Type code (e.g., 10-K).
         :type type: str
+        :param types: Filter by multiple Filing Type codes. Comma-separated (e.g., 10-K,10-Q).
+        :type types: str
         :param updated_date_from: Filter by the date a filing was last updated on the platform (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).
         :type updated_date_from: datetime
         :param updated_date_to: Filter by the date a filing was last updated on the platform (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).
@@ -166,6 +169,7 @@ class FilingsApi:
             source=source,
             sources=sources,
             type=type,
+            types=types,
             updated_date_from=updated_date_from,
             updated_date_to=updated_date_to,
             view=view,
@@ -211,6 +215,7 @@ class FilingsApi:
         source: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Filter by a single data source ID.")] = None,
         sources: Annotated[Optional[StrictStr], Field(description="Filter by data source ID(s). Comma-separated for multiple values (e.g., 38,40,51).")] = None,
         type: Annotated[Optional[StrictStr], Field(description="Filter by Filing Type code (e.g., 10-K).")] = None,
+        types: Annotated[Optional[StrictStr], Field(description="Filter by multiple Filing Type codes. Comma-separated (e.g., 10-K,10-Q).")] = None,
         updated_date_from: Annotated[Optional[datetime], Field(description="Filter by the date a filing was last updated on the platform (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         updated_date_to: Annotated[Optional[datetime], Field(description="Filter by the date a filing was last updated on the platform (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         view: Annotated[Optional[StrictStr], Field(description="Controls the level of detail. Omit for a default 'summary' view, or use 'full' to include all details for each filing.")] = None,
@@ -267,6 +272,8 @@ class FilingsApi:
         :type sources: str
         :param type: Filter by Filing Type code (e.g., 10-K).
         :type type: str
+        :param types: Filter by multiple Filing Type codes. Comma-separated (e.g., 10-K,10-Q).
+        :type types: str
         :param updated_date_from: Filter by the date a filing was last updated on the platform (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).
         :type updated_date_from: datetime
         :param updated_date_to: Filter by the date a filing was last updated on the platform (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).
@@ -314,6 +321,7 @@ class FilingsApi:
             source=source,
             sources=sources,
             type=type,
+            types=types,
             updated_date_from=updated_date_from,
             updated_date_to=updated_date_to,
             view=view,
@@ -359,6 +367,7 @@ class FilingsApi:
         source: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Filter by a single data source ID.")] = None,
         sources: Annotated[Optional[StrictStr], Field(description="Filter by data source ID(s). Comma-separated for multiple values (e.g., 38,40,51).")] = None,
         type: Annotated[Optional[StrictStr], Field(description="Filter by Filing Type code (e.g., 10-K).")] = None,
+        types: Annotated[Optional[StrictStr], Field(description="Filter by multiple Filing Type codes. Comma-separated (e.g., 10-K,10-Q).")] = None,
         updated_date_from: Annotated[Optional[datetime], Field(description="Filter by the date a filing was last updated on the platform (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         updated_date_to: Annotated[Optional[datetime], Field(description="Filter by the date a filing was last updated on the platform (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         view: Annotated[Optional[StrictStr], Field(description="Controls the level of detail. Omit for a default 'summary' view, or use 'full' to include all details for each filing.")] = None,
@@ -415,6 +424,8 @@ class FilingsApi:
         :type sources: str
         :param type: Filter by Filing Type code (e.g., 10-K).
         :type type: str
+        :param types: Filter by multiple Filing Type codes. Comma-separated (e.g., 10-K,10-Q).
+        :type types: str
         :param updated_date_from: Filter by the date a filing was last updated on the platform (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).
         :type updated_date_from: datetime
         :param updated_date_to: Filter by the date a filing was last updated on the platform (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).
@@ -462,6 +473,7 @@ class FilingsApi:
             source=source,
             sources=sources,
             type=type,
+            types=types,
             updated_date_from=updated_date_from,
             updated_date_to=updated_date_to,
             view=view,
@@ -502,6 +514,7 @@ class FilingsApi:
         source,
         sources,
         type,
+        types,
         updated_date_from,
         updated_date_to,
         view,
@@ -634,6 +647,10 @@ class FilingsApi:
         if type is not None:
             
             _query_params.append(('type', type))
+            
+        if types is not None:
+            
+            _query_params.append(('types', types))
             
         if updated_date_from is not None:
             if isinstance(updated_date_from, datetime):
