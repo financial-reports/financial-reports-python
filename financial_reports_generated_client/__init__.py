@@ -15,12 +15,13 @@
 """  # noqa: E501
 
 
-__version__ = "1.3.6"
+__version__ = "1.3.7"
 
 # Define package exports
 __all__ = [
     "CompaniesApi",
     "CountriesApi",
+    "FilingCategoriesApi",
     "FilingTypesApi",
     "FilingsApi",
     "ISICClassificationsApi",
@@ -43,6 +44,7 @@ __all__ = [
     "DesignatedSponsor",
     "ErrorDetail",
     "Filing",
+    "FilingCategory",
     "FilingProcessedPayload",
     "FilingSummary",
     "FilingType",
@@ -54,6 +56,7 @@ __all__ = [
     "ListedStockExchange",
     "PaginatedCompanyMinimalList",
     "PaginatedCountryList",
+    "PaginatedFilingCategoryList",
     "PaginatedFilingSummaryList",
     "PaginatedFilingTypeList",
     "PaginatedISICClassList",
@@ -78,6 +81,7 @@ __all__ = [
 # import apis into sdk package
 from financial_reports_generated_client.api.companies_api import CompaniesApi as CompaniesApi
 from financial_reports_generated_client.api.countries_api import CountriesApi as CountriesApi
+from financial_reports_generated_client.api.filing_categories_api import FilingCategoriesApi as FilingCategoriesApi
 from financial_reports_generated_client.api.filing_types_api import FilingTypesApi as FilingTypesApi
 from financial_reports_generated_client.api.filings_api import FilingsApi as FilingsApi
 from financial_reports_generated_client.api.isic_classifications_api import ISICClassificationsApi as ISICClassificationsApi
@@ -104,6 +108,7 @@ from financial_reports_generated_client.models.country import Country as Country
 from financial_reports_generated_client.models.designated_sponsor import DesignatedSponsor as DesignatedSponsor
 from financial_reports_generated_client.models.error_detail import ErrorDetail as ErrorDetail
 from financial_reports_generated_client.models.filing import Filing as Filing
+from financial_reports_generated_client.models.filing_category import FilingCategory as FilingCategory
 from financial_reports_generated_client.models.filing_processed_payload import FilingProcessedPayload as FilingProcessedPayload
 from financial_reports_generated_client.models.filing_summary import FilingSummary as FilingSummary
 from financial_reports_generated_client.models.filing_type import FilingType as FilingType
@@ -115,6 +120,7 @@ from financial_reports_generated_client.models.language import Language as Langu
 from financial_reports_generated_client.models.listed_stock_exchange import ListedStockExchange as ListedStockExchange
 from financial_reports_generated_client.models.paginated_company_minimal_list import PaginatedCompanyMinimalList as PaginatedCompanyMinimalList
 from financial_reports_generated_client.models.paginated_country_list import PaginatedCountryList as PaginatedCountryList
+from financial_reports_generated_client.models.paginated_filing_category_list import PaginatedFilingCategoryList as PaginatedFilingCategoryList
 from financial_reports_generated_client.models.paginated_filing_summary_list import PaginatedFilingSummaryList as PaginatedFilingSummaryList
 from financial_reports_generated_client.models.paginated_filing_type_list import PaginatedFilingTypeList as PaginatedFilingTypeList
 from financial_reports_generated_client.models.paginated_isic_class_list import PaginatedISICClassList as PaginatedISICClassList

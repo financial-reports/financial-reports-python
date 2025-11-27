@@ -15,10 +15,10 @@
 
 import unittest
 
-from financial_reports_generated_client.models.paginated_filing_type_list import PaginatedFilingTypeList
+from financial_reports_generated_client.models.paginated_filing_category_list import PaginatedFilingCategoryList
 
-class TestPaginatedFilingTypeList(unittest.TestCase):
-    """PaginatedFilingTypeList unit test stubs"""
+class TestPaginatedFilingCategoryList(unittest.TestCase):
+    """PaginatedFilingCategoryList unit test stubs"""
 
     def setUp(self):
         pass
@@ -26,44 +26,40 @@ class TestPaginatedFilingTypeList(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> PaginatedFilingTypeList:
-        """Test PaginatedFilingTypeList
+    def make_instance(self, include_optional) -> PaginatedFilingCategoryList:
+        """Test PaginatedFilingCategoryList
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `PaginatedFilingTypeList`
+        # uncomment below to create an instance of `PaginatedFilingCategoryList`
         """
-        model = PaginatedFilingTypeList()
+        model = PaginatedFilingCategoryList()
         if include_optional:
-            return PaginatedFilingTypeList(
+            return PaginatedFilingCategoryList(
                 count = 123,
                 next = 'http://api.example.org/accounts/?page=4',
                 previous = 'http://api.example.org/accounts/?page=2',
                 results = [
-                    financial_reports_generated_client.models.filing_type.FilingType(
+                    financial_reports_generated_client.models.filing_category.FilingCategory(
                         id = 56, 
-                        code = '', 
                         name = '', 
-                        description = '', 
-                        category = null, )
+                        sort_order = 56, )
                     ]
             )
         else:
-            return PaginatedFilingTypeList(
+            return PaginatedFilingCategoryList(
                 count = 123,
                 results = [
-                    financial_reports_generated_client.models.filing_type.FilingType(
+                    financial_reports_generated_client.models.filing_category.FilingCategory(
                         id = 56, 
-                        code = '', 
                         name = '', 
-                        description = '', 
-                        category = null, )
+                        sort_order = 56, )
                     ],
         )
         """
 
-    def testPaginatedFilingTypeList(self):
-        """Test PaginatedFilingTypeList"""
+    def testPaginatedFilingCategoryList(self):
+        """Test PaginatedFilingCategoryList"""
         # inst_req_only = self.make_instance(include_optional=False)
         # inst_req_and_optional = self.make_instance(include_optional=True)
 

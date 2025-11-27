@@ -50,13 +50,13 @@ class Company(BaseModel):
     industry_group: Optional[ISICDivision]
     industry: Optional[ISICGroup]
     sub_industry: Optional[ISICClass]
-    ir_link: StrictStr = Field(description="Link to the company's Investor Relations page.")
-    homepage_link: StrictStr = Field(description="Link to the company's main homepage.")
+    ir_link: Optional[StrictStr] = Field(description="Link to the company's Investor Relations page.")
+    homepage_link: Optional[StrictStr] = Field(description="Link to the company's main homepage.")
     logo: Optional[StrictStr] = Field(description="URL of the company's logo file.")
     date_public: Optional[date] = Field(description="Date the company first became public.")
-    date_ipo: date = Field(description="Date of the company's Initial Public Offering.")
-    main_stock_exchange: StrictStr = Field(description="Primary stock exchange where the company is listed.")
-    is_listed: StrictBool = Field(description="Indicates if the company is currently publicly listed.")
+    date_ipo: Optional[date] = Field(description="Date of the company's Initial Public Offering.")
+    main_stock_exchange: Optional[StrictStr] = Field(description="Primary stock exchange where the company is listed.")
+    is_listed: Optional[StrictBool] = Field(description="Indicates if the company is currently publicly listed.")
     social_facebook: Optional[StrictStr] = Field(description="Facebook profile/page identifier.")
     social_instagram: Optional[StrictStr] = Field(description="Instagram profile identifier.")
     social_twitter: Optional[StrictStr] = Field(description="Twitter handle (without @).")
@@ -257,6 +257,16 @@ class Company(BaseModel):
         if self.sub_industry is None and "sub_industry" in self.model_fields_set:
             _dict['sub_industry'] = None
 
+        # set to None if ir_link (nullable) is None
+        # and model_fields_set contains the field
+        if self.ir_link is None and "ir_link" in self.model_fields_set:
+            _dict['ir_link'] = None
+
+        # set to None if homepage_link (nullable) is None
+        # and model_fields_set contains the field
+        if self.homepage_link is None and "homepage_link" in self.model_fields_set:
+            _dict['homepage_link'] = None
+
         # set to None if logo (nullable) is None
         # and model_fields_set contains the field
         if self.logo is None and "logo" in self.model_fields_set:
@@ -266,6 +276,21 @@ class Company(BaseModel):
         # and model_fields_set contains the field
         if self.date_public is None and "date_public" in self.model_fields_set:
             _dict['date_public'] = None
+
+        # set to None if date_ipo (nullable) is None
+        # and model_fields_set contains the field
+        if self.date_ipo is None and "date_ipo" in self.model_fields_set:
+            _dict['date_ipo'] = None
+
+        # set to None if main_stock_exchange (nullable) is None
+        # and model_fields_set contains the field
+        if self.main_stock_exchange is None and "main_stock_exchange" in self.model_fields_set:
+            _dict['main_stock_exchange'] = None
+
+        # set to None if is_listed (nullable) is None
+        # and model_fields_set contains the field
+        if self.is_listed is None and "is_listed" in self.model_fields_set:
+            _dict['is_listed'] = None
 
         # set to None if social_facebook (nullable) is None
         # and model_fields_set contains the field

@@ -18,22 +18,21 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from financial_reports_generated_client.models.filing_category import FilingCategory
 from typing import Optional, Set
 from typing_extensions import Self
 
-class FilingType(BaseModel):
+class PaginatedFilingCategoryList(BaseModel):
     """
-    FilingType
+    PaginatedFilingCategoryList
     """ # noqa: E501
-    id: StrictInt
-    code: StrictStr = Field(description="Unique code identifying the filing type.")
-    name: StrictStr = Field(description="Human-readable name of the filing type.")
-    description: StrictStr = Field(description="Detailed description of the filing type.")
-    category: Optional[FilingCategory]
-    __properties: ClassVar[List[str]] = ["id", "code", "name", "description", "category"]
+    count: StrictInt
+    next: Optional[StrictStr] = None
+    previous: Optional[StrictStr] = None
+    results: List[FilingCategory]
+    __properties: ClassVar[List[str]] = ["count", "next", "previous", "results"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -53,7 +52,7 @@ class FilingType(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of FilingType from a JSON string"""
+        """Create an instance of PaginatedFilingCategoryList from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -65,18 +64,8 @@ class FilingType(BaseModel):
         * `None` is only added to the output dict for nullable fields that
           were set at model initialization. Other fields with value `None`
           are ignored.
-        * OpenAPI `readOnly` fields are excluded.
-        * OpenAPI `readOnly` fields are excluded.
-        * OpenAPI `readOnly` fields are excluded.
-        * OpenAPI `readOnly` fields are excluded.
-        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
-            "id",
-            "code",
-            "name",
-            "description",
-            "category",
         ])
 
         _dict = self.model_dump(
@@ -84,19 +73,18 @@ class FilingType(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of category
-        if self.category:
-            _dict['category'] = self.category.to_dict()
-        # set to None if category (nullable) is None
-        # and model_fields_set contains the field
-        if self.category is None and "category" in self.model_fields_set:
-            _dict['category'] = None
-
+        # override the default output from pydantic by calling `to_dict()` of each item in results (list)
+        _items = []
+        if self.results:
+            for _item_results in self.results:
+                if _item_results:
+                    _items.append(_item_results.to_dict())
+            _dict['results'] = _items
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of FilingType from a dict"""
+        """Create an instance of PaginatedFilingCategoryList from a dict"""
         if obj is None:
             return None
 
@@ -104,11 +92,10 @@ class FilingType(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "id": obj.get("id"),
-            "code": obj.get("code"),
-            "name": obj.get("name"),
-            "description": obj.get("description"),
-            "category": FilingCategory.from_dict(obj["category"]) if obj.get("category") is not None else None
+            "count": obj.get("count"),
+            "next": obj.get("next"),
+            "previous": obj.get("previous"),
+            "results": [FilingCategory.from_dict(_item) for _item in obj["results"]] if obj.get("results") is not None else None
         })
         return _obj
 

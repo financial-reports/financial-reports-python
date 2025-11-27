@@ -51,7 +51,8 @@ class TestFiling(unittest.TestCase):
                     id = 56, 
                     code = '', 
                     name = '', 
-                    description = '', ),
+                    description = '', 
+                    category = null, ),
                 language = financial_reports_generated_client.models.language.Language(
                     id = 56, 
                     code = '', 
@@ -87,7 +88,8 @@ class TestFiling(unittest.TestCase):
                     id = 56, 
                     code = '', 
                     name = '', 
-                    description = '', ),
+                    description = '', 
+                    category = null, ),
                 language = financial_reports_generated_client.models.language.Language(
                     id = 56, 
                     code = '', 

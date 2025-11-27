@@ -53,7 +53,8 @@ class TestFilingSummary(unittest.TestCase):
                     id = 56, 
                     code = '', 
                     name = '', 
-                    description = '', )
+                    description = '', 
+                    category = null, )
             )
         else:
             return FilingSummary(
@@ -72,7 +73,8 @@ class TestFilingSummary(unittest.TestCase):
                     id = 56, 
                     code = '', 
                     name = '', 
-                    description = '', ),
+                    description = '', 
+                    category = null, ),
         )
         """
 

@@ -15,10 +15,10 @@
 
 import unittest
 
-from financial_reports_generated_client.models.filing_type import FilingType
+from financial_reports_generated_client.models.filing_category import FilingCategory
 
-class TestFilingType(unittest.TestCase):
-    """FilingType unit test stubs"""
+class TestFilingCategory(unittest.TestCase):
+    """FilingCategory unit test stubs"""
 
     def setUp(self):
         pass
@@ -26,40 +26,30 @@ class TestFilingType(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> FilingType:
-        """Test FilingType
+    def make_instance(self, include_optional) -> FilingCategory:
+        """Test FilingCategory
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `FilingType`
+        # uncomment below to create an instance of `FilingCategory`
         """
-        model = FilingType()
+        model = FilingCategory()
         if include_optional:
-            return FilingType(
+            return FilingCategory(
                 id = 56,
-                code = '',
                 name = '',
-                description = '',
-                category = financial_reports_generated_client.models.filing_category.FilingCategory(
-                    id = 56, 
-                    name = '', 
-                    sort_order = 56, )
+                sort_order = 56
             )
         else:
-            return FilingType(
+            return FilingCategory(
                 id = 56,
-                code = '',
                 name = '',
-                description = '',
-                category = financial_reports_generated_client.models.filing_category.FilingCategory(
-                    id = 56, 
-                    name = '', 
-                    sort_order = 56, ),
+                sort_order = 56,
         )
         """
 
-    def testFilingType(self):
-        """Test FilingType"""
+    def testFilingCategory(self):
+        """Test FilingCategory"""
         # inst_req_only = self.make_instance(include_optional=False)
         # inst_req_and_optional = self.make_instance(include_optional=True)
 

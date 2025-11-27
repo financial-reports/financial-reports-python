@@ -19,21 +19,18 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
-from financial_reports_generated_client.models.filing_category import FilingCategory
+from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
 from typing_extensions import Self
 
-class FilingType(BaseModel):
+class FilingCategory(BaseModel):
     """
-    FilingType
+    FilingCategory
     """ # noqa: E501
     id: StrictInt
-    code: StrictStr = Field(description="Unique code identifying the filing type.")
-    name: StrictStr = Field(description="Human-readable name of the filing type.")
-    description: StrictStr = Field(description="Detailed description of the filing type.")
-    category: Optional[FilingCategory]
-    __properties: ClassVar[List[str]] = ["id", "code", "name", "description", "category"]
+    name: StrictStr = Field(description="Name of the disclosure category.")
+    sort_order: StrictInt = Field(description="Order priority for display.")
+    __properties: ClassVar[List[str]] = ["id", "name", "sort_order"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -53,7 +50,7 @@ class FilingType(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of FilingType from a JSON string"""
+        """Create an instance of FilingCategory from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -68,15 +65,11 @@ class FilingType(BaseModel):
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
-        * OpenAPI `readOnly` fields are excluded.
-        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
             "id",
-            "code",
             "name",
-            "description",
-            "category",
+            "sort_order",
         ])
 
         _dict = self.model_dump(
@@ -84,19 +77,11 @@ class FilingType(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of category
-        if self.category:
-            _dict['category'] = self.category.to_dict()
-        # set to None if category (nullable) is None
-        # and model_fields_set contains the field
-        if self.category is None and "category" in self.model_fields_set:
-            _dict['category'] = None
-
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of FilingType from a dict"""
+        """Create an instance of FilingCategory from a dict"""
         if obj is None:
             return None
 
@@ -105,10 +90,8 @@ class FilingType(BaseModel):
 
         _obj = cls.model_validate({
             "id": obj.get("id"),
-            "code": obj.get("code"),
             "name": obj.get("name"),
-            "description": obj.get("description"),
-            "category": FilingCategory.from_dict(obj["category"]) if obj.get("category") is not None else None
+            "sort_order": obj.get("sort_order")
         })
         return _obj
 
