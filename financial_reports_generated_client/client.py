@@ -1,5 +1,6 @@
 
 import os
+import asyncio
 from .configuration import Configuration
 from .api_client import ApiClient
 
@@ -13,6 +14,24 @@ from .api.languages_api import LanguagesApi
 from .api.countries_api import CountriesApi
 from .api.isic_classifications_api import ISICClassificationsApi
 from .api.webhooks_management_api import WebhooksManagementApi
+
+class ResourceWrapper:
+    """
+    Wraps the generated API classes to provide cleaner method names.
+    Translates client.filings.list() -> client.filings.filings_list()
+    """
+    def __init__(self, api_instance, prefix):
+        self._api = api_instance
+        self._prefix = prefix
+
+    def __getattr__(self, name):
+        # 1. Try to find the method with the prefix (e.g., 'list' -> 'filings_list')
+        prefixed_name = f"{self._prefix}_{name}"
+        if hasattr(self._api, prefixed_name):
+            return getattr(self._api, prefixed_name)
+        
+        # 2. Fallback: Return the original attribute if it exists
+        return getattr(self._api, name)
 
 class FinancialReports:
     """
@@ -35,21 +54,24 @@ class FinancialReports:
         
         self.api_client = ApiClient(self.config)
 
-        # Initialize API instances
-        self.filings = FilingsApi(self.api_client)
-        self.companies = CompaniesApi(self.api_client)
-        self.filing_types = FilingTypesApi(self.api_client)
-        self.filing_categories = FilingCategoriesApi(self.api_client)
-        self.sources = SourcesApi(self.api_client)
-        self.languages = LanguagesApi(self.api_client)
-        self.countries = CountriesApi(self.api_client)
+        # Initialize API instances with smart wrappers
+        self.filings = ResourceWrapper(FilingsApi(self.api_client), "filings")
+        self.companies = ResourceWrapper(CompaniesApi(self.api_client), "companies")
+        self.filing_types = ResourceWrapper(FilingTypesApi(self.api_client), "filing_types")
+        self.filing_categories = ResourceWrapper(FilingCategoriesApi(self.api_client), "filing_categories")
+        self.sources = ResourceWrapper(SourcesApi(self.api_client), "sources")
+        self.languages = ResourceWrapper(LanguagesApi(self.api_client), "languages")
+        self.countries = ResourceWrapper(CountriesApi(self.api_client), "countries")
+        
+        # ISIC has multiple endpoints per API class, so we leave it unwrapped or user calls specific methods
         self.isic = ISICClassificationsApi(self.api_client)
-        self.webhooks = WebhooksManagementApi(self.api_client)
+        
+        # Webhooks
+        self.webhooks = ResourceWrapper(WebhooksManagementApi(self.api_client), "webhooks")
 
-    def close(self):
-        self.api_client.close()
+    async def close(self):
+        await self.api_client.close()
 
-    # Async Context Managers to match library=asyncio
     async def __aenter__(self):
         return self
 
