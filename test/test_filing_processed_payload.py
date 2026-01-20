@@ -47,7 +47,10 @@ class TestFilingProcessedPayload(unittest.TestCase):
                     website = '', 
                     company_page = '', 
                     country_name = '', 
-                    country_code_alpha2 = '', ),
+                    country_code_alpha2 = '', 
+                    isins = [
+                        ''
+                        ], ),
                 filing = financial_reports_generated_client.models.webhook_filing_payload.WebhookFilingPayload(
                     id = '', 
                     filing_type_code = '', 
@@ -74,7 +77,10 @@ class TestFilingProcessedPayload(unittest.TestCase):
                     website = '', 
                     company_page = '', 
                     country_name = '', 
-                    country_code_alpha2 = '', ),
+                    country_code_alpha2 = '', 
+                    isins = [
+                        ''
+                        ], ),
                 filing = financial_reports_generated_client.models.webhook_filing_payload.WebhookFilingPayload(
                     id = '', 
                     filing_type_code = '', 

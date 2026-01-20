@@ -10,6 +10,9 @@ Name | Type | Description | Notes
 **release_datetime** | **datetime** | Time the document was published on the authority page | [optional] 
 **company** | [**CompanyMinimal**](CompanyMinimal.md) |  | [readonly] 
 **filing_type** | [**FilingType**](FilingType.md) |  | [readonly] 
+**processing_status** | [**ProcessingStatusEnum**](ProcessingStatusEnum.md) | The lifecycle status of the raw document to markdown conversion.  * &#x60;PENDING&#x60; - Pending * &#x60;QUEUED&#x60; - Queued * &#x60;PROCESSING&#x60; - Processing * &#x60;COMPLETED&#x60; - Completed * &#x60;FAILED&#x60; - Failed * &#x60;SKIPPED&#x60; - Skipped | [optional] 
+**file_extension** | **str** | File extension (e.g., PDF, HTML). | [optional] 
+**file_size** | **int** | File size in bytes. Stores locally to avoid storage backend hits. | [optional] 
 
 ## Example
 

@@ -35,7 +35,8 @@ class WebhookCompanyPayload(BaseModel):
     company_page: StrictStr = Field(description="URL to the company's page on Financial Reports.")
     country_name: StrictStr = Field(description="Name of the company's country of incorporation.")
     country_code_alpha2: StrictStr = Field(description="ISO 3166-1 alpha-2 country code.")
-    __properties: ClassVar[List[str]] = ["id", "name", "ticker", "lei", "website", "company_page", "country_name", "country_code_alpha2"]
+    isins: List[StrictStr] = Field(description="List of ISIN codes (strings) associated with the company. The Primary ISIN is always at index 0. Only included if your webhook is configured with 'include_isins: true'.")
+    __properties: ClassVar[List[str]] = ["id", "name", "ticker", "lei", "website", "company_page", "country_name", "country_code_alpha2", "isins"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -111,7 +112,8 @@ class WebhookCompanyPayload(BaseModel):
             "website": obj.get("website"),
             "company_page": obj.get("company_page"),
             "country_name": obj.get("country_name"),
-            "country_code_alpha2": obj.get("country_code_alpha2")
+            "country_code_alpha2": obj.get("country_code_alpha2"),
+            "isins": obj.get("isins")
         })
         return _obj
 

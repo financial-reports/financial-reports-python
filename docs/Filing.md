@@ -17,6 +17,8 @@ Name | Type | Description | Notes
 **release_datetime** | **datetime** | Time the document was published on the authority page | [optional] 
 **source** | [**Source**](Source.md) |  | [readonly] 
 **document** | **str** |  | [readonly] 
+**file_extension** | **str** | File extension (e.g., PDF, HTML). | [optional] 
+**file_size** | **int** | File size in bytes. Stores locally to avoid storage backend hits. | [optional] 
 **markdown_url** | **str** |  | [readonly] 
 
 ## Example

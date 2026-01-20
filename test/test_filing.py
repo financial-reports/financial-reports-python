@@ -69,6 +69,8 @@ class TestFiling(unittest.TestCase):
                     url = '', 
                     description = '', ),
                 document = '',
+                file_extension = '',
+                file_size = 0,
                 markdown_url = ''
             )
         else:

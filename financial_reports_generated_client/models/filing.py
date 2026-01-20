@@ -45,8 +45,10 @@ class Filing(BaseModel):
     release_datetime: Optional[datetime] = Field(default=None, description="Time the document was published on the authority page")
     source: Optional[Source]
     document: Optional[StrictStr]
+    file_extension: Optional[Annotated[str, Field(strict=True, max_length=10)]] = Field(default=None, description="File extension (e.g., PDF, HTML).")
+    file_size: Optional[Annotated[int, Field(le=2147483647, strict=True, ge=0)]] = Field(default=None, description="File size in bytes. Stores locally to avoid storage backend hits.")
     markdown_url: Optional[StrictStr]
-    __properties: ClassVar[List[str]] = ["id", "company", "filing_type", "language", "filing_date", "title", "added_to_platform", "updated_date", "dissemination_datetime", "release_datetime", "source", "document", "markdown_url"]
+    __properties: ClassVar[List[str]] = ["id", "company", "filing_type", "language", "filing_date", "title", "added_to_platform", "updated_date", "dissemination_datetime", "release_datetime", "source", "document", "file_extension", "file_size", "markdown_url"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -137,6 +139,16 @@ class Filing(BaseModel):
         if self.document is None and "document" in self.model_fields_set:
             _dict['document'] = None
 
+        # set to None if file_extension (nullable) is None
+        # and model_fields_set contains the field
+        if self.file_extension is None and "file_extension" in self.model_fields_set:
+            _dict['file_extension'] = None
+
+        # set to None if file_size (nullable) is None
+        # and model_fields_set contains the field
+        if self.file_size is None and "file_size" in self.model_fields_set:
+            _dict['file_size'] = None
+
         # set to None if markdown_url (nullable) is None
         # and model_fields_set contains the field
         if self.markdown_url is None and "markdown_url" in self.model_fields_set:
@@ -166,6 +178,8 @@ class Filing(BaseModel):
             "release_datetime": obj.get("release_datetime"),
             "source": Source.from_dict(obj["source"]) if obj.get("source") is not None else None,
             "document": obj.get("document"),
+            "file_extension": obj.get("file_extension"),
+            "file_size": obj.get("file_size"),
             "markdown_url": obj.get("markdown_url")
         })
         return _obj

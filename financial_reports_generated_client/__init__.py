@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "1.3.7"
+__version__ = "1.3.8"
 
 # Define package exports
 __all__ = [
@@ -67,6 +67,7 @@ __all__ = [
     "PaginatedSourceList",
     "PaginatedWebhookList",
     "PatchedWebhook",
+    "ProcessingStatusEnum",
     "Source",
     "StockIndex",
     "WatchlistAction",
@@ -131,6 +132,7 @@ from financial_reports_generated_client.models.paginated_language_list import Pa
 from financial_reports_generated_client.models.paginated_source_list import PaginatedSourceList as PaginatedSourceList
 from financial_reports_generated_client.models.paginated_webhook_list import PaginatedWebhookList as PaginatedWebhookList
 from financial_reports_generated_client.models.patched_webhook import PatchedWebhook as PatchedWebhook
+from financial_reports_generated_client.models.processing_status_enum import ProcessingStatusEnum as ProcessingStatusEnum
 from financial_reports_generated_client.models.source import Source as Source
 from financial_reports_generated_client.models.stock_index import StockIndex as StockIndex
 from financial_reports_generated_client.models.watchlist_action import WatchlistAction as WatchlistAction

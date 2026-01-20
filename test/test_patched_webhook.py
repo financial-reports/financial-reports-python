@@ -40,6 +40,8 @@ class TestPatchedWebhook(unittest.TestCase):
                 url = '',
                 is_active = True,
                 include_markdown = True,
+                include_isins = True,
+                track_all_companies = True,
                 subscribed_filing_types = [
                     ''
                     ],

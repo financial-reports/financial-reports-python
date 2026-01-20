@@ -22,10 +22,9 @@ from setuptools import setup, find_packages  # noqa: H301
 # prerequisite: setuptools
 # http://pypi.python.org/pypi/setuptools
 NAME = "financial-reports-generated-client"
-VERSION = "1.3.7"
+VERSION = "1.3.8"
 PYTHON_REQUIRES = ">= 3.9"
 REQUIRES = [
-    "urllib3 >= 2.1.0, < 3.0.0",
     "python-dateutil >= 2.8.2",
     "aiohttp >= 3.8.4",
     "aiohttp-retry >= 2.8.3",

@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **company_page** | **str** | URL to the company&#39;s page on Financial Reports. | [readonly] 
 **country_name** | **str** | Name of the company&#39;s country of incorporation. | [readonly] 
 **country_code_alpha2** | **str** | ISO 3166-1 alpha-2 country code. | [readonly] 
+**isins** | **List[str]** | List of ISIN codes (strings) associated with the company. The Primary ISIN is always at index 0. Only included if your webhook is configured with &#39;include_isins: true&#39;. | 
 
 ## Example
 

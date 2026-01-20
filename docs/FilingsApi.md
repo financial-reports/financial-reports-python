@@ -5,12 +5,12 @@ All URIs are relative to *https://api.financialreports.eu*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**filings_list**](FilingsApi.md#filings_list) | **GET** /filings/ | List Filings
-[**filings_markdown_retrieve**](FilingsApi.md#filings_markdown_retrieve) | **GET** /filings/{filing_id}/markdown/ | Retrieve Filing Markdown
+[**filings_markdown_retrieve**](FilingsApi.md#filings_markdown_retrieve) | **GET** /filings/{id}/markdown/ | Retrieve Filing Markdown
 [**filings_retrieve**](FilingsApi.md#filings_retrieve) | **GET** /filings/{id}/ | Retrieve Filing Details
 
 
 # **filings_list**
-> PaginatedFilingSummaryList filings_list(added_to_platform_from=added_to_platform_from, added_to_platform_to=added_to_platform_to, company=company, company_isin=company_isin, countries=countries, language=language, languages=languages, lei=lei, on_watchlist=on_watchlist, ordering=ordering, page=page, page_size=page_size, release_datetime_from=release_datetime_from, release_datetime_to=release_datetime_to, search=search, source=source, sources=sources, type=type, types=types, updated_date_from=updated_date_from, updated_date_to=updated_date_to, view=view)
+> PaginatedFilingSummaryList filings_list(added_to_platform_from=added_to_platform_from, added_to_platform_to=added_to_platform_to, company=company, company_isin=company_isin, countries=countries, extensions=extensions, file_size_max=file_size_max, file_size_min=file_size_min, language=language, languages=languages, lei=lei, on_watchlist=on_watchlist, ordering=ordering, page=page, page_size=page_size, release_datetime_from=release_datetime_from, release_datetime_to=release_datetime_to, search=search, source=source, sources=sources, type=type, types=types, updated_date_from=updated_date_from, updated_date_to=updated_date_to, view=view)
 
 List Filings
 
@@ -55,6 +55,9 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
     company = 56 # int | Filter by internal Company ID. (optional)
     company_isin = 'company_isin_example' # str | Filter by Company ISIN. Case-insensitive. (optional)
     countries = 'countries_example' # str | Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values (e.g., US,GB,DE). (optional)
+    extensions = 'extensions_example' # str | Filter by file extension(s). Single (e.g., PDF) or comma-separated (e.g., PDF,XBRL). Case-insensitive. (optional)
+    file_size_max = 56 # int | Filter by maximum file size in bytes. (optional)
+    file_size_min = 56 # int | Filter by minimum file size in bytes. (optional)
     language = 'language_example' # str | Filter by a single filing language ISO 639-1 code (e.g., en). (optional)
     languages = 'languages_example' # str | Filter by filing language ISO 639-1 code(s). Comma-separated for multiple values (e.g., en,de). (optional)
     lei = 'lei_example' # str | Filter by Company Legal Entity Identifier (LEI). (optional)
@@ -75,7 +78,7 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
 
     try:
         # List Filings
-        api_response = await api_instance.filings_list(added_to_platform_from=added_to_platform_from, added_to_platform_to=added_to_platform_to, company=company, company_isin=company_isin, countries=countries, language=language, languages=languages, lei=lei, on_watchlist=on_watchlist, ordering=ordering, page=page, page_size=page_size, release_datetime_from=release_datetime_from, release_datetime_to=release_datetime_to, search=search, source=source, sources=sources, type=type, types=types, updated_date_from=updated_date_from, updated_date_to=updated_date_to, view=view)
+        api_response = await api_instance.filings_list(added_to_platform_from=added_to_platform_from, added_to_platform_to=added_to_platform_to, company=company, company_isin=company_isin, countries=countries, extensions=extensions, file_size_max=file_size_max, file_size_min=file_size_min, language=language, languages=languages, lei=lei, on_watchlist=on_watchlist, ordering=ordering, page=page, page_size=page_size, release_datetime_from=release_datetime_from, release_datetime_to=release_datetime_to, search=search, source=source, sources=sources, type=type, types=types, updated_date_from=updated_date_from, updated_date_to=updated_date_to, view=view)
         print("The response of FilingsApi->filings_list:\n")
         pprint(api_response)
     except Exception as e:
@@ -94,6 +97,9 @@ Name | Type | Description  | Notes
  **company** | **int**| Filter by internal Company ID. | [optional] 
  **company_isin** | **str**| Filter by Company ISIN. Case-insensitive. | [optional] 
  **countries** | **str**| Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values (e.g., US,GB,DE). | [optional] 
+ **extensions** | **str**| Filter by file extension(s). Single (e.g., PDF) or comma-separated (e.g., PDF,XBRL). Case-insensitive. | [optional] 
+ **file_size_max** | **int**| Filter by maximum file size in bytes. | [optional] 
+ **file_size_min** | **int**| Filter by minimum file size in bytes. | [optional] 
  **language** | **str**| Filter by a single filing language ISO 639-1 code (e.g., en). | [optional] 
  **languages** | **str**| Filter by filing language ISO 639-1 code(s). Comma-separated for multiple values (e.g., en,de). | [optional] 
  **lei** | **str**| Filter by Company Legal Entity Identifier (LEI). | [optional] 
@@ -135,7 +141,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **filings_markdown_retrieve**
-> filings_markdown_retrieve(filing_id)
+> filings_markdown_retrieve(id)
 
 Retrieve Filing Markdown
 
@@ -174,11 +180,11 @@ configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
 async with financial_reports_generated_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = financial_reports_generated_client.FilingsApi(api_client)
-    filing_id = 56 # int | 
+    id = 56 # int | A unique integer value identifying this filing.
 
     try:
         # Retrieve Filing Markdown
-        await api_instance.filings_markdown_retrieve(filing_id)
+        await api_instance.filings_markdown_retrieve(id)
     except Exception as e:
         print("Exception when calling FilingsApi->filings_markdown_retrieve: %s\n" % e)
 ```
@@ -190,7 +196,7 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **filing_id** | **int**|  | 
+ **id** | **int**| A unique integer value identifying this filing. | 
 
 ### Return type
 

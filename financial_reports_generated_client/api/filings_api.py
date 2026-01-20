@@ -50,6 +50,9 @@ class FilingsApi:
         company: Annotated[Optional[StrictInt], Field(description="Filter by internal Company ID.")] = None,
         company_isin: Annotated[Optional[StrictStr], Field(description="Filter by Company ISIN. Case-insensitive.")] = None,
         countries: Annotated[Optional[StrictStr], Field(description="Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values (e.g., US,GB,DE).")] = None,
+        extensions: Annotated[Optional[StrictStr], Field(description="Filter by file extension(s). Single (e.g., PDF) or comma-separated (e.g., PDF,XBRL). Case-insensitive.")] = None,
+        file_size_max: Annotated[Optional[StrictInt], Field(description="Filter by maximum file size in bytes.")] = None,
+        file_size_min: Annotated[Optional[StrictInt], Field(description="Filter by minimum file size in bytes.")] = None,
         language: Annotated[Optional[StrictStr], Field(description="Filter by a single filing language ISO 639-1 code (e.g., en).")] = None,
         languages: Annotated[Optional[StrictStr], Field(description="Filter by filing language ISO 639-1 code(s). Comma-separated for multiple values (e.g., en,de).")] = None,
         lei: Annotated[Optional[StrictStr], Field(description="Filter by Company Legal Entity Identifier (LEI).")] = None,
@@ -94,6 +97,12 @@ class FilingsApi:
         :type company_isin: str
         :param countries: Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values (e.g., US,GB,DE).
         :type countries: str
+        :param extensions: Filter by file extension(s). Single (e.g., PDF) or comma-separated (e.g., PDF,XBRL). Case-insensitive.
+        :type extensions: str
+        :param file_size_max: Filter by maximum file size in bytes.
+        :type file_size_max: int
+        :param file_size_min: Filter by minimum file size in bytes.
+        :type file_size_min: int
         :param language: Filter by a single filing language ISO 639-1 code (e.g., en).
         :type language: str
         :param languages: Filter by filing language ISO 639-1 code(s). Comma-separated for multiple values (e.g., en,de).
@@ -156,6 +165,9 @@ class FilingsApi:
             company=company,
             company_isin=company_isin,
             countries=countries,
+            extensions=extensions,
+            file_size_max=file_size_max,
+            file_size_min=file_size_min,
             language=language,
             languages=languages,
             lei=lei,
@@ -202,6 +214,9 @@ class FilingsApi:
         company: Annotated[Optional[StrictInt], Field(description="Filter by internal Company ID.")] = None,
         company_isin: Annotated[Optional[StrictStr], Field(description="Filter by Company ISIN. Case-insensitive.")] = None,
         countries: Annotated[Optional[StrictStr], Field(description="Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values (e.g., US,GB,DE).")] = None,
+        extensions: Annotated[Optional[StrictStr], Field(description="Filter by file extension(s). Single (e.g., PDF) or comma-separated (e.g., PDF,XBRL). Case-insensitive.")] = None,
+        file_size_max: Annotated[Optional[StrictInt], Field(description="Filter by maximum file size in bytes.")] = None,
+        file_size_min: Annotated[Optional[StrictInt], Field(description="Filter by minimum file size in bytes.")] = None,
         language: Annotated[Optional[StrictStr], Field(description="Filter by a single filing language ISO 639-1 code (e.g., en).")] = None,
         languages: Annotated[Optional[StrictStr], Field(description="Filter by filing language ISO 639-1 code(s). Comma-separated for multiple values (e.g., en,de).")] = None,
         lei: Annotated[Optional[StrictStr], Field(description="Filter by Company Legal Entity Identifier (LEI).")] = None,
@@ -246,6 +261,12 @@ class FilingsApi:
         :type company_isin: str
         :param countries: Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values (e.g., US,GB,DE).
         :type countries: str
+        :param extensions: Filter by file extension(s). Single (e.g., PDF) or comma-separated (e.g., PDF,XBRL). Case-insensitive.
+        :type extensions: str
+        :param file_size_max: Filter by maximum file size in bytes.
+        :type file_size_max: int
+        :param file_size_min: Filter by minimum file size in bytes.
+        :type file_size_min: int
         :param language: Filter by a single filing language ISO 639-1 code (e.g., en).
         :type language: str
         :param languages: Filter by filing language ISO 639-1 code(s). Comma-separated for multiple values (e.g., en,de).
@@ -308,6 +329,9 @@ class FilingsApi:
             company=company,
             company_isin=company_isin,
             countries=countries,
+            extensions=extensions,
+            file_size_max=file_size_max,
+            file_size_min=file_size_min,
             language=language,
             languages=languages,
             lei=lei,
@@ -354,6 +378,9 @@ class FilingsApi:
         company: Annotated[Optional[StrictInt], Field(description="Filter by internal Company ID.")] = None,
         company_isin: Annotated[Optional[StrictStr], Field(description="Filter by Company ISIN. Case-insensitive.")] = None,
         countries: Annotated[Optional[StrictStr], Field(description="Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values (e.g., US,GB,DE).")] = None,
+        extensions: Annotated[Optional[StrictStr], Field(description="Filter by file extension(s). Single (e.g., PDF) or comma-separated (e.g., PDF,XBRL). Case-insensitive.")] = None,
+        file_size_max: Annotated[Optional[StrictInt], Field(description="Filter by maximum file size in bytes.")] = None,
+        file_size_min: Annotated[Optional[StrictInt], Field(description="Filter by minimum file size in bytes.")] = None,
         language: Annotated[Optional[StrictStr], Field(description="Filter by a single filing language ISO 639-1 code (e.g., en).")] = None,
         languages: Annotated[Optional[StrictStr], Field(description="Filter by filing language ISO 639-1 code(s). Comma-separated for multiple values (e.g., en,de).")] = None,
         lei: Annotated[Optional[StrictStr], Field(description="Filter by Company Legal Entity Identifier (LEI).")] = None,
@@ -398,6 +425,12 @@ class FilingsApi:
         :type company_isin: str
         :param countries: Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values (e.g., US,GB,DE).
         :type countries: str
+        :param extensions: Filter by file extension(s). Single (e.g., PDF) or comma-separated (e.g., PDF,XBRL). Case-insensitive.
+        :type extensions: str
+        :param file_size_max: Filter by maximum file size in bytes.
+        :type file_size_max: int
+        :param file_size_min: Filter by minimum file size in bytes.
+        :type file_size_min: int
         :param language: Filter by a single filing language ISO 639-1 code (e.g., en).
         :type language: str
         :param languages: Filter by filing language ISO 639-1 code(s). Comma-separated for multiple values (e.g., en,de).
@@ -460,6 +493,9 @@ class FilingsApi:
             company=company,
             company_isin=company_isin,
             countries=countries,
+            extensions=extensions,
+            file_size_max=file_size_max,
+            file_size_min=file_size_min,
             language=language,
             languages=languages,
             lei=lei,
@@ -501,6 +537,9 @@ class FilingsApi:
         company,
         company_isin,
         countries,
+        extensions,
+        file_size_max,
+        file_size_min,
         language,
         languages,
         lei,
@@ -577,6 +616,18 @@ class FilingsApi:
         if countries is not None:
             
             _query_params.append(('countries', countries))
+            
+        if extensions is not None:
+            
+            _query_params.append(('extensions', extensions))
+            
+        if file_size_max is not None:
+            
+            _query_params.append(('file_size_max', file_size_max))
+            
+        if file_size_min is not None:
+            
+            _query_params.append(('file_size_min', file_size_min))
             
         if language is not None:
             
@@ -722,7 +773,7 @@ class FilingsApi:
     @validate_call
     async def filings_markdown_retrieve(
         self,
-        filing_id: StrictInt,
+        id: Annotated[StrictInt, Field(description="A unique integer value identifying this filing.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -740,8 +791,8 @@ class FilingsApi:
 
         **Access Level Required:** Access to full filing content in Markdown requires a **Level 2** Plan or higher.  --- Retrieve the raw processed content of a single filing in Markdown format.
 
-        :param filing_id: (required)
-        :type filing_id: int
+        :param id: A unique integer value identifying this filing. (required)
+        :type id: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -765,7 +816,7 @@ class FilingsApi:
         """ # noqa: E501
 
         _param = self._filings_markdown_retrieve_serialize(
-            filing_id=filing_id,
+            id=id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -791,7 +842,7 @@ class FilingsApi:
     @validate_call
     async def filings_markdown_retrieve_with_http_info(
         self,
-        filing_id: StrictInt,
+        id: Annotated[StrictInt, Field(description="A unique integer value identifying this filing.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -809,8 +860,8 @@ class FilingsApi:
 
         **Access Level Required:** Access to full filing content in Markdown requires a **Level 2** Plan or higher.  --- Retrieve the raw processed content of a single filing in Markdown format.
 
-        :param filing_id: (required)
-        :type filing_id: int
+        :param id: A unique integer value identifying this filing. (required)
+        :type id: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -834,7 +885,7 @@ class FilingsApi:
         """ # noqa: E501
 
         _param = self._filings_markdown_retrieve_serialize(
-            filing_id=filing_id,
+            id=id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -860,7 +911,7 @@ class FilingsApi:
     @validate_call
     async def filings_markdown_retrieve_without_preload_content(
         self,
-        filing_id: StrictInt,
+        id: Annotated[StrictInt, Field(description="A unique integer value identifying this filing.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -878,8 +929,8 @@ class FilingsApi:
 
         **Access Level Required:** Access to full filing content in Markdown requires a **Level 2** Plan or higher.  --- Retrieve the raw processed content of a single filing in Markdown format.
 
-        :param filing_id: (required)
-        :type filing_id: int
+        :param id: A unique integer value identifying this filing. (required)
+        :type id: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -903,7 +954,7 @@ class FilingsApi:
         """ # noqa: E501
 
         _param = self._filings_markdown_retrieve_serialize(
-            filing_id=filing_id,
+            id=id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -924,7 +975,7 @@ class FilingsApi:
 
     def _filings_markdown_retrieve_serialize(
         self,
-        filing_id,
+        id,
         _request_auth,
         _content_type,
         _headers,
@@ -946,8 +997,8 @@ class FilingsApi:
         _body_params: Optional[bytes] = None
 
         # process the path parameters
-        if filing_id is not None:
-            _path_params['filing_id'] = filing_id
+        if id is not None:
+            _path_params['id'] = id
         # process the query parameters
         # process the header parameters
         # process the form parameters
@@ -970,7 +1021,7 @@ class FilingsApi:
 
         return self.api_client.param_serialize(
             method='GET',
-            resource_path='/filings/{filing_id}/markdown/',
+            resource_path='/filings/{id}/markdown/',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,

@@ -42,7 +42,7 @@ class Company(BaseModel):
     description_last_updated: Optional[datetime] = Field(description="Timestamp of the last update to the company's description.")
     isins: List[StrictStr] = Field(description="List of International Securities Identification Numbers (ISINs) associated with the company.")
     lei: StrictStr = Field(description="Legal Entity Identifier (ISO 17442).")
-    country_code: Optional[StrictStr] = Field(description="ISO 3166-1 alpha-2 country code of the company's primary registration or headquarters.")
+    country_code: StrictStr = Field(description="ISO 3166-1 alpha-2 country code of the company's primary registration or headquarters.")
     address: StrictStr = Field(description="The company's primary street address.")
     city: StrictStr = Field(description="The city where the company's headquarters is located.")
     zip_code: StrictStr = Field(description="The postal or ZIP code for the company's address.")
@@ -231,11 +231,6 @@ class Company(BaseModel):
         # and model_fields_set contains the field
         if self.description_last_updated is None and "description_last_updated" in self.model_fields_set:
             _dict['description_last_updated'] = None
-
-        # set to None if country_code (nullable) is None
-        # and model_fields_set contains the field
-        if self.country_code is None and "country_code" in self.model_fields_set:
-            _dict['country_code'] = None
 
         # set to None if sector (nullable) is None
         # and model_fields_set contains the field

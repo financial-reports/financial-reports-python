@@ -33,11 +33,13 @@ class PatchedWebhook(BaseModel):
     url: Optional[Annotated[str, Field(strict=True, max_length=500)]] = Field(default=None, description="The endpoint URL (HTTPS required) to which the webhook payloads will be sent.")
     is_active: Optional[StrictBool] = Field(default=True, description="Set to 'false' to temporarily disable this webhook without deleting it.")
     include_markdown: Optional[StrictBool] = Field(default=True, description="Set to 'true' to include the full 'markdown_content' in the webhook payload. Set to 'false' to receive a payload without the markdown body.")
+    include_isins: Optional[StrictBool] = Field(default=False, description="Set to 'true' to include the list of ISINs in the company object. Warning: Large companies may have thousands of ISINs, increasing payload size.")
+    track_all_companies: Optional[StrictBool] = Field(default=False, description="Set to 'true' to subscribe to the Global Firehose. You will receive notifications for filings from ALL companies in the database, regardless of your Watchlist.")
     subscribed_filing_types: Optional[List[StrictStr]] = Field(default=None, description="A list of filing type codes (e.g., ['10-K', 'Annual Report']) to subscribe to. If this list is empty or omitted, you will be subscribed to all filing types.")
     secret_key: Optional[StrictStr] = Field(default=None, description="Your unique secret key for verifying payload signatures. This key is generated upon creation and can be regenerated via a separate endpoint.")
     created_at: Optional[datetime] = None
     updated_at: Optional[datetime] = None
-    __properties: ClassVar[List[str]] = ["id", "url", "is_active", "include_markdown", "subscribed_filing_types", "secret_key", "created_at", "updated_at"]
+    __properties: ClassVar[List[str]] = ["id", "url", "is_active", "include_markdown", "include_isins", "track_all_companies", "subscribed_filing_types", "secret_key", "created_at", "updated_at"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -102,6 +104,8 @@ class PatchedWebhook(BaseModel):
             "url": obj.get("url"),
             "is_active": obj.get("is_active") if obj.get("is_active") is not None else True,
             "include_markdown": obj.get("include_markdown") if obj.get("include_markdown") is not None else True,
+            "include_isins": obj.get("include_isins") if obj.get("include_isins") is not None else False,
+            "track_all_companies": obj.get("track_all_companies") if obj.get("track_all_companies") is not None else False,
             "subscribed_filing_types": obj.get("subscribed_filing_types"),
             "secret_key": obj.get("secret_key"),
             "created_at": obj.get("created_at"),

@@ -33,7 +33,7 @@ class CompanyMinimal(BaseModel):
     isins: List[StrictStr] = Field(description="List of International Securities Identification Numbers (ISINs) associated with the company.")
     lei: StrictStr = Field(description="Legal Entity Identifier (ISO 17442).")
     sub_industry_code: Optional[StrictStr] = Field(description="ISIC classification code classifying the company.")
-    country_code: Optional[StrictStr] = Field(description="ISO 3166-1 alpha-2 country code of the company's primary registration or headquarters.")
+    country_code: StrictStr = Field(description="ISO 3166-1 alpha-2 country code of the company's primary registration or headquarters.")
     __properties: ClassVar[List[str]] = ["id", "name", "tagline", "isins", "lei", "sub_industry_code", "country_code"]
 
     model_config = ConfigDict(
@@ -91,11 +91,6 @@ class CompanyMinimal(BaseModel):
         # and model_fields_set contains the field
         if self.sub_industry_code is None and "sub_industry_code" in self.model_fields_set:
             _dict['sub_industry_code'] = None
-
-        # set to None if country_code (nullable) is None
-        # and model_fields_set contains the field
-        if self.country_code is None and "country_code" in self.model_fields_set:
-            _dict['country_code'] = None
 
         return _dict
 

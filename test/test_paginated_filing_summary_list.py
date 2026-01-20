@@ -45,7 +45,10 @@ class TestPaginatedFilingSummaryList(unittest.TestCase):
                         title = '', 
                         release_datetime = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
                         company = null, 
-                        filing_type = null, )
+                        filing_type = null, 
+                        processing_status = null, 
+                        file_extension = '', 
+                        file_size = 0, )
                     ]
             )
         else:
@@ -57,7 +60,10 @@ class TestPaginatedFilingSummaryList(unittest.TestCase):
                         title = '', 
                         release_datetime = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
                         company = null, 
-                        filing_type = null, )
+                        filing_type = null, 
+                        processing_status = null, 
+                        file_extension = '', 
+                        file_size = 0, )
                     ],
         )
         """

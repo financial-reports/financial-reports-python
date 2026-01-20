@@ -24,6 +24,7 @@ from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from financial_reports_generated_client.models.company_minimal import CompanyMinimal
 from financial_reports_generated_client.models.filing_type import FilingType
+from financial_reports_generated_client.models.processing_status_enum import ProcessingStatusEnum
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -36,7 +37,10 @@ class FilingSummary(BaseModel):
     release_datetime: Optional[datetime] = Field(default=None, description="Time the document was published on the authority page")
     company: CompanyMinimal
     filing_type: FilingType
-    __properties: ClassVar[List[str]] = ["id", "title", "release_datetime", "company", "filing_type"]
+    processing_status: Optional[ProcessingStatusEnum] = Field(default=None, description="The lifecycle status of the raw document to markdown conversion.  * `PENDING` - Pending * `QUEUED` - Queued * `PROCESSING` - Processing * `COMPLETED` - Completed * `FAILED` - Failed * `SKIPPED` - Skipped")
+    file_extension: Optional[Annotated[str, Field(strict=True, max_length=10)]] = Field(default=None, description="File extension (e.g., PDF, HTML).")
+    file_size: Optional[Annotated[int, Field(le=2147483647, strict=True, ge=0)]] = Field(default=None, description="File size in bytes. Stores locally to avoid storage backend hits.")
+    __properties: ClassVar[List[str]] = ["id", "title", "release_datetime", "company", "filing_type", "processing_status", "file_extension", "file_size"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -94,6 +98,16 @@ class FilingSummary(BaseModel):
         if self.release_datetime is None and "release_datetime" in self.model_fields_set:
             _dict['release_datetime'] = None
 
+        # set to None if file_extension (nullable) is None
+        # and model_fields_set contains the field
+        if self.file_extension is None and "file_extension" in self.model_fields_set:
+            _dict['file_extension'] = None
+
+        # set to None if file_size (nullable) is None
+        # and model_fields_set contains the field
+        if self.file_size is None and "file_size" in self.model_fields_set:
+            _dict['file_size'] = None
+
         return _dict
 
     @classmethod
@@ -110,7 +124,10 @@ class FilingSummary(BaseModel):
             "title": obj.get("title"),
             "release_datetime": obj.get("release_datetime"),
             "company": CompanyMinimal.from_dict(obj["company"]) if obj.get("company") is not None else None,
-            "filing_type": FilingType.from_dict(obj["filing_type"]) if obj.get("filing_type") is not None else None
+            "filing_type": FilingType.from_dict(obj["filing_type"]) if obj.get("filing_type") is not None else None,
+            "processing_status": obj.get("processing_status"),
+            "file_extension": obj.get("file_extension"),
+            "file_size": obj.get("file_size")
         })
         return _obj
 

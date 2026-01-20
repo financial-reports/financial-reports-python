@@ -54,7 +54,10 @@ class TestFilingSummary(unittest.TestCase):
                     code = '', 
                     name = '', 
                     description = '', 
-                    category = null, )
+                    category = null, ),
+                processing_status = 'PENDING',
+                file_extension = '',
+                file_size = 0
             )
         else:
             return FilingSummary(
