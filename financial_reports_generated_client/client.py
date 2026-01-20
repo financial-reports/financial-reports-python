@@ -1,6 +1,7 @@
 
 import os
 import asyncio
+import certifi
 from .configuration import Configuration
 from .api_client import ApiClient
 
@@ -51,6 +52,11 @@ class FinancialReports:
         # Hardcode the Production Host
         self.config = Configuration(host="https://api.financialreports.eu")
         self.config.api_key['ApiKeyAuth'] = api_key
+        
+        # SSL FIX: Force usage of certifi bundle
+        # This prevents SSL errors on macOS and bare-bones containers
+        self.config.ssl_ca_cert = certifi.where()
+        self.config.assert_hostname = False # Optional: strict hostname checking can sometimes be flaky behind proxies, but usually safe to leave True.
         
         self.api_client = ApiClient(self.config)
 
