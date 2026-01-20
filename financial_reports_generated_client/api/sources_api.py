@@ -1,9 +1,9 @@
 # coding: utf-8
 
 """
-    Financial Reports API
+    FinancialReports API
 
-    Welcome to the Financial Reports API, your gateway to European company filings, financial data, and corporate information. All API requests must be authenticated. Authentication is performed by including your unique API key in the **X-API-Key** HTTP header. Please use the \"Authorize\" button to set your key and try out the endpoints.
+     Welcome to the FinancialReports API.  ### Access Levels This API is tiered based on data granularity.  | Level | Name | Description | | :--- | :--- | :--- | | **Level 1** | **Standard Access** | Access to raw PDF/XBRL metadata, company profiles, ISIC classifications, and reference data. | | **Level 2** | **Processed Filings** | Access to converted content (Markdown/JSON) and full-text search capabilities. | | **Level 3** | **Extracted Financials** | Access to specific extracted financial line items (Revenue, EBITDA, etc.) mapped to standard taxonomies. |  ### Authentication All API requests must be authenticated via the **X-API-Key** header. 
 
     The version of the OpenAPI document: 1.0.0
     Contact: api@financialreports.eu
@@ -61,7 +61,7 @@ class SourcesApi:
     ) -> PaginatedSourceList:
         """List Data Sources
 
-        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve a paginated list of all available data sources.
+        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve a paginated list of all available data sources.
 
         :param page: A page number within the paginated result set.
         :type page: int
@@ -132,7 +132,7 @@ class SourcesApi:
     ) -> ApiResponse[PaginatedSourceList]:
         """List Data Sources
 
-        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve a paginated list of all available data sources.
+        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve a paginated list of all available data sources.
 
         :param page: A page number within the paginated result set.
         :type page: int
@@ -203,7 +203,7 @@ class SourcesApi:
     ) -> RESTResponseType:
         """List Data Sources
 
-        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve a paginated list of all available data sources.
+        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve a paginated list of all available data sources.
 
         :param page: A page number within the paginated result set.
         :type page: int
@@ -340,7 +340,7 @@ class SourcesApi:
     ) -> Source:
         """Retrieve Data Source
 
-        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve details for a specific data source by its ID.
+        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve details for a specific data source by its ID.
 
         :param id: A unique integer value identifying this source. (required)
         :type id: int
@@ -407,7 +407,7 @@ class SourcesApi:
     ) -> ApiResponse[Source]:
         """Retrieve Data Source
 
-        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve details for a specific data source by its ID.
+        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve details for a specific data source by its ID.
 
         :param id: A unique integer value identifying this source. (required)
         :type id: int
@@ -474,7 +474,7 @@ class SourcesApi:
     ) -> RESTResponseType:
         """Retrieve Data Source
 
-        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve details for a specific data source by its ID.
+        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve details for a specific data source by its ID.
 
         :param id: A unique integer value identifying this source. (required)
         :type id: int

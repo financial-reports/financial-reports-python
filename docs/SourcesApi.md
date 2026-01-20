@@ -13,7 +13,7 @@ Method | HTTP request | Description
 
 List Data Sources
 
-**Access Level Required:** Requires **Level 1** Plan or higher.
+**Access Level Required:** Requires **Standard Access (Level 1)**.
 
 ---
 Retrieve a paginated list of all available data sources.
@@ -97,7 +97,7 @@ Name | Type | Description  | Notes
 
 Retrieve Data Source
 
-**Access Level Required:** Requires **Level 1** Plan or higher.
+**Access Level Required:** Requires **Standard Access (Level 1)**.
 
 ---
 Retrieve details for a specific data source by its ID.

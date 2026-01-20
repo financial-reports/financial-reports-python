@@ -13,7 +13,7 @@ Method | HTTP request | Description
 
 List Companies
 
-**Access Level Required:** Requires **Level 1** Plan or higher.
+**Access Level Required:** Requires **Standard Access (Level 1)**.
 
 ---
 Retrieve a paginated list of companies.
@@ -122,7 +122,7 @@ Name | Type | Description  | Notes
 
 Retrieve Company Details
 
-**Access Level Required:** Requires **Level 1** Plan or higher.
+**Access Level Required:** Requires **Standard Access (Level 1)**.
 
 ---
 Retrieve detailed information for a single company by its internal ID.

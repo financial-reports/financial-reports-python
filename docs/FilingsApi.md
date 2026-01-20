@@ -14,7 +14,7 @@ Method | HTTP request | Description
 
 List Filings
 
-**Access Level Required:** Requires **Level 1** Plan or higher.
+**Access Level Required:** Requires **Standard Access (Level 1)**.
 
 ---
 Retrieve a paginated list of regulatory filings.
@@ -145,7 +145,7 @@ Name | Type | Description  | Notes
 
 Retrieve Filing Markdown
 
-**Access Level Required:** Access to full filing content in Markdown requires a **Level 2** Plan or higher.
+**Access Level Required:** Requires **Processed Filings (Level 2)** access to view full converted content.
 
 ---
 Retrieve the raw processed content of a single filing in Markdown format.
@@ -226,7 +226,7 @@ void (empty response body)
 
 Retrieve Filing Details
 
-**Access Level Required:** Requires **Level 1** Plan or higher.
+**Access Level Required:** Requires **Standard Access (Level 1)**.
 
 ---
 Retrieve detailed information for a single filing by its ID.

@@ -1,9 +1,9 @@
 # coding: utf-8
 
 """
-    Financial Reports API
+    FinancialReports API
 
-    Welcome to the Financial Reports API, your gateway to European company filings, financial data, and corporate information. All API requests must be authenticated. Authentication is performed by including your unique API key in the **X-API-Key** HTTP header. Please use the \"Authorize\" button to set your key and try out the endpoints.
+     Welcome to the FinancialReports API.  ### Access Levels This API is tiered based on data granularity.  | Level | Name | Description | | :--- | :--- | :--- | | **Level 1** | **Standard Access** | Access to raw PDF/XBRL metadata, company profiles, ISIC classifications, and reference data. | | **Level 2** | **Processed Filings** | Access to converted content (Markdown/JSON) and full-text search capabilities. | | **Level 3** | **Extracted Financials** | Access to specific extracted financial line items (Revenue, EBITDA, etc.) mapped to standard taxonomies. |  ### Authentication All API requests must be authenticated via the **X-API-Key** header. 
 
     The version of the OpenAPI document: 1.0.0
     Contact: api@financialreports.eu
@@ -85,7 +85,7 @@ class FilingsApi:
     ) -> PaginatedFilingSummaryList:
         """List Filings
 
-        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve a paginated list of regulatory filings.
+        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve a paginated list of regulatory filings.
 
         :param added_to_platform_from: Filter by date added to platform (inclusive start date, YYYY-MM-DDTHH:MM:SSZ format).
         :type added_to_platform_from: datetime
@@ -249,7 +249,7 @@ class FilingsApi:
     ) -> ApiResponse[PaginatedFilingSummaryList]:
         """List Filings
 
-        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve a paginated list of regulatory filings.
+        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve a paginated list of regulatory filings.
 
         :param added_to_platform_from: Filter by date added to platform (inclusive start date, YYYY-MM-DDTHH:MM:SSZ format).
         :type added_to_platform_from: datetime
@@ -413,7 +413,7 @@ class FilingsApi:
     ) -> RESTResponseType:
         """List Filings
 
-        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve a paginated list of regulatory filings.
+        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve a paginated list of regulatory filings.
 
         :param added_to_platform_from: Filter by date added to platform (inclusive start date, YYYY-MM-DDTHH:MM:SSZ format).
         :type added_to_platform_from: datetime
@@ -789,7 +789,7 @@ class FilingsApi:
     ) -> None:
         """Retrieve Filing Markdown
 
-        **Access Level Required:** Access to full filing content in Markdown requires a **Level 2** Plan or higher.  --- Retrieve the raw processed content of a single filing in Markdown format.
+        **Access Level Required:** Requires **Processed Filings (Level 2)** access to view full converted content.  --- Retrieve the raw processed content of a single filing in Markdown format.
 
         :param id: A unique integer value identifying this filing. (required)
         :type id: int
@@ -858,7 +858,7 @@ class FilingsApi:
     ) -> ApiResponse[None]:
         """Retrieve Filing Markdown
 
-        **Access Level Required:** Access to full filing content in Markdown requires a **Level 2** Plan or higher.  --- Retrieve the raw processed content of a single filing in Markdown format.
+        **Access Level Required:** Requires **Processed Filings (Level 2)** access to view full converted content.  --- Retrieve the raw processed content of a single filing in Markdown format.
 
         :param id: A unique integer value identifying this filing. (required)
         :type id: int
@@ -927,7 +927,7 @@ class FilingsApi:
     ) -> RESTResponseType:
         """Retrieve Filing Markdown
 
-        **Access Level Required:** Access to full filing content in Markdown requires a **Level 2** Plan or higher.  --- Retrieve the raw processed content of a single filing in Markdown format.
+        **Access Level Required:** Requires **Processed Filings (Level 2)** access to view full converted content.  --- Retrieve the raw processed content of a single filing in Markdown format.
 
         :param id: A unique integer value identifying this filing. (required)
         :type id: int
@@ -1056,7 +1056,7 @@ class FilingsApi:
     ) -> Filing:
         """Retrieve Filing Details
 
-        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve detailed information for a single filing by its ID.
+        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve detailed information for a single filing by its ID.
 
         :param id: A unique integer value identifying this filing. (required)
         :type id: int
@@ -1125,7 +1125,7 @@ class FilingsApi:
     ) -> ApiResponse[Filing]:
         """Retrieve Filing Details
 
-        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve detailed information for a single filing by its ID.
+        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve detailed information for a single filing by its ID.
 
         :param id: A unique integer value identifying this filing. (required)
         :type id: int
@@ -1194,7 +1194,7 @@ class FilingsApi:
     ) -> RESTResponseType:
         """Retrieve Filing Details
 
-        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve detailed information for a single filing by its ID.
+        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve detailed information for a single filing by its ID.
 
         :param id: A unique integer value identifying this filing. (required)
         :type id: int

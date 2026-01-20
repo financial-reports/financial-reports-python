@@ -13,7 +13,7 @@ Method | HTTP request | Description
 
 List Filing Types
 
-**Access Level Required:** Requires **Level 1** Plan or higher.
+**Access Level Required:** Requires **Standard Access (Level 1)**.
 
 ---
 Retrieve a paginated list of all available filing types.
@@ -101,7 +101,7 @@ Name | Type | Description  | Notes
 
 Retrieve Filing Type
 
-**Access Level Required:** Requires **Level 1** Plan or higher.
+**Access Level Required:** Requires **Standard Access (Level 1)**.
 
 ---
 Retrieve details for a specific filing type by its ID.

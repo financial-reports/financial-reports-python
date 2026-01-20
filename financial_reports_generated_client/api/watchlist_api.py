@@ -1,9 +1,9 @@
 # coding: utf-8
 
 """
-    Financial Reports API
+    FinancialReports API
 
-    Welcome to the Financial Reports API, your gateway to European company filings, financial data, and corporate information. All API requests must be authenticated. Authentication is performed by including your unique API key in the **X-API-Key** HTTP header. Please use the \"Authorize\" button to set your key and try out the endpoints.
+     Welcome to the FinancialReports API.  ### Access Levels This API is tiered based on data granularity.  | Level | Name | Description | | :--- | :--- | :--- | | **Level 1** | **Standard Access** | Access to raw PDF/XBRL metadata, company profiles, ISIC classifications, and reference data. | | **Level 2** | **Processed Filings** | Access to converted content (Markdown/JSON) and full-text search capabilities. | | **Level 3** | **Extracted Financials** | Access to specific extracted financial line items (Revenue, EBITDA, etc.) mapped to standard taxonomies. |  ### Authentication All API requests must be authenticated via the **X-API-Key** header. 
 
     The version of the OpenAPI document: 1.0.0
     Contact: api@financialreports.eu
@@ -60,7 +60,7 @@ class WatchlistApi:
     ) -> WatchlistResponse:
         """Add Company to Watchlist
 
-        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Adds a specified company to the authenticated user's watchlist.
+        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Adds a specified company to the authenticated user's watchlist.
 
         :param watchlist_action: (required)
         :type watchlist_action: WatchlistAction
@@ -129,7 +129,7 @@ class WatchlistApi:
     ) -> ApiResponse[WatchlistResponse]:
         """Add Company to Watchlist
 
-        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Adds a specified company to the authenticated user's watchlist.
+        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Adds a specified company to the authenticated user's watchlist.
 
         :param watchlist_action: (required)
         :type watchlist_action: WatchlistAction
@@ -198,7 +198,7 @@ class WatchlistApi:
     ) -> RESTResponseType:
         """Add Company to Watchlist
 
-        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Adds a specified company to the authenticated user's watchlist.
+        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Adds a specified company to the authenticated user's watchlist.
 
         :param watchlist_action: (required)
         :type watchlist_action: WatchlistAction
@@ -340,7 +340,7 @@ class WatchlistApi:
     ) -> WatchlistResponse:
         """Remove Company from Watchlist
 
-        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Removes a specified company from the authenticated user's watchlist using the `company_id` from the URL path.
+        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Removes a specified company from the authenticated user's watchlist using the `company_id` from the URL path.
 
         :param company_id: (required)
         :type company_id: int
@@ -409,7 +409,7 @@ class WatchlistApi:
     ) -> ApiResponse[WatchlistResponse]:
         """Remove Company from Watchlist
 
-        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Removes a specified company from the authenticated user's watchlist using the `company_id` from the URL path.
+        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Removes a specified company from the authenticated user's watchlist using the `company_id` from the URL path.
 
         :param company_id: (required)
         :type company_id: int
@@ -478,7 +478,7 @@ class WatchlistApi:
     ) -> RESTResponseType:
         """Remove Company from Watchlist
 
-        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Removes a specified company from the authenticated user's watchlist using the `company_id` from the URL path.
+        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Removes a specified company from the authenticated user's watchlist using the `company_id` from the URL path.
 
         :param company_id: (required)
         :type company_id: int
@@ -606,7 +606,7 @@ class WatchlistApi:
     ) -> List[WatchlistCompany]:
         """Get User's Watchlist
 
-        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Fetches all companies currently in the authenticated user's watchlist.
+        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Fetches all companies currently in the authenticated user's watchlist.
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -670,7 +670,7 @@ class WatchlistApi:
     ) -> ApiResponse[List[WatchlistCompany]]:
         """Get User's Watchlist
 
-        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Fetches all companies currently in the authenticated user's watchlist.
+        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Fetches all companies currently in the authenticated user's watchlist.
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -734,7 +734,7 @@ class WatchlistApi:
     ) -> RESTResponseType:
         """Get User's Watchlist
 
-        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Fetches all companies currently in the authenticated user's watchlist.
+        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Fetches all companies currently in the authenticated user's watchlist.
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request

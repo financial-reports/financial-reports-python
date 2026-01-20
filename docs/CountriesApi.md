@@ -13,7 +13,7 @@ Method | HTTP request | Description
 
 List Countries
 
-**Access Level Required:** Requires **Level 1** Plan or higher.
+**Access Level Required:** Requires **Standard Access (Level 1)**.
 
 ---
 Retrieve a list of all supported countries.
@@ -97,7 +97,7 @@ Name | Type | Description  | Notes
 
 Retrieve Country
 
-**Access Level Required:** Requires **Level 1** Plan or higher.
+**Access Level Required:** Requires **Standard Access (Level 1)**.
 
 ---
 Retrieve details for a specific country by its ID.

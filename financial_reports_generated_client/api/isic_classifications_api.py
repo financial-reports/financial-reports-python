@@ -1,9 +1,9 @@
 # coding: utf-8
 
 """
-    Financial Reports API
+    FinancialReports API
 
-    Welcome to the Financial Reports API, your gateway to European company filings, financial data, and corporate information. All API requests must be authenticated. Authentication is performed by including your unique API key in the **X-API-Key** HTTP header. Please use the \"Authorize\" button to set your key and try out the endpoints.
+     Welcome to the FinancialReports API.  ### Access Levels This API is tiered based on data granularity.  | Level | Name | Description | | :--- | :--- | :--- | | **Level 1** | **Standard Access** | Access to raw PDF/XBRL metadata, company profiles, ISIC classifications, and reference data. | | **Level 2** | **Processed Filings** | Access to converted content (Markdown/JSON) and full-text search capabilities. | | **Level 3** | **Extracted Financials** | Access to specific extracted financial line items (Revenue, EBITDA, etc.) mapped to standard taxonomies. |  ### Authentication All API requests must be authenticated via the **X-API-Key** header. 
 
     The version of the OpenAPI document: 1.0.0
     Contact: api@financialreports.eu
@@ -74,7 +74,7 @@ class ISICClassificationsApi:
     ) -> PaginatedISICClassList:
         """List ISIC Classes
 
-        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve a paginated list of ISIC Classes.
+        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve a paginated list of ISIC Classes.
 
         :param code:
         :type code: str
@@ -173,7 +173,7 @@ class ISICClassificationsApi:
     ) -> ApiResponse[PaginatedISICClassList]:
         """List ISIC Classes
 
-        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve a paginated list of ISIC Classes.
+        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve a paginated list of ISIC Classes.
 
         :param code:
         :type code: str
@@ -272,7 +272,7 @@ class ISICClassificationsApi:
     ) -> RESTResponseType:
         """List ISIC Classes
 
-        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve a paginated list of ISIC Classes.
+        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve a paginated list of ISIC Classes.
 
         :param code:
         :type code: str
@@ -466,7 +466,7 @@ class ISICClassificationsApi:
     ) -> ISICClass:
         """Retrieve ISIC Class
 
-        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve details for a specific ISIC Class by its ID.
+        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve details for a specific ISIC Class by its ID.
 
         :param id: A unique integer value identifying this sub industry. (required)
         :type id: int
@@ -533,7 +533,7 @@ class ISICClassificationsApi:
     ) -> ApiResponse[ISICClass]:
         """Retrieve ISIC Class
 
-        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve details for a specific ISIC Class by its ID.
+        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve details for a specific ISIC Class by its ID.
 
         :param id: A unique integer value identifying this sub industry. (required)
         :type id: int
@@ -600,7 +600,7 @@ class ISICClassificationsApi:
     ) -> RESTResponseType:
         """Retrieve ISIC Class
 
-        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve details for a specific ISIC Class by its ID.
+        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve details for a specific ISIC Class by its ID.
 
         :param id: A unique integer value identifying this sub industry. (required)
         :type id: int
@@ -733,7 +733,7 @@ class ISICClassificationsApi:
     ) -> PaginatedISICDivisionList:
         """List ISIC Divisions
 
-        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve a paginated list of ISIC Divisions.
+        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve a paginated list of ISIC Divisions.
 
         :param code:
         :type code: str
@@ -824,7 +824,7 @@ class ISICClassificationsApi:
     ) -> ApiResponse[PaginatedISICDivisionList]:
         """List ISIC Divisions
 
-        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve a paginated list of ISIC Divisions.
+        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve a paginated list of ISIC Divisions.
 
         :param code:
         :type code: str
@@ -915,7 +915,7 @@ class ISICClassificationsApi:
     ) -> RESTResponseType:
         """List ISIC Divisions
 
-        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve a paginated list of ISIC Divisions.
+        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve a paginated list of ISIC Divisions.
 
         :param code:
         :type code: str
@@ -1093,7 +1093,7 @@ class ISICClassificationsApi:
     ) -> ISICDivision:
         """Retrieve ISIC Division
 
-        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve details for a specific ISIC Division by its ID.
+        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve details for a specific ISIC Division by its ID.
 
         :param id: A unique integer value identifying this industry group. (required)
         :type id: int
@@ -1160,7 +1160,7 @@ class ISICClassificationsApi:
     ) -> ApiResponse[ISICDivision]:
         """Retrieve ISIC Division
 
-        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve details for a specific ISIC Division by its ID.
+        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve details for a specific ISIC Division by its ID.
 
         :param id: A unique integer value identifying this industry group. (required)
         :type id: int
@@ -1227,7 +1227,7 @@ class ISICClassificationsApi:
     ) -> RESTResponseType:
         """Retrieve ISIC Division
 
-        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve details for a specific ISIC Division by its ID.
+        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve details for a specific ISIC Division by its ID.
 
         :param id: A unique integer value identifying this industry group. (required)
         :type id: int
@@ -1361,7 +1361,7 @@ class ISICClassificationsApi:
     ) -> PaginatedISICGroupList:
         """List ISIC Groups
 
-        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve a paginated list of ISIC Groups.
+        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve a paginated list of ISIC Groups.
 
         :param code:
         :type code: str
@@ -1456,7 +1456,7 @@ class ISICClassificationsApi:
     ) -> ApiResponse[PaginatedISICGroupList]:
         """List ISIC Groups
 
-        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve a paginated list of ISIC Groups.
+        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve a paginated list of ISIC Groups.
 
         :param code:
         :type code: str
@@ -1551,7 +1551,7 @@ class ISICClassificationsApi:
     ) -> RESTResponseType:
         """List ISIC Groups
 
-        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve a paginated list of ISIC Groups.
+        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve a paginated list of ISIC Groups.
 
         :param code:
         :type code: str
@@ -1737,7 +1737,7 @@ class ISICClassificationsApi:
     ) -> ISICGroup:
         """Retrieve ISIC Group
 
-        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve details for a specific ISIC Group by its ID.
+        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve details for a specific ISIC Group by its ID.
 
         :param id: A unique integer value identifying this industry. (required)
         :type id: int
@@ -1804,7 +1804,7 @@ class ISICClassificationsApi:
     ) -> ApiResponse[ISICGroup]:
         """Retrieve ISIC Group
 
-        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve details for a specific ISIC Group by its ID.
+        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve details for a specific ISIC Group by its ID.
 
         :param id: A unique integer value identifying this industry. (required)
         :type id: int
@@ -1871,7 +1871,7 @@ class ISICClassificationsApi:
     ) -> RESTResponseType:
         """Retrieve ISIC Group
 
-        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve details for a specific ISIC Group by its ID.
+        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve details for a specific ISIC Group by its ID.
 
         :param id: A unique integer value identifying this industry. (required)
         :type id: int
@@ -2003,7 +2003,7 @@ class ISICClassificationsApi:
     ) -> PaginatedISICSectionList:
         """List ISIC Sections
 
-        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve a paginated list of ISIC Sections.
+        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve a paginated list of ISIC Sections.
 
         :param code:
         :type code: str
@@ -2090,7 +2090,7 @@ class ISICClassificationsApi:
     ) -> ApiResponse[PaginatedISICSectionList]:
         """List ISIC Sections
 
-        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve a paginated list of ISIC Sections.
+        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve a paginated list of ISIC Sections.
 
         :param code:
         :type code: str
@@ -2177,7 +2177,7 @@ class ISICClassificationsApi:
     ) -> RESTResponseType:
         """List ISIC Sections
 
-        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve a paginated list of ISIC Sections.
+        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve a paginated list of ISIC Sections.
 
         :param code:
         :type code: str
@@ -2347,7 +2347,7 @@ class ISICClassificationsApi:
     ) -> ISICSection:
         """Retrieve ISIC Section
 
-        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve details for a specific ISIC Section by its ID.
+        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve details for a specific ISIC Section by its ID.
 
         :param id: A unique integer value identifying this sector. (required)
         :type id: int
@@ -2414,7 +2414,7 @@ class ISICClassificationsApi:
     ) -> ApiResponse[ISICSection]:
         """Retrieve ISIC Section
 
-        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve details for a specific ISIC Section by its ID.
+        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve details for a specific ISIC Section by its ID.
 
         :param id: A unique integer value identifying this sector. (required)
         :type id: int
@@ -2481,7 +2481,7 @@ class ISICClassificationsApi:
     ) -> RESTResponseType:
         """Retrieve ISIC Section
 
-        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve details for a specific ISIC Section by its ID.
+        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve details for a specific ISIC Section by its ID.
 
         :param id: A unique integer value identifying this sector. (required)
         :type id: int

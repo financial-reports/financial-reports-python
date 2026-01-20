@@ -14,7 +14,7 @@ Method | HTTP request | Description
 
 Add Company to Watchlist
 
-**Access Level Required:** Requires **Level 1** Plan or higher.
+**Access Level Required:** Requires **Standard Access (Level 1)**.
 
 ---
 Adds a specified company to the authenticated user's watchlist.
@@ -99,7 +99,7 @@ Name | Type | Description  | Notes
 
 Remove Company from Watchlist
 
-**Access Level Required:** Requires **Level 1** Plan or higher.
+**Access Level Required:** Requires **Standard Access (Level 1)**.
 
 ---
 Removes a specified company from the authenticated user's watchlist using the `company_id` from the URL path.
@@ -183,7 +183,7 @@ Name | Type | Description  | Notes
 
 Get User's Watchlist
 
-**Access Level Required:** Requires **Level 1** Plan or higher.
+**Access Level Required:** Requires **Standard Access (Level 1)**.
 
 ---
 Fetches all companies currently in the authenticated user's watchlist.

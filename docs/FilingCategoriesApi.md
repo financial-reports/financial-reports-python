@@ -13,7 +13,7 @@ Method | HTTP request | Description
 
 List Filing Categories
 
-**Access Level Required:** Requires **Level 1** Plan or higher.
+**Access Level Required:** Requires **Standard Access (Level 1)**.
 
 ---
 Retrieve the 11 standardized disclosure types (categories) defined by the FRCF.
@@ -97,7 +97,7 @@ Name | Type | Description  | Notes
 
 Retrieve Filing Category
 
-**Access Level Required:** Requires **Level 1** Plan or higher.
+**Access Level Required:** Requires **Standard Access (Level 1)**.
 
 ---
 Retrieve details for a specific filing category by its ID.

@@ -13,7 +13,7 @@ Method | HTTP request | Description
 
 List Languages
 
-**Access Level Required:** Requires **Level 1** Plan or higher.
+**Access Level Required:** Requires **Standard Access (Level 1)**.
 
 ---
 Retrieve a list of all supported languages for filings.
@@ -97,7 +97,7 @@ Name | Type | Description  | Notes
 
 Retrieve Language
 
-**Access Level Required:** Requires **Level 1** Plan or higher.
+**Access Level Required:** Requires **Standard Access (Level 1)**.
 
 ---
 Retrieve details for a specific language by its ID.

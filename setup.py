@@ -1,9 +1,9 @@
 # coding: utf-8
 
 """
-    Financial Reports API
+    FinancialReports API
 
-    Welcome to the Financial Reports API, your gateway to European company filings, financial data, and corporate information. All API requests must be authenticated. Authentication is performed by including your unique API key in the **X-API-Key** HTTP header. Please use the \"Authorize\" button to set your key and try out the endpoints.
+     Welcome to the FinancialReports API.  ### Access Levels This API is tiered based on data granularity.  | Level | Name | Description | | :--- | :--- | :--- | | **Level 1** | **Standard Access** | Access to raw PDF/XBRL metadata, company profiles, ISIC classifications, and reference data. | | **Level 2** | **Processed Filings** | Access to converted content (Markdown/JSON) and full-text search capabilities. | | **Level 3** | **Extracted Financials** | Access to specific extracted financial line items (Revenue, EBITDA, etc.) mapped to standard taxonomies. |  ### Authentication All API requests must be authenticated via the **X-API-Key** header. 
 
     The version of the OpenAPI document: 1.0.0
     Contact: api@financialreports.eu
@@ -22,7 +22,7 @@ from setuptools import setup, find_packages  # noqa: H301
 # prerequisite: setuptools
 # http://pypi.python.org/pypi/setuptools
 NAME = "financial-reports-generated-client"
-VERSION = "1.3.8"
+VERSION = "1.3.9"
 PYTHON_REQUIRES = ">= 3.9"
 REQUIRES = [
     "python-dateutil >= 2.8.2",
@@ -35,18 +35,18 @@ REQUIRES = [
 setup(
     name=NAME,
     version=VERSION,
-    description="Financial Reports API",
+    description="FinancialReports API",
     author="API Support",
     author_email="api@financialreports.eu",
     url="",
-    keywords=["OpenAPI", "OpenAPI-Generator", "Financial Reports API"],
+    keywords=["OpenAPI", "OpenAPI-Generator", "FinancialReports API"],
     install_requires=REQUIRES,
     packages=find_packages(exclude=["test", "tests"]),
     include_package_data=True,
     license="Apache-2.0",
     long_description_content_type='text/markdown',
     long_description="""\
-    Welcome to the Financial Reports API, your gateway to European company filings, financial data, and corporate information. All API requests must be authenticated. Authentication is performed by including your unique API key in the **X-API-Key** HTTP header. Please use the \&quot;Authorize\&quot; button to set your key and try out the endpoints.
+     Welcome to the FinancialReports API.  ### Access Levels This API is tiered based on data granularity.  | Level | Name | Description | | :--- | :--- | :--- | | **Level 1** | **Standard Access** | Access to raw PDF/XBRL metadata, company profiles, ISIC classifications, and reference data. | | **Level 2** | **Processed Filings** | Access to converted content (Markdown/JSON) and full-text search capabilities. | | **Level 3** | **Extracted Financials** | Access to specific extracted financial line items (Revenue, EBITDA, etc.) mapped to standard taxonomies. |  ### Authentication All API requests must be authenticated via the **X-API-Key** header. 
     """,  # noqa: E501
     package_data={"financial_reports_generated_client": ["py.typed"]},
 )

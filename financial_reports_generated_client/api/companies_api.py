@@ -1,9 +1,9 @@
 # coding: utf-8
 
 """
-    Financial Reports API
+    FinancialReports API
 
-    Welcome to the Financial Reports API, your gateway to European company filings, financial data, and corporate information. All API requests must be authenticated. Authentication is performed by including your unique API key in the **X-API-Key** HTTP header. Please use the \"Authorize\" button to set your key and try out the endpoints.
+     Welcome to the FinancialReports API.  ### Access Levels This API is tiered based on data granularity.  | Level | Name | Description | | :--- | :--- | :--- | | **Level 1** | **Standard Access** | Access to raw PDF/XBRL metadata, company profiles, ISIC classifications, and reference data. | | **Level 2** | **Processed Filings** | Access to converted content (Markdown/JSON) and full-text search capabilities. | | **Level 3** | **Extracted Financials** | Access to specific extracted financial line items (Revenue, EBITDA, etc.) mapped to standard taxonomies. |  ### Authentication All API requests must be authenticated via the **X-API-Key** header. 
 
     The version of the OpenAPI document: 1.0.0
     Contact: api@financialreports.eu
@@ -73,7 +73,7 @@ class CompaniesApi:
     ) -> PaginatedCompanyMinimalList:
         """List Companies
 
-        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve a paginated list of companies.
+        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve a paginated list of companies.
 
         :param countries: Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values.
         :type countries: str
@@ -193,7 +193,7 @@ class CompaniesApi:
     ) -> ApiResponse[PaginatedCompanyMinimalList]:
         """List Companies
 
-        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve a paginated list of companies.
+        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve a paginated list of companies.
 
         :param countries: Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values.
         :type countries: str
@@ -313,7 +313,7 @@ class CompaniesApi:
     ) -> RESTResponseType:
         """List Companies
 
-        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve a paginated list of companies.
+        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve a paginated list of companies.
 
         :param countries: Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values.
         :type countries: str
@@ -547,7 +547,7 @@ class CompaniesApi:
     ) -> Company:
         """Retrieve Company Details
 
-        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve detailed information for a single company by its internal ID.
+        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve detailed information for a single company by its internal ID.
 
         :param id: A unique integer value identifying this company. (required)
         :type id: int
@@ -616,7 +616,7 @@ class CompaniesApi:
     ) -> ApiResponse[Company]:
         """Retrieve Company Details
 
-        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve detailed information for a single company by its internal ID.
+        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve detailed information for a single company by its internal ID.
 
         :param id: A unique integer value identifying this company. (required)
         :type id: int
@@ -685,7 +685,7 @@ class CompaniesApi:
     ) -> RESTResponseType:
         """Retrieve Company Details
 
-        **Access Level Required:** Requires **Level 1** Plan or higher.  --- Retrieve detailed information for a single company by its internal ID.
+        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve detailed information for a single company by its internal ID.
 
         :param id: A unique integer value identifying this company. (required)
         :type id: int
