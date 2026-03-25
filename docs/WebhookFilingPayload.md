@@ -6,15 +6,16 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **str** | Internal Financial Reports Filing ID. | [readonly] 
-**filing_type_code** | **str** | Short code for the filing type (e.g., &#39;10-K&#39;). | [readonly] 
-**filing_type_name** | **str** | Human-readable filing type (e.g., &#39;Annual Report&#39;). | [readonly] 
-**language_code** | **str** | ISO 639-1 language code (e.g., &#39;en&#39;). | [readonly] 
-**language_name** | **str** | Human-readable language name (e.g., &#39;English&#39;). | [readonly] 
+**processing_status** | **str** | The current processing status of the filing (e.g., &#39;PENDING&#39;, &#39;COMPLETED&#39;). | [readonly] 
+**filing_type_code** | **str** | Short code for the filing type (e.g., &#39;10-K&#39;). May be null for &#39;filing.received&#39; events. | [readonly] 
+**filing_type_name** | **str** | Human-readable filing type (e.g., &#39;Annual Report&#39;). May be null for &#39;filing.received&#39; events. | [readonly] 
+**language_code** | **str** | ISO 639-1 language code (e.g., &#39;en&#39;). May be null for &#39;filing.received&#39; events. | [readonly] 
+**language_name** | **str** | Human-readable language name (e.g., &#39;English&#39;). May be null for &#39;filing.received&#39; events. | [readonly] 
 **title** | **str** | The title of the filing. | [readonly] 
 **dissemination_datetime** | **datetime** | The exact time the filing was disseminated by the source. | [readonly] 
-**release_datetime** | **datetime** | The official release time of the filing (e.S., the period end). | [readonly] 
+**release_datetime** | **datetime** | The official release time of the filing (e.g., the period end). | [readonly] 
 **document_url** | **str** | A direct, temporary link to download the original filing document (e.g., PDF). | [readonly] 
-**markdown_content** | **str** | The full, processed content of the filing in Markdown format. This field is only included if your webhook is configured with &#39;include_markdown: true&#39;. | [readonly] 
+**markdown_content** | **str** | The full, processed content of the filing in Markdown format. This field is only included if your webhook is configured with &#39;include_markdown: true&#39; AND the event type is &#39;filing.processed&#39;. It is null for &#39;filing.received&#39;. | [readonly] 
 
 ## Example
 

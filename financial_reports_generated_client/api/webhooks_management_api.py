@@ -1,9 +1,7 @@
-# coding: utf-8
-
 """
     FinancialReports API
 
-     Welcome to the FinancialReports API.  ### Access Levels This API is tiered based on data granularity.  | Level | Name | Description | | :--- | :--- | :--- | | **Level 1** | **Standard Access** | Access to raw PDF/XBRL metadata, company profiles, ISIC classifications, and reference data. | | **Level 2** | **Processed Filings** | Access to converted content (Markdown/JSON) and full-text search capabilities. | | **Level 3** | **Extracted Financials** | Access to specific extracted financial line items (Revenue, EBITDA, etc.) mapped to standard taxonomies. |  ### Authentication All API requests must be authenticated via the **X-API-Key** header. 
+     Welcome to the FinancialReports API.  ### Access Levels This API is tiered based on data granularity.  | Level | Name | Description | | :--- | :--- | :--- | | **Level 1** | **Standard Access** | Access to raw PDF/XBRL metadata, company profiles, ISIC classifications, reference data, and **point-in-time audit trails**. | | **Level 2** | **Processed Filings** | Access to converted content (Markdown/JSON) and full-text search capabilities. | | **Level 3** | **RAG / Agent** | Access to specific extracted financial line items (Revenue, EBITDA, etc.) mapped to standard taxonomies, and access to the conversational RAG agent. |  ### Rate Limiting To ensure stability, this API uses a dual-layer rate limit: 1.  **Burst Limit:** A short-term speed limit (e.g., 5 requests/second) to prevent system overload. 2.  **Quota Limit:** A monthly allowance of total requests based on your subscription plan.  Check the response headers `X-RateLimit-Burst-Limit` and `X-RateLimit-Monthly-Remaining` for your current status.  ### Authentication All API requests must be authenticated via the **X-API-Key** header. 
 
     The version of the OpenAPI document: 1.0.0
     Contact: api@financialreports.eu
@@ -11,6 +9,7 @@
 
     Do not edit the class manually.
 """  # noqa: E501
+
 
 import warnings
 from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
@@ -20,10 +19,11 @@ from typing_extensions import Annotated
 from pydantic import Field, StrictInt
 from typing import Optional
 from typing_extensions import Annotated
+from financial_reports_generated_client.models.paginated_webhook_delivery_list import PaginatedWebhookDeliveryList
 from financial_reports_generated_client.models.paginated_webhook_list import PaginatedWebhookList
 from financial_reports_generated_client.models.patched_webhook import PatchedWebhook
 from financial_reports_generated_client.models.webhook import Webhook
-from financial_reports_generated_client.models.webhook_regenerate_secret import WebhookRegenerateSecret
+from financial_reports_generated_client.models.webhook_secret import WebhookSecret
 
 from financial_reports_generated_client.api_client import ApiClient, RequestSerialized
 from financial_reports_generated_client.api_response import ApiResponse
@@ -62,7 +62,7 @@ class WebhooksManagementApi:
     ) -> Webhook:
         """Create Webhook
 
-        Create a new webhook subscription. The `secret_key` will be generated and returned to you.
+        Create a new webhook subscription. The `secret_key` is returned in the response **only once**.
 
         :param webhook: (required)
         :type webhook: Webhook
@@ -129,7 +129,7 @@ class WebhooksManagementApi:
     ) -> ApiResponse[Webhook]:
         """Create Webhook
 
-        Create a new webhook subscription. The `secret_key` will be generated and returned to you.
+        Create a new webhook subscription. The `secret_key` is returned in the response **only once**.
 
         :param webhook: (required)
         :type webhook: Webhook
@@ -196,7 +196,7 @@ class WebhooksManagementApi:
     ) -> RESTResponseType:
         """Create Webhook
 
-        Create a new webhook subscription. The `secret_key` will be generated and returned to you.
+        Create a new webhook subscription. The `secret_key` is returned in the response **only once**.
 
         :param webhook: (required)
         :type webhook: Webhook
@@ -302,6 +302,267 @@ class WebhooksManagementApi:
         return self.api_client.param_serialize(
             method='POST',
             resource_path='/webhooks/',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    async def webhooks_deliveries_retrieve(
+        self,
+        id: Annotated[StrictInt, Field(description="A unique integer value identifying this webhook.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> PaginatedWebhookDeliveryList:
+        """List Delivery Logs
+
+        Retrieve a paginated list of delivery attempts (logs) for a specific webhook.
+
+        :param id: A unique integer value identifying this webhook. (required)
+        :type id: int
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._webhooks_deliveries_retrieve_serialize(
+            id=id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PaginatedWebhookDeliveryList",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    async def webhooks_deliveries_retrieve_with_http_info(
+        self,
+        id: Annotated[StrictInt, Field(description="A unique integer value identifying this webhook.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[PaginatedWebhookDeliveryList]:
+        """List Delivery Logs
+
+        Retrieve a paginated list of delivery attempts (logs) for a specific webhook.
+
+        :param id: A unique integer value identifying this webhook. (required)
+        :type id: int
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._webhooks_deliveries_retrieve_serialize(
+            id=id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PaginatedWebhookDeliveryList",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    async def webhooks_deliveries_retrieve_without_preload_content(
+        self,
+        id: Annotated[StrictInt, Field(description="A unique integer value identifying this webhook.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """List Delivery Logs
+
+        Retrieve a paginated list of delivery attempts (logs) for a specific webhook.
+
+        :param id: A unique integer value identifying this webhook. (required)
+        :type id: int
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._webhooks_deliveries_retrieve_serialize(
+            id=id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PaginatedWebhookDeliveryList",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _webhooks_deliveries_retrieve_serialize(
+        self,
+        id,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if id is not None:
+            _path_params['id'] = id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'ApiKeyAuth'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/webhooks/{id}/deliveries/',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -591,7 +852,7 @@ class WebhooksManagementApi:
     ) -> PaginatedWebhookList:
         """List Webhooks
 
-        Retrieve a list of all webhooks configured for your account.
+        Retrieve a list of all webhooks configured for your account. Note: Secret keys are not returned in this list.
 
         :param page: A page number within the paginated result set.
         :type page: int
@@ -662,7 +923,7 @@ class WebhooksManagementApi:
     ) -> ApiResponse[PaginatedWebhookList]:
         """List Webhooks
 
-        Retrieve a list of all webhooks configured for your account.
+        Retrieve a list of all webhooks configured for your account. Note: Secret keys are not returned in this list.
 
         :param page: A page number within the paginated result set.
         :type page: int
@@ -733,7 +994,7 @@ class WebhooksManagementApi:
     ) -> RESTResponseType:
         """List Webhooks
 
-        Retrieve a list of all webhooks configured for your account.
+        Retrieve a list of all webhooks configured for your account. Note: Secret keys are not returned in this list.
 
         :param page: A page number within the paginated result set.
         :type page: int
@@ -871,7 +1132,7 @@ class WebhooksManagementApi:
     ) -> Webhook:
         """Partial Update Webhook
 
-        Partially update the details of a specific webhook. Note: The `secret_key` cannot be set via this endpoint.
+        Partially update the details of a specific webhook.
 
         :param id: A unique integer value identifying this webhook. (required)
         :type id: int
@@ -942,7 +1203,7 @@ class WebhooksManagementApi:
     ) -> ApiResponse[Webhook]:
         """Partial Update Webhook
 
-        Partially update the details of a specific webhook. Note: The `secret_key` cannot be set via this endpoint.
+        Partially update the details of a specific webhook.
 
         :param id: A unique integer value identifying this webhook. (required)
         :type id: int
@@ -1013,7 +1274,7 @@ class WebhooksManagementApi:
     ) -> RESTResponseType:
         """Partial Update Webhook
 
-        Partially update the details of a specific webhook. Note: The `secret_key` cannot be set via this endpoint.
+        Partially update the details of a specific webhook.
 
         :param id: A unique integer value identifying this webhook. (required)
         :type id: int
@@ -1157,7 +1418,7 @@ class WebhooksManagementApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> WebhookRegenerateSecret:
+    ) -> WebhookSecret:
         """Regenerate Secret Key
 
         Generates a new, unique `secret_key` for this webhook. The old key will be invalidated immediately. This action is irreversible.
@@ -1198,7 +1459,7 @@ class WebhooksManagementApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "WebhookRegenerateSecret",
+            '200': "WebhookSecret",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1228,7 +1489,7 @@ class WebhooksManagementApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[WebhookRegenerateSecret]:
+    ) -> ApiResponse[WebhookSecret]:
         """Regenerate Secret Key
 
         Generates a new, unique `secret_key` for this webhook. The old key will be invalidated immediately. This action is irreversible.
@@ -1269,7 +1530,7 @@ class WebhooksManagementApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "WebhookRegenerateSecret",
+            '200': "WebhookSecret",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1340,7 +1601,7 @@ class WebhooksManagementApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "WebhookRegenerateSecret",
+            '200': "WebhookSecret",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1448,7 +1709,7 @@ class WebhooksManagementApi:
     ) -> Webhook:
         """Retrieve Webhook
 
-        Retrieve the details of a specific webhook by its ID.
+        Retrieve the details of a specific webhook by its ID. Note: Secret keys are not visible here.
 
         :param id: A unique integer value identifying this webhook. (required)
         :type id: int
@@ -1515,7 +1776,7 @@ class WebhooksManagementApi:
     ) -> ApiResponse[Webhook]:
         """Retrieve Webhook
 
-        Retrieve the details of a specific webhook by its ID.
+        Retrieve the details of a specific webhook by its ID. Note: Secret keys are not visible here.
 
         :param id: A unique integer value identifying this webhook. (required)
         :type id: int
@@ -1582,7 +1843,7 @@ class WebhooksManagementApi:
     ) -> RESTResponseType:
         """Retrieve Webhook
 
-        Retrieve the details of a specific webhook by its ID.
+        Retrieve the details of a specific webhook by its ID. Note: Secret keys are not visible here.
 
         :param id: A unique integer value identifying this webhook. (required)
         :type id: int
@@ -1710,7 +1971,7 @@ class WebhooksManagementApi:
     ) -> None:
         """Test Webhook
 
-        Sends a pre-defined 'filing.processed.test' event to the configured webhook URL to verify its functionality.
+        Sends a pre-defined 'filing.processed.test' event to the configured webhook URL to verify its functionality. This creates a delivery record.
 
         :param id: A unique integer value identifying this webhook. (required)
         :type id: int
@@ -1750,7 +2011,6 @@ class WebhooksManagementApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': None,
             '400': None,
-            '408': None,
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1783,7 +2043,7 @@ class WebhooksManagementApi:
     ) -> ApiResponse[None]:
         """Test Webhook
 
-        Sends a pre-defined 'filing.processed.test' event to the configured webhook URL to verify its functionality.
+        Sends a pre-defined 'filing.processed.test' event to the configured webhook URL to verify its functionality. This creates a delivery record.
 
         :param id: A unique integer value identifying this webhook. (required)
         :type id: int
@@ -1823,7 +2083,6 @@ class WebhooksManagementApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': None,
             '400': None,
-            '408': None,
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1856,7 +2115,7 @@ class WebhooksManagementApi:
     ) -> RESTResponseType:
         """Test Webhook
 
-        Sends a pre-defined 'filing.processed.test' event to the configured webhook URL to verify its functionality.
+        Sends a pre-defined 'filing.processed.test' event to the configured webhook URL to verify its functionality. This creates a delivery record.
 
         :param id: A unique integer value identifying this webhook. (required)
         :type id: int
@@ -1896,7 +2155,6 @@ class WebhooksManagementApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': None,
             '400': None,
-            '408': None,
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1998,7 +2256,7 @@ class WebhooksManagementApi:
     ) -> Webhook:
         """Update Webhook
 
-        Update the details of a specific webhook. Note: The `secret_key` cannot be set via this endpoint.
+        Update the details of a specific webhook.
 
         :param id: A unique integer value identifying this webhook. (required)
         :type id: int
@@ -2069,7 +2327,7 @@ class WebhooksManagementApi:
     ) -> ApiResponse[Webhook]:
         """Update Webhook
 
-        Update the details of a specific webhook. Note: The `secret_key` cannot be set via this endpoint.
+        Update the details of a specific webhook.
 
         :param id: A unique integer value identifying this webhook. (required)
         :type id: int
@@ -2140,7 +2398,7 @@ class WebhooksManagementApi:
     ) -> RESTResponseType:
         """Update Webhook
 
-        Update the details of a specific webhook. Note: The `secret_key` cannot be set via this endpoint.
+        Update the details of a specific webhook.
 
         :param id: A unique integer value identifying this webhook. (required)
         :type id: int

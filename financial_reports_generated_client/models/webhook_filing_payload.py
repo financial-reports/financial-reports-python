@@ -3,7 +3,7 @@
 """
     FinancialReports API
 
-     Welcome to the FinancialReports API.  ### Access Levels This API is tiered based on data granularity.  | Level | Name | Description | | :--- | :--- | :--- | | **Level 1** | **Standard Access** | Access to raw PDF/XBRL metadata, company profiles, ISIC classifications, and reference data. | | **Level 2** | **Processed Filings** | Access to converted content (Markdown/JSON) and full-text search capabilities. | | **Level 3** | **Extracted Financials** | Access to specific extracted financial line items (Revenue, EBITDA, etc.) mapped to standard taxonomies. |  ### Authentication All API requests must be authenticated via the **X-API-Key** header. 
+     Welcome to the FinancialReports API.  ### Access Levels This API is tiered based on data granularity.  | Level | Name | Description | | :--- | :--- | :--- | | **Level 1** | **Standard Access** | Access to raw PDF/XBRL metadata, company profiles, ISIC classifications, reference data, and **point-in-time audit trails**. | | **Level 2** | **Processed Filings** | Access to converted content (Markdown/JSON) and full-text search capabilities. | | **Level 3** | **RAG / Agent** | Access to specific extracted financial line items (Revenue, EBITDA, etc.) mapped to standard taxonomies, and access to the conversational RAG agent. |  ### Rate Limiting To ensure stability, this API uses a dual-layer rate limit: 1.  **Burst Limit:** A short-term speed limit (e.g., 5 requests/second) to prevent system overload. 2.  **Quota Limit:** A monthly allowance of total requests based on your subscription plan.  Check the response headers `X-RateLimit-Burst-Limit` and `X-RateLimit-Monthly-Remaining` for your current status.  ### Authentication All API requests must be authenticated via the **X-API-Key** header. 
 
     The version of the OpenAPI document: 1.0.0
     Contact: api@financialreports.eu
@@ -20,28 +20,31 @@ import json
 
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List
+from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class WebhookFilingPayload(BaseModel):
     """
     WebhookFilingPayload
     """ # noqa: E501
     id: StrictStr = Field(description="Internal Financial Reports Filing ID.")
-    filing_type_code: StrictStr = Field(description="Short code for the filing type (e.g., '10-K').")
-    filing_type_name: StrictStr = Field(description="Human-readable filing type (e.g., 'Annual Report').")
-    language_code: StrictStr = Field(description="ISO 639-1 language code (e.g., 'en').")
-    language_name: StrictStr = Field(description="Human-readable language name (e.g., 'English').")
+    processing_status: StrictStr = Field(description="The current processing status of the filing (e.g., 'PENDING', 'COMPLETED').")
+    filing_type_code: Optional[StrictStr] = Field(description="Short code for the filing type (e.g., '10-K'). May be null for 'filing.received' events.")
+    filing_type_name: Optional[StrictStr] = Field(description="Human-readable filing type (e.g., 'Annual Report'). May be null for 'filing.received' events.")
+    language_code: Optional[StrictStr] = Field(description="ISO 639-1 language code (e.g., 'en'). May be null for 'filing.received' events.")
+    language_name: Optional[StrictStr] = Field(description="Human-readable language name (e.g., 'English'). May be null for 'filing.received' events.")
     title: StrictStr = Field(description="The title of the filing.")
     dissemination_datetime: datetime = Field(description="The exact time the filing was disseminated by the source.")
-    release_datetime: datetime = Field(description="The official release time of the filing (e.S., the period end).")
+    release_datetime: datetime = Field(description="The official release time of the filing (e.g., the period end).")
     document_url: StrictStr = Field(description="A direct, temporary link to download the original filing document (e.g., PDF).")
-    markdown_content: StrictStr = Field(description="The full, processed content of the filing in Markdown format. This field is only included if your webhook is configured with 'include_markdown: true'.")
-    __properties: ClassVar[List[str]] = ["id", "filing_type_code", "filing_type_name", "language_code", "language_name", "title", "dissemination_datetime", "release_datetime", "document_url", "markdown_content"]
+    markdown_content: Optional[StrictStr] = Field(description="The full, processed content of the filing in Markdown format. This field is only included if your webhook is configured with 'include_markdown: true' AND the event type is 'filing.processed'. It is null for 'filing.received'.")
+    __properties: ClassVar[List[str]] = ["id", "processing_status", "filing_type_code", "filing_type_name", "language_code", "language_name", "title", "dissemination_datetime", "release_datetime", "document_url", "markdown_content"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -53,8 +56,7 @@ class WebhookFilingPayload(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -80,9 +82,11 @@ class WebhookFilingPayload(BaseModel):
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
             "id",
+            "processing_status",
             "filing_type_code",
             "filing_type_name",
             "language_code",
@@ -99,6 +103,31 @@ class WebhookFilingPayload(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if filing_type_code (nullable) is None
+        # and model_fields_set contains the field
+        if self.filing_type_code is None and "filing_type_code" in self.model_fields_set:
+            _dict['filing_type_code'] = None
+
+        # set to None if filing_type_name (nullable) is None
+        # and model_fields_set contains the field
+        if self.filing_type_name is None and "filing_type_name" in self.model_fields_set:
+            _dict['filing_type_name'] = None
+
+        # set to None if language_code (nullable) is None
+        # and model_fields_set contains the field
+        if self.language_code is None and "language_code" in self.model_fields_set:
+            _dict['language_code'] = None
+
+        # set to None if language_name (nullable) is None
+        # and model_fields_set contains the field
+        if self.language_name is None and "language_name" in self.model_fields_set:
+            _dict['language_name'] = None
+
+        # set to None if markdown_content (nullable) is None
+        # and model_fields_set contains the field
+        if self.markdown_content is None and "markdown_content" in self.model_fields_set:
+            _dict['markdown_content'] = None
+
         return _dict
 
     @classmethod
@@ -112,6 +141,7 @@ class WebhookFilingPayload(BaseModel):
 
         _obj = cls.model_validate({
             "id": obj.get("id"),
+            "processing_status": obj.get("processing_status"),
             "filing_type_code": obj.get("filing_type_code"),
             "filing_type_name": obj.get("filing_type_name"),
             "language_code": obj.get("language_code"),

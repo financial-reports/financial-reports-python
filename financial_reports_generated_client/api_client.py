@@ -1,9 +1,7 @@
-# coding: utf-8
-
 """
     FinancialReports API
 
-     Welcome to the FinancialReports API.  ### Access Levels This API is tiered based on data granularity.  | Level | Name | Description | | :--- | :--- | :--- | | **Level 1** | **Standard Access** | Access to raw PDF/XBRL metadata, company profiles, ISIC classifications, and reference data. | | **Level 2** | **Processed Filings** | Access to converted content (Markdown/JSON) and full-text search capabilities. | | **Level 3** | **Extracted Financials** | Access to specific extracted financial line items (Revenue, EBITDA, etc.) mapped to standard taxonomies. |  ### Authentication All API requests must be authenticated via the **X-API-Key** header. 
+     Welcome to the FinancialReports API.  ### Access Levels This API is tiered based on data granularity.  | Level | Name | Description | | :--- | :--- | :--- | | **Level 1** | **Standard Access** | Access to raw PDF/XBRL metadata, company profiles, ISIC classifications, reference data, and **point-in-time audit trails**. | | **Level 2** | **Processed Filings** | Access to converted content (Markdown/JSON) and full-text search capabilities. | | **Level 3** | **RAG / Agent** | Access to specific extracted financial line items (Revenue, EBITDA, etc.) mapped to standard taxonomies, and access to the conversational RAG agent. |  ### Rate Limiting To ensure stability, this API uses a dual-layer rate limit: 1.  **Burst Limit:** A short-term speed limit (e.g., 5 requests/second) to prevent system overload. 2.  **Quota Limit:** A monthly allowance of total requests based on your subscription plan.  Check the response headers `X-RateLimit-Burst-Limit` and `X-RateLimit-Monthly-Remaining` for your current status.  ### Authentication All API requests must be authenticated via the **X-API-Key** header. 
 
     The version of the OpenAPI document: 1.0.0
     Contact: api@financialreports.eu
@@ -11,6 +9,7 @@
 
     Do not edit the class manually.
 """  # noqa: E501
+
 
 
 import datetime
@@ -70,6 +69,7 @@ class ApiClient:
         'date': datetime.date,
         'datetime': datetime.datetime,
         'decimal': decimal.Decimal,
+        'UUID': uuid.UUID,
         'object': object,
     }
     _pool = None
@@ -92,7 +92,7 @@ class ApiClient:
             self.default_headers[header_name] = header_value
         self.cookie = cookie
         # Set default User-Agent.
-        self.user_agent = 'OpenAPI-Generator/1.4.2/python'
+        self.user_agent = 'OpenAPI-Generator/1.4.3/python'
         self.client_side_validation = configuration.client_side_validation
 
     async def __aenter__(self):
@@ -310,7 +310,7 @@ class ApiClient:
         response_text = None
         return_data = None
         try:
-            if response_type == "bytearray":
+            if response_type in ("bytearray", "bytes"):
                 return_data = response_data.data
             elif response_type == "file":
                 return_data = self.__deserialize_file(response_data)
@@ -472,6 +472,8 @@ class ApiClient:
             return self.__deserialize_datetime(data)
         elif klass is decimal.Decimal:
             return decimal.Decimal(data)
+        elif klass is uuid.UUID:
+            return uuid.UUID(data)
         elif issubclass(klass, Enum):
             return self.__deserialize_enum(data, klass)
         else:
@@ -712,7 +714,9 @@ class ApiClient:
                 content_disposition
             )
             assert m is not None, "Unexpected 'content-disposition' header value"
-            filename = m.group(1)
+            filename = os.path.basename(m.group(1))  # Strip any directory traversal
+            if filename in ("", ".", ".."):  # fall back to tmp filename
+                filename = os.path.basename(path)
             path = os.path.join(os.path.dirname(path), filename)
 
         with open(path, "wb") as f:

@@ -1,9 +1,9 @@
 # coding: utf-8
 
 """
-    Financial Reports API
+    FinancialReports API
 
-    Welcome to the Financial Reports API, your gateway to European company filings, financial data, and corporate information. All API requests must be authenticated. Authentication is performed by including your unique API key in the **X-API-Key** HTTP header. Please use the \"Authorize\" button to set your key and try out the endpoints.
+     Welcome to the FinancialReports API.  ### Access Levels This API is tiered based on data granularity.  | Level | Name | Description | | :--- | :--- | :--- | | **Level 1** | **Standard Access** | Access to raw PDF/XBRL metadata, company profiles, ISIC classifications, reference data, and **point-in-time audit trails**. | | **Level 2** | **Processed Filings** | Access to converted content (Markdown/JSON) and full-text search capabilities. | | **Level 3** | **RAG / Agent** | Access to specific extracted financial line items (Revenue, EBITDA, etc.) mapped to standard taxonomies, and access to the conversational RAG agent. |  ### Rate Limiting To ensure stability, this API uses a dual-layer rate limit: 1.  **Burst Limit:** A short-term speed limit (e.g., 5 requests/second) to prevent system overload. 2.  **Quota Limit:** A monthly allowance of total requests based on your subscription plan.  Check the response headers `X-RateLimit-Burst-Limit` and `X-RateLimit-Monthly-Remaining` for your current status.  ### Authentication All API requests must be authenticated via the **X-API-Key** header. 
 
     The version of the OpenAPI document: 1.0.0
     Contact: api@financialreports.eu
@@ -21,16 +21,15 @@ from typing_extensions import Self
 
 class StatusEnum(str, Enum):
     """
-    * `PENDING` - Pending * `PROCESSING` - Processing * `COMPLETED` - Completed * `FAILED` - Failed
+    * `pending` - Pending * `success` - Success * `failed` - Failed
     """
 
     """
     allowed enum values
     """
-    PENDING = 'PENDING'
-    PROCESSING = 'PROCESSING'
-    COMPLETED = 'COMPLETED'
-    FAILED = 'FAILED'
+    PENDING = 'pending'
+    SUCCESS = 'success'
+    FAILED = 'failed'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

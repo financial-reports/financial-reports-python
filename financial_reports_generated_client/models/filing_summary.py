@@ -3,7 +3,7 @@
 """
     FinancialReports API
 
-     Welcome to the FinancialReports API.  ### Access Levels This API is tiered based on data granularity.  | Level | Name | Description | | :--- | :--- | :--- | | **Level 1** | **Standard Access** | Access to raw PDF/XBRL metadata, company profiles, ISIC classifications, and reference data. | | **Level 2** | **Processed Filings** | Access to converted content (Markdown/JSON) and full-text search capabilities. | | **Level 3** | **Extracted Financials** | Access to specific extracted financial line items (Revenue, EBITDA, etc.) mapped to standard taxonomies. |  ### Authentication All API requests must be authenticated via the **X-API-Key** header. 
+     Welcome to the FinancialReports API.  ### Access Levels This API is tiered based on data granularity.  | Level | Name | Description | | :--- | :--- | :--- | | **Level 1** | **Standard Access** | Access to raw PDF/XBRL metadata, company profiles, ISIC classifications, reference data, and **point-in-time audit trails**. | | **Level 2** | **Processed Filings** | Access to converted content (Markdown/JSON) and full-text search capabilities. | | **Level 3** | **RAG / Agent** | Access to specific extracted financial line items (Revenue, EBITDA, etc.) mapped to standard taxonomies, and access to the conversational RAG agent. |  ### Rate Limiting To ensure stability, this API uses a dual-layer rate limit: 1.  **Burst Limit:** A short-term speed limit (e.g., 5 requests/second) to prevent system overload. 2.  **Quota Limit:** A monthly allowance of total requests based on your subscription plan.  Check the response headers `X-RateLimit-Burst-Limit` and `X-RateLimit-Monthly-Remaining` for your current status.  ### Authentication All API requests must be authenticated via the **X-API-Key** header. 
 
     The version of the OpenAPI document: 1.0.0
     Contact: api@financialreports.eu
@@ -19,7 +19,7 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict, Field, StrictInt
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from financial_reports_generated_client.models.company_minimal import CompanyMinimal
@@ -27,6 +27,7 @@ from financial_reports_generated_client.models.filing_type import FilingType
 from financial_reports_generated_client.models.processing_status_enum import ProcessingStatusEnum
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class FilingSummary(BaseModel):
     """
@@ -35,15 +36,19 @@ class FilingSummary(BaseModel):
     id: StrictInt
     title: Optional[Annotated[str, Field(strict=True, max_length=200)]] = Field(default=None, description="Optional title for the filing")
     release_datetime: Optional[datetime] = Field(default=None, description="Time the document was published on the authority page")
+    document_url: StrictStr = Field(description="Direct URL to the raw filing package (e.g., ZIP/PDF) on S3.")
+    proxy_url: Optional[StrictStr] = Field(description="Direct URL to the extracted, browser-renderable main document.")
+    viewer_url: Optional[StrictStr] = Field(description="URL to view the filing in the interactive web platform.")
     company: CompanyMinimal
     filing_type: FilingType
     processing_status: Optional[ProcessingStatusEnum] = Field(default=None, description="The lifecycle status of the raw document to markdown conversion.  * `PENDING` - Pending * `QUEUED` - Queued * `PROCESSING` - Processing * `COMPLETED` - Completed * `FAILED` - Failed * `SKIPPED` - Skipped")
     file_extension: Optional[Annotated[str, Field(strict=True, max_length=10)]] = Field(default=None, description="File extension (e.g., PDF, HTML).")
     file_size: Optional[Annotated[int, Field(le=2147483647, strict=True, ge=0)]] = Field(default=None, description="File size in bytes. Stores locally to avoid storage backend hits.")
-    __properties: ClassVar[List[str]] = ["id", "title", "release_datetime", "company", "filing_type", "processing_status", "file_extension", "file_size"]
+    __properties: ClassVar[List[str]] = ["id", "title", "release_datetime", "document_url", "proxy_url", "viewer_url", "company", "filing_type", "processing_status", "file_extension", "file_size"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -55,8 +60,7 @@ class FilingSummary(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -75,9 +79,15 @@ class FilingSummary(BaseModel):
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
             "id",
+            "document_url",
+            "proxy_url",
+            "viewer_url",
             "company",
             "filing_type",
         ])
@@ -97,6 +107,16 @@ class FilingSummary(BaseModel):
         # and model_fields_set contains the field
         if self.release_datetime is None and "release_datetime" in self.model_fields_set:
             _dict['release_datetime'] = None
+
+        # set to None if proxy_url (nullable) is None
+        # and model_fields_set contains the field
+        if self.proxy_url is None and "proxy_url" in self.model_fields_set:
+            _dict['proxy_url'] = None
+
+        # set to None if viewer_url (nullable) is None
+        # and model_fields_set contains the field
+        if self.viewer_url is None and "viewer_url" in self.model_fields_set:
+            _dict['viewer_url'] = None
 
         # set to None if file_extension (nullable) is None
         # and model_fields_set contains the field
@@ -123,6 +143,9 @@ class FilingSummary(BaseModel):
             "id": obj.get("id"),
             "title": obj.get("title"),
             "release_datetime": obj.get("release_datetime"),
+            "document_url": obj.get("document_url"),
+            "proxy_url": obj.get("proxy_url"),
+            "viewer_url": obj.get("viewer_url"),
             "company": CompanyMinimal.from_dict(obj["company"]) if obj.get("company") is not None else None,
             "filing_type": FilingType.from_dict(obj["filing_type"]) if obj.get("filing_type") is not None else None,
             "processing_status": obj.get("processing_status"),

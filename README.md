@@ -2,7 +2,7 @@
 
 The official Python client for the [FinancialReports API](https://financialreports.eu). 
 
-Access a comprehensive database of European financial filings, company information, and industry classifications programmatically.
+Access a comprehensive database of financial filings, company information, and industry classifications programmatically.
 
 ## Installation
 

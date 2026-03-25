@@ -3,7 +3,7 @@
 """
     FinancialReports API
 
-     Welcome to the FinancialReports API.  ### Access Levels This API is tiered based on data granularity.  | Level | Name | Description | | :--- | :--- | :--- | | **Level 1** | **Standard Access** | Access to raw PDF/XBRL metadata, company profiles, ISIC classifications, and reference data. | | **Level 2** | **Processed Filings** | Access to converted content (Markdown/JSON) and full-text search capabilities. | | **Level 3** | **Extracted Financials** | Access to specific extracted financial line items (Revenue, EBITDA, etc.) mapped to standard taxonomies. |  ### Authentication All API requests must be authenticated via the **X-API-Key** header. 
+     Welcome to the FinancialReports API.  ### Access Levels This API is tiered based on data granularity.  | Level | Name | Description | | :--- | :--- | :--- | | **Level 1** | **Standard Access** | Access to raw PDF/XBRL metadata, company profiles, ISIC classifications, reference data, and **point-in-time audit trails**. | | **Level 2** | **Processed Filings** | Access to converted content (Markdown/JSON) and full-text search capabilities. | | **Level 3** | **RAG / Agent** | Access to specific extracted financial line items (Revenue, EBITDA, etc.) mapped to standard taxonomies, and access to the conversational RAG agent. |  ### Rate Limiting To ensure stability, this API uses a dual-layer rate limit: 1.  **Burst Limit:** A short-term speed limit (e.g., 5 requests/second) to prevent system overload. 2.  **Quota Limit:** A monthly allowance of total requests based on your subscription plan.  Check the response headers `X-RateLimit-Burst-Limit` and `X-RateLimit-Monthly-Remaining` for your current status.  ### Authentication All API requests must be authenticated via the **X-API-Key** header. 
 
     The version of the OpenAPI document: 1.0.0
     Contact: api@financialreports.eu
@@ -24,10 +24,11 @@ from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class PatchedWebhook(BaseModel):
     """
-    Serializer for the Webhook model. Handles create, retrieve, update, and list operations for a user's webhooks.
+    Serializer for the Webhook model. Handles create, retrieve, update, and list operations. Note: The 'secret_key' is intentionally excluded from this serializer for security.
     """ # noqa: E501
     id: Optional[StrictInt] = Field(default=None, description="The unique identifier for the webhook.")
     url: Optional[Annotated[str, Field(strict=True, max_length=500)]] = Field(default=None, description="The endpoint URL (HTTPS required) to which the webhook payloads will be sent.")
@@ -35,14 +36,16 @@ class PatchedWebhook(BaseModel):
     include_markdown: Optional[StrictBool] = Field(default=True, description="Set to 'true' to include the full 'markdown_content' in the webhook payload. Set to 'false' to receive a payload without the markdown body.")
     include_isins: Optional[StrictBool] = Field(default=False, description="Set to 'true' to include the list of ISINs in the company object. Warning: Large companies may have thousands of ISINs, increasing payload size.")
     track_all_companies: Optional[StrictBool] = Field(default=False, description="Set to 'true' to subscribe to the Global Firehose. You will receive notifications for filings from ALL companies in the database, regardless of your Watchlist.")
+    trigger_on_filing_received: Optional[StrictBool] = Field(default=False, description="If true, triggers immediately when a filing is detected (Fastest). Note: Metadata like filing type may be null, and no markdown is included.")
+    trigger_on_filing_processed: Optional[StrictBool] = Field(default=True, description="If true, triggers when the filing has been fully analyzed and converted (Complete). Includes verified metadata and markdown content.")
     subscribed_filing_types: Optional[List[StrictStr]] = Field(default=None, description="A list of filing type codes (e.g., ['10-K', 'Annual Report']) to subscribe to. If this list is empty or omitted, you will be subscribed to all filing types.")
-    secret_key: Optional[StrictStr] = Field(default=None, description="Your unique secret key for verifying payload signatures. This key is generated upon creation and can be regenerated via a separate endpoint.")
     created_at: Optional[datetime] = None
     updated_at: Optional[datetime] = None
-    __properties: ClassVar[List[str]] = ["id", "url", "is_active", "include_markdown", "include_isins", "track_all_companies", "subscribed_filing_types", "secret_key", "created_at", "updated_at"]
+    __properties: ClassVar[List[str]] = ["id", "url", "is_active", "include_markdown", "include_isins", "track_all_companies", "trigger_on_filing_received", "trigger_on_filing_processed", "subscribed_filing_types", "created_at", "updated_at"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -54,8 +57,7 @@ class PatchedWebhook(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -74,11 +76,9 @@ class PatchedWebhook(BaseModel):
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
-        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
             "id",
-            "secret_key",
             "created_at",
             "updated_at",
         ])
@@ -106,8 +106,9 @@ class PatchedWebhook(BaseModel):
             "include_markdown": obj.get("include_markdown") if obj.get("include_markdown") is not None else True,
             "include_isins": obj.get("include_isins") if obj.get("include_isins") is not None else False,
             "track_all_companies": obj.get("track_all_companies") if obj.get("track_all_companies") is not None else False,
+            "trigger_on_filing_received": obj.get("trigger_on_filing_received") if obj.get("trigger_on_filing_received") is not None else False,
+            "trigger_on_filing_processed": obj.get("trigger_on_filing_processed") if obj.get("trigger_on_filing_processed") is not None else True,
             "subscribed_filing_types": obj.get("subscribed_filing_types"),
-            "secret_key": obj.get("secret_key"),
             "created_at": obj.get("created_at"),
             "updated_at": obj.get("updated_at")
         })

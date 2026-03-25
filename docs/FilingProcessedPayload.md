@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**event_type** | **str** | The name of the event (e.g., &#39;filing.processed&#39;). | [readonly] 
+**event_type** | **str** | The name of the event (e.g., &#39;filing.processed&#39; or &#39;filing.received&#39;). | [readonly] 
 **webhook_id** | **str** | The ID of the webhook configuration that triggered this event. | [readonly] 
 **filing_id** | **str** | The ID of the newly processed filing. | [readonly] 
 **company** | [**WebhookCompanyPayload**](WebhookCompanyPayload.md) | Details of the company associated with the filing. | [readonly] 

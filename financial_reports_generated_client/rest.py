@@ -3,7 +3,7 @@
 """
     FinancialReports API
 
-     Welcome to the FinancialReports API.  ### Access Levels This API is tiered based on data granularity.  | Level | Name | Description | | :--- | :--- | :--- | | **Level 1** | **Standard Access** | Access to raw PDF/XBRL metadata, company profiles, ISIC classifications, and reference data. | | **Level 2** | **Processed Filings** | Access to converted content (Markdown/JSON) and full-text search capabilities. | | **Level 3** | **Extracted Financials** | Access to specific extracted financial line items (Revenue, EBITDA, etc.) mapped to standard taxonomies. |  ### Authentication All API requests must be authenticated via the **X-API-Key** header. 
+     Welcome to the FinancialReports API.  ### Access Levels This API is tiered based on data granularity.  | Level | Name | Description | | :--- | :--- | :--- | | **Level 1** | **Standard Access** | Access to raw PDF/XBRL metadata, company profiles, ISIC classifications, reference data, and **point-in-time audit trails**. | | **Level 2** | **Processed Filings** | Access to converted content (Markdown/JSON) and full-text search capabilities. | | **Level 3** | **RAG / Agent** | Access to specific extracted financial line items (Revenue, EBITDA, etc.) mapped to standard taxonomies, and access to the conversational RAG agent. |  ### Rate Limiting To ensure stability, this API uses a dual-layer rate limit: 1.  **Burst Limit:** A short-term speed limit (e.g., 5 requests/second) to prevent system overload. 2.  **Quota Limit:** A monthly allowance of total requests based on your subscription plan.  Check the response headers `X-RateLimit-Burst-Limit` and `X-RateLimit-Monthly-Remaining` for your current status.  ### Authentication All API requests must be authenticated via the **X-API-Key** header. 
 
     The version of the OpenAPI document: 1.0.0
     Contact: api@financialreports.eu
@@ -78,7 +78,20 @@ class RESTClientObject:
         self.proxy = configuration.proxy
         self.proxy_headers = configuration.proxy_headers
 
-        self.retries = configuration.retries
+        retries = configuration.retries
+        if retries is None:
+            self._effective_retry_options = None
+        elif isinstance(retries, aiohttp_retry.RetryOptionsBase):
+            self._effective_retry_options = retries
+        elif isinstance(retries, int):
+            self._effective_retry_options = aiohttp_retry.ExponentialRetry(
+                attempts=retries,
+                factor=2.0,
+                start_timeout=0.1,
+                max_timeout=120.0
+            )
+        else:
+            self._effective_retry_options = None
 
         self.pool_manager: Optional[aiohttp.ClientSession] = None
         self.retry_client: Optional[aiohttp_retry.RetryClient] = None
@@ -201,16 +214,11 @@ class RESTClientObject:
             )
         pool_manager = self.pool_manager
 
-        if self.retries is not None and method in ALLOW_RETRY_METHODS:
+        if self._effective_retry_options is not None and method in ALLOW_RETRY_METHODS:
             if self.retry_client is None:
                 self.retry_client = aiohttp_retry.RetryClient(
                     client_session=self.pool_manager,
-                    retry_options=aiohttp_retry.ExponentialRetry(
-                        attempts=self.retries,
-                        factor=2.0,
-                        start_timeout=0.1,
-                        max_timeout=120.0
-                    )
+                    retry_options=self._effective_retry_options
                 )
             pool_manager = self.retry_client
 

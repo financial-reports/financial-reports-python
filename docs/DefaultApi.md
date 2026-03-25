@@ -12,7 +12,7 @@ Method | HTTP request | Description
 
 Filing Processed Event
 
-Triggered when a new filing is successfully ingested, processed, and made available in the API. This is the primary event for tracking new data.
+Triggered when a filing has been successfully analyzed, classified, and converted to Markdown. This event contains the complete metadata and content.
 
 ### Example
 
@@ -68,9 +68,9 @@ No authorization required
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | (Success) Your endpoint should return a 2xx status code to acknowledge receipt. |  -  |
-**4xx** | (Client Error) Your endpoint returned an error. We may retry based on the status code. |  -  |
-**5xx** | (Server Error) Your endpoint is down or unavailable. We will retry. |  -  |
+**200** | (Success) Acknowledge receipt. |  -  |
+**4xx** | (Client Error) Retry logic may apply. |  -  |
+**5xx** | (Server Error) We will retry. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

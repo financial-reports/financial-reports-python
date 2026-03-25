@@ -1,6 +1,6 @@
 # Webhook
 
-Serializer for the Webhook model. Handles create, retrieve, update, and list operations for a user's webhooks.
+Serializer for the Webhook model. Handles create, retrieve, update, and list operations. Note: The 'secret_key' is intentionally excluded from this serializer for security.
 
 ## Properties
 
@@ -12,8 +12,9 @@ Name | Type | Description | Notes
 **include_markdown** | **bool** | Set to &#39;true&#39; to include the full &#39;markdown_content&#39; in the webhook payload. Set to &#39;false&#39; to receive a payload without the markdown body. | [optional] [default to True]
 **include_isins** | **bool** | Set to &#39;true&#39; to include the list of ISINs in the company object. Warning: Large companies may have thousands of ISINs, increasing payload size. | [optional] [default to False]
 **track_all_companies** | **bool** | Set to &#39;true&#39; to subscribe to the Global Firehose. You will receive notifications for filings from ALL companies in the database, regardless of your Watchlist. | [optional] [default to False]
+**trigger_on_filing_received** | **bool** | If true, triggers immediately when a filing is detected (Fastest). Note: Metadata like filing type may be null, and no markdown is included. | [optional] [default to False]
+**trigger_on_filing_processed** | **bool** | If true, triggers when the filing has been fully analyzed and converted (Complete). Includes verified metadata and markdown content. | [optional] [default to True]
 **subscribed_filing_types** | **List[str]** | A list of filing type codes (e.g., [&#39;10-K&#39;, &#39;Annual Report&#39;]) to subscribe to. If this list is empty or omitted, you will be subscribed to all filing types. | [optional] 
-**secret_key** | **str** | Your unique secret key for verifying payload signatures. This key is generated upon creation and can be regenerated via a separate endpoint. | [readonly] 
 **created_at** | **datetime** |  | [readonly] 
 **updated_at** | **datetime** |  | [readonly] 
 

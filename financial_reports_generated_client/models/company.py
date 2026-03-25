@@ -3,7 +3,7 @@
 """
     FinancialReports API
 
-     Welcome to the FinancialReports API.  ### Access Levels This API is tiered based on data granularity.  | Level | Name | Description | | :--- | :--- | :--- | | **Level 1** | **Standard Access** | Access to raw PDF/XBRL metadata, company profiles, ISIC classifications, and reference data. | | **Level 2** | **Processed Filings** | Access to converted content (Markdown/JSON) and full-text search capabilities. | | **Level 3** | **Extracted Financials** | Access to specific extracted financial line items (Revenue, EBITDA, etc.) mapped to standard taxonomies. |  ### Authentication All API requests must be authenticated via the **X-API-Key** header. 
+     Welcome to the FinancialReports API.  ### Access Levels This API is tiered based on data granularity.  | Level | Name | Description | | :--- | :--- | :--- | | **Level 1** | **Standard Access** | Access to raw PDF/XBRL metadata, company profiles, ISIC classifications, reference data, and **point-in-time audit trails**. | | **Level 2** | **Processed Filings** | Access to converted content (Markdown/JSON) and full-text search capabilities. | | **Level 3** | **RAG / Agent** | Access to specific extracted financial line items (Revenue, EBITDA, etc.) mapped to standard taxonomies, and access to the conversational RAG agent. |  ### Rate Limiting To ensure stability, this API uses a dual-layer rate limit: 1.  **Burst Limit:** A short-term speed limit (e.g., 5 requests/second) to prevent system overload. 2.  **Quota Limit:** A monthly allowance of total requests based on your subscription plan.  Check the response headers `X-RateLimit-Burst-Limit` and `X-RateLimit-Monthly-Remaining` for your current status.  ### Authentication All API requests must be authenticated via the **X-API-Key** header. 
 
     The version of the OpenAPI document: 1.0.0
     Contact: api@financialreports.eu
@@ -22,14 +22,17 @@ from datetime import date, datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from financial_reports_generated_client.models.designated_sponsor import DesignatedSponsor
+from financial_reports_generated_client.models.entity_legal_form import EntityLegalForm
 from financial_reports_generated_client.models.isic_class import ISICClass
 from financial_reports_generated_client.models.isic_division import ISICDivision
 from financial_reports_generated_client.models.isic_group import ISICGroup
 from financial_reports_generated_client.models.isic_section import ISICSection
+from financial_reports_generated_client.models.jurisdiction import Jurisdiction
 from financial_reports_generated_client.models.listed_stock_exchange import ListedStockExchange
 from financial_reports_generated_client.models.stock_index import StockIndex
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class Company(BaseModel):
     """
@@ -77,10 +80,17 @@ class Company(BaseModel):
     designated_sponsor: List[DesignatedSponsor] = Field(description="Financial institutions that act as market makers for the company's stock.")
     listed_stock_exchange: List[ListedStockExchange] = Field(description="A list of stock exchanges where the company is listed.")
     stock_index: List[StockIndex] = Field(description="A list of stock indices the company is a component of.")
-    __properties: ClassVar[List[str]] = ["id", "name", "tagline", "description", "description_last_updated", "isins", "lei", "country_code", "address", "city", "zip_code", "sector", "industry_group", "industry", "sub_industry", "ir_link", "homepage_link", "logo", "date_public", "date_ipo", "main_stock_exchange", "is_listed", "social_facebook", "social_instagram", "social_twitter", "social_linkedin", "social_youtube", "social_tiktok", "social_pinterest", "social_xing", "social_glassdoor", "year_founded", "corporate_video_id", "served_area", "headcount", "contact_email", "ticker", "local_company_id", "shares_outstanding", "designated_sponsor", "listed_stock_exchange", "stock_index"]
+    legal_status: StrictStr = Field(description="The operational and legal registration status sourced from GLEIF (e.g., ACTIVE, INACTIVE).")
+    legal_form: Optional[EntityLegalForm]
+    jurisdiction: Optional[Jurisdiction]
+    legal_address: StrictStr = Field(description="The official registered legal address of the company sourced from GLEIF.")
+    legal_city: StrictStr = Field(description="The city of the registered legal address sourced from GLEIF.")
+    legal_zip_code: StrictStr = Field(description="The postal code of the registered legal address sourced from GLEIF.")
+    __properties: ClassVar[List[str]] = ["id", "name", "tagline", "description", "description_last_updated", "isins", "lei", "country_code", "address", "city", "zip_code", "sector", "industry_group", "industry", "sub_industry", "ir_link", "homepage_link", "logo", "date_public", "date_ipo", "main_stock_exchange", "is_listed", "social_facebook", "social_instagram", "social_twitter", "social_linkedin", "social_youtube", "social_tiktok", "social_pinterest", "social_xing", "social_glassdoor", "year_founded", "corporate_video_id", "served_area", "headcount", "contact_email", "ticker", "local_company_id", "shares_outstanding", "designated_sponsor", "listed_stock_exchange", "stock_index", "legal_status", "legal_form", "jurisdiction", "legal_address", "legal_city", "legal_zip_code"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -92,8 +102,7 @@ class Company(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -147,6 +156,16 @@ class Company(BaseModel):
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
             "id",
@@ -154,6 +173,7 @@ class Company(BaseModel):
             "tagline",
             "description",
             "description_last_updated",
+            "isins",
             "lei",
             "country_code",
             "address",
@@ -187,6 +207,15 @@ class Company(BaseModel):
             "ticker",
             "local_company_id",
             "shares_outstanding",
+            "designated_sponsor",
+            "listed_stock_exchange",
+            "stock_index",
+            "legal_status",
+            "legal_form",
+            "jurisdiction",
+            "legal_address",
+            "legal_city",
+            "legal_zip_code",
         ])
 
         _dict = self.model_dump(
@@ -227,6 +256,12 @@ class Company(BaseModel):
                 if _item_stock_index:
                     _items.append(_item_stock_index.to_dict())
             _dict['stock_index'] = _items
+        # override the default output from pydantic by calling `to_dict()` of legal_form
+        if self.legal_form:
+            _dict['legal_form'] = self.legal_form.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of jurisdiction
+        if self.jurisdiction:
+            _dict['jurisdiction'] = self.jurisdiction.to_dict()
         # set to None if description_last_updated (nullable) is None
         # and model_fields_set contains the field
         if self.description_last_updated is None and "description_last_updated" in self.model_fields_set:
@@ -367,6 +402,16 @@ class Company(BaseModel):
         if self.shares_outstanding is None and "shares_outstanding" in self.model_fields_set:
             _dict['shares_outstanding'] = None
 
+        # set to None if legal_form (nullable) is None
+        # and model_fields_set contains the field
+        if self.legal_form is None and "legal_form" in self.model_fields_set:
+            _dict['legal_form'] = None
+
+        # set to None if jurisdiction (nullable) is None
+        # and model_fields_set contains the field
+        if self.jurisdiction is None and "jurisdiction" in self.model_fields_set:
+            _dict['jurisdiction'] = None
+
         return _dict
 
     @classmethod
@@ -420,7 +465,13 @@ class Company(BaseModel):
             "shares_outstanding": obj.get("shares_outstanding"),
             "designated_sponsor": [DesignatedSponsor.from_dict(_item) for _item in obj["designated_sponsor"]] if obj.get("designated_sponsor") is not None else None,
             "listed_stock_exchange": [ListedStockExchange.from_dict(_item) for _item in obj["listed_stock_exchange"]] if obj.get("listed_stock_exchange") is not None else None,
-            "stock_index": [StockIndex.from_dict(_item) for _item in obj["stock_index"]] if obj.get("stock_index") is not None else None
+            "stock_index": [StockIndex.from_dict(_item) for _item in obj["stock_index"]] if obj.get("stock_index") is not None else None,
+            "legal_status": obj.get("legal_status"),
+            "legal_form": EntityLegalForm.from_dict(obj["legal_form"]) if obj.get("legal_form") is not None else None,
+            "jurisdiction": Jurisdiction.from_dict(obj["jurisdiction"]) if obj.get("jurisdiction") is not None else None,
+            "legal_address": obj.get("legal_address"),
+            "legal_city": obj.get("legal_city"),
+            "legal_zip_code": obj.get("legal_zip_code")
         })
         return _obj
 

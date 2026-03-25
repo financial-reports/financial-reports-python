@@ -4,7 +4,7 @@
 """
     FinancialReports API
 
-     Welcome to the FinancialReports API.  ### Access Levels This API is tiered based on data granularity.  | Level | Name | Description | | :--- | :--- | :--- | | **Level 1** | **Standard Access** | Access to raw PDF/XBRL metadata, company profiles, ISIC classifications, and reference data. | | **Level 2** | **Processed Filings** | Access to converted content (Markdown/JSON) and full-text search capabilities. | | **Level 3** | **Extracted Financials** | Access to specific extracted financial line items (Revenue, EBITDA, etc.) mapped to standard taxonomies. |  ### Authentication All API requests must be authenticated via the **X-API-Key** header. 
+     Welcome to the FinancialReports API.  ### Access Levels This API is tiered based on data granularity.  | Level | Name | Description | | :--- | :--- | :--- | | **Level 1** | **Standard Access** | Access to raw PDF/XBRL metadata, company profiles, ISIC classifications, reference data, and **point-in-time audit trails**. | | **Level 2** | **Processed Filings** | Access to converted content (Markdown/JSON) and full-text search capabilities. | | **Level 3** | **RAG / Agent** | Access to specific extracted financial line items (Revenue, EBITDA, etc.) mapped to standard taxonomies, and access to the conversational RAG agent. |  ### Rate Limiting To ensure stability, this API uses a dual-layer rate limit: 1.  **Burst Limit:** A short-term speed limit (e.g., 5 requests/second) to prevent system overload. 2.  **Quota Limit:** A monthly allowance of total requests based on your subscription plan.  Check the response headers `X-RateLimit-Burst-Limit` and `X-RateLimit-Monthly-Remaining` for your current status.  ### Authentication All API requests must be authenticated via the **X-API-Key** header. 
 
     The version of the OpenAPI document: 1.0.0
     Contact: api@financialreports.eu
@@ -14,43 +14,61 @@
 """  # noqa: E501
 
 # import models into model package
+from financial_reports_generated_client.models.chat_interaction_request import ChatInteractionRequest
+from financial_reports_generated_client.models.chat_message_item import ChatMessageItem
+from financial_reports_generated_client.models.chat_message_list import ChatMessageList
+from financial_reports_generated_client.models.chat_session_update_response import ChatSessionUpdateResponse
 from financial_reports_generated_client.models.company import Company
 from financial_reports_generated_client.models.company_minimal import CompanyMinimal
 from financial_reports_generated_client.models.country import Country
 from financial_reports_generated_client.models.designated_sponsor import DesignatedSponsor
+from financial_reports_generated_client.models.entity_legal_form import EntityLegalForm
 from financial_reports_generated_client.models.error_detail import ErrorDetail
 from financial_reports_generated_client.models.filing import Filing
 from financial_reports_generated_client.models.filing_category import FilingCategory
+from financial_reports_generated_client.models.filing_history import FilingHistory
 from financial_reports_generated_client.models.filing_processed_payload import FilingProcessedPayload
 from financial_reports_generated_client.models.filing_summary import FilingSummary
 from financial_reports_generated_client.models.filing_type import FilingType
+from financial_reports_generated_client.models.fiscal_period_enum import FiscalPeriodEnum
 from financial_reports_generated_client.models.isic_class import ISICClass
 from financial_reports_generated_client.models.isic_division import ISICDivision
 from financial_reports_generated_client.models.isic_group import ISICGroup
 from financial_reports_generated_client.models.isic_section import ISICSection
+from financial_reports_generated_client.models.isin import ISIN
+from financial_reports_generated_client.models.jurisdiction import Jurisdiction
 from financial_reports_generated_client.models.language import Language
 from financial_reports_generated_client.models.listed_stock_exchange import ListedStockExchange
+from financial_reports_generated_client.models.next_annual_report import NextAnnualReport
 from financial_reports_generated_client.models.paginated_company_minimal_list import PaginatedCompanyMinimalList
 from financial_reports_generated_client.models.paginated_country_list import PaginatedCountryList
 from financial_reports_generated_client.models.paginated_filing_category_list import PaginatedFilingCategoryList
+from financial_reports_generated_client.models.paginated_filing_history_list import PaginatedFilingHistoryList
 from financial_reports_generated_client.models.paginated_filing_summary_list import PaginatedFilingSummaryList
 from financial_reports_generated_client.models.paginated_filing_type_list import PaginatedFilingTypeList
 from financial_reports_generated_client.models.paginated_isic_class_list import PaginatedISICClassList
 from financial_reports_generated_client.models.paginated_isic_division_list import PaginatedISICDivisionList
 from financial_reports_generated_client.models.paginated_isic_group_list import PaginatedISICGroupList
 from financial_reports_generated_client.models.paginated_isic_section_list import PaginatedISICSectionList
+from financial_reports_generated_client.models.paginated_isin_list import PaginatedISINList
 from financial_reports_generated_client.models.paginated_language_list import PaginatedLanguageList
 from financial_reports_generated_client.models.paginated_source_list import PaginatedSourceList
+from financial_reports_generated_client.models.paginated_webhook_delivery_list import PaginatedWebhookDeliveryList
 from financial_reports_generated_client.models.paginated_webhook_list import PaginatedWebhookList
+from financial_reports_generated_client.models.patched_chat_session_update_request import PatchedChatSessionUpdateRequest
 from financial_reports_generated_client.models.patched_webhook import PatchedWebhook
 from financial_reports_generated_client.models.processing_status_enum import ProcessingStatusEnum
+from financial_reports_generated_client.models.sse_event import SSEEvent
+from financial_reports_generated_client.models.session_context import SessionContext
 from financial_reports_generated_client.models.source import Source
+from financial_reports_generated_client.models.status_enum import StatusEnum
 from financial_reports_generated_client.models.stock_index import StockIndex
 from financial_reports_generated_client.models.watchlist_action import WatchlistAction
 from financial_reports_generated_client.models.watchlist_company import WatchlistCompany
 from financial_reports_generated_client.models.watchlist_response import WatchlistResponse
 from financial_reports_generated_client.models.webhook import Webhook
 from financial_reports_generated_client.models.webhook_company_payload import WebhookCompanyPayload
+from financial_reports_generated_client.models.webhook_delivery import WebhookDelivery
 from financial_reports_generated_client.models.webhook_filing_payload import WebhookFilingPayload
-from financial_reports_generated_client.models.webhook_regenerate_secret import WebhookRegenerateSecret
+from financial_reports_generated_client.models.webhook_secret import WebhookSecret
 

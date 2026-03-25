@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **tagline** | **str** | A short, one-liner describing the company&#39;s value proposition. | [readonly] 
 **description** | **str** | A detailed description or &#39;About Us&#39; text for the company. | [readonly] 
 **description_last_updated** | **datetime** | Timestamp of the last update to the company&#39;s description. | [readonly] 
-**isins** | **List[str]** | List of International Securities Identification Numbers (ISINs) associated with the company. | 
+**isins** | **List[str]** | List of International Securities Identification Numbers (ISINs) associated with the company. | [readonly] 
 **lei** | **str** | Legal Entity Identifier (ISO 17442). | [readonly] 
 **country_code** | **str** | ISO 3166-1 alpha-2 country code of the company&#39;s primary registration or headquarters. | [readonly] 
 **address** | **str** | The company&#39;s primary street address. | [readonly] 
@@ -44,9 +44,15 @@ Name | Type | Description | Notes
 **ticker** | **str** | Primary stock ticker symbol. | [readonly] 
 **local_company_id** | **str** | Local registration or jurisdiction-specific ID (e.g., HRB 24902, CIK 123456). | [readonly] 
 **shares_outstanding** | **int** | The total number of a corporation&#39;s stock shares that have been authorized and issued. | [readonly] 
-**designated_sponsor** | [**List[DesignatedSponsor]**](DesignatedSponsor.md) | Financial institutions that act as market makers for the company&#39;s stock. | 
-**listed_stock_exchange** | [**List[ListedStockExchange]**](ListedStockExchange.md) | A list of stock exchanges where the company is listed. | 
-**stock_index** | [**List[StockIndex]**](StockIndex.md) | A list of stock indices the company is a component of. | 
+**designated_sponsor** | [**List[DesignatedSponsor]**](DesignatedSponsor.md) | Financial institutions that act as market makers for the company&#39;s stock. | [readonly] 
+**listed_stock_exchange** | [**List[ListedStockExchange]**](ListedStockExchange.md) | A list of stock exchanges where the company is listed. | [readonly] 
+**stock_index** | [**List[StockIndex]**](StockIndex.md) | A list of stock indices the company is a component of. | [readonly] 
+**legal_status** | **str** | The operational and legal registration status sourced from GLEIF (e.g., ACTIVE, INACTIVE). | [readonly] 
+**legal_form** | [**EntityLegalForm**](EntityLegalForm.md) |  | [readonly] 
+**jurisdiction** | [**Jurisdiction**](Jurisdiction.md) |  | [readonly] 
+**legal_address** | **str** | The official registered legal address of the company sourced from GLEIF. | [readonly] 
+**legal_city** | **str** | The city of the registered legal address sourced from GLEIF. | [readonly] 
+**legal_zip_code** | **str** | The postal code of the registered legal address sourced from GLEIF. | [readonly] 
 
 ## Example
 

@@ -1,16 +1,14 @@
 # StatusEnum
 
-* `PENDING` - Pending * `PROCESSING` - Processing * `COMPLETED` - Completed * `FAILED` - Failed
+* `pending` - Pending * `success` - Success * `failed` - Failed
 
 ## Enum
 
-* `PENDING` (value: `'PENDING'`)
+* `PENDING` (value: `'pending'`)
 
-* `PROCESSING` (value: `'PROCESSING'`)
+* `SUCCESS` (value: `'success'`)
 
-* `COMPLETED` (value: `'COMPLETED'`)
-
-* `FAILED` (value: `'FAILED'`)
+* `FAILED` (value: `'failed'`)
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

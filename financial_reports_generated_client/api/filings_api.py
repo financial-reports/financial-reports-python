@@ -1,9 +1,7 @@
-# coding: utf-8
-
 """
     FinancialReports API
 
-     Welcome to the FinancialReports API.  ### Access Levels This API is tiered based on data granularity.  | Level | Name | Description | | :--- | :--- | :--- | | **Level 1** | **Standard Access** | Access to raw PDF/XBRL metadata, company profiles, ISIC classifications, and reference data. | | **Level 2** | **Processed Filings** | Access to converted content (Markdown/JSON) and full-text search capabilities. | | **Level 3** | **Extracted Financials** | Access to specific extracted financial line items (Revenue, EBITDA, etc.) mapped to standard taxonomies. |  ### Authentication All API requests must be authenticated via the **X-API-Key** header. 
+     Welcome to the FinancialReports API.  ### Access Levels This API is tiered based on data granularity.  | Level | Name | Description | | :--- | :--- | :--- | | **Level 1** | **Standard Access** | Access to raw PDF/XBRL metadata, company profiles, ISIC classifications, reference data, and **point-in-time audit trails**. | | **Level 2** | **Processed Filings** | Access to converted content (Markdown/JSON) and full-text search capabilities. | | **Level 3** | **RAG / Agent** | Access to specific extracted financial line items (Revenue, EBITDA, etc.) mapped to standard taxonomies, and access to the conversational RAG agent. |  ### Rate Limiting To ensure stability, this API uses a dual-layer rate limit: 1.  **Burst Limit:** A short-term speed limit (e.g., 5 requests/second) to prevent system overload. 2.  **Quota Limit:** A monthly allowance of total requests based on your subscription plan.  Check the response headers `X-RateLimit-Burst-Limit` and `X-RateLimit-Monthly-Remaining` for your current status.  ### Authentication All API requests must be authenticated via the **X-API-Key** header. 
 
     The version of the OpenAPI document: 1.0.0
     Contact: api@financialreports.eu
@@ -11,6 +9,7 @@
 
     Do not edit the class manually.
 """  # noqa: E501
+
 
 import warnings
 from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
@@ -22,6 +21,7 @@ from pydantic import Field, StrictBool, StrictFloat, StrictInt, StrictStr, field
 from typing import Optional, Union
 from typing_extensions import Annotated
 from financial_reports_generated_client.models.filing import Filing
+from financial_reports_generated_client.models.paginated_filing_history_list import PaginatedFilingHistoryList
 from financial_reports_generated_client.models.paginated_filing_summary_list import PaginatedFilingSummaryList
 
 from financial_reports_generated_client.api_client import ApiClient, RequestSerialized
@@ -43,16 +43,284 @@ class FilingsApi:
 
 
     @validate_call
+    async def filings_history_retrieve(
+        self,
+        id: Annotated[StrictInt, Field(description="A unique integer value identifying this filing.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> PaginatedFilingHistoryList:
+        """Retrieve Filing History (Audit Trail)
+
+        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve a point-in-time audit trail of material changes made to this filing (e.g., classification or status updates).
+
+        :param id: A unique integer value identifying this filing. (required)
+        :type id: int
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._filings_history_retrieve_serialize(
+            id=id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PaginatedFilingHistoryList",
+            '404': "ErrorDetail",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    async def filings_history_retrieve_with_http_info(
+        self,
+        id: Annotated[StrictInt, Field(description="A unique integer value identifying this filing.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[PaginatedFilingHistoryList]:
+        """Retrieve Filing History (Audit Trail)
+
+        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve a point-in-time audit trail of material changes made to this filing (e.g., classification or status updates).
+
+        :param id: A unique integer value identifying this filing. (required)
+        :type id: int
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._filings_history_retrieve_serialize(
+            id=id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PaginatedFilingHistoryList",
+            '404': "ErrorDetail",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    async def filings_history_retrieve_without_preload_content(
+        self,
+        id: Annotated[StrictInt, Field(description="A unique integer value identifying this filing.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Retrieve Filing History (Audit Trail)
+
+        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve a point-in-time audit trail of material changes made to this filing (e.g., classification or status updates).
+
+        :param id: A unique integer value identifying this filing. (required)
+        :type id: int
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._filings_history_retrieve_serialize(
+            id=id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PaginatedFilingHistoryList",
+            '404': "ErrorDetail",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _filings_history_retrieve_serialize(
+        self,
+        id,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if id is not None:
+            _path_params['id'] = id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'ApiKeyAuth'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/filings/{id}/history/',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
     async def filings_list(
         self,
         added_to_platform_from: Annotated[Optional[datetime], Field(description="Filter by date added to platform (inclusive start date, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         added_to_platform_to: Annotated[Optional[datetime], Field(description="Filter by date added to platform (inclusive end date, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
+        categories: Annotated[Optional[StrictStr], Field(description="Filter by multiple Filing Category IDs. Comma-separated (e.g., 1,3).")] = None,
+        category: Annotated[Optional[StrictInt], Field(description="Filter by a single Filing Category ID.")] = None,
         company: Annotated[Optional[StrictInt], Field(description="Filter by internal Company ID.")] = None,
         company_isin: Annotated[Optional[StrictStr], Field(description="Filter by Company ISIN. Case-insensitive.")] = None,
         countries: Annotated[Optional[StrictStr], Field(description="Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values (e.g., US,GB,DE).")] = None,
         extensions: Annotated[Optional[StrictStr], Field(description="Filter by file extension(s). Single (e.g., PDF) or comma-separated (e.g., PDF,XBRL). Case-insensitive.")] = None,
         file_size_max: Annotated[Optional[StrictInt], Field(description="Filter by maximum file size in bytes.")] = None,
         file_size_min: Annotated[Optional[StrictInt], Field(description="Filter by minimum file size in bytes.")] = None,
+        fiscal_period: Annotated[Optional[StrictStr], Field(description="Filter by fiscal period. Possible values: `FY` (Full Year), `Q1`, `Q2`, `Q3`, `Q4`, `H1` (First Half), `H2` (Second Half). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.")] = None,
+        fiscal_year: Annotated[Optional[StrictInt], Field(description="Filter by fiscal year (e.g., `2024`). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.")] = None,
         language: Annotated[Optional[StrictStr], Field(description="Filter by a single filing language ISO 639-1 code (e.g., en).")] = None,
         languages: Annotated[Optional[StrictStr], Field(description="Filter by filing language ISO 639-1 code(s). Comma-separated for multiple values (e.g., en,de).")] = None,
         lei: Annotated[Optional[StrictStr], Field(description="Filter by Company Legal Entity Identifier (LEI).")] = None,
@@ -60,6 +328,9 @@ class FilingsApi:
         ordering: Annotated[Optional[StrictStr], Field(description="Which field to use when ordering the results. Available fields: `id`, `release_datetime`, `added_to_platform`. Prefix with '-' for descending order (e.g., `-release_datetime`).")] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
+        period_ending_date: Annotated[Optional[StrictStr], Field(description="Filter by the exact period ending date (YYYY-MM-DD, e.g., `2024-12-31`). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.")] = None,
+        period_ending_date_from: Annotated[Optional[StrictStr], Field(description="Filter by period ending date — inclusive start (YYYY-MM-DD).")] = None,
+        period_ending_date_to: Annotated[Optional[StrictStr], Field(description="Filter by period ending date — inclusive end (YYYY-MM-DD).")] = None,
         release_datetime_from: Annotated[Optional[datetime], Field(description="Filter by release datetime (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         release_datetime_to: Annotated[Optional[datetime], Field(description="Filter by release datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         search: Annotated[Optional[StrictStr], Field(description="A search term.")] = None,
@@ -91,6 +362,10 @@ class FilingsApi:
         :type added_to_platform_from: datetime
         :param added_to_platform_to: Filter by date added to platform (inclusive end date, YYYY-MM-DDTHH:MM:SSZ format).
         :type added_to_platform_to: datetime
+        :param categories: Filter by multiple Filing Category IDs. Comma-separated (e.g., 1,3).
+        :type categories: str
+        :param category: Filter by a single Filing Category ID.
+        :type category: int
         :param company: Filter by internal Company ID.
         :type company: int
         :param company_isin: Filter by Company ISIN. Case-insensitive.
@@ -103,6 +378,10 @@ class FilingsApi:
         :type file_size_max: int
         :param file_size_min: Filter by minimum file size in bytes.
         :type file_size_min: int
+        :param fiscal_period: Filter by fiscal period. Possible values: `FY` (Full Year), `Q1`, `Q2`, `Q3`, `Q4`, `H1` (First Half), `H2` (Second Half). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.
+        :type fiscal_period: str
+        :param fiscal_year: Filter by fiscal year (e.g., `2024`). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.
+        :type fiscal_year: int
         :param language: Filter by a single filing language ISO 639-1 code (e.g., en).
         :type language: str
         :param languages: Filter by filing language ISO 639-1 code(s). Comma-separated for multiple values (e.g., en,de).
@@ -117,6 +396,12 @@ class FilingsApi:
         :type page: int
         :param page_size: Number of results to return per page.
         :type page_size: int
+        :param period_ending_date: Filter by the exact period ending date (YYYY-MM-DD, e.g., `2024-12-31`). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.
+        :type period_ending_date: str
+        :param period_ending_date_from: Filter by period ending date — inclusive start (YYYY-MM-DD).
+        :type period_ending_date_from: str
+        :param period_ending_date_to: Filter by period ending date — inclusive end (YYYY-MM-DD).
+        :type period_ending_date_to: str
         :param release_datetime_from: Filter by release datetime (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).
         :type release_datetime_from: datetime
         :param release_datetime_to: Filter by release datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).
@@ -162,12 +447,16 @@ class FilingsApi:
         _param = self._filings_list_serialize(
             added_to_platform_from=added_to_platform_from,
             added_to_platform_to=added_to_platform_to,
+            categories=categories,
+            category=category,
             company=company,
             company_isin=company_isin,
             countries=countries,
             extensions=extensions,
             file_size_max=file_size_max,
             file_size_min=file_size_min,
+            fiscal_period=fiscal_period,
+            fiscal_year=fiscal_year,
             language=language,
             languages=languages,
             lei=lei,
@@ -175,6 +464,9 @@ class FilingsApi:
             ordering=ordering,
             page=page,
             page_size=page_size,
+            period_ending_date=period_ending_date,
+            period_ending_date_from=period_ending_date_from,
+            period_ending_date_to=period_ending_date_to,
             release_datetime_from=release_datetime_from,
             release_datetime_to=release_datetime_to,
             search=search,
@@ -211,12 +503,16 @@ class FilingsApi:
         self,
         added_to_platform_from: Annotated[Optional[datetime], Field(description="Filter by date added to platform (inclusive start date, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         added_to_platform_to: Annotated[Optional[datetime], Field(description="Filter by date added to platform (inclusive end date, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
+        categories: Annotated[Optional[StrictStr], Field(description="Filter by multiple Filing Category IDs. Comma-separated (e.g., 1,3).")] = None,
+        category: Annotated[Optional[StrictInt], Field(description="Filter by a single Filing Category ID.")] = None,
         company: Annotated[Optional[StrictInt], Field(description="Filter by internal Company ID.")] = None,
         company_isin: Annotated[Optional[StrictStr], Field(description="Filter by Company ISIN. Case-insensitive.")] = None,
         countries: Annotated[Optional[StrictStr], Field(description="Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values (e.g., US,GB,DE).")] = None,
         extensions: Annotated[Optional[StrictStr], Field(description="Filter by file extension(s). Single (e.g., PDF) or comma-separated (e.g., PDF,XBRL). Case-insensitive.")] = None,
         file_size_max: Annotated[Optional[StrictInt], Field(description="Filter by maximum file size in bytes.")] = None,
         file_size_min: Annotated[Optional[StrictInt], Field(description="Filter by minimum file size in bytes.")] = None,
+        fiscal_period: Annotated[Optional[StrictStr], Field(description="Filter by fiscal period. Possible values: `FY` (Full Year), `Q1`, `Q2`, `Q3`, `Q4`, `H1` (First Half), `H2` (Second Half). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.")] = None,
+        fiscal_year: Annotated[Optional[StrictInt], Field(description="Filter by fiscal year (e.g., `2024`). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.")] = None,
         language: Annotated[Optional[StrictStr], Field(description="Filter by a single filing language ISO 639-1 code (e.g., en).")] = None,
         languages: Annotated[Optional[StrictStr], Field(description="Filter by filing language ISO 639-1 code(s). Comma-separated for multiple values (e.g., en,de).")] = None,
         lei: Annotated[Optional[StrictStr], Field(description="Filter by Company Legal Entity Identifier (LEI).")] = None,
@@ -224,6 +520,9 @@ class FilingsApi:
         ordering: Annotated[Optional[StrictStr], Field(description="Which field to use when ordering the results. Available fields: `id`, `release_datetime`, `added_to_platform`. Prefix with '-' for descending order (e.g., `-release_datetime`).")] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
+        period_ending_date: Annotated[Optional[StrictStr], Field(description="Filter by the exact period ending date (YYYY-MM-DD, e.g., `2024-12-31`). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.")] = None,
+        period_ending_date_from: Annotated[Optional[StrictStr], Field(description="Filter by period ending date — inclusive start (YYYY-MM-DD).")] = None,
+        period_ending_date_to: Annotated[Optional[StrictStr], Field(description="Filter by period ending date — inclusive end (YYYY-MM-DD).")] = None,
         release_datetime_from: Annotated[Optional[datetime], Field(description="Filter by release datetime (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         release_datetime_to: Annotated[Optional[datetime], Field(description="Filter by release datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         search: Annotated[Optional[StrictStr], Field(description="A search term.")] = None,
@@ -255,6 +554,10 @@ class FilingsApi:
         :type added_to_platform_from: datetime
         :param added_to_platform_to: Filter by date added to platform (inclusive end date, YYYY-MM-DDTHH:MM:SSZ format).
         :type added_to_platform_to: datetime
+        :param categories: Filter by multiple Filing Category IDs. Comma-separated (e.g., 1,3).
+        :type categories: str
+        :param category: Filter by a single Filing Category ID.
+        :type category: int
         :param company: Filter by internal Company ID.
         :type company: int
         :param company_isin: Filter by Company ISIN. Case-insensitive.
@@ -267,6 +570,10 @@ class FilingsApi:
         :type file_size_max: int
         :param file_size_min: Filter by minimum file size in bytes.
         :type file_size_min: int
+        :param fiscal_period: Filter by fiscal period. Possible values: `FY` (Full Year), `Q1`, `Q2`, `Q3`, `Q4`, `H1` (First Half), `H2` (Second Half). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.
+        :type fiscal_period: str
+        :param fiscal_year: Filter by fiscal year (e.g., `2024`). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.
+        :type fiscal_year: int
         :param language: Filter by a single filing language ISO 639-1 code (e.g., en).
         :type language: str
         :param languages: Filter by filing language ISO 639-1 code(s). Comma-separated for multiple values (e.g., en,de).
@@ -281,6 +588,12 @@ class FilingsApi:
         :type page: int
         :param page_size: Number of results to return per page.
         :type page_size: int
+        :param period_ending_date: Filter by the exact period ending date (YYYY-MM-DD, e.g., `2024-12-31`). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.
+        :type period_ending_date: str
+        :param period_ending_date_from: Filter by period ending date — inclusive start (YYYY-MM-DD).
+        :type period_ending_date_from: str
+        :param period_ending_date_to: Filter by period ending date — inclusive end (YYYY-MM-DD).
+        :type period_ending_date_to: str
         :param release_datetime_from: Filter by release datetime (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).
         :type release_datetime_from: datetime
         :param release_datetime_to: Filter by release datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).
@@ -326,12 +639,16 @@ class FilingsApi:
         _param = self._filings_list_serialize(
             added_to_platform_from=added_to_platform_from,
             added_to_platform_to=added_to_platform_to,
+            categories=categories,
+            category=category,
             company=company,
             company_isin=company_isin,
             countries=countries,
             extensions=extensions,
             file_size_max=file_size_max,
             file_size_min=file_size_min,
+            fiscal_period=fiscal_period,
+            fiscal_year=fiscal_year,
             language=language,
             languages=languages,
             lei=lei,
@@ -339,6 +656,9 @@ class FilingsApi:
             ordering=ordering,
             page=page,
             page_size=page_size,
+            period_ending_date=period_ending_date,
+            period_ending_date_from=period_ending_date_from,
+            period_ending_date_to=period_ending_date_to,
             release_datetime_from=release_datetime_from,
             release_datetime_to=release_datetime_to,
             search=search,
@@ -375,12 +695,16 @@ class FilingsApi:
         self,
         added_to_platform_from: Annotated[Optional[datetime], Field(description="Filter by date added to platform (inclusive start date, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         added_to_platform_to: Annotated[Optional[datetime], Field(description="Filter by date added to platform (inclusive end date, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
+        categories: Annotated[Optional[StrictStr], Field(description="Filter by multiple Filing Category IDs. Comma-separated (e.g., 1,3).")] = None,
+        category: Annotated[Optional[StrictInt], Field(description="Filter by a single Filing Category ID.")] = None,
         company: Annotated[Optional[StrictInt], Field(description="Filter by internal Company ID.")] = None,
         company_isin: Annotated[Optional[StrictStr], Field(description="Filter by Company ISIN. Case-insensitive.")] = None,
         countries: Annotated[Optional[StrictStr], Field(description="Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values (e.g., US,GB,DE).")] = None,
         extensions: Annotated[Optional[StrictStr], Field(description="Filter by file extension(s). Single (e.g., PDF) or comma-separated (e.g., PDF,XBRL). Case-insensitive.")] = None,
         file_size_max: Annotated[Optional[StrictInt], Field(description="Filter by maximum file size in bytes.")] = None,
         file_size_min: Annotated[Optional[StrictInt], Field(description="Filter by minimum file size in bytes.")] = None,
+        fiscal_period: Annotated[Optional[StrictStr], Field(description="Filter by fiscal period. Possible values: `FY` (Full Year), `Q1`, `Q2`, `Q3`, `Q4`, `H1` (First Half), `H2` (Second Half). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.")] = None,
+        fiscal_year: Annotated[Optional[StrictInt], Field(description="Filter by fiscal year (e.g., `2024`). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.")] = None,
         language: Annotated[Optional[StrictStr], Field(description="Filter by a single filing language ISO 639-1 code (e.g., en).")] = None,
         languages: Annotated[Optional[StrictStr], Field(description="Filter by filing language ISO 639-1 code(s). Comma-separated for multiple values (e.g., en,de).")] = None,
         lei: Annotated[Optional[StrictStr], Field(description="Filter by Company Legal Entity Identifier (LEI).")] = None,
@@ -388,6 +712,9 @@ class FilingsApi:
         ordering: Annotated[Optional[StrictStr], Field(description="Which field to use when ordering the results. Available fields: `id`, `release_datetime`, `added_to_platform`. Prefix with '-' for descending order (e.g., `-release_datetime`).")] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
+        period_ending_date: Annotated[Optional[StrictStr], Field(description="Filter by the exact period ending date (YYYY-MM-DD, e.g., `2024-12-31`). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.")] = None,
+        period_ending_date_from: Annotated[Optional[StrictStr], Field(description="Filter by period ending date — inclusive start (YYYY-MM-DD).")] = None,
+        period_ending_date_to: Annotated[Optional[StrictStr], Field(description="Filter by period ending date — inclusive end (YYYY-MM-DD).")] = None,
         release_datetime_from: Annotated[Optional[datetime], Field(description="Filter by release datetime (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         release_datetime_to: Annotated[Optional[datetime], Field(description="Filter by release datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         search: Annotated[Optional[StrictStr], Field(description="A search term.")] = None,
@@ -419,6 +746,10 @@ class FilingsApi:
         :type added_to_platform_from: datetime
         :param added_to_platform_to: Filter by date added to platform (inclusive end date, YYYY-MM-DDTHH:MM:SSZ format).
         :type added_to_platform_to: datetime
+        :param categories: Filter by multiple Filing Category IDs. Comma-separated (e.g., 1,3).
+        :type categories: str
+        :param category: Filter by a single Filing Category ID.
+        :type category: int
         :param company: Filter by internal Company ID.
         :type company: int
         :param company_isin: Filter by Company ISIN. Case-insensitive.
@@ -431,6 +762,10 @@ class FilingsApi:
         :type file_size_max: int
         :param file_size_min: Filter by minimum file size in bytes.
         :type file_size_min: int
+        :param fiscal_period: Filter by fiscal period. Possible values: `FY` (Full Year), `Q1`, `Q2`, `Q3`, `Q4`, `H1` (First Half), `H2` (Second Half). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.
+        :type fiscal_period: str
+        :param fiscal_year: Filter by fiscal year (e.g., `2024`). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.
+        :type fiscal_year: int
         :param language: Filter by a single filing language ISO 639-1 code (e.g., en).
         :type language: str
         :param languages: Filter by filing language ISO 639-1 code(s). Comma-separated for multiple values (e.g., en,de).
@@ -445,6 +780,12 @@ class FilingsApi:
         :type page: int
         :param page_size: Number of results to return per page.
         :type page_size: int
+        :param period_ending_date: Filter by the exact period ending date (YYYY-MM-DD, e.g., `2024-12-31`). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.
+        :type period_ending_date: str
+        :param period_ending_date_from: Filter by period ending date — inclusive start (YYYY-MM-DD).
+        :type period_ending_date_from: str
+        :param period_ending_date_to: Filter by period ending date — inclusive end (YYYY-MM-DD).
+        :type period_ending_date_to: str
         :param release_datetime_from: Filter by release datetime (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).
         :type release_datetime_from: datetime
         :param release_datetime_to: Filter by release datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).
@@ -490,12 +831,16 @@ class FilingsApi:
         _param = self._filings_list_serialize(
             added_to_platform_from=added_to_platform_from,
             added_to_platform_to=added_to_platform_to,
+            categories=categories,
+            category=category,
             company=company,
             company_isin=company_isin,
             countries=countries,
             extensions=extensions,
             file_size_max=file_size_max,
             file_size_min=file_size_min,
+            fiscal_period=fiscal_period,
+            fiscal_year=fiscal_year,
             language=language,
             languages=languages,
             lei=lei,
@@ -503,6 +848,9 @@ class FilingsApi:
             ordering=ordering,
             page=page,
             page_size=page_size,
+            period_ending_date=period_ending_date,
+            period_ending_date_from=period_ending_date_from,
+            period_ending_date_to=period_ending_date_to,
             release_datetime_from=release_datetime_from,
             release_datetime_to=release_datetime_to,
             search=search,
@@ -534,12 +882,16 @@ class FilingsApi:
         self,
         added_to_platform_from,
         added_to_platform_to,
+        categories,
+        category,
         company,
         company_isin,
         countries,
         extensions,
         file_size_max,
         file_size_min,
+        fiscal_period,
+        fiscal_year,
         language,
         languages,
         lei,
@@ -547,6 +899,9 @@ class FilingsApi:
         ordering,
         page,
         page_size,
+        period_ending_date,
+        period_ending_date_from,
+        period_ending_date_to,
         release_datetime_from,
         release_datetime_to,
         search,
@@ -605,6 +960,14 @@ class FilingsApi:
             else:
                 _query_params.append(('added_to_platform_to', added_to_platform_to))
             
+        if categories is not None:
+            
+            _query_params.append(('categories', categories))
+            
+        if category is not None:
+            
+            _query_params.append(('category', category))
+            
         if company is not None:
             
             _query_params.append(('company', company))
@@ -628,6 +991,14 @@ class FilingsApi:
         if file_size_min is not None:
             
             _query_params.append(('file_size_min', file_size_min))
+            
+        if fiscal_period is not None:
+            
+            _query_params.append(('fiscal_period', fiscal_period))
+            
+        if fiscal_year is not None:
+            
+            _query_params.append(('fiscal_year', fiscal_year))
             
         if language is not None:
             
@@ -656,6 +1027,18 @@ class FilingsApi:
         if page_size is not None:
             
             _query_params.append(('page_size', page_size))
+            
+        if period_ending_date is not None:
+            
+            _query_params.append(('period_ending_date', period_ending_date))
+            
+        if period_ending_date_from is not None:
+            
+            _query_params.append(('period_ending_date_from', period_ending_date_from))
+            
+        if period_ending_date_to is not None:
+            
+            _query_params.append(('period_ending_date_to', period_ending_date_to))
             
         if release_datetime_from is not None:
             if isinstance(release_datetime_from, datetime):

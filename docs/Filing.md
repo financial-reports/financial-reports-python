@@ -16,10 +16,17 @@ Name | Type | Description | Notes
 **dissemination_datetime** | **datetime** | Time the document was released to the public and sent to the authority | [optional] 
 **release_datetime** | **datetime** | Time the document was published on the authority page | [optional] 
 **source** | [**Source**](Source.md) |  | [readonly] 
-**document** | **str** |  | [readonly] 
+**document** | **str** | Direct URL to the raw filing package (e.g., ZIP/PDF) on S3. | [readonly] 
+**proxy_url** | **str** | Direct URL to the extracted, browser-renderable main document. | [readonly] 
+**viewer_url** | **str** | URL to view the filing in the interactive web platform. | [readonly] 
 **file_extension** | **str** | File extension (e.g., PDF, HTML). | [optional] 
 **file_size** | **int** | File size in bytes. Stores locally to avoid storage backend hits. | [optional] 
 **markdown_url** | **str** |  | [readonly] 
+**filing_type_confidence** | **float** | Confidence score (0.0–1.0) assigned by the automated classification system for the filing type. | [readonly] 
+**filing_type_reasoning** | **str** | Step-by-step rationale produced by the automated classification system for the assigned filing type. Indicative only — not manually reviewed. | [readonly] 
+**fiscal_year** | **int** | The accounting fiscal year this filing covers (e.g., 2024). Populated for annual, quarterly, interim reports and earnings releases. Null if not yet determined. | [readonly] 
+**fiscal_period** | [**FiscalPeriodEnum**](FiscalPeriodEnum.md) |  | [readonly] 
+**period_ending_date** | **date** | The exact date the reported financial period ends (e.g., 2024-12-31). Populated for annual, quarterly, interim reports and earnings releases. Null if not yet determined. | [readonly] 
 
 ## Example
 

@@ -3,7 +3,7 @@
 """
     FinancialReports API
 
-     Welcome to the FinancialReports API.  ### Access Levels This API is tiered based on data granularity.  | Level | Name | Description | | :--- | :--- | :--- | | **Level 1** | **Standard Access** | Access to raw PDF/XBRL metadata, company profiles, ISIC classifications, and reference data. | | **Level 2** | **Processed Filings** | Access to converted content (Markdown/JSON) and full-text search capabilities. | | **Level 3** | **Extracted Financials** | Access to specific extracted financial line items (Revenue, EBITDA, etc.) mapped to standard taxonomies. |  ### Authentication All API requests must be authenticated via the **X-API-Key** header. 
+     Welcome to the FinancialReports API.  ### Access Levels This API is tiered based on data granularity.  | Level | Name | Description | | :--- | :--- | :--- | | **Level 1** | **Standard Access** | Access to raw PDF/XBRL metadata, company profiles, ISIC classifications, reference data, and **point-in-time audit trails**. | | **Level 2** | **Processed Filings** | Access to converted content (Markdown/JSON) and full-text search capabilities. | | **Level 3** | **RAG / Agent** | Access to specific extracted financial line items (Revenue, EBITDA, etc.) mapped to standard taxonomies, and access to the conversational RAG agent. |  ### Rate Limiting To ensure stability, this API uses a dual-layer rate limit: 1.  **Burst Limit:** A short-term speed limit (e.g., 5 requests/second) to prevent system overload. 2.  **Quota Limit:** A monthly allowance of total requests based on your subscription plan.  Check the response headers `X-RateLimit-Burst-Limit` and `X-RateLimit-Monthly-Remaining` for your current status.  ### Authentication All API requests must be authenticated via the **X-API-Key** header. 
 
     The version of the OpenAPI document: 1.0.0
     Contact: api@financialreports.eu
@@ -19,15 +19,17 @@ import re  # noqa: F401
 import json
 
 from datetime import date, datetime
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing_extensions import Annotated
 from financial_reports_generated_client.models.company_minimal import CompanyMinimal
 from financial_reports_generated_client.models.filing_type import FilingType
+from financial_reports_generated_client.models.fiscal_period_enum import FiscalPeriodEnum
 from financial_reports_generated_client.models.language import Language
 from financial_reports_generated_client.models.source import Source
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class Filing(BaseModel):
     """
@@ -44,14 +46,22 @@ class Filing(BaseModel):
     dissemination_datetime: Optional[datetime] = Field(default=None, description="Time the document was released to the public and sent to the authority")
     release_datetime: Optional[datetime] = Field(default=None, description="Time the document was published on the authority page")
     source: Optional[Source]
-    document: Optional[StrictStr]
+    document: Optional[StrictStr] = Field(description="Direct URL to the raw filing package (e.g., ZIP/PDF) on S3.")
+    proxy_url: Optional[StrictStr] = Field(description="Direct URL to the extracted, browser-renderable main document.")
+    viewer_url: Optional[StrictStr] = Field(description="URL to view the filing in the interactive web platform.")
     file_extension: Optional[Annotated[str, Field(strict=True, max_length=10)]] = Field(default=None, description="File extension (e.g., PDF, HTML).")
     file_size: Optional[Annotated[int, Field(le=2147483647, strict=True, ge=0)]] = Field(default=None, description="File size in bytes. Stores locally to avoid storage backend hits.")
     markdown_url: Optional[StrictStr]
-    __properties: ClassVar[List[str]] = ["id", "company", "filing_type", "language", "filing_date", "title", "added_to_platform", "updated_date", "dissemination_datetime", "release_datetime", "source", "document", "file_extension", "file_size", "markdown_url"]
+    filing_type_confidence: Optional[Union[StrictFloat, StrictInt]] = Field(description="Confidence score (0.0–1.0) assigned by the automated classification system for the filing type.")
+    filing_type_reasoning: Optional[StrictStr] = Field(description="Step-by-step rationale produced by the automated classification system for the assigned filing type. Indicative only — not manually reviewed.")
+    fiscal_year: Optional[StrictInt] = Field(description="The accounting fiscal year this filing covers (e.g., 2024). Populated for annual, quarterly, interim reports and earnings releases. Null if not yet determined.")
+    fiscal_period: Optional[FiscalPeriodEnum]
+    period_ending_date: Optional[date] = Field(description="The exact date the reported financial period ends (e.g., 2024-12-31). Populated for annual, quarterly, interim reports and earnings releases. Null if not yet determined.")
+    __properties: ClassVar[List[str]] = ["id", "company", "filing_type", "language", "filing_date", "title", "added_to_platform", "updated_date", "dissemination_datetime", "release_datetime", "source", "document", "proxy_url", "viewer_url", "file_extension", "file_size", "markdown_url", "filing_type_confidence", "filing_type_reasoning", "fiscal_year", "fiscal_period", "period_ending_date"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -63,8 +73,7 @@ class Filing(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -89,6 +98,13 @@ class Filing(BaseModel):
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
             "id",
@@ -99,7 +115,14 @@ class Filing(BaseModel):
             "updated_date",
             "source",
             "document",
+            "proxy_url",
+            "viewer_url",
             "markdown_url",
+            "filing_type_confidence",
+            "filing_type_reasoning",
+            "fiscal_year",
+            "fiscal_period",
+            "period_ending_date",
         ])
 
         _dict = self.model_dump(
@@ -139,6 +162,16 @@ class Filing(BaseModel):
         if self.document is None and "document" in self.model_fields_set:
             _dict['document'] = None
 
+        # set to None if proxy_url (nullable) is None
+        # and model_fields_set contains the field
+        if self.proxy_url is None and "proxy_url" in self.model_fields_set:
+            _dict['proxy_url'] = None
+
+        # set to None if viewer_url (nullable) is None
+        # and model_fields_set contains the field
+        if self.viewer_url is None and "viewer_url" in self.model_fields_set:
+            _dict['viewer_url'] = None
+
         # set to None if file_extension (nullable) is None
         # and model_fields_set contains the field
         if self.file_extension is None and "file_extension" in self.model_fields_set:
@@ -153,6 +186,31 @@ class Filing(BaseModel):
         # and model_fields_set contains the field
         if self.markdown_url is None and "markdown_url" in self.model_fields_set:
             _dict['markdown_url'] = None
+
+        # set to None if filing_type_confidence (nullable) is None
+        # and model_fields_set contains the field
+        if self.filing_type_confidence is None and "filing_type_confidence" in self.model_fields_set:
+            _dict['filing_type_confidence'] = None
+
+        # set to None if filing_type_reasoning (nullable) is None
+        # and model_fields_set contains the field
+        if self.filing_type_reasoning is None and "filing_type_reasoning" in self.model_fields_set:
+            _dict['filing_type_reasoning'] = None
+
+        # set to None if fiscal_year (nullable) is None
+        # and model_fields_set contains the field
+        if self.fiscal_year is None and "fiscal_year" in self.model_fields_set:
+            _dict['fiscal_year'] = None
+
+        # set to None if fiscal_period (nullable) is None
+        # and model_fields_set contains the field
+        if self.fiscal_period is None and "fiscal_period" in self.model_fields_set:
+            _dict['fiscal_period'] = None
+
+        # set to None if period_ending_date (nullable) is None
+        # and model_fields_set contains the field
+        if self.period_ending_date is None and "period_ending_date" in self.model_fields_set:
+            _dict['period_ending_date'] = None
 
         return _dict
 
@@ -178,9 +236,16 @@ class Filing(BaseModel):
             "release_datetime": obj.get("release_datetime"),
             "source": Source.from_dict(obj["source"]) if obj.get("source") is not None else None,
             "document": obj.get("document"),
+            "proxy_url": obj.get("proxy_url"),
+            "viewer_url": obj.get("viewer_url"),
             "file_extension": obj.get("file_extension"),
             "file_size": obj.get("file_size"),
-            "markdown_url": obj.get("markdown_url")
+            "markdown_url": obj.get("markdown_url"),
+            "filing_type_confidence": obj.get("filing_type_confidence"),
+            "filing_type_reasoning": obj.get("filing_type_reasoning"),
+            "fiscal_year": obj.get("fiscal_year"),
+            "fiscal_period": obj.get("fiscal_period"),
+            "period_ending_date": obj.get("period_ending_date")
         })
         return _obj
 
