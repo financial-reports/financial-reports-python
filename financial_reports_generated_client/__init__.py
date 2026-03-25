@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "1.4.4"
+__version__ = "1.4.5"
 
 # Define package exports
 __all__ = [
@@ -31,6 +31,7 @@ __all__ = [
     "WatchlistApi",
     "WebhooksManagementApi",
     "ChatApi",
+    "McpApi",
     "ApiResponse",
     "ApiClient",
     "Configuration",
@@ -112,6 +113,7 @@ from financial_reports_generated_client.api.sources_api import SourcesApi as Sou
 from financial_reports_generated_client.api.watchlist_api import WatchlistApi as WatchlistApi
 from financial_reports_generated_client.api.webhooks_management_api import WebhooksManagementApi as WebhooksManagementApi
 from financial_reports_generated_client.api.chat_api import ChatApi as ChatApi
+from financial_reports_generated_client.api.mcp_api import McpApi as McpApi
 
 # import ApiClient
 from financial_reports_generated_client.api_response import ApiResponse as ApiResponse
