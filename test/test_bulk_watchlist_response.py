@@ -15,53 +15,44 @@
 
 import unittest
 
-from financial_reports_generated_client.api.watchlist_api import WatchlistApi
+from financial_reports_generated_client.models.bulk_watchlist_response import BulkWatchlistResponse
 
+class TestBulkWatchlistResponse(unittest.TestCase):
+    """BulkWatchlistResponse unit test stubs"""
 
-class TestWatchlistApi(unittest.IsolatedAsyncioTestCase):
-    """WatchlistApi unit test stubs"""
-
-    async def asyncSetUp(self) -> None:
-        self.api = WatchlistApi()
-
-    async def asyncTearDown(self) -> None:
-        await self.api.api_client.close()
-
-    async def test_watchlist_companies_bulk_add_create(self) -> None:
-        """Test case for watchlist_companies_bulk_add_create
-
-        Bulk Add Companies to Watchlist
-        """
+    def setUp(self):
         pass
 
-    async def test_watchlist_companies_bulk_remove_create(self) -> None:
-        """Test case for watchlist_companies_bulk_remove_create
-
-        Bulk Remove Companies from Watchlist
-        """
+    def tearDown(self):
         pass
 
-    async def test_watchlist_companies_create(self) -> None:
-        """Test case for watchlist_companies_create
-
-        Add Company to Watchlist
+    def make_instance(self, include_optional) -> BulkWatchlistResponse:
+        """Test BulkWatchlistResponse
+            include_optional is a boolean, when False only required
+            params are included, when True both required and
+            optional params are included """
+        # uncomment below to create an instance of `BulkWatchlistResponse`
         """
-        pass
-
-    async def test_watchlist_companies_destroy(self) -> None:
-        """Test case for watchlist_companies_destroy
-
-        Remove Company from Watchlist
+        model = BulkWatchlistResponse()
+        if include_optional:
+            return BulkWatchlistResponse(
+                status = '',
+                message = '',
+                company_ids = [
+                    56
+                    ]
+            )
+        else:
+            return BulkWatchlistResponse(
+                status = '',
+                message = '',
+        )
         """
-        pass
 
-    async def test_watchlist_retrieve(self) -> None:
-        """Test case for watchlist_retrieve
-
-        Get User's Watchlist
-        """
-        pass
-
+    def testBulkWatchlistResponse(self):
+        """Test BulkWatchlistResponse"""
+        # inst_req_only = self.make_instance(include_optional=False)
+        # inst_req_and_optional = self.make_instance(include_optional=True)
 
 if __name__ == '__main__':
     unittest.main()

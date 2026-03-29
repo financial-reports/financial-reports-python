@@ -18,28 +18,19 @@ import pprint
 import re  # noqa: F401
 import json
 
-from datetime import datetime
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
-from uuid import UUID
-from financial_reports_generated_client.models.status_enum import StatusEnum
+from pydantic import BaseModel, ConfigDict, Field, StrictInt
+from typing import Any, ClassVar, Dict, List
+from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
 
-class WebhookDelivery(BaseModel):
+class BulkWatchlist(BaseModel):
     """
-    WebhookDelivery
+    BulkWatchlist
     """ # noqa: E501
-    uuid: UUID
-    webhook_id: StrictInt
-    event_type: StrictStr
-    filing_id: Optional[StrictInt] = Field(description="ID of the filing reference to reconstruct payload")
-    status: StatusEnum
-    response_status_code: Optional[StrictInt]
-    duration_ms: Optional[StrictInt]
-    created_at: datetime
-    __properties: ClassVar[List[str]] = ["uuid", "webhook_id", "event_type", "filing_id", "status", "response_status_code", "duration_ms", "created_at"]
+    company_ids: Annotated[List[StrictInt], Field(min_length=1, max_length=100)] = Field(description="A list of company IDs (1–100) to add or remove from the watchlist.")
+    __properties: ClassVar[List[str]] = ["company_ids"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -59,7 +50,7 @@ class WebhookDelivery(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of WebhookDelivery from a JSON string"""
+        """Create an instance of BulkWatchlist from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -71,24 +62,8 @@ class WebhookDelivery(BaseModel):
         * `None` is only added to the output dict for nullable fields that
           were set at model initialization. Other fields with value `None`
           are ignored.
-        * OpenAPI `readOnly` fields are excluded.
-        * OpenAPI `readOnly` fields are excluded.
-        * OpenAPI `readOnly` fields are excluded.
-        * OpenAPI `readOnly` fields are excluded.
-        * OpenAPI `readOnly` fields are excluded.
-        * OpenAPI `readOnly` fields are excluded.
-        * OpenAPI `readOnly` fields are excluded.
-        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
-            "uuid",
-            "webhook_id",
-            "event_type",
-            "filing_id",
-            "status",
-            "response_status_code",
-            "duration_ms",
-            "created_at",
         ])
 
         _dict = self.model_dump(
@@ -96,26 +71,11 @@ class WebhookDelivery(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if filing_id (nullable) is None
-        # and model_fields_set contains the field
-        if self.filing_id is None and "filing_id" in self.model_fields_set:
-            _dict['filing_id'] = None
-
-        # set to None if response_status_code (nullable) is None
-        # and model_fields_set contains the field
-        if self.response_status_code is None and "response_status_code" in self.model_fields_set:
-            _dict['response_status_code'] = None
-
-        # set to None if duration_ms (nullable) is None
-        # and model_fields_set contains the field
-        if self.duration_ms is None and "duration_ms" in self.model_fields_set:
-            _dict['duration_ms'] = None
-
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of WebhookDelivery from a dict"""
+        """Create an instance of BulkWatchlist from a dict"""
         if obj is None:
             return None
 
@@ -123,14 +83,7 @@ class WebhookDelivery(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "uuid": obj.get("uuid"),
-            "webhook_id": obj.get("webhook_id"),
-            "event_type": obj.get("event_type"),
-            "filing_id": obj.get("filing_id"),
-            "status": obj.get("status"),
-            "response_status_code": obj.get("response_status_code"),
-            "duration_ms": obj.get("duration_ms"),
-            "created_at": obj.get("created_at")
+            "company_ids": obj.get("company_ids")
         })
         return _obj
 

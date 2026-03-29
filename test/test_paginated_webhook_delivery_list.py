@@ -44,14 +44,11 @@ class TestPaginatedWebhookDeliveryList(unittest.TestCase):
                         uuid = '', 
                         webhook_id = 56, 
                         event_type = '', 
+                        filing_id = 56, 
                         status = null, 
                         response_status_code = 56, 
                         duration_ms = 56, 
-                        created_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
-                        request_headers = null, 
-                        request_payload = null, 
-                        response_body = '', 
-                        response_headers = null, )
+                        created_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), )
                     ]
             )
         else:
@@ -62,14 +59,11 @@ class TestPaginatedWebhookDeliveryList(unittest.TestCase):
                         uuid = '', 
                         webhook_id = 56, 
                         event_type = '', 
+                        filing_id = 56, 
                         status = null, 
                         response_status_code = 56, 
                         duration_ms = 56, 
-                        created_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
-                        request_headers = null, 
-                        request_payload = null, 
-                        response_body = '', 
-                        response_headers = null, )
+                        created_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), )
                     ],
         )
         """

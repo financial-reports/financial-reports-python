@@ -1,6 +1,5 @@
 # PatchedWebhook
 
-Serializer for the Webhook model. Handles create, retrieve, update, and list operations. Note: The 'secret_key' is intentionally excluded from this serializer for security.
 
 ## Properties
 

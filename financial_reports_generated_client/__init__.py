@@ -15,10 +15,11 @@
 """  # noqa: E501
 
 
-__version__ = "1.4.6"
+__version__ = "1.4.7"
 
 # Define package exports
 __all__ = [
+    "ChatAgentApi",
     "CompaniesApi",
     "CountriesApi",
     "FilingCategoriesApi",
@@ -30,8 +31,6 @@ __all__ = [
     "SourcesApi",
     "WatchlistApi",
     "WebhooksManagementApi",
-    "ChatApi",
-    "McpApi",
     "ApiResponse",
     "ApiClient",
     "Configuration",
@@ -41,6 +40,8 @@ __all__ = [
     "ApiKeyError",
     "ApiAttributeError",
     "ApiException",
+    "BulkWatchlist",
+    "BulkWatchlistResponse",
     "ChatInteractionRequest",
     "ChatMessageItem",
     "ChatMessageList",
@@ -96,11 +97,13 @@ __all__ = [
     "Webhook",
     "WebhookCompanyPayload",
     "WebhookDelivery",
+    "WebhookDeliveryDetail",
     "WebhookFilingPayload",
     "WebhookSecret",
 ]
 
 # import apis into sdk package
+from financial_reports_generated_client.api.chat_agent_api import ChatAgentApi as ChatAgentApi
 from financial_reports_generated_client.api.companies_api import CompaniesApi as CompaniesApi
 from financial_reports_generated_client.api.countries_api import CountriesApi as CountriesApi
 from financial_reports_generated_client.api.filing_categories_api import FilingCategoriesApi as FilingCategoriesApi
@@ -112,8 +115,6 @@ from financial_reports_generated_client.api.languages_api import LanguagesApi as
 from financial_reports_generated_client.api.sources_api import SourcesApi as SourcesApi
 from financial_reports_generated_client.api.watchlist_api import WatchlistApi as WatchlistApi
 from financial_reports_generated_client.api.webhooks_management_api import WebhooksManagementApi as WebhooksManagementApi
-from financial_reports_generated_client.api.chat_api import ChatApi as ChatApi
-from financial_reports_generated_client.api.mcp_api import McpApi as McpApi
 
 # import ApiClient
 from financial_reports_generated_client.api_response import ApiResponse as ApiResponse
@@ -127,6 +128,8 @@ from financial_reports_generated_client.exceptions import ApiAttributeError as A
 from financial_reports_generated_client.exceptions import ApiException as ApiException
 
 # import models into sdk package
+from financial_reports_generated_client.models.bulk_watchlist import BulkWatchlist as BulkWatchlist
+from financial_reports_generated_client.models.bulk_watchlist_response import BulkWatchlistResponse as BulkWatchlistResponse
 from financial_reports_generated_client.models.chat_interaction_request import ChatInteractionRequest as ChatInteractionRequest
 from financial_reports_generated_client.models.chat_message_item import ChatMessageItem as ChatMessageItem
 from financial_reports_generated_client.models.chat_message_list import ChatMessageList as ChatMessageList
@@ -182,6 +185,7 @@ from financial_reports_generated_client.models.watchlist_response import Watchli
 from financial_reports_generated_client.models.webhook import Webhook as Webhook
 from financial_reports_generated_client.models.webhook_company_payload import WebhookCompanyPayload as WebhookCompanyPayload
 from financial_reports_generated_client.models.webhook_delivery import WebhookDelivery as WebhookDelivery
+from financial_reports_generated_client.models.webhook_delivery_detail import WebhookDeliveryDetail as WebhookDeliveryDetail
 from financial_reports_generated_client.models.webhook_filing_payload import WebhookFilingPayload as WebhookFilingPayload
 from financial_reports_generated_client.models.webhook_secret import WebhookSecret as WebhookSecret
 

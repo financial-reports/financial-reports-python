@@ -34,10 +34,24 @@ class TestWebhooksManagementApi(unittest.IsolatedAsyncioTestCase):
         """
         pass
 
+    async def test_webhooks_deliveries_replay_create(self) -> None:
+        """Test case for webhooks_deliveries_replay_create
+
+        Replay Delivery
+        """
+        pass
+
     async def test_webhooks_deliveries_retrieve(self) -> None:
         """Test case for webhooks_deliveries_retrieve
 
         List Delivery Logs
+        """
+        pass
+
+    async def test_webhooks_delivery_detail_retrieve(self) -> None:
+        """Test case for webhooks_delivery_detail_retrieve
+
+        Retrieve Delivery Detail
         """
         pass
 

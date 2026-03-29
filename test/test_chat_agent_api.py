@@ -15,50 +15,43 @@
 
 import unittest
 
-from financial_reports_generated_client.api.watchlist_api import WatchlistApi
+from financial_reports_generated_client.api.chat_agent_api import ChatAgentApi
 
 
-class TestWatchlistApi(unittest.IsolatedAsyncioTestCase):
-    """WatchlistApi unit test stubs"""
+class TestChatAgentApi(unittest.IsolatedAsyncioTestCase):
+    """ChatAgentApi unit test stubs"""
 
     async def asyncSetUp(self) -> None:
-        self.api = WatchlistApi()
+        self.api = ChatAgentApi()
 
     async def asyncTearDown(self) -> None:
         await self.api.api_client.close()
 
-    async def test_watchlist_companies_bulk_add_create(self) -> None:
-        """Test case for watchlist_companies_bulk_add_create
+    async def test_chat_sessions_destroy(self) -> None:
+        """Test case for chat_sessions_destroy
 
-        Bulk Add Companies to Watchlist
+        Delete Chat Session
         """
         pass
 
-    async def test_watchlist_companies_bulk_remove_create(self) -> None:
-        """Test case for watchlist_companies_bulk_remove_create
+    async def test_chat_sessions_messages_retrieve(self) -> None:
+        """Test case for chat_sessions_messages_retrieve
 
-        Bulk Remove Companies from Watchlist
+        Retrieve Chat History
         """
         pass
 
-    async def test_watchlist_companies_create(self) -> None:
-        """Test case for watchlist_companies_create
+    async def test_chat_sessions_partial_update(self) -> None:
+        """Test case for chat_sessions_partial_update
 
-        Add Company to Watchlist
+        Update Chat Session
         """
         pass
 
-    async def test_watchlist_companies_destroy(self) -> None:
-        """Test case for watchlist_companies_destroy
+    async def test_chat_stream_create(self) -> None:
+        """Test case for chat_stream_create
 
-        Remove Company from Watchlist
-        """
-        pass
-
-    async def test_watchlist_retrieve(self) -> None:
-        """Test case for watchlist_retrieve
-
-        Get User's Watchlist
+        Stream Financial Assistant Agent
         """
         pass
 

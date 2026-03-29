@@ -1,6 +1,7 @@
 # flake8: noqa
 
 # import apis into api package
+from financial_reports_generated_client.api.chat_agent_api import ChatAgentApi
 from financial_reports_generated_client.api.companies_api import CompaniesApi
 from financial_reports_generated_client.api.countries_api import CountriesApi
 from financial_reports_generated_client.api.filing_categories_api import FilingCategoriesApi
@@ -12,6 +13,4 @@ from financial_reports_generated_client.api.languages_api import LanguagesApi
 from financial_reports_generated_client.api.sources_api import SourcesApi
 from financial_reports_generated_client.api.watchlist_api import WatchlistApi
 from financial_reports_generated_client.api.webhooks_management_api import WebhooksManagementApi
-from financial_reports_generated_client.api.chat_api import ChatApi
-from financial_reports_generated_client.api.mcp_api import McpApi
 

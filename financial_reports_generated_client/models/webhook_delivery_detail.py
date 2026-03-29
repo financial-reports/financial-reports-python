@@ -27,9 +27,9 @@ from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
 
-class WebhookDelivery(BaseModel):
+class WebhookDeliveryDetail(BaseModel):
     """
-    WebhookDelivery
+    WebhookDeliveryDetail
     """ # noqa: E501
     uuid: UUID
     webhook_id: StrictInt
@@ -38,8 +38,11 @@ class WebhookDelivery(BaseModel):
     status: StatusEnum
     response_status_code: Optional[StrictInt]
     duration_ms: Optional[StrictInt]
+    response_body: Optional[StrictStr]
     created_at: datetime
-    __properties: ClassVar[List[str]] = ["uuid", "webhook_id", "event_type", "filing_id", "status", "response_status_code", "duration_ms", "created_at"]
+    request_headers: Dict[str, Any] = Field(description="Reconstructed request headers that were sent with this delivery.")
+    request_payload: Dict[str, Any] = Field(description="Reconstructed request payload. Built dynamically from the referenced filing.")
+    __properties: ClassVar[List[str]] = ["uuid", "webhook_id", "event_type", "filing_id", "status", "response_status_code", "duration_ms", "response_body", "created_at", "request_headers", "request_payload"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -59,7 +62,7 @@ class WebhookDelivery(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of WebhookDelivery from a JSON string"""
+        """Create an instance of WebhookDeliveryDetail from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -79,6 +82,9 @@ class WebhookDelivery(BaseModel):
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
             "uuid",
@@ -88,7 +94,10 @@ class WebhookDelivery(BaseModel):
             "status",
             "response_status_code",
             "duration_ms",
+            "response_body",
             "created_at",
+            "request_headers",
+            "request_payload",
         ])
 
         _dict = self.model_dump(
@@ -111,11 +120,16 @@ class WebhookDelivery(BaseModel):
         if self.duration_ms is None and "duration_ms" in self.model_fields_set:
             _dict['duration_ms'] = None
 
+        # set to None if response_body (nullable) is None
+        # and model_fields_set contains the field
+        if self.response_body is None and "response_body" in self.model_fields_set:
+            _dict['response_body'] = None
+
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of WebhookDelivery from a dict"""
+        """Create an instance of WebhookDeliveryDetail from a dict"""
         if obj is None:
             return None
 
@@ -130,7 +144,10 @@ class WebhookDelivery(BaseModel):
             "status": obj.get("status"),
             "response_status_code": obj.get("response_status_code"),
             "duration_ms": obj.get("duration_ms"),
-            "created_at": obj.get("created_at")
+            "response_body": obj.get("response_body"),
+            "created_at": obj.get("created_at"),
+            "request_headers": obj.get("request_headers"),
+            "request_payload": obj.get("request_payload")
         })
         return _obj
 

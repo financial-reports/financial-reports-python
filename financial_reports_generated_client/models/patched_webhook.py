@@ -28,7 +28,7 @@ from pydantic_core import to_jsonable_python
 
 class PatchedWebhook(BaseModel):
     """
-    Serializer for the Webhook model. Handles create, retrieve, update, and list operations. Note: The 'secret_key' is intentionally excluded from this serializer for security.
+    PatchedWebhook
     """ # noqa: E501
     id: Optional[StrictInt] = Field(default=None, description="The unique identifier for the webhook.")
     url: Optional[Annotated[str, Field(strict=True, max_length=500)]] = Field(default=None, description="The endpoint URL (HTTPS required) to which the webhook payloads will be sent.")

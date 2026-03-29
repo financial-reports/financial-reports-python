@@ -15,10 +15,10 @@
 
 import unittest
 
-from financial_reports_generated_client.models.webhook_delivery import WebhookDelivery
+from financial_reports_generated_client.models.webhook_delivery_detail import WebhookDeliveryDetail
 
-class TestWebhookDelivery(unittest.TestCase):
-    """WebhookDelivery unit test stubs"""
+class TestWebhookDeliveryDetail(unittest.TestCase):
+    """WebhookDeliveryDetail unit test stubs"""
 
     def setUp(self):
         pass
@@ -26,16 +26,16 @@ class TestWebhookDelivery(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> WebhookDelivery:
-        """Test WebhookDelivery
+    def make_instance(self, include_optional) -> WebhookDeliveryDetail:
+        """Test WebhookDeliveryDetail
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `WebhookDelivery`
+        # uncomment below to create an instance of `WebhookDeliveryDetail`
         """
-        model = WebhookDelivery()
+        model = WebhookDeliveryDetail()
         if include_optional:
-            return WebhookDelivery(
+            return WebhookDeliveryDetail(
                 uuid = '',
                 webhook_id = 56,
                 event_type = '',
@@ -43,10 +43,17 @@ class TestWebhookDelivery(unittest.TestCase):
                 status = 'pending',
                 response_status_code = 56,
                 duration_ms = 56,
-                created_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f')
+                response_body = '',
+                created_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
+                request_headers = {
+                    'key' : null
+                    },
+                request_payload = {
+                    'key' : null
+                    }
             )
         else:
-            return WebhookDelivery(
+            return WebhookDeliveryDetail(
                 uuid = '',
                 webhook_id = 56,
                 event_type = '',
@@ -54,12 +61,19 @@ class TestWebhookDelivery(unittest.TestCase):
                 status = 'pending',
                 response_status_code = 56,
                 duration_ms = 56,
+                response_body = '',
                 created_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
+                request_headers = {
+                    'key' : null
+                    },
+                request_payload = {
+                    'key' : null
+                    },
         )
         """
 
-    def testWebhookDelivery(self):
-        """Test WebhookDelivery"""
+    def testWebhookDeliveryDetail(self):
+        """Test WebhookDeliveryDetail"""
         # inst_req_only = self.make_instance(include_optional=False)
         # inst_req_and_optional = self.make_instance(include_optional=True)
 

@@ -26,7 +26,7 @@ from pydantic_core import to_jsonable_python
 
 class WebhookSecret(BaseModel):
     """
-    Serializer used solely for returning the secret key upon creation or regeneration.
+    WebhookSecret
     """ # noqa: E501
     secret_key: StrictStr = Field(description="The unique secret key for the webhook. This is shown only once.")
     __properties: ClassVar[List[str]] = ["secret_key"]

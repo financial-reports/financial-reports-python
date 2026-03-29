@@ -14,6 +14,8 @@
 """  # noqa: E501
 
 # import models into model package
+from financial_reports_generated_client.models.bulk_watchlist import BulkWatchlist
+from financial_reports_generated_client.models.bulk_watchlist_response import BulkWatchlistResponse
 from financial_reports_generated_client.models.chat_interaction_request import ChatInteractionRequest
 from financial_reports_generated_client.models.chat_message_item import ChatMessageItem
 from financial_reports_generated_client.models.chat_message_list import ChatMessageList
@@ -69,6 +71,7 @@ from financial_reports_generated_client.models.watchlist_response import Watchli
 from financial_reports_generated_client.models.webhook import Webhook
 from financial_reports_generated_client.models.webhook_company_payload import WebhookCompanyPayload
 from financial_reports_generated_client.models.webhook_delivery import WebhookDelivery
+from financial_reports_generated_client.models.webhook_delivery_detail import WebhookDeliveryDetail
 from financial_reports_generated_client.models.webhook_filing_payload import WebhookFilingPayload
 from financial_reports_generated_client.models.webhook_secret import WebhookSecret
 

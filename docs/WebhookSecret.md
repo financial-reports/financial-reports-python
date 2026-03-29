@@ -1,6 +1,5 @@
 # WebhookSecret
 
-Serializer used solely for returning the secret key upon creation or regeneration.
 
 ## Properties
 
