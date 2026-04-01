@@ -47,7 +47,15 @@ class TestISIN(unittest.TestCase):
                         ], 
                     lei = '', 
                     sub_industry_code = '', 
-                    country_code = '', )
+                    country_code = '', ),
+                figi = '',
+                composite_figi = '',
+                share_class_figi = '',
+                security_type = '',
+                security_type2 = '',
+                market_sector = '',
+                exch_code = '',
+                figi_last_updated = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f')
             )
         else:
             return ISIN(
@@ -63,6 +71,14 @@ class TestISIN(unittest.TestCase):
                     lei = '', 
                     sub_industry_code = '', 
                     country_code = '', ),
+                figi = '',
+                composite_figi = '',
+                share_class_figi = '',
+                security_type = '',
+                security_type2 = '',
+                market_sector = '',
+                exch_code = '',
+                figi_last_updated = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
         )
         """
 

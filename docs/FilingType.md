@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **code** | **str** | Unique code identifying the filing type. | [readonly] 
 **name** | **str** | Human-readable name of the filing type. | [readonly] 
 **description** | **str** | Detailed description of the filing type. | [readonly] 
-**category** | [**FilingCategory**](FilingCategory.md) |  | [readonly] 
+**category** | [**FilingCategory**](FilingCategory.md) | The broad functional category (Disclosure Type) this report belongs to. | [readonly] 
 
 ## Example
 

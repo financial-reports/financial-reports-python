@@ -18,8 +18,9 @@ import pprint
 import re  # noqa: F401
 import json
 
+from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
-from typing import Any, ClassVar, Dict, List
+from typing import Any, ClassVar, Dict, List, Optional
 from financial_reports_generated_client.models.company_minimal import CompanyMinimal
 from typing import Optional, Set
 from typing_extensions import Self
@@ -32,7 +33,15 @@ class ISIN(BaseModel):
     code: StrictStr = Field(description="The 12-character International Securities Identification Number.")
     is_primary: StrictBool = Field(description="Indicates if this is the primary ISIN for the company on this platform.")
     company: CompanyMinimal = Field(description="The company associated with this ISIN.")
-    __properties: ClassVar[List[str]] = ["code", "is_primary", "company"]
+    figi: StrictStr = Field(description="The 12-character Financial Instrument Global Identifier (FIGI) for this specific listing.")
+    composite_figi: StrictStr = Field(description="The composite FIGI representing the instrument across all exchanges in a given country.")
+    share_class_figi: StrictStr = Field(description="The share class FIGI representing the instrument globally, regardless of exchange.")
+    security_type: StrictStr = Field(description="Primary security type classification (e.g., Common Stock, ETP, REIT).")
+    security_type2: StrictStr = Field(description="Secondary security type classification providing additional granularity.")
+    market_sector: StrictStr = Field(description="Market sector classification from OpenFIGI (e.g., Equity, Govt, Corp).")
+    exch_code: StrictStr = Field(description="Exchange code where this security is listed (e.g., GY, US, LN).")
+    figi_last_updated: Optional[datetime] = Field(description="Timestamp of the last successful FIGI data enrichment for this ISIN.")
+    __properties: ClassVar[List[str]] = ["code", "is_primary", "company", "figi", "composite_figi", "share_class_figi", "security_type", "security_type2", "market_sector", "exch_code", "figi_last_updated"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -67,11 +76,27 @@ class ISIN(BaseModel):
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
             "code",
             "is_primary",
             "company",
+            "figi",
+            "composite_figi",
+            "share_class_figi",
+            "security_type",
+            "security_type2",
+            "market_sector",
+            "exch_code",
+            "figi_last_updated",
         ])
 
         _dict = self.model_dump(
@@ -82,6 +107,11 @@ class ISIN(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of company
         if self.company:
             _dict['company'] = self.company.to_dict()
+        # set to None if figi_last_updated (nullable) is None
+        # and model_fields_set contains the field
+        if self.figi_last_updated is None and "figi_last_updated" in self.model_fields_set:
+            _dict['figi_last_updated'] = None
+
         return _dict
 
     @classmethod
@@ -96,7 +126,15 @@ class ISIN(BaseModel):
         _obj = cls.model_validate({
             "code": obj.get("code"),
             "is_primary": obj.get("is_primary"),
-            "company": CompanyMinimal.from_dict(obj["company"]) if obj.get("company") is not None else None
+            "company": CompanyMinimal.from_dict(obj["company"]) if obj.get("company") is not None else None,
+            "figi": obj.get("figi"),
+            "composite_figi": obj.get("composite_figi"),
+            "share_class_figi": obj.get("share_class_figi"),
+            "security_type": obj.get("security_type"),
+            "security_type2": obj.get("security_type2"),
+            "market_sector": obj.get("market_sector"),
+            "exch_code": obj.get("exch_code"),
+            "figi_last_updated": obj.get("figi_last_updated")
         })
         return _obj
 

@@ -49,10 +49,10 @@ class Company(BaseModel):
     address: StrictStr = Field(description="The company's primary street address.")
     city: StrictStr = Field(description="The city where the company's headquarters is located.")
     zip_code: StrictStr = Field(description="The postal or ZIP code for the company's address.")
-    sector: Optional[ISICSection]
-    industry_group: Optional[ISICDivision]
-    industry: Optional[ISICGroup]
-    sub_industry: Optional[ISICClass]
+    sector: Optional[ISICSection] = Field(description="Company's ISIC Section classification.")
+    industry_group: Optional[ISICDivision] = Field(description="Company's ISIC Division classification.")
+    industry: Optional[ISICGroup] = Field(description="Company's ISIC Group classification.")
+    sub_industry: Optional[ISICClass] = Field(description="Company's ISIC Class classification.")
     ir_link: Optional[StrictStr] = Field(description="Link to the company's Investor Relations page.")
     homepage_link: Optional[StrictStr] = Field(description="Link to the company's main homepage.")
     logo: Optional[StrictStr] = Field(description="URL of the company's logo file.")
@@ -81,8 +81,8 @@ class Company(BaseModel):
     listed_stock_exchange: List[ListedStockExchange] = Field(description="A list of stock exchanges where the company is listed.")
     stock_index: List[StockIndex] = Field(description="A list of stock indices the company is a component of.")
     legal_status: StrictStr = Field(description="The operational and legal registration status sourced from GLEIF (e.g., ACTIVE, INACTIVE).")
-    legal_form: Optional[EntityLegalForm]
-    jurisdiction: Optional[Jurisdiction]
+    legal_form: Optional[EntityLegalForm] = Field(description="The ISO 20275 Entity Legal Form sourced from GLEIF.")
+    jurisdiction: Optional[Jurisdiction] = Field(description="The legal jurisdiction of incorporation sourced from GLEIF.")
     legal_address: StrictStr = Field(description="The official registered legal address of the company sourced from GLEIF.")
     legal_city: StrictStr = Field(description="The city of the registered legal address sourced from GLEIF.")
     legal_zip_code: StrictStr = Field(description="The postal code of the registered legal address sourced from GLEIF.")

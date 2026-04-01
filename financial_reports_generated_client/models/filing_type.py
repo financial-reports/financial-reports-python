@@ -33,7 +33,7 @@ class FilingType(BaseModel):
     code: StrictStr = Field(description="Unique code identifying the filing type.")
     name: StrictStr = Field(description="Human-readable name of the filing type.")
     description: StrictStr = Field(description="Detailed description of the filing type.")
-    category: Optional[FilingCategory]
+    category: Optional[FilingCategory] = Field(description="The broad functional category (Disclosure Type) this report belongs to.")
     __properties: ClassVar[List[str]] = ["id", "code", "name", "description", "category"]
 
     model_config = ConfigDict(
