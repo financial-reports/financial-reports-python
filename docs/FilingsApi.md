@@ -94,7 +94,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **filings_list**
-> PaginatedFilingSummaryList filings_list(added_to_platform_from=added_to_platform_from, added_to_platform_to=added_to_platform_to, categories=categories, category=category, company=company, company_isin=company_isin, countries=countries, extensions=extensions, file_size_max=file_size_max, file_size_min=file_size_min, fiscal_period=fiscal_period, fiscal_year=fiscal_year, language=language, languages=languages, lei=lei, on_watchlist=on_watchlist, ordering=ordering, page=page, page_size=page_size, period_ending_date=period_ending_date, period_ending_date_from=period_ending_date_from, period_ending_date_to=period_ending_date_to, release_datetime_from=release_datetime_from, release_datetime_to=release_datetime_to, search=search, source=source, sources=sources, type=type, types=types, updated_date_from=updated_date_from, updated_date_to=updated_date_to, view=view)
+> PaginatedFilingSummaryList filings_list(added_to_platform_from=added_to_platform_from, added_to_platform_to=added_to_platform_to, categories=categories, category=category, company=company, company_isin=company_isin, countries=countries, extensions=extensions, file_size_max=file_size_max, file_size_min=file_size_min, fiscal_period=fiscal_period, fiscal_year=fiscal_year, language=language, languages=languages, lei=lei, on_watchlist=on_watchlist, ordering=ordering, page=page, page_size=page_size, period_ending_date=period_ending_date, period_ending_date_from=period_ending_date_from, period_ending_date_to=period_ending_date_to, release_datetime_from=release_datetime_from, release_datetime_to=release_datetime_to, source=source, sources=sources, type=type, types=types, updated_date_from=updated_date_from, updated_date_to=updated_date_to, view=view)
 
 List Filings
 
@@ -158,7 +158,6 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
     period_ending_date_to = 'period_ending_date_to_example' # str | Filter by period ending date — inclusive end (YYYY-MM-DD). (optional)
     release_datetime_from = '2013-10-20T19:20:30+01:00' # datetime | Filter by release datetime (inclusive start, YYYY-MM-DDTHH:MM:SSZ format). (optional)
     release_datetime_to = '2013-10-20T19:20:30+01:00' # datetime | Filter by release datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format). (optional)
-    search = 'search_example' # str | A search term. (optional)
     source = 3.4 # float | Filter by a single data source ID. (optional)
     sources = 'sources_example' # str | Filter by data source ID(s). Comma-separated for multiple values (e.g., 38,40,51). (optional)
     type = 'type_example' # str | Filter by Filing Type code (e.g., 10-K). (optional)
@@ -169,7 +168,7 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
 
     try:
         # List Filings
-        api_response = await api_instance.filings_list(added_to_platform_from=added_to_platform_from, added_to_platform_to=added_to_platform_to, categories=categories, category=category, company=company, company_isin=company_isin, countries=countries, extensions=extensions, file_size_max=file_size_max, file_size_min=file_size_min, fiscal_period=fiscal_period, fiscal_year=fiscal_year, language=language, languages=languages, lei=lei, on_watchlist=on_watchlist, ordering=ordering, page=page, page_size=page_size, period_ending_date=period_ending_date, period_ending_date_from=period_ending_date_from, period_ending_date_to=period_ending_date_to, release_datetime_from=release_datetime_from, release_datetime_to=release_datetime_to, search=search, source=source, sources=sources, type=type, types=types, updated_date_from=updated_date_from, updated_date_to=updated_date_to, view=view)
+        api_response = await api_instance.filings_list(added_to_platform_from=added_to_platform_from, added_to_platform_to=added_to_platform_to, categories=categories, category=category, company=company, company_isin=company_isin, countries=countries, extensions=extensions, file_size_max=file_size_max, file_size_min=file_size_min, fiscal_period=fiscal_period, fiscal_year=fiscal_year, language=language, languages=languages, lei=lei, on_watchlist=on_watchlist, ordering=ordering, page=page, page_size=page_size, period_ending_date=period_ending_date, period_ending_date_from=period_ending_date_from, period_ending_date_to=period_ending_date_to, release_datetime_from=release_datetime_from, release_datetime_to=release_datetime_to, source=source, sources=sources, type=type, types=types, updated_date_from=updated_date_from, updated_date_to=updated_date_to, view=view)
         print("The response of FilingsApi->filings_list:\n")
         pprint(api_response)
     except Exception as e:
@@ -207,7 +206,6 @@ Name | Type | Description  | Notes
  **period_ending_date_to** | **str**| Filter by period ending date — inclusive end (YYYY-MM-DD). | [optional] 
  **release_datetime_from** | **datetime**| Filter by release datetime (inclusive start, YYYY-MM-DDTHH:MM:SSZ format). | [optional] 
  **release_datetime_to** | **datetime**| Filter by release datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format). | [optional] 
- **search** | **str**| A search term. | [optional] 
  **source** | **float**| Filter by a single data source ID. | [optional] 
  **sources** | **str**| Filter by data source ID(s). Comma-separated for multiple values (e.g., 38,40,51). | [optional] 
  **type** | **str**| Filter by Filing Type code (e.g., 10-K). | [optional] 

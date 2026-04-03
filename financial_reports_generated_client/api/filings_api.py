@@ -333,7 +333,6 @@ class FilingsApi:
         period_ending_date_to: Annotated[Optional[StrictStr], Field(description="Filter by period ending date — inclusive end (YYYY-MM-DD).")] = None,
         release_datetime_from: Annotated[Optional[datetime], Field(description="Filter by release datetime (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         release_datetime_to: Annotated[Optional[datetime], Field(description="Filter by release datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
-        search: Annotated[Optional[StrictStr], Field(description="A search term.")] = None,
         source: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Filter by a single data source ID.")] = None,
         sources: Annotated[Optional[StrictStr], Field(description="Filter by data source ID(s). Comma-separated for multiple values (e.g., 38,40,51).")] = None,
         type: Annotated[Optional[StrictStr], Field(description="Filter by Filing Type code (e.g., 10-K).")] = None,
@@ -406,8 +405,6 @@ class FilingsApi:
         :type release_datetime_from: datetime
         :param release_datetime_to: Filter by release datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).
         :type release_datetime_to: datetime
-        :param search: A search term.
-        :type search: str
         :param source: Filter by a single data source ID.
         :type source: float
         :param sources: Filter by data source ID(s). Comma-separated for multiple values (e.g., 38,40,51).
@@ -469,7 +466,6 @@ class FilingsApi:
             period_ending_date_to=period_ending_date_to,
             release_datetime_from=release_datetime_from,
             release_datetime_to=release_datetime_to,
-            search=search,
             source=source,
             sources=sources,
             type=type,
@@ -525,7 +521,6 @@ class FilingsApi:
         period_ending_date_to: Annotated[Optional[StrictStr], Field(description="Filter by period ending date — inclusive end (YYYY-MM-DD).")] = None,
         release_datetime_from: Annotated[Optional[datetime], Field(description="Filter by release datetime (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         release_datetime_to: Annotated[Optional[datetime], Field(description="Filter by release datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
-        search: Annotated[Optional[StrictStr], Field(description="A search term.")] = None,
         source: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Filter by a single data source ID.")] = None,
         sources: Annotated[Optional[StrictStr], Field(description="Filter by data source ID(s). Comma-separated for multiple values (e.g., 38,40,51).")] = None,
         type: Annotated[Optional[StrictStr], Field(description="Filter by Filing Type code (e.g., 10-K).")] = None,
@@ -598,8 +593,6 @@ class FilingsApi:
         :type release_datetime_from: datetime
         :param release_datetime_to: Filter by release datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).
         :type release_datetime_to: datetime
-        :param search: A search term.
-        :type search: str
         :param source: Filter by a single data source ID.
         :type source: float
         :param sources: Filter by data source ID(s). Comma-separated for multiple values (e.g., 38,40,51).
@@ -661,7 +654,6 @@ class FilingsApi:
             period_ending_date_to=period_ending_date_to,
             release_datetime_from=release_datetime_from,
             release_datetime_to=release_datetime_to,
-            search=search,
             source=source,
             sources=sources,
             type=type,
@@ -717,7 +709,6 @@ class FilingsApi:
         period_ending_date_to: Annotated[Optional[StrictStr], Field(description="Filter by period ending date — inclusive end (YYYY-MM-DD).")] = None,
         release_datetime_from: Annotated[Optional[datetime], Field(description="Filter by release datetime (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         release_datetime_to: Annotated[Optional[datetime], Field(description="Filter by release datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
-        search: Annotated[Optional[StrictStr], Field(description="A search term.")] = None,
         source: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Filter by a single data source ID.")] = None,
         sources: Annotated[Optional[StrictStr], Field(description="Filter by data source ID(s). Comma-separated for multiple values (e.g., 38,40,51).")] = None,
         type: Annotated[Optional[StrictStr], Field(description="Filter by Filing Type code (e.g., 10-K).")] = None,
@@ -790,8 +781,6 @@ class FilingsApi:
         :type release_datetime_from: datetime
         :param release_datetime_to: Filter by release datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).
         :type release_datetime_to: datetime
-        :param search: A search term.
-        :type search: str
         :param source: Filter by a single data source ID.
         :type source: float
         :param sources: Filter by data source ID(s). Comma-separated for multiple values (e.g., 38,40,51).
@@ -853,7 +842,6 @@ class FilingsApi:
             period_ending_date_to=period_ending_date_to,
             release_datetime_from=release_datetime_from,
             release_datetime_to=release_datetime_to,
-            search=search,
             source=source,
             sources=sources,
             type=type,
@@ -904,7 +892,6 @@ class FilingsApi:
         period_ending_date_to,
         release_datetime_from,
         release_datetime_to,
-        search,
         source,
         sources,
         type,
@@ -1065,10 +1052,6 @@ class FilingsApi:
                 )
             else:
                 _query_params.append(('release_datetime_to', release_datetime_to))
-            
-        if search is not None:
-            
-            _query_params.append(('search', search))
             
         if source is not None:
             

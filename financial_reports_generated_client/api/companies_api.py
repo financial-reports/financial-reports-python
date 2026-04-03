@@ -53,7 +53,6 @@ class CompaniesApi:
         ordering: Annotated[Optional[StrictStr], Field(description="Which field to use when ordering the results. Available fields: `id`, `name`, `date_ipo`, `year_founded`, `country_iso__name`. Prefix with '-' for descending order (e.g., `-name`).")] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
-        search: Annotated[Optional[StrictStr], Field(description="A search term.")] = None,
         sector: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Section code.")] = None,
         sub_industry: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Class code.")] = None,
         ticker: Annotated[Optional[StrictStr], Field(description="Filter by Company primary stock Ticker symbol. Case-insensitive.")] = None,
@@ -93,8 +92,6 @@ class CompaniesApi:
         :type page: int
         :param page_size: Number of results to return per page.
         :type page_size: int
-        :param search: A search term.
-        :type search: str
         :param sector: Filter by ISIC Section code.
         :type sector: str
         :param sub_industry: Filter by ISIC Class code.
@@ -135,7 +132,6 @@ class CompaniesApi:
             ordering=ordering,
             page=page,
             page_size=page_size,
-            search=search,
             sector=sector,
             sub_industry=sub_industry,
             ticker=ticker,
@@ -173,7 +169,6 @@ class CompaniesApi:
         ordering: Annotated[Optional[StrictStr], Field(description="Which field to use when ordering the results. Available fields: `id`, `name`, `date_ipo`, `year_founded`, `country_iso__name`. Prefix with '-' for descending order (e.g., `-name`).")] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
-        search: Annotated[Optional[StrictStr], Field(description="A search term.")] = None,
         sector: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Section code.")] = None,
         sub_industry: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Class code.")] = None,
         ticker: Annotated[Optional[StrictStr], Field(description="Filter by Company primary stock Ticker symbol. Case-insensitive.")] = None,
@@ -213,8 +208,6 @@ class CompaniesApi:
         :type page: int
         :param page_size: Number of results to return per page.
         :type page_size: int
-        :param search: A search term.
-        :type search: str
         :param sector: Filter by ISIC Section code.
         :type sector: str
         :param sub_industry: Filter by ISIC Class code.
@@ -255,7 +248,6 @@ class CompaniesApi:
             ordering=ordering,
             page=page,
             page_size=page_size,
-            search=search,
             sector=sector,
             sub_industry=sub_industry,
             ticker=ticker,
@@ -293,7 +285,6 @@ class CompaniesApi:
         ordering: Annotated[Optional[StrictStr], Field(description="Which field to use when ordering the results. Available fields: `id`, `name`, `date_ipo`, `year_founded`, `country_iso__name`. Prefix with '-' for descending order (e.g., `-name`).")] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
-        search: Annotated[Optional[StrictStr], Field(description="A search term.")] = None,
         sector: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Section code.")] = None,
         sub_industry: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Class code.")] = None,
         ticker: Annotated[Optional[StrictStr], Field(description="Filter by Company primary stock Ticker symbol. Case-insensitive.")] = None,
@@ -333,8 +324,6 @@ class CompaniesApi:
         :type page: int
         :param page_size: Number of results to return per page.
         :type page_size: int
-        :param search: A search term.
-        :type search: str
         :param sector: Filter by ISIC Section code.
         :type sector: str
         :param sub_industry: Filter by ISIC Class code.
@@ -375,7 +364,6 @@ class CompaniesApi:
             ordering=ordering,
             page=page,
             page_size=page_size,
-            search=search,
             sector=sector,
             sub_industry=sub_industry,
             ticker=ticker,
@@ -408,7 +396,6 @@ class CompaniesApi:
         ordering,
         page,
         page_size,
-        search,
         sector,
         sub_industry,
         ticker,
@@ -470,10 +457,6 @@ class CompaniesApi:
         if page_size is not None:
             
             _query_params.append(('page_size', page_size))
-            
-        if search is not None:
-            
-            _query_params.append(('search', search))
             
         if sector is not None:
             
