@@ -1,6 +1,6 @@
 # FiscalPeriodEnum
 
-* `FY` - Full Year * `Q1` - First Quarter * `Q2` - Second Quarter * `Q3` - Third Quarter * `Q4` - Fourth Quarter * `H1` - First Half * `H2` - Second Half
+* `FY` - Full Year * `Q1` - First Quarter * `Q2` - Second Quarter * `Q3` - Third Quarter * `Q4` - Fourth Quarter * `H1` - First Half * `H2` - Second Half * `9M` - Nine Months
 
 ## Enum
 
@@ -17,6 +17,8 @@
 * `H1` (value: `'H1'`)
 
 * `H2` (value: `'H2'`)
+
+* `ENUM_9M` (value: `'9M'`)
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -21,7 +21,7 @@ from typing_extensions import Self
 
 class FiscalPeriodEnum(str, Enum):
     """
-    * `FY` - Full Year * `Q1` - First Quarter * `Q2` - Second Quarter * `Q3` - Third Quarter * `Q4` - Fourth Quarter * `H1` - First Half * `H2` - Second Half
+    * `FY` - Full Year * `Q1` - First Quarter * `Q2` - Second Quarter * `Q3` - Third Quarter * `Q4` - Fourth Quarter * `H1` - First Half * `H2` - Second Half * `9M` - Nine Months
     """
 
     """
@@ -34,6 +34,7 @@ class FiscalPeriodEnum(str, Enum):
     Q4 = 'Q4'
     H1 = 'H1'
     H2 = 'H2'
+    ENUM_9M = '9M'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

@@ -1,6 +1,6 @@
 [project]
 name = "financial_reports_generated_client"
-version = "1.4.21"
+version = "1.4.22"
 description = "FinancialReports API"
 authors = [
   {name = "API Support",email = "api@financialreports.eu"},
