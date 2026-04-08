@@ -6,8 +6,8 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **int** |  | [readonly] 
-**name** | **str** | Name of the data source. | [readonly] 
-**url** | **str** | URL of the data source homepage or relevant section. | [readonly] 
+**name** | **str** | Generic label identifying the regional authority for this data source. | [readonly] 
+**url** | **str** | Homepage URL for the data source, when available. | [readonly] 
 **description** | **str** | Description of the data source. | [readonly] 
 
 ## Example

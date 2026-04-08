@@ -19,7 +19,7 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List
+from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
@@ -29,8 +29,8 @@ class Source(BaseModel):
     Source
     """ # noqa: E501
     id: StrictInt
-    name: StrictStr = Field(description="Name of the data source.")
-    url: StrictStr = Field(description="URL of the data source homepage or relevant section.")
+    name: StrictStr = Field(description="Generic label identifying the regional authority for this data source.")
+    url: Optional[StrictStr] = Field(description="Homepage URL for the data source, when available.")
     description: StrictStr = Field(description="Description of the data source.")
     __properties: ClassVar[List[str]] = ["id", "name", "url", "description"]
 
@@ -81,6 +81,11 @@ class Source(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if url (nullable) is None
+        # and model_fields_set contains the field
+        if self.url is None and "url" in self.model_fields_set:
+            _dict['url'] = None
+
         return _dict
 
     @classmethod
