@@ -15,11 +15,10 @@
 """  # noqa: E501
 
 
-__version__ = "1.4.26"
+__version__ = "1.4.27"
 
 # Define package exports
 __all__ = [
-    "ChatAgentApi",
     "CompaniesApi",
     "CountriesApi",
     "FilingCategoriesApi",
@@ -42,10 +41,6 @@ __all__ = [
     "ApiException",
     "BulkWatchlist",
     "BulkWatchlistResponse",
-    "ChatInteractionRequest",
-    "ChatMessageItem",
-    "ChatMessageList",
-    "ChatSessionUpdateResponse",
     "Company",
     "CompanyMinimal",
     "Country",
@@ -83,11 +78,8 @@ __all__ = [
     "PaginatedSourceList",
     "PaginatedWebhookDeliveryList",
     "PaginatedWebhookList",
-    "PatchedChatSessionUpdateRequest",
     "PatchedWebhook",
     "ProcessingStatusEnum",
-    "SSEEvent",
-    "SessionContext",
     "Source",
     "StatusEnum",
     "StockIndex",
@@ -103,7 +95,6 @@ __all__ = [
 ]
 
 # import apis into sdk package
-from financial_reports_generated_client.api.chat_agent_api import ChatAgentApi as ChatAgentApi
 from financial_reports_generated_client.api.companies_api import CompaniesApi as CompaniesApi
 from financial_reports_generated_client.api.countries_api import CountriesApi as CountriesApi
 from financial_reports_generated_client.api.filing_categories_api import FilingCategoriesApi as FilingCategoriesApi
@@ -130,10 +121,6 @@ from financial_reports_generated_client.exceptions import ApiException as ApiExc
 # import models into sdk package
 from financial_reports_generated_client.models.bulk_watchlist import BulkWatchlist as BulkWatchlist
 from financial_reports_generated_client.models.bulk_watchlist_response import BulkWatchlistResponse as BulkWatchlistResponse
-from financial_reports_generated_client.models.chat_interaction_request import ChatInteractionRequest as ChatInteractionRequest
-from financial_reports_generated_client.models.chat_message_item import ChatMessageItem as ChatMessageItem
-from financial_reports_generated_client.models.chat_message_list import ChatMessageList as ChatMessageList
-from financial_reports_generated_client.models.chat_session_update_response import ChatSessionUpdateResponse as ChatSessionUpdateResponse
 from financial_reports_generated_client.models.company import Company as Company
 from financial_reports_generated_client.models.company_minimal import CompanyMinimal as CompanyMinimal
 from financial_reports_generated_client.models.country import Country as Country
@@ -171,11 +158,8 @@ from financial_reports_generated_client.models.paginated_language_list import Pa
 from financial_reports_generated_client.models.paginated_source_list import PaginatedSourceList as PaginatedSourceList
 from financial_reports_generated_client.models.paginated_webhook_delivery_list import PaginatedWebhookDeliveryList as PaginatedWebhookDeliveryList
 from financial_reports_generated_client.models.paginated_webhook_list import PaginatedWebhookList as PaginatedWebhookList
-from financial_reports_generated_client.models.patched_chat_session_update_request import PatchedChatSessionUpdateRequest as PatchedChatSessionUpdateRequest
 from financial_reports_generated_client.models.patched_webhook import PatchedWebhook as PatchedWebhook
 from financial_reports_generated_client.models.processing_status_enum import ProcessingStatusEnum as ProcessingStatusEnum
-from financial_reports_generated_client.models.sse_event import SSEEvent as SSEEvent
-from financial_reports_generated_client.models.session_context import SessionContext as SessionContext
 from financial_reports_generated_client.models.source import Source as Source
 from financial_reports_generated_client.models.status_enum import StatusEnum as StatusEnum
 from financial_reports_generated_client.models.stock_index import StockIndex as StockIndex
