@@ -15,43 +15,29 @@
 
 import unittest
 
-from financial_reports_generated_client.api.companies_api import CompaniesApi
+from financial_reports_generated_client.api.financial_data_api import FinancialDataApi
 
 
-class TestCompaniesApi(unittest.IsolatedAsyncioTestCase):
-    """CompaniesApi unit test stubs"""
+class TestFinancialDataApi(unittest.IsolatedAsyncioTestCase):
+    """FinancialDataApi unit test stubs"""
 
     async def asyncSetUp(self) -> None:
-        self.api = CompaniesApi()
+        self.api = FinancialDataApi()
 
     async def asyncTearDown(self) -> None:
         await self.api.api_client.close()
 
-    async def test_companies_financials_retrieve(self) -> None:
-        """Test case for companies_financials_retrieve
+    async def test_line_item_definitions_list(self) -> None:
+        """Test case for line_item_definitions_list
 
-        Retrieve Company Financials
+        List Line Item Definitions
         """
         pass
 
-    async def test_companies_list(self) -> None:
-        """Test case for companies_list
+    async def test_line_item_definitions_retrieve(self) -> None:
+        """Test case for line_item_definitions_retrieve
 
-        List Companies
-        """
-        pass
-
-    async def test_companies_next_annual_report_retrieve(self) -> None:
-        """Test case for companies_next_annual_report_retrieve
-
-        Predict Next Annual Report
-        """
-        pass
-
-    async def test_companies_retrieve(self) -> None:
-        """Test case for companies_retrieve
-
-        Retrieve Company Details
+        Retrieve Line Item Definition
         """
         pass
 

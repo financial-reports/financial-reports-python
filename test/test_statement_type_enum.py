@@ -15,46 +15,20 @@
 
 import unittest
 
-from financial_reports_generated_client.api.companies_api import CompaniesApi
+from financial_reports_generated_client.models.statement_type_enum import StatementTypeEnum
 
+class TestStatementTypeEnum(unittest.TestCase):
+    """StatementTypeEnum unit test stubs"""
 
-class TestCompaniesApi(unittest.IsolatedAsyncioTestCase):
-    """CompaniesApi unit test stubs"""
-
-    async def asyncSetUp(self) -> None:
-        self.api = CompaniesApi()
-
-    async def asyncTearDown(self) -> None:
-        await self.api.api_client.close()
-
-    async def test_companies_financials_retrieve(self) -> None:
-        """Test case for companies_financials_retrieve
-
-        Retrieve Company Financials
-        """
+    def setUp(self):
         pass
 
-    async def test_companies_list(self) -> None:
-        """Test case for companies_list
-
-        List Companies
-        """
+    def tearDown(self):
         pass
 
-    async def test_companies_next_annual_report_retrieve(self) -> None:
-        """Test case for companies_next_annual_report_retrieve
-
-        Predict Next Annual Report
-        """
-        pass
-
-    async def test_companies_retrieve(self) -> None:
-        """Test case for companies_retrieve
-
-        Retrieve Company Details
-        """
-        pass
-
+    def testStatementTypeEnum(self):
+        """Test StatementTypeEnum"""
+        # inst = StatementTypeEnum()
 
 if __name__ == '__main__':
     unittest.main()

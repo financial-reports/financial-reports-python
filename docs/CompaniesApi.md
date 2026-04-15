@@ -4,10 +4,109 @@ All URIs are relative to *https://api.financialreports.eu*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**companies_financials_retrieve**](CompaniesApi.md#companies_financials_retrieve) | **GET** /companies/{id}/financials/ | Retrieve Company Financials
 [**companies_list**](CompaniesApi.md#companies_list) | **GET** /companies/ | List Companies
 [**companies_next_annual_report_retrieve**](CompaniesApi.md#companies_next_annual_report_retrieve) | **GET** /companies/{id}/next-annual-report/ | Predict Next Annual Report
 [**companies_retrieve**](CompaniesApi.md#companies_retrieve) | **GET** /companies/{id}/ | Retrieve Company Details
 
+
+# **companies_financials_retrieve**
+> PaginatedCompanyFinancialStatementList companies_financials_retrieve(id, fiscal_period=fiscal_period, fiscal_year=fiscal_year, fiscal_year_from=fiscal_year_from, fiscal_year_to=fiscal_year_to, line_items=line_items, statement_type=statement_type)
+
+Retrieve Company Financials
+
+Returns deduplicated, standardized financial KPIs for a company, structured by fiscal period and statement type.
+
+When multiple filings report the same period (e.g. an annual report and its ESEF package), the data from the most recently published filing is returned.
+
+Use the `depth` and `parent_code` fields on each line item to render the Capital IQ-style statement hierarchy.
+
+**Access Level Required:** Requires **RAG / Agent (Level 3)**.
+
+### Example
+
+* Api Key Authentication (ApiKeyAuth):
+
+```python
+import financial_reports_generated_client
+from financial_reports_generated_client.models.paginated_company_financial_statement_list import PaginatedCompanyFinancialStatementList
+from financial_reports_generated_client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.financialreports.eu
+# See configuration.py for a list of all supported configuration parameters.
+configuration = financial_reports_generated_client.Configuration(
+    host = "https://api.financialreports.eu"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: ApiKeyAuth
+configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+async with financial_reports_generated_client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = financial_reports_generated_client.CompaniesApi(api_client)
+    id = 56 # int | A unique integer value identifying this company.
+    fiscal_period = 'fiscal_period_example' # str | Filter by fiscal period. (optional)
+    fiscal_year = 56 # int | Filter by exact fiscal year (e.g. `2024`). (optional)
+    fiscal_year_from = 56 # int | Fiscal year range start (inclusive). (optional)
+    fiscal_year_to = 56 # int | Fiscal year range end (inclusive). (optional)
+    line_items = 'line_items_example' # str | Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Only statements containing at least one of the requested codes are returned. (optional)
+    statement_type = 'statement_type_example' # str | Filter by statement type. (optional)
+
+    try:
+        # Retrieve Company Financials
+        api_response = await api_instance.companies_financials_retrieve(id, fiscal_period=fiscal_period, fiscal_year=fiscal_year, fiscal_year_from=fiscal_year_from, fiscal_year_to=fiscal_year_to, line_items=line_items, statement_type=statement_type)
+        print("The response of CompaniesApi->companies_financials_retrieve:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling CompaniesApi->companies_financials_retrieve: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **int**| A unique integer value identifying this company. | 
+ **fiscal_period** | **str**| Filter by fiscal period. | [optional] 
+ **fiscal_year** | **int**| Filter by exact fiscal year (e.g. &#x60;2024&#x60;). | [optional] 
+ **fiscal_year_from** | **int**| Fiscal year range start (inclusive). | [optional] 
+ **fiscal_year_to** | **int**| Fiscal year range end (inclusive). | [optional] 
+ **line_items** | **str**| Comma-separated KPI codes to include (e.g. &#x60;revenue,ebitda,net_income_loss&#x60;). Omit to return all extracted line items. Only statements containing at least one of the requested codes are returned. | [optional] 
+ **statement_type** | **str**| Filter by statement type. | [optional] 
+
+### Return type
+
+[**PaginatedCompanyFinancialStatementList**](PaginatedCompanyFinancialStatementList.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** |  |  -  |
+**404** | Company not found. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **companies_list**
 > PaginatedCompanyMinimalList companies_list(countries=countries, industry=industry, industry_group=industry_group, isin=isin, lei=lei, on_watchlist=on_watchlist, ordering=ordering, page=page, page_size=page_size, sector=sector, sub_industry=sub_industry, ticker=ticker, view=view)

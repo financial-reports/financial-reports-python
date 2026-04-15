@@ -13,48 +13,28 @@
 """  # noqa: E501
 
 
-import unittest
-
-from financial_reports_generated_client.api.companies_api import CompaniesApi
-
-
-class TestCompaniesApi(unittest.IsolatedAsyncioTestCase):
-    """CompaniesApi unit test stubs"""
-
-    async def asyncSetUp(self) -> None:
-        self.api = CompaniesApi()
-
-    async def asyncTearDown(self) -> None:
-        await self.api.api_client.close()
-
-    async def test_companies_financials_retrieve(self) -> None:
-        """Test case for companies_financials_retrieve
-
-        Retrieve Company Financials
-        """
-        pass
-
-    async def test_companies_list(self) -> None:
-        """Test case for companies_list
-
-        List Companies
-        """
-        pass
-
-    async def test_companies_next_annual_report_retrieve(self) -> None:
-        """Test case for companies_next_annual_report_retrieve
-
-        Predict Next Annual Report
-        """
-        pass
-
-    async def test_companies_retrieve(self) -> None:
-        """Test case for companies_retrieve
-
-        Retrieve Company Details
-        """
-        pass
+from __future__ import annotations
+import json
+from enum import Enum
+from typing_extensions import Self
 
 
-if __name__ == '__main__':
-    unittest.main()
+class StatementTypeEnum(str, Enum):
+    """
+    * `IS` - Income Statement * `BS` - Balance Sheet * `CFS` - Cash Flow Statement * `SUP` - Supplemental / Ratio
+    """
+
+    """
+    allowed enum values
+    """
+    IS = 'IS'
+    BS = 'BS'
+    CFS = 'CFS'
+    SUP = 'SUP'
+
+    @classmethod
+    def from_json(cls, json_str: str) -> Self:
+        """Create an instance of StatementTypeEnum from a JSON string"""
+        return cls(json.loads(json_str))
+
+

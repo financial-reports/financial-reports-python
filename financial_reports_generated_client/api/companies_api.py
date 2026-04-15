@@ -21,6 +21,7 @@ from typing import Optional
 from typing_extensions import Annotated
 from financial_reports_generated_client.models.company import Company
 from financial_reports_generated_client.models.next_annual_report import NextAnnualReport
+from financial_reports_generated_client.models.paginated_company_financial_statement_list import PaginatedCompanyFinancialStatementList
 from financial_reports_generated_client.models.paginated_company_minimal_list import PaginatedCompanyMinimalList
 
 from financial_reports_generated_client.api_client import ApiClient, RequestSerialized
@@ -39,6 +40,372 @@ class CompaniesApi:
         if api_client is None:
             api_client = ApiClient.get_default()
         self.api_client = api_client
+
+
+    @validate_call
+    async def companies_financials_retrieve(
+        self,
+        id: Annotated[StrictInt, Field(description="A unique integer value identifying this company.")],
+        fiscal_period: Annotated[Optional[StrictStr], Field(description="Filter by fiscal period.")] = None,
+        fiscal_year: Annotated[Optional[StrictInt], Field(description="Filter by exact fiscal year (e.g. `2024`).")] = None,
+        fiscal_year_from: Annotated[Optional[StrictInt], Field(description="Fiscal year range start (inclusive).")] = None,
+        fiscal_year_to: Annotated[Optional[StrictInt], Field(description="Fiscal year range end (inclusive).")] = None,
+        line_items: Annotated[Optional[StrictStr], Field(description="Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Only statements containing at least one of the requested codes are returned.")] = None,
+        statement_type: Annotated[Optional[StrictStr], Field(description="Filter by statement type.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> PaginatedCompanyFinancialStatementList:
+        """Retrieve Company Financials
+
+        Returns deduplicated, standardized financial KPIs for a company, structured by fiscal period and statement type.  When multiple filings report the same period (e.g. an annual report and its ESEF package), the data from the most recently published filing is returned.  Use the `depth` and `parent_code` fields on each line item to render the Capital IQ-style statement hierarchy.  **Access Level Required:** Requires **RAG / Agent (Level 3)**.
+
+        :param id: A unique integer value identifying this company. (required)
+        :type id: int
+        :param fiscal_period: Filter by fiscal period.
+        :type fiscal_period: str
+        :param fiscal_year: Filter by exact fiscal year (e.g. `2024`).
+        :type fiscal_year: int
+        :param fiscal_year_from: Fiscal year range start (inclusive).
+        :type fiscal_year_from: int
+        :param fiscal_year_to: Fiscal year range end (inclusive).
+        :type fiscal_year_to: int
+        :param line_items: Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Only statements containing at least one of the requested codes are returned.
+        :type line_items: str
+        :param statement_type: Filter by statement type.
+        :type statement_type: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._companies_financials_retrieve_serialize(
+            id=id,
+            fiscal_period=fiscal_period,
+            fiscal_year=fiscal_year,
+            fiscal_year_from=fiscal_year_from,
+            fiscal_year_to=fiscal_year_to,
+            line_items=line_items,
+            statement_type=statement_type,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PaginatedCompanyFinancialStatementList",
+            '404': None,
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    async def companies_financials_retrieve_with_http_info(
+        self,
+        id: Annotated[StrictInt, Field(description="A unique integer value identifying this company.")],
+        fiscal_period: Annotated[Optional[StrictStr], Field(description="Filter by fiscal period.")] = None,
+        fiscal_year: Annotated[Optional[StrictInt], Field(description="Filter by exact fiscal year (e.g. `2024`).")] = None,
+        fiscal_year_from: Annotated[Optional[StrictInt], Field(description="Fiscal year range start (inclusive).")] = None,
+        fiscal_year_to: Annotated[Optional[StrictInt], Field(description="Fiscal year range end (inclusive).")] = None,
+        line_items: Annotated[Optional[StrictStr], Field(description="Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Only statements containing at least one of the requested codes are returned.")] = None,
+        statement_type: Annotated[Optional[StrictStr], Field(description="Filter by statement type.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[PaginatedCompanyFinancialStatementList]:
+        """Retrieve Company Financials
+
+        Returns deduplicated, standardized financial KPIs for a company, structured by fiscal period and statement type.  When multiple filings report the same period (e.g. an annual report and its ESEF package), the data from the most recently published filing is returned.  Use the `depth` and `parent_code` fields on each line item to render the Capital IQ-style statement hierarchy.  **Access Level Required:** Requires **RAG / Agent (Level 3)**.
+
+        :param id: A unique integer value identifying this company. (required)
+        :type id: int
+        :param fiscal_period: Filter by fiscal period.
+        :type fiscal_period: str
+        :param fiscal_year: Filter by exact fiscal year (e.g. `2024`).
+        :type fiscal_year: int
+        :param fiscal_year_from: Fiscal year range start (inclusive).
+        :type fiscal_year_from: int
+        :param fiscal_year_to: Fiscal year range end (inclusive).
+        :type fiscal_year_to: int
+        :param line_items: Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Only statements containing at least one of the requested codes are returned.
+        :type line_items: str
+        :param statement_type: Filter by statement type.
+        :type statement_type: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._companies_financials_retrieve_serialize(
+            id=id,
+            fiscal_period=fiscal_period,
+            fiscal_year=fiscal_year,
+            fiscal_year_from=fiscal_year_from,
+            fiscal_year_to=fiscal_year_to,
+            line_items=line_items,
+            statement_type=statement_type,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PaginatedCompanyFinancialStatementList",
+            '404': None,
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    async def companies_financials_retrieve_without_preload_content(
+        self,
+        id: Annotated[StrictInt, Field(description="A unique integer value identifying this company.")],
+        fiscal_period: Annotated[Optional[StrictStr], Field(description="Filter by fiscal period.")] = None,
+        fiscal_year: Annotated[Optional[StrictInt], Field(description="Filter by exact fiscal year (e.g. `2024`).")] = None,
+        fiscal_year_from: Annotated[Optional[StrictInt], Field(description="Fiscal year range start (inclusive).")] = None,
+        fiscal_year_to: Annotated[Optional[StrictInt], Field(description="Fiscal year range end (inclusive).")] = None,
+        line_items: Annotated[Optional[StrictStr], Field(description="Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Only statements containing at least one of the requested codes are returned.")] = None,
+        statement_type: Annotated[Optional[StrictStr], Field(description="Filter by statement type.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Retrieve Company Financials
+
+        Returns deduplicated, standardized financial KPIs for a company, structured by fiscal period and statement type.  When multiple filings report the same period (e.g. an annual report and its ESEF package), the data from the most recently published filing is returned.  Use the `depth` and `parent_code` fields on each line item to render the Capital IQ-style statement hierarchy.  **Access Level Required:** Requires **RAG / Agent (Level 3)**.
+
+        :param id: A unique integer value identifying this company. (required)
+        :type id: int
+        :param fiscal_period: Filter by fiscal period.
+        :type fiscal_period: str
+        :param fiscal_year: Filter by exact fiscal year (e.g. `2024`).
+        :type fiscal_year: int
+        :param fiscal_year_from: Fiscal year range start (inclusive).
+        :type fiscal_year_from: int
+        :param fiscal_year_to: Fiscal year range end (inclusive).
+        :type fiscal_year_to: int
+        :param line_items: Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Only statements containing at least one of the requested codes are returned.
+        :type line_items: str
+        :param statement_type: Filter by statement type.
+        :type statement_type: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._companies_financials_retrieve_serialize(
+            id=id,
+            fiscal_period=fiscal_period,
+            fiscal_year=fiscal_year,
+            fiscal_year_from=fiscal_year_from,
+            fiscal_year_to=fiscal_year_to,
+            line_items=line_items,
+            statement_type=statement_type,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PaginatedCompanyFinancialStatementList",
+            '404': None,
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _companies_financials_retrieve_serialize(
+        self,
+        id,
+        fiscal_period,
+        fiscal_year,
+        fiscal_year_from,
+        fiscal_year_to,
+        line_items,
+        statement_type,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if id is not None:
+            _path_params['id'] = id
+        # process the query parameters
+        if fiscal_period is not None:
+            
+            _query_params.append(('fiscal_period', fiscal_period))
+            
+        if fiscal_year is not None:
+            
+            _query_params.append(('fiscal_year', fiscal_year))
+            
+        if fiscal_year_from is not None:
+            
+            _query_params.append(('fiscal_year_from', fiscal_year_from))
+            
+        if fiscal_year_to is not None:
+            
+            _query_params.append(('fiscal_year_to', fiscal_year_to))
+            
+        if line_items is not None:
+            
+            _query_params.append(('line_items', line_items))
+            
+        if statement_type is not None:
+            
+            _query_params.append(('statement_type', statement_type))
+            
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'ApiKeyAuth'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/companies/{id}/financials/',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
 
 
     @validate_call
