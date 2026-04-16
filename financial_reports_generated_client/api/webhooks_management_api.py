@@ -91,8 +91,8 @@ class WebhooksManagementApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': None,
-            '4xx': None,
-            '5xx': None,
+            '4XX': None,
+            '5XX': None,
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -160,8 +160,8 @@ class WebhooksManagementApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': None,
-            '4xx': None,
-            '5xx': None,
+            '4XX': None,
+            '5XX': None,
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -229,8 +229,8 @@ class WebhooksManagementApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': None,
-            '4xx': None,
-            '5xx': None,
+            '4XX': None,
+            '5XX': None,
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -363,8 +363,8 @@ class WebhooksManagementApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': None,
-            '4xx': None,
-            '5xx': None,
+            '4XX': None,
+            '5XX': None,
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -432,8 +432,8 @@ class WebhooksManagementApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': None,
-            '4xx': None,
-            '5xx': None,
+            '4XX': None,
+            '5XX': None,
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -501,8 +501,8 @@ class WebhooksManagementApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': None,
-            '4xx': None,
-            '5xx': None,
+            '4XX': None,
+            '5XX': None,
         }
         response_data = await self.api_client.call_api(
             *_param,

@@ -333,6 +333,7 @@ class FilingTypesApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'CognitoJWT', 
             'ApiKeyAuth'
         ]
 
@@ -594,6 +595,7 @@ class FilingTypesApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'CognitoJWT', 
             'ApiKeyAuth'
         ]
 

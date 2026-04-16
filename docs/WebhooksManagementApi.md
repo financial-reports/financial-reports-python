@@ -70,8 +70,8 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | (Success) Acknowledge receipt. |  -  |
-**4xx** | (Client Error) Retry logic may apply. |  -  |
-**5xx** | (Server Error) We will retry. |  -  |
+**4XX** | (Client Error) Retry logic may apply. |  -  |
+**5XX** | (Server Error) We will retry. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -137,8 +137,8 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | (Success) Acknowledge receipt. |  -  |
-**4xx** | (Client Error) Retry logic may apply. |  -  |
-**5xx** | (Server Error) We will retry. |  -  |
+**4XX** | (Client Error) Retry logic may apply. |  -  |
+**5XX** | (Server Error) We will retry. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

@@ -384,6 +384,7 @@ class ISINsApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'CognitoJWT', 
             'ApiKeyAuth'
         ]
 
@@ -645,6 +646,7 @@ class ISINsApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'CognitoJWT', 
             'ApiKeyAuth'
         ]
 

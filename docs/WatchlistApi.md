@@ -23,6 +23,7 @@ Adds up to 100 companies to the authenticated user's watchlist in a single reque
 
 ### Example
 
+* Bearer (JWT) Authentication (CognitoJWT):
 * Api Key Authentication (ApiKeyAuth):
 
 ```python
@@ -42,6 +43,11 @@ configuration = financial_reports_generated_client.Configuration(
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
+
+# Configure Bearer authorization (JWT): CognitoJWT
+configuration = financial_reports_generated_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Configure API key authorization: ApiKeyAuth
 configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
@@ -79,7 +85,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth)
+[CognitoJWT](../README.md#CognitoJWT), [ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 
@@ -108,6 +114,7 @@ Removes up to 100 companies from the authenticated user's watchlist in a single 
 
 ### Example
 
+* Bearer (JWT) Authentication (CognitoJWT):
 * Api Key Authentication (ApiKeyAuth):
 
 ```python
@@ -127,6 +134,11 @@ configuration = financial_reports_generated_client.Configuration(
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
+
+# Configure Bearer authorization (JWT): CognitoJWT
+configuration = financial_reports_generated_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Configure API key authorization: ApiKeyAuth
 configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
@@ -164,7 +176,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth)
+[CognitoJWT](../README.md#CognitoJWT), [ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 
@@ -193,6 +205,7 @@ Adds a specified company to the authenticated user's watchlist.
 
 ### Example
 
+* Bearer (JWT) Authentication (CognitoJWT):
 * Api Key Authentication (ApiKeyAuth):
 
 ```python
@@ -212,6 +225,11 @@ configuration = financial_reports_generated_client.Configuration(
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
+
+# Configure Bearer authorization (JWT): CognitoJWT
+configuration = financial_reports_generated_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Configure API key authorization: ApiKeyAuth
 configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
@@ -249,7 +267,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth)
+[CognitoJWT](../README.md#CognitoJWT), [ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 
@@ -278,6 +296,7 @@ Removes a specified company from the authenticated user's watchlist using the `c
 
 ### Example
 
+* Bearer (JWT) Authentication (CognitoJWT):
 * Api Key Authentication (ApiKeyAuth):
 
 ```python
@@ -296,6 +315,11 @@ configuration = financial_reports_generated_client.Configuration(
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
+
+# Configure Bearer authorization (JWT): CognitoJWT
+configuration = financial_reports_generated_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Configure API key authorization: ApiKeyAuth
 configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
@@ -333,7 +357,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth)
+[CognitoJWT](../README.md#CognitoJWT), [ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 
@@ -362,6 +386,7 @@ Fetches all companies currently in the authenticated user's watchlist. Results a
 
 ### Example
 
+* Bearer (JWT) Authentication (CognitoJWT):
 * Api Key Authentication (ApiKeyAuth):
 
 ```python
@@ -380,6 +405,11 @@ configuration = financial_reports_generated_client.Configuration(
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
+
+# Configure Bearer authorization (JWT): CognitoJWT
+configuration = financial_reports_generated_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Configure API key authorization: ApiKeyAuth
 configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
@@ -413,7 +443,7 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth)
+[CognitoJWT](../README.md#CognitoJWT), [ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 

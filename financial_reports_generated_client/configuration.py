@@ -112,6 +112,7 @@ AuthSettings = TypedDict(
     "AuthSettings",
     {
         "ApiKeyAuth": APIKeyAuthSetting,
+        "CognitoJWT": BearerFormatAuthSetting,
     },
     total=False,
 )
@@ -542,6 +543,14 @@ conf = financial_reports_generated_client.Configuration(
                     'ApiKeyAuth',
                 ),
             }
+        if self.access_token is not None:
+            auth['CognitoJWT'] = {
+                'type': 'bearer',
+                'in': 'header',
+                'format': 'JWT',
+                'key': 'Authorization',
+                'value': 'Bearer ' + self.access_token
+            }
         return auth
 
     def to_debug_report(self) -> str:
@@ -553,7 +562,7 @@ conf = financial_reports_generated_client.Configuration(
                "OS: {env}\n"\
                "Python Version: {pyversion}\n"\
                "Version of the API: 1.1.5\n"\
-               "SDK Package Version: 1.4.30".\
+               "SDK Package Version: 1.4.31".\
                format(env=sys.platform, pyversion=sys.version)
 
     def get_host_settings(self) -> List[HostSetting]:

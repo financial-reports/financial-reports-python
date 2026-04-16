@@ -299,6 +299,7 @@ class CountriesApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'CognitoJWT', 
             'ApiKeyAuth'
         ]
 
@@ -560,6 +561,7 @@ class CountriesApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'CognitoJWT', 
             'ApiKeyAuth'
         ]
 

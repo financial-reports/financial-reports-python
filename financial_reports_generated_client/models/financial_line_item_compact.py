@@ -33,7 +33,7 @@ class FinancialLineItemCompact(BaseModel):
     name: StrictStr
     statement_type: StrictStr = Field(description="Statement type of the KPI definition (IS, BS, CFS, SUP). May differ from the parent statement — e.g. SUP items appear on whichever statement they were extracted from.")
     depth: StrictInt
-    parent_code: StrictStr
+    parent_code: Optional[StrictStr] = Field(description="Code of the parent line item in the hierarchy, or null for top-level items.")
     sort_order: StrictInt
     value: Optional[Annotated[str, Field(strict=True)]] = Field(description="Value scaled to units (e.g. thousands * 1000). Use for cross-company comparison.")
     raw_value: Annotated[str, Field(strict=True)] = Field(description="Value as reported in the document, before scaling.")
@@ -98,6 +98,11 @@ class FinancialLineItemCompact(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if parent_code (nullable) is None
+        # and model_fields_set contains the field
+        if self.parent_code is None and "parent_code" in self.model_fields_set:
+            _dict['parent_code'] = None
+
         # set to None if value (nullable) is None
         # and model_fields_set contains the field
         if self.value is None and "value" in self.model_fields_set:

@@ -301,6 +301,7 @@ class WatchlistApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'CognitoJWT', 
             'ApiKeyAuth'
         ]
 
@@ -581,6 +582,7 @@ class WatchlistApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'CognitoJWT', 
             'ApiKeyAuth'
         ]
 
@@ -861,6 +863,7 @@ class WatchlistApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'CognitoJWT', 
             'ApiKeyAuth'
         ]
 
@@ -1128,6 +1131,7 @@ class WatchlistApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'CognitoJWT', 
             'ApiKeyAuth'
         ]
 
@@ -1377,6 +1381,7 @@ class WatchlistApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'CognitoJWT', 
             'ApiKeyAuth'
         ]
 

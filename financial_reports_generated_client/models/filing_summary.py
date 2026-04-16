@@ -36,7 +36,7 @@ class FilingSummary(BaseModel):
     id: StrictInt
     title: Optional[Annotated[str, Field(strict=True, max_length=200)]] = Field(default=None, description="Optional title for the filing")
     release_datetime: Optional[datetime] = Field(default=None, description="Time the document was published on the authority page")
-    document_url: StrictStr = Field(description="Direct URL to the raw filing package (e.g., ZIP/PDF) on S3.")
+    document_url: Optional[StrictStr] = Field(description="Direct URL to the raw filing package (e.g., ZIP/PDF) on S3.")
     proxy_url: Optional[StrictStr] = Field(description="Direct URL to the extracted, browser-renderable main document.")
     viewer_url: Optional[StrictStr] = Field(description="URL to view the filing in the interactive web platform.")
     company: CompanyMinimal
@@ -107,6 +107,11 @@ class FilingSummary(BaseModel):
         # and model_fields_set contains the field
         if self.release_datetime is None and "release_datetime" in self.model_fields_set:
             _dict['release_datetime'] = None
+
+        # set to None if document_url (nullable) is None
+        # and model_fields_set contains the field
+        if self.document_url is None and "document_url" in self.model_fields_set:
+            _dict['document_url'] = None
 
         # set to None if proxy_url (nullable) is None
         # and model_fields_set contains the field

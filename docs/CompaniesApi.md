@@ -25,6 +25,7 @@ Use the `depth` and `parent_code` fields on each line item to render the Capital
 
 ### Example
 
+* Bearer (JWT) Authentication (CognitoJWT):
 * Api Key Authentication (ApiKeyAuth):
 
 ```python
@@ -43,6 +44,11 @@ configuration = financial_reports_generated_client.Configuration(
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
+
+# Configure Bearer authorization (JWT): CognitoJWT
+configuration = financial_reports_generated_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Configure API key authorization: ApiKeyAuth
 configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
@@ -92,7 +98,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth)
+[CognitoJWT](../README.md#CognitoJWT), [ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 
@@ -109,7 +115,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **companies_list**
-> PaginatedCompanyMinimalList companies_list(countries=countries, industry=industry, industry_group=industry_group, isin=isin, lei=lei, on_watchlist=on_watchlist, ordering=ordering, page=page, page_size=page_size, sector=sector, sub_industry=sub_industry, ticker=ticker, view=view)
+> PaginatedCompanyMinimalList companies_list(countries=countries, industry=industry, industry_group=industry_group, isin=isin, lei=lei, on_watchlist=on_watchlist, ordering=ordering, page=page, page_size=page_size, search=search, sector=sector, sub_industry=sub_industry, ticker=ticker, view=view)
 
 List Companies
 
@@ -120,6 +126,7 @@ Retrieve a paginated list of companies.
 
 ### Example
 
+* Bearer (JWT) Authentication (CognitoJWT):
 * Api Key Authentication (ApiKeyAuth):
 
 ```python
@@ -138,6 +145,11 @@ configuration = financial_reports_generated_client.Configuration(
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
+
+# Configure Bearer authorization (JWT): CognitoJWT
+configuration = financial_reports_generated_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Configure API key authorization: ApiKeyAuth
 configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
@@ -158,6 +170,7 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
     ordering = 'ordering_example' # str | Which field to use when ordering the results. Available fields: `id`, `name`, `date_ipo`, `year_founded`, `country_iso__name`. Prefix with '-' for descending order (e.g., `-name`). (optional)
     page = 56 # int | A page number within the paginated result set. (optional)
     page_size = 56 # int | Number of results to return per page. (optional)
+    search = 'search_example' # str | Search across company name, LEI, ticker symbol, and associated ISIN codes. Case-insensitive. Multiple whitespace-separated terms are AND-combined (each term must match at least one of the searched fields). (optional)
     sector = 'sector_example' # str | Filter by ISIC Section code. (optional)
     sub_industry = 'sub_industry_example' # str | Filter by ISIC Class code. (optional)
     ticker = 'ticker_example' # str | Filter by Company primary stock Ticker symbol. Case-insensitive. (optional)
@@ -165,7 +178,7 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
 
     try:
         # List Companies
-        api_response = await api_instance.companies_list(countries=countries, industry=industry, industry_group=industry_group, isin=isin, lei=lei, on_watchlist=on_watchlist, ordering=ordering, page=page, page_size=page_size, sector=sector, sub_industry=sub_industry, ticker=ticker, view=view)
+        api_response = await api_instance.companies_list(countries=countries, industry=industry, industry_group=industry_group, isin=isin, lei=lei, on_watchlist=on_watchlist, ordering=ordering, page=page, page_size=page_size, search=search, sector=sector, sub_industry=sub_industry, ticker=ticker, view=view)
         print("The response of CompaniesApi->companies_list:\n")
         pprint(api_response)
     except Exception as e:
@@ -188,6 +201,7 @@ Name | Type | Description  | Notes
  **ordering** | **str**| Which field to use when ordering the results. Available fields: &#x60;id&#x60;, &#x60;name&#x60;, &#x60;date_ipo&#x60;, &#x60;year_founded&#x60;, &#x60;country_iso__name&#x60;. Prefix with &#39;-&#39; for descending order (e.g., &#x60;-name&#x60;). | [optional] 
  **page** | **int**| A page number within the paginated result set. | [optional] 
  **page_size** | **int**| Number of results to return per page. | [optional] 
+ **search** | **str**| Search across company name, LEI, ticker symbol, and associated ISIN codes. Case-insensitive. Multiple whitespace-separated terms are AND-combined (each term must match at least one of the searched fields). | [optional] 
  **sector** | **str**| Filter by ISIC Section code. | [optional] 
  **sub_industry** | **str**| Filter by ISIC Class code. | [optional] 
  **ticker** | **str**| Filter by Company primary stock Ticker symbol. Case-insensitive. | [optional] 
@@ -199,7 +213,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth)
+[CognitoJWT](../README.md#CognitoJWT), [ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 
@@ -224,6 +238,7 @@ Calculates the expected release window for the next annual report based on histo
 
 ### Example
 
+* Bearer (JWT) Authentication (CognitoJWT):
 * Api Key Authentication (ApiKeyAuth):
 
 ```python
@@ -242,6 +257,11 @@ configuration = financial_reports_generated_client.Configuration(
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
+
+# Configure Bearer authorization (JWT): CognitoJWT
+configuration = financial_reports_generated_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Configure API key authorization: ApiKeyAuth
 configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
@@ -279,7 +299,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth)
+[CognitoJWT](../README.md#CognitoJWT), [ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 
@@ -307,6 +327,7 @@ Retrieve detailed information for a single company by its internal ID.
 
 ### Example
 
+* Bearer (JWT) Authentication (CognitoJWT):
 * Api Key Authentication (ApiKeyAuth):
 
 ```python
@@ -325,6 +346,11 @@ configuration = financial_reports_generated_client.Configuration(
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
+
+# Configure Bearer authorization (JWT): CognitoJWT
+configuration = financial_reports_generated_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Configure API key authorization: ApiKeyAuth
 configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
@@ -362,7 +388,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth)
+[CognitoJWT](../README.md#CognitoJWT), [ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 

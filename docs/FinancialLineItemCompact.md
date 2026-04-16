@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **name** | **str** |  | 
 **statement_type** | **str** | Statement type of the KPI definition (IS, BS, CFS, SUP). May differ from the parent statement — e.g. SUP items appear on whichever statement they were extracted from. | 
 **depth** | **int** |  | 
-**parent_code** | **str** |  | [readonly] 
+**parent_code** | **str** | Code of the parent line item in the hierarchy, or null for top-level items. | [readonly] 
 **sort_order** | **int** |  | 
 **value** | **decimal.Decimal** | Value scaled to units (e.g. thousands * 1000). Use for cross-company comparison. | 
 **raw_value** | **decimal.Decimal** | Value as reported in the document, before scaling. | 
