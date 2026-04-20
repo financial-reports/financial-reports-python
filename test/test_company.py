@@ -44,6 +44,7 @@ class TestCompany(unittest.TestCase):
                 isins = [
                     ''
                     ],
+                isin_count = '',
                 lei = '',
                 country_code = '',
                 address = '',
@@ -128,6 +129,7 @@ class TestCompany(unittest.TestCase):
                 isins = [
                     ''
                     ],
+                isin_count = '',
                 lei = '',
                 country_code = '',
                 address = '',
