@@ -31,7 +31,7 @@ class CompanyMinimal(BaseModel):
     id: StrictInt = Field(description="Unique identifier for the company.")
     name: StrictStr = Field(description="Company name.")
     tagline: StrictStr = Field(description="A short, one-liner describing the company's value proposition.")
-    isins: List[StrictStr] = Field(description="List of International Securities Identification Numbers (ISINs) associated with the company.")
+    isins: List[StrictStr] = Field(description="Primary ISIN(s) for the company. Use the company detail endpoint for the full list.")
     lei: StrictStr = Field(description="Legal Entity Identifier (ISO 17442).")
     sub_industry_code: Optional[StrictStr] = Field(description="ISIC classification code classifying the company.")
     country_code: StrictStr = Field(description="ISO 3166-1 alpha-2 country code of the company's primary registration or headquarters.")
