@@ -46,6 +46,9 @@ class FinancialLineItemCompact(BaseModel):
         if value is None:
             return value
 
+        if not isinstance(value, str):
+            value = str(value)
+
         if not re.match(r"^-?\d{0,26}(?:\.\d{0,2})?$", value):
             raise ValueError(r"must validate the regular expression /^-?\d{0,26}(?:\.\d{0,2})?$/")
         return value
@@ -53,6 +56,9 @@ class FinancialLineItemCompact(BaseModel):
     @field_validator('raw_value')
     def raw_value_validate_regular_expression(cls, value):
         """Validates the regular expression"""
+        if not isinstance(value, str):
+            value = str(value)
+
         if not re.match(r"^-?\d{0,22}(?:\.\d{0,6})?$", value):
             raise ValueError(r"must validate the regular expression /^-?\d{0,22}(?:\.\d{0,6})?$/")
         return value

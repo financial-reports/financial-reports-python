@@ -11,6 +11,7 @@
 """  # noqa: E501
 
 
+import aiohttp_retry
 import base64
 import copy
 import http.client as httplib
@@ -215,7 +216,7 @@ conf = financial_reports_generated_client.Configuration(
         server_operation_variables: Optional[Dict[int, ServerVariablesT]]=None,
         ignore_operation_servers: bool=False,
         ssl_ca_cert: Optional[str]=None,
-        retries: Optional[Union[int, Any]] = None,
+        retries: Optional[Union[int, aiohttp_retry.RetryOptionsBase]] = None,
         ca_cert_data: Optional[Union[str, bytes]] = None,
         cert_file: Optional[str]=None,
         key_file: Optional[str]=None,
@@ -562,7 +563,7 @@ conf = financial_reports_generated_client.Configuration(
                "OS: {env}\n"\
                "Python Version: {pyversion}\n"\
                "Version of the API: 1.1.5\n"\
-               "SDK Package Version: 1.4.33".\
+               "SDK Package Version: 1.4.34".\
                format(env=sys.platform, pyversion=sys.version)
 
     def get_host_settings(self) -> List[HostSetting]:
