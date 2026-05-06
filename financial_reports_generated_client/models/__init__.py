@@ -4,7 +4,7 @@
 """
     FinancialReports API
 
-     Welcome to the FinancialReports API.  ### Access Levels This API is tiered based on data granularity.  | Level | Name | Description | | :--- | :--- | :--- | | **Level 1** | **Standard Access** | Access to raw PDF/XBRL metadata, company profiles, ISIC classifications, reference data, and **point-in-time audit trails**. | | **Level 2** | **Processed Filings** | Access to converted content (Markdown/JSON) and full-text search capabilities. | | **Level 3** | **RAG / Agent** | Access to specific extracted financial line items (Revenue, EBITDA, etc.) mapped to standard taxonomies, and access to the conversational RAG agent. |  ### Rate Limiting To ensure stability, this API uses a dual-layer rate limit: 1.  **Burst Limit:** A short-term speed limit (e.g., 5 requests/second) to prevent system overload. 2.  **Quota Limit:** A monthly allowance of total requests based on your subscription plan.  Check the response headers `X-RateLimit-Burst-Limit` and `X-RateLimit-Monthly-Remaining` for your current status.  ### Authentication All API requests must be authenticated via the **X-API-Key** header. 
+    Public-company filings across G20 markets and Europe. Authenticate every request with the `X-API-Key` header. Honor the `X-RateLimit-Burst-Remaining` response header.  **Tiered access.** **L1** — metadata, company profiles, ISIC classifications, reference data, point-in-time audit trails. **L2** — Markdown / JSON content, full-text search. **L3** — standardized financial line items (income statement, balance sheet, cash-flow statement) per fiscal period, mapped to a single reusable taxonomy.
 
     The version of the OpenAPI document: 1.1.5
     Contact: api@financialreports.eu
