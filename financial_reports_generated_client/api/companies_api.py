@@ -17,11 +17,10 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
 from pydantic import Field, StrictBool, StrictInt, StrictStr, field_validator
-from typing import Optional
+from typing import Any, Dict, Optional
 from typing_extensions import Annotated
 from financial_reports_generated_client.models.company import Company
 from financial_reports_generated_client.models.next_annual_report import NextAnnualReport
-from financial_reports_generated_client.models.paginated_company_financial_statement_list import PaginatedCompanyFinancialStatementList
 from financial_reports_generated_client.models.paginated_company_minimal_list import PaginatedCompanyMinimalList
 
 from financial_reports_generated_client.api_client import ApiClient, RequestSerialized
@@ -46,12 +45,13 @@ class CompaniesApi:
     async def companies_financials_retrieve(
         self,
         id: Annotated[StrictInt, Field(description="A unique integer value identifying this company.")],
+        as_of: Annotated[Optional[StrictStr], Field(description="Point-in-time query (`YYYY-MM-DD`). Returns the financials as they were known on that date — only filings released on or before `as_of` are considered when picking the statement for each period.")] = None,
         fiscal_period: Annotated[Optional[StrictStr], Field(description="Filter by fiscal period.")] = None,
         fiscal_year: Annotated[Optional[StrictInt], Field(description="Filter by exact fiscal year (e.g. `2024`).")] = None,
         fiscal_year_from: Annotated[Optional[StrictInt], Field(description="Fiscal year range start (inclusive).")] = None,
         fiscal_year_to: Annotated[Optional[StrictInt], Field(description="Fiscal year range end (inclusive).")] = None,
-        line_items: Annotated[Optional[StrictStr], Field(description="Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Only statements containing at least one of the requested codes are returned.")] = None,
-        statement_type: Annotated[Optional[StrictStr], Field(description="Filter by statement type.")] = None,
+        line_items: Annotated[Optional[StrictStr], Field(description="Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Statements with none of the requested codes are dropped. Unknown codes return `400` — see `/api/line-item-definitions/`.")] = None,
+        statement_type: Annotated[Optional[StrictStr], Field(description="Filter to a single statement type.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -64,13 +64,15 @@ class CompaniesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> PaginatedCompanyFinancialStatementList:
+    ) -> Dict[str, object]:
         """Retrieve Company Financials
 
-        Returns deduplicated, standardized financial KPIs for a company, structured by fiscal period and statement type.  When multiple filings report the same period (e.g. an annual report and its ESEF package), the data from the most recently published filing is returned.  Use the `depth` and `parent_code` fields on each line item to render the Capital IQ-style statement hierarchy.  **Access Level Required:** Requires **RAG / Agent (Level 3)**.
+        **Experimental endpoint — the response schema may change without an API version bump.**  Returns standardized financial KPIs for a company as a structured document: a company envelope containing `periods`, each holding its Income Statement, Balance Sheet and Cash Flow `statements`, each holding `line_items`.  When several filings report the same period, the most recently published filing is selected; every contributing filing is listed in the statement's `sources` array. `source_filing` and `sources` are returned only for accounts with source unmasking enabled (`sources_masked` reports which applies). Use `as_of=YYYY-MM-DD` for a point-in-time view.  Use the `depth` and `parent_code` fields on each line item to render the Capital IQ-style statement hierarchy.  **Access Level Required:** Requires **RAG / Agent (Level 3)**.
 
         :param id: A unique integer value identifying this company. (required)
         :type id: int
+        :param as_of: Point-in-time query (`YYYY-MM-DD`). Returns the financials as they were known on that date — only filings released on or before `as_of` are considered when picking the statement for each period.
+        :type as_of: str
         :param fiscal_period: Filter by fiscal period.
         :type fiscal_period: str
         :param fiscal_year: Filter by exact fiscal year (e.g. `2024`).
@@ -79,9 +81,9 @@ class CompaniesApi:
         :type fiscal_year_from: int
         :param fiscal_year_to: Fiscal year range end (inclusive).
         :type fiscal_year_to: int
-        :param line_items: Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Only statements containing at least one of the requested codes are returned.
+        :param line_items: Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Statements with none of the requested codes are dropped. Unknown codes return `400` — see `/api/line-item-definitions/`.
         :type line_items: str
-        :param statement_type: Filter by statement type.
+        :param statement_type: Filter to a single statement type.
         :type statement_type: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -107,6 +109,7 @@ class CompaniesApi:
 
         _param = self._companies_financials_retrieve_serialize(
             id=id,
+            as_of=as_of,
             fiscal_period=fiscal_period,
             fiscal_year=fiscal_year,
             fiscal_year_from=fiscal_year_from,
@@ -120,7 +123,8 @@ class CompaniesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "PaginatedCompanyFinancialStatementList",
+            '200': "Dict[str, object]",
+            '400': None,
             '404': None,
         }
         response_data = await self.api_client.call_api(
@@ -138,12 +142,13 @@ class CompaniesApi:
     async def companies_financials_retrieve_with_http_info(
         self,
         id: Annotated[StrictInt, Field(description="A unique integer value identifying this company.")],
+        as_of: Annotated[Optional[StrictStr], Field(description="Point-in-time query (`YYYY-MM-DD`). Returns the financials as they were known on that date — only filings released on or before `as_of` are considered when picking the statement for each period.")] = None,
         fiscal_period: Annotated[Optional[StrictStr], Field(description="Filter by fiscal period.")] = None,
         fiscal_year: Annotated[Optional[StrictInt], Field(description="Filter by exact fiscal year (e.g. `2024`).")] = None,
         fiscal_year_from: Annotated[Optional[StrictInt], Field(description="Fiscal year range start (inclusive).")] = None,
         fiscal_year_to: Annotated[Optional[StrictInt], Field(description="Fiscal year range end (inclusive).")] = None,
-        line_items: Annotated[Optional[StrictStr], Field(description="Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Only statements containing at least one of the requested codes are returned.")] = None,
-        statement_type: Annotated[Optional[StrictStr], Field(description="Filter by statement type.")] = None,
+        line_items: Annotated[Optional[StrictStr], Field(description="Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Statements with none of the requested codes are dropped. Unknown codes return `400` — see `/api/line-item-definitions/`.")] = None,
+        statement_type: Annotated[Optional[StrictStr], Field(description="Filter to a single statement type.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -156,13 +161,15 @@ class CompaniesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[PaginatedCompanyFinancialStatementList]:
+    ) -> ApiResponse[Dict[str, object]]:
         """Retrieve Company Financials
 
-        Returns deduplicated, standardized financial KPIs for a company, structured by fiscal period and statement type.  When multiple filings report the same period (e.g. an annual report and its ESEF package), the data from the most recently published filing is returned.  Use the `depth` and `parent_code` fields on each line item to render the Capital IQ-style statement hierarchy.  **Access Level Required:** Requires **RAG / Agent (Level 3)**.
+        **Experimental endpoint — the response schema may change without an API version bump.**  Returns standardized financial KPIs for a company as a structured document: a company envelope containing `periods`, each holding its Income Statement, Balance Sheet and Cash Flow `statements`, each holding `line_items`.  When several filings report the same period, the most recently published filing is selected; every contributing filing is listed in the statement's `sources` array. `source_filing` and `sources` are returned only for accounts with source unmasking enabled (`sources_masked` reports which applies). Use `as_of=YYYY-MM-DD` for a point-in-time view.  Use the `depth` and `parent_code` fields on each line item to render the Capital IQ-style statement hierarchy.  **Access Level Required:** Requires **RAG / Agent (Level 3)**.
 
         :param id: A unique integer value identifying this company. (required)
         :type id: int
+        :param as_of: Point-in-time query (`YYYY-MM-DD`). Returns the financials as they were known on that date — only filings released on or before `as_of` are considered when picking the statement for each period.
+        :type as_of: str
         :param fiscal_period: Filter by fiscal period.
         :type fiscal_period: str
         :param fiscal_year: Filter by exact fiscal year (e.g. `2024`).
@@ -171,9 +178,9 @@ class CompaniesApi:
         :type fiscal_year_from: int
         :param fiscal_year_to: Fiscal year range end (inclusive).
         :type fiscal_year_to: int
-        :param line_items: Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Only statements containing at least one of the requested codes are returned.
+        :param line_items: Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Statements with none of the requested codes are dropped. Unknown codes return `400` — see `/api/line-item-definitions/`.
         :type line_items: str
-        :param statement_type: Filter by statement type.
+        :param statement_type: Filter to a single statement type.
         :type statement_type: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -199,6 +206,7 @@ class CompaniesApi:
 
         _param = self._companies_financials_retrieve_serialize(
             id=id,
+            as_of=as_of,
             fiscal_period=fiscal_period,
             fiscal_year=fiscal_year,
             fiscal_year_from=fiscal_year_from,
@@ -212,7 +220,8 @@ class CompaniesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "PaginatedCompanyFinancialStatementList",
+            '200': "Dict[str, object]",
+            '400': None,
             '404': None,
         }
         response_data = await self.api_client.call_api(
@@ -230,12 +239,13 @@ class CompaniesApi:
     async def companies_financials_retrieve_without_preload_content(
         self,
         id: Annotated[StrictInt, Field(description="A unique integer value identifying this company.")],
+        as_of: Annotated[Optional[StrictStr], Field(description="Point-in-time query (`YYYY-MM-DD`). Returns the financials as they were known on that date — only filings released on or before `as_of` are considered when picking the statement for each period.")] = None,
         fiscal_period: Annotated[Optional[StrictStr], Field(description="Filter by fiscal period.")] = None,
         fiscal_year: Annotated[Optional[StrictInt], Field(description="Filter by exact fiscal year (e.g. `2024`).")] = None,
         fiscal_year_from: Annotated[Optional[StrictInt], Field(description="Fiscal year range start (inclusive).")] = None,
         fiscal_year_to: Annotated[Optional[StrictInt], Field(description="Fiscal year range end (inclusive).")] = None,
-        line_items: Annotated[Optional[StrictStr], Field(description="Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Only statements containing at least one of the requested codes are returned.")] = None,
-        statement_type: Annotated[Optional[StrictStr], Field(description="Filter by statement type.")] = None,
+        line_items: Annotated[Optional[StrictStr], Field(description="Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Statements with none of the requested codes are dropped. Unknown codes return `400` — see `/api/line-item-definitions/`.")] = None,
+        statement_type: Annotated[Optional[StrictStr], Field(description="Filter to a single statement type.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -251,10 +261,12 @@ class CompaniesApi:
     ) -> RESTResponseType:
         """Retrieve Company Financials
 
-        Returns deduplicated, standardized financial KPIs for a company, structured by fiscal period and statement type.  When multiple filings report the same period (e.g. an annual report and its ESEF package), the data from the most recently published filing is returned.  Use the `depth` and `parent_code` fields on each line item to render the Capital IQ-style statement hierarchy.  **Access Level Required:** Requires **RAG / Agent (Level 3)**.
+        **Experimental endpoint — the response schema may change without an API version bump.**  Returns standardized financial KPIs for a company as a structured document: a company envelope containing `periods`, each holding its Income Statement, Balance Sheet and Cash Flow `statements`, each holding `line_items`.  When several filings report the same period, the most recently published filing is selected; every contributing filing is listed in the statement's `sources` array. `source_filing` and `sources` are returned only for accounts with source unmasking enabled (`sources_masked` reports which applies). Use `as_of=YYYY-MM-DD` for a point-in-time view.  Use the `depth` and `parent_code` fields on each line item to render the Capital IQ-style statement hierarchy.  **Access Level Required:** Requires **RAG / Agent (Level 3)**.
 
         :param id: A unique integer value identifying this company. (required)
         :type id: int
+        :param as_of: Point-in-time query (`YYYY-MM-DD`). Returns the financials as they were known on that date — only filings released on or before `as_of` are considered when picking the statement for each period.
+        :type as_of: str
         :param fiscal_period: Filter by fiscal period.
         :type fiscal_period: str
         :param fiscal_year: Filter by exact fiscal year (e.g. `2024`).
@@ -263,9 +275,9 @@ class CompaniesApi:
         :type fiscal_year_from: int
         :param fiscal_year_to: Fiscal year range end (inclusive).
         :type fiscal_year_to: int
-        :param line_items: Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Only statements containing at least one of the requested codes are returned.
+        :param line_items: Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Statements with none of the requested codes are dropped. Unknown codes return `400` — see `/api/line-item-definitions/`.
         :type line_items: str
-        :param statement_type: Filter by statement type.
+        :param statement_type: Filter to a single statement type.
         :type statement_type: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -291,6 +303,7 @@ class CompaniesApi:
 
         _param = self._companies_financials_retrieve_serialize(
             id=id,
+            as_of=as_of,
             fiscal_period=fiscal_period,
             fiscal_year=fiscal_year,
             fiscal_year_from=fiscal_year_from,
@@ -304,7 +317,8 @@ class CompaniesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "PaginatedCompanyFinancialStatementList",
+            '200': "Dict[str, object]",
+            '400': None,
             '404': None,
         }
         response_data = await self.api_client.call_api(
@@ -317,6 +331,7 @@ class CompaniesApi:
     def _companies_financials_retrieve_serialize(
         self,
         id,
+        as_of,
         fiscal_period,
         fiscal_year,
         fiscal_year_from,
@@ -347,6 +362,10 @@ class CompaniesApi:
         if id is not None:
             _path_params['id'] = id
         # process the query parameters
+        if as_of is not None:
+            
+            _query_params.append(('as_of', as_of))
+            
         if fiscal_period is not None:
             
             _query_params.append(('fiscal_period', fiscal_period))

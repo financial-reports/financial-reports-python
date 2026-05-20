@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "1.4.38"
+__version__ = "1.4.39"
 
 # Define package exports
 __all__ = [
@@ -44,10 +44,8 @@ __all__ = [
     "BulkWatchlist",
     "BulkWatchlistResponse",
     "Company",
-    "CompanyFinancialStatement",
     "CompanyMinimal",
     "Country",
-    "CurrencyCompact",
     "DesignatedSponsor",
     "EntityLegalForm",
     "ErrorDetail",
@@ -57,7 +55,6 @@ __all__ = [
     "FilingProcessedPayload",
     "FilingSummary",
     "FilingType",
-    "FinancialLineItemCompact",
     "FiscalPeriodEnum",
     "ISICClass",
     "ISICDivision",
@@ -69,7 +66,6 @@ __all__ = [
     "LineItemDefinition",
     "ListedStockExchange",
     "NextAnnualReport",
-    "PaginatedCompanyFinancialStatementList",
     "PaginatedCompanyMinimalList",
     "PaginatedCountryList",
     "PaginatedFilingCategoryList",
@@ -133,10 +129,8 @@ from financial_reports_generated_client.exceptions import ApiException as ApiExc
 from financial_reports_generated_client.models.bulk_watchlist import BulkWatchlist as BulkWatchlist
 from financial_reports_generated_client.models.bulk_watchlist_response import BulkWatchlistResponse as BulkWatchlistResponse
 from financial_reports_generated_client.models.company import Company as Company
-from financial_reports_generated_client.models.company_financial_statement import CompanyFinancialStatement as CompanyFinancialStatement
 from financial_reports_generated_client.models.company_minimal import CompanyMinimal as CompanyMinimal
 from financial_reports_generated_client.models.country import Country as Country
-from financial_reports_generated_client.models.currency_compact import CurrencyCompact as CurrencyCompact
 from financial_reports_generated_client.models.designated_sponsor import DesignatedSponsor as DesignatedSponsor
 from financial_reports_generated_client.models.entity_legal_form import EntityLegalForm as EntityLegalForm
 from financial_reports_generated_client.models.error_detail import ErrorDetail as ErrorDetail
@@ -146,7 +140,6 @@ from financial_reports_generated_client.models.filing_history import FilingHisto
 from financial_reports_generated_client.models.filing_processed_payload import FilingProcessedPayload as FilingProcessedPayload
 from financial_reports_generated_client.models.filing_summary import FilingSummary as FilingSummary
 from financial_reports_generated_client.models.filing_type import FilingType as FilingType
-from financial_reports_generated_client.models.financial_line_item_compact import FinancialLineItemCompact as FinancialLineItemCompact
 from financial_reports_generated_client.models.fiscal_period_enum import FiscalPeriodEnum as FiscalPeriodEnum
 from financial_reports_generated_client.models.isic_class import ISICClass as ISICClass
 from financial_reports_generated_client.models.isic_division import ISICDivision as ISICDivision
@@ -158,7 +151,6 @@ from financial_reports_generated_client.models.language import Language as Langu
 from financial_reports_generated_client.models.line_item_definition import LineItemDefinition as LineItemDefinition
 from financial_reports_generated_client.models.listed_stock_exchange import ListedStockExchange as ListedStockExchange
 from financial_reports_generated_client.models.next_annual_report import NextAnnualReport as NextAnnualReport
-from financial_reports_generated_client.models.paginated_company_financial_statement_list import PaginatedCompanyFinancialStatementList as PaginatedCompanyFinancialStatementList
 from financial_reports_generated_client.models.paginated_company_minimal_list import PaginatedCompanyMinimalList as PaginatedCompanyMinimalList
 from financial_reports_generated_client.models.paginated_country_list import PaginatedCountryList as PaginatedCountryList
 from financial_reports_generated_client.models.paginated_filing_category_list import PaginatedFilingCategoryList as PaginatedFilingCategoryList

@@ -11,13 +11,15 @@ Method | HTTP request | Description
 
 
 # **companies_financials_retrieve**
-> PaginatedCompanyFinancialStatementList companies_financials_retrieve(id, fiscal_period=fiscal_period, fiscal_year=fiscal_year, fiscal_year_from=fiscal_year_from, fiscal_year_to=fiscal_year_to, line_items=line_items, statement_type=statement_type)
+> Dict[str, object] companies_financials_retrieve(id, as_of=as_of, fiscal_period=fiscal_period, fiscal_year=fiscal_year, fiscal_year_from=fiscal_year_from, fiscal_year_to=fiscal_year_to, line_items=line_items, statement_type=statement_type)
 
 Retrieve Company Financials
 
-Returns deduplicated, standardized financial KPIs for a company, structured by fiscal period and statement type.
+**Experimental endpoint — the response schema may change without an API version bump.**
 
-When multiple filings report the same period (e.g. an annual report and its ESEF package), the data from the most recently published filing is returned.
+Returns standardized financial KPIs for a company as a structured document: a company envelope containing `periods`, each holding its Income Statement, Balance Sheet and Cash Flow `statements`, each holding `line_items`.
+
+When several filings report the same period, the most recently published filing is selected; every contributing filing is listed in the statement's `sources` array. `source_filing` and `sources` are returned only for accounts with source unmasking enabled (`sources_masked` reports which applies). Use `as_of=YYYY-MM-DD` for a point-in-time view.
 
 Use the `depth` and `parent_code` fields on each line item to render the Capital IQ-style statement hierarchy.
 
@@ -30,7 +32,6 @@ Use the `depth` and `parent_code` fields on each line item to render the Capital
 
 ```python
 import financial_reports_generated_client
-from financial_reports_generated_client.models.paginated_company_financial_statement_list import PaginatedCompanyFinancialStatementList
 from financial_reports_generated_client.rest import ApiException
 from pprint import pprint
 
@@ -61,16 +62,17 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
     # Create an instance of the API class
     api_instance = financial_reports_generated_client.CompaniesApi(api_client)
     id = 56 # int | A unique integer value identifying this company.
+    as_of = 'as_of_example' # str | Point-in-time query (`YYYY-MM-DD`). Returns the financials as they were known on that date — only filings released on or before `as_of` are considered when picking the statement for each period. (optional)
     fiscal_period = 'fiscal_period_example' # str | Filter by fiscal period. (optional)
     fiscal_year = 56 # int | Filter by exact fiscal year (e.g. `2024`). (optional)
     fiscal_year_from = 56 # int | Fiscal year range start (inclusive). (optional)
     fiscal_year_to = 56 # int | Fiscal year range end (inclusive). (optional)
-    line_items = 'line_items_example' # str | Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Only statements containing at least one of the requested codes are returned. (optional)
-    statement_type = 'statement_type_example' # str | Filter by statement type. (optional)
+    line_items = 'line_items_example' # str | Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Statements with none of the requested codes are dropped. Unknown codes return `400` — see `/api/line-item-definitions/`. (optional)
+    statement_type = 'statement_type_example' # str | Filter to a single statement type. (optional)
 
     try:
         # Retrieve Company Financials
-        api_response = await api_instance.companies_financials_retrieve(id, fiscal_period=fiscal_period, fiscal_year=fiscal_year, fiscal_year_from=fiscal_year_from, fiscal_year_to=fiscal_year_to, line_items=line_items, statement_type=statement_type)
+        api_response = await api_instance.companies_financials_retrieve(id, as_of=as_of, fiscal_period=fiscal_period, fiscal_year=fiscal_year, fiscal_year_from=fiscal_year_from, fiscal_year_to=fiscal_year_to, line_items=line_items, statement_type=statement_type)
         print("The response of CompaniesApi->companies_financials_retrieve:\n")
         pprint(api_response)
     except Exception as e:
@@ -85,16 +87,17 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer value identifying this company. | 
+ **as_of** | **str**| Point-in-time query (&#x60;YYYY-MM-DD&#x60;). Returns the financials as they were known on that date — only filings released on or before &#x60;as_of&#x60; are considered when picking the statement for each period. | [optional] 
  **fiscal_period** | **str**| Filter by fiscal period. | [optional] 
  **fiscal_year** | **int**| Filter by exact fiscal year (e.g. &#x60;2024&#x60;). | [optional] 
  **fiscal_year_from** | **int**| Fiscal year range start (inclusive). | [optional] 
  **fiscal_year_to** | **int**| Fiscal year range end (inclusive). | [optional] 
- **line_items** | **str**| Comma-separated KPI codes to include (e.g. &#x60;revenue,ebitda,net_income_loss&#x60;). Omit to return all extracted line items. Only statements containing at least one of the requested codes are returned. | [optional] 
- **statement_type** | **str**| Filter by statement type. | [optional] 
+ **line_items** | **str**| Comma-separated KPI codes to include (e.g. &#x60;revenue,ebitda,net_income_loss&#x60;). Omit to return all extracted line items. Statements with none of the requested codes are dropped. Unknown codes return &#x60;400&#x60; — see &#x60;/api/line-item-definitions/&#x60;. | [optional] 
+ **statement_type** | **str**| Filter to a single statement type. | [optional] 
 
 ### Return type
 
-[**PaginatedCompanyFinancialStatementList**](PaginatedCompanyFinancialStatementList.md)
+**Dict[str, object]**
 
 ### Authorization
 
@@ -109,7 +112,8 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** |  |  -  |
+**200** | Structured company financials document. |  -  |
+**400** | Invalid query parameter. |  -  |
 **404** | Company not found. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
