@@ -50,7 +50,9 @@ class TestPaginatedLineItemDefinitionList(unittest.TestCase):
                         sort_order = 0, 
                         category = '', 
                         description = '', 
-                        aliases = null, 
+                        aliases = [
+                            ''
+                            ], 
                         is_capital_iq_standard = True, )
                     ]
             )
@@ -68,7 +70,9 @@ class TestPaginatedLineItemDefinitionList(unittest.TestCase):
                         sort_order = 0, 
                         category = '', 
                         description = '', 
-                        aliases = null, 
+                        aliases = [
+                            ''
+                            ], 
                         is_capital_iq_standard = True, )
                     ],
         )

@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "1.4.39"
+__version__ = "1.4.40"
 
 # Define package exports
 __all__ = [
@@ -31,7 +31,6 @@ __all__ = [
     "SourcesApi",
     "WatchlistApi",
     "WebhooksManagementApi",
-    "FilingsApi",
     "ApiResponse",
     "ApiClient",
     "Configuration",
@@ -43,6 +42,10 @@ __all__ = [
     "ApiException",
     "BulkWatchlist",
     "BulkWatchlistResponse",
+    "CompaniesFinancialsRetrieve200Response",
+    "CompaniesFinancialsRetrieve200ResponseCurrency",
+    "CompaniesFinancialsRetrieve200ResponseFilters",
+    "CompaniesFinancialsRetrieve200ResponsePeriodsInner",
     "Company",
     "CompanyMinimal",
     "Country",
@@ -90,13 +93,17 @@ __all__ = [
     "StockIndex",
     "WatchlistAction",
     "WatchlistCompany",
+    "WatchlistPage",
     "WatchlistResponse",
     "Webhook",
     "WebhookCompanyPayload",
+    "WebhookCreateResponse",
     "WebhookDelivery",
     "WebhookDeliveryDetail",
     "WebhookFilingPayload",
+    "WebhookReplayResponse",
     "WebhookSecret",
+    "WebhookTestResponse",
 ]
 
 # import apis into sdk package
@@ -112,7 +119,6 @@ from financial_reports_generated_client.api.languages_api import LanguagesApi as
 from financial_reports_generated_client.api.sources_api import SourcesApi as SourcesApi
 from financial_reports_generated_client.api.watchlist_api import WatchlistApi as WatchlistApi
 from financial_reports_generated_client.api.webhooks_management_api import WebhooksManagementApi as WebhooksManagementApi
-from financial_reports_generated_client.api.filings_api import FilingsApi as FilingsApi
 
 # import ApiClient
 from financial_reports_generated_client.api_response import ApiResponse as ApiResponse
@@ -128,6 +134,10 @@ from financial_reports_generated_client.exceptions import ApiException as ApiExc
 # import models into sdk package
 from financial_reports_generated_client.models.bulk_watchlist import BulkWatchlist as BulkWatchlist
 from financial_reports_generated_client.models.bulk_watchlist_response import BulkWatchlistResponse as BulkWatchlistResponse
+from financial_reports_generated_client.models.companies_financials_retrieve200_response import CompaniesFinancialsRetrieve200Response as CompaniesFinancialsRetrieve200Response
+from financial_reports_generated_client.models.companies_financials_retrieve200_response_currency import CompaniesFinancialsRetrieve200ResponseCurrency as CompaniesFinancialsRetrieve200ResponseCurrency
+from financial_reports_generated_client.models.companies_financials_retrieve200_response_filters import CompaniesFinancialsRetrieve200ResponseFilters as CompaniesFinancialsRetrieve200ResponseFilters
+from financial_reports_generated_client.models.companies_financials_retrieve200_response_periods_inner import CompaniesFinancialsRetrieve200ResponsePeriodsInner as CompaniesFinancialsRetrieve200ResponsePeriodsInner
 from financial_reports_generated_client.models.company import Company as Company
 from financial_reports_generated_client.models.company_minimal import CompanyMinimal as CompanyMinimal
 from financial_reports_generated_client.models.country import Country as Country
@@ -175,13 +185,17 @@ from financial_reports_generated_client.models.status_enum import StatusEnum as 
 from financial_reports_generated_client.models.stock_index import StockIndex as StockIndex
 from financial_reports_generated_client.models.watchlist_action import WatchlistAction as WatchlistAction
 from financial_reports_generated_client.models.watchlist_company import WatchlistCompany as WatchlistCompany
+from financial_reports_generated_client.models.watchlist_page import WatchlistPage as WatchlistPage
 from financial_reports_generated_client.models.watchlist_response import WatchlistResponse as WatchlistResponse
 from financial_reports_generated_client.models.webhook import Webhook as Webhook
 from financial_reports_generated_client.models.webhook_company_payload import WebhookCompanyPayload as WebhookCompanyPayload
+from financial_reports_generated_client.models.webhook_create_response import WebhookCreateResponse as WebhookCreateResponse
 from financial_reports_generated_client.models.webhook_delivery import WebhookDelivery as WebhookDelivery
 from financial_reports_generated_client.models.webhook_delivery_detail import WebhookDeliveryDetail as WebhookDeliveryDetail
 from financial_reports_generated_client.models.webhook_filing_payload import WebhookFilingPayload as WebhookFilingPayload
+from financial_reports_generated_client.models.webhook_replay_response import WebhookReplayResponse as WebhookReplayResponse
 from financial_reports_generated_client.models.webhook_secret import WebhookSecret as WebhookSecret
+from financial_reports_generated_client.models.webhook_test_response import WebhookTestResponse as WebhookTestResponse
 
 
 from .client import FinancialReports

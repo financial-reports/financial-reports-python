@@ -14,7 +14,7 @@ Name | Type | Description | Notes
 **sort_order** | **int** | Display order within (statement_type, category). | [optional] 
 **category** | **str** | Optional grouping within a statement (e.g. &#39;Operating Expenses&#39;). | [optional] 
 **description** | **str** | Definition of the KPI. Used in the extraction prompt. | [optional] 
-**aliases** | **object** |  | [optional] 
+**aliases** | **List[str]** | Alternative labels this line item may appear under in source filings. | [readonly] 
 **is_capital_iq_standard** | **bool** | True if this KPI maps 1:1 to an S&amp;P Capital IQ field. | [optional] 
 
 ## Example

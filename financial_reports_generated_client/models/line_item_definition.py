@@ -39,7 +39,7 @@ class LineItemDefinition(BaseModel):
     sort_order: Optional[Annotated[int, Field(le=2147483647, strict=True, ge=0)]] = Field(default=None, description="Display order within (statement_type, category).")
     category: Optional[Annotated[str, Field(strict=True, max_length=80)]] = Field(default=None, description="Optional grouping within a statement (e.g. 'Operating Expenses').")
     description: Optional[StrictStr] = Field(default=None, description="Definition of the KPI. Used in the extraction prompt.")
-    aliases: Optional[Any] = None
+    aliases: List[StrictStr] = Field(description="Alternative labels this line item may appear under in source filings.")
     is_capital_iq_standard: Optional[StrictBool] = Field(default=None, description="True if this KPI maps 1:1 to an S&P Capital IQ field.")
     __properties: ClassVar[List[str]] = ["code", "name", "statement_type", "statement_type_display", "depth", "parent_code", "sort_order", "category", "description", "aliases", "is_capital_iq_standard"]
 
@@ -73,8 +73,10 @@ class LineItemDefinition(BaseModel):
         * `None` is only added to the output dict for nullable fields that
           were set at model initialization. Other fields with value `None`
           are ignored.
+        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
+            "aliases",
         ])
 
         _dict = self.model_dump(
@@ -86,11 +88,6 @@ class LineItemDefinition(BaseModel):
         # and model_fields_set contains the field
         if self.parent_code is None and "parent_code" in self.model_fields_set:
             _dict['parent_code'] = None
-
-        # set to None if aliases (nullable) is None
-        # and model_fields_set contains the field
-        if self.aliases is None and "aliases" in self.model_fields_set:
-            _dict['aliases'] = None
 
         return _dict
 

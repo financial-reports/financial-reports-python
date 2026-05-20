@@ -11,7 +11,7 @@ Method | HTTP request | Description
 
 
 # **companies_financials_retrieve**
-> Dict[str, object] companies_financials_retrieve(id, as_of=as_of, fiscal_period=fiscal_period, fiscal_year=fiscal_year, fiscal_year_from=fiscal_year_from, fiscal_year_to=fiscal_year_to, line_items=line_items, statement_type=statement_type)
+> CompaniesFinancialsRetrieve200Response companies_financials_retrieve(id, as_of=as_of, fiscal_period=fiscal_period, fiscal_year=fiscal_year, fiscal_year_from=fiscal_year_from, fiscal_year_to=fiscal_year_to, line_items=line_items, statement_type=statement_type)
 
 Retrieve Company Financials
 
@@ -32,6 +32,7 @@ Use the `depth` and `parent_code` fields on each line item to render the Capital
 
 ```python
 import financial_reports_generated_client
+from financial_reports_generated_client.models.companies_financials_retrieve200_response import CompaniesFinancialsRetrieve200Response
 from financial_reports_generated_client.rest import ApiException
 from pprint import pprint
 
@@ -97,7 +98,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Dict[str, object]**
+[**CompaniesFinancialsRetrieve200Response**](CompaniesFinancialsRetrieve200Response.md)
 
 ### Authorization
 

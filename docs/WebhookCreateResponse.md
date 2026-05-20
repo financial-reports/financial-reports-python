@@ -1,12 +1,13 @@
-# PatchedWebhook
+# WebhookCreateResponse
 
+Response body for `create()` — identical to WebhookSerializer plus the one-time `secret_key`, which the view injects into the create response.
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **int** | The unique identifier for the webhook. | [optional] [readonly] 
-**url** | **str** | The endpoint URL (HTTPS required) to which the webhook payloads will be sent. | [optional] 
+**id** | **int** | The unique identifier for the webhook. | [readonly] 
+**url** | **str** | The endpoint URL (HTTPS required) to which the webhook payloads will be sent. | 
 **is_active** | **bool** | Set to &#39;false&#39; to temporarily disable this webhook without deleting it. | [optional] [default to True]
 **include_markdown** | **bool** | Set to &#39;true&#39; to include the full &#39;markdown_content&#39; in the webhook payload. Set to &#39;false&#39; to receive a payload without the markdown body. | [optional] [default to True]
 **include_isins** | **bool** | Set to &#39;true&#39; to include the list of ISINs in the company object. Warning: Large companies may have thousands of ISINs, increasing payload size. | [optional] [default to False]
@@ -14,25 +15,26 @@ Name | Type | Description | Notes
 **trigger_on_filing_received** | **bool** | If true, triggers immediately when a filing is detected (Fastest). Note: Metadata like filing type may be null, and no markdown is included. | [optional] [default to False]
 **trigger_on_filing_processed** | **bool** | If true, triggers when the filing has been fully analyzed and converted (Complete). Includes verified metadata and markdown content. | [optional] [default to True]
 **subscribed_filing_types** | **List[str]** | A list of filing type codes (e.g., [&#39;10-K&#39;, &#39;Annual Report&#39;]) to subscribe to. If this list is empty or omitted, you will be subscribed to all filing types. | [optional] 
-**created_at** | **datetime** | Timestamp when the webhook was created. | [optional] [readonly] 
-**updated_at** | **datetime** | Timestamp when the webhook was last updated. | [optional] [readonly] 
+**created_at** | **datetime** | Timestamp when the webhook was created. | [readonly] 
+**updated_at** | **datetime** | Timestamp when the webhook was last updated. | [readonly] 
+**secret_key** | **str** | The webhook signing secret. Returned only once, in the create response. | [readonly] 
 
 ## Example
 
 ```python
-from financial_reports_generated_client.models.patched_webhook import PatchedWebhook
+from financial_reports_generated_client.models.webhook_create_response import WebhookCreateResponse
 
 # TODO update the JSON string below
 json = "{}"
-# create an instance of PatchedWebhook from a JSON string
-patched_webhook_instance = PatchedWebhook.from_json(json)
+# create an instance of WebhookCreateResponse from a JSON string
+webhook_create_response_instance = WebhookCreateResponse.from_json(json)
 # print the JSON string representation of the object
-print(PatchedWebhook.to_json())
+print(WebhookCreateResponse.to_json())
 
 # convert the object into a dict
-patched_webhook_dict = patched_webhook_instance.to_dict()
-# create an instance of PatchedWebhook from a dict
-patched_webhook_from_dict = PatchedWebhook.from_dict(patched_webhook_dict)
+webhook_create_response_dict = webhook_create_response_instance.to_dict()
+# create an instance of WebhookCreateResponse from a dict
+webhook_create_response_from_dict = WebhookCreateResponse.from_dict(webhook_create_response_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

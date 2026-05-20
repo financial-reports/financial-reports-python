@@ -44,7 +44,7 @@ class Company(BaseModel):
     description: StrictStr = Field(description="A detailed description or 'About Us' text for the company.")
     description_last_updated: Optional[datetime] = Field(description="Timestamp of the last update to the company's description.")
     isins: List[StrictStr] = Field(description="ISINs associated with the company (capped at 100; use the ISIN endpoint for the full list).")
-    isin_count: StrictStr = Field(description="Total number of ISINs associated with this company.")
+    isin_count: StrictInt = Field(description="Total number of ISINs associated with this company.")
     lei: StrictStr = Field(description="Legal Entity Identifier (ISO 17442).")
     country_code: StrictStr = Field(description="ISO 3166-1 alpha-2 country code of the company's primary registration or headquarters.")
     address: StrictStr = Field(description="The company's primary street address.")

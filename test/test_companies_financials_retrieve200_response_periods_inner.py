@@ -15,10 +15,10 @@
 
 import unittest
 
-from financial_reports_generated_client.models.line_item_definition import LineItemDefinition
+from financial_reports_generated_client.models.companies_financials_retrieve200_response_periods_inner import CompaniesFinancialsRetrieve200ResponsePeriodsInner
 
-class TestLineItemDefinition(unittest.TestCase):
-    """LineItemDefinition unit test stubs"""
+class TestCompaniesFinancialsRetrieve200ResponsePeriodsInner(unittest.TestCase):
+    """CompaniesFinancialsRetrieve200ResponsePeriodsInner unit test stubs"""
 
     def setUp(self):
         pass
@@ -26,44 +26,31 @@ class TestLineItemDefinition(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> LineItemDefinition:
-        """Test LineItemDefinition
+    def make_instance(self, include_optional) -> CompaniesFinancialsRetrieve200ResponsePeriodsInner:
+        """Test CompaniesFinancialsRetrieve200ResponsePeriodsInner
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `LineItemDefinition`
+        # uncomment below to create an instance of `CompaniesFinancialsRetrieve200ResponsePeriodsInner`
         """
-        model = LineItemDefinition()
+        model = CompaniesFinancialsRetrieve200ResponsePeriodsInner()
         if include_optional:
-            return LineItemDefinition(
-                code = '',
-                name = '',
-                statement_type = 'IS',
-                statement_type_display = '',
-                depth = 0,
-                parent_code = '',
-                sort_order = 0,
-                category = '',
-                description = '',
-                aliases = [
-                    ''
-                    ],
-                is_capital_iq_standard = True
+            return CompaniesFinancialsRetrieve200ResponsePeriodsInner(
+                fiscal_year = 56,
+                fiscal_period = '',
+                period_start_date = datetime.datetime.strptime('1975-12-30', '%Y-%m-%d').date(),
+                period_end_date = datetime.datetime.strptime('1975-12-30', '%Y-%m-%d').date(),
+                statements = [
+                    None
+                    ]
             )
         else:
-            return LineItemDefinition(
-                code = '',
-                name = '',
-                statement_type = 'IS',
-                statement_type_display = '',
-                aliases = [
-                    ''
-                    ],
+            return CompaniesFinancialsRetrieve200ResponsePeriodsInner(
         )
         """
 
-    def testLineItemDefinition(self):
-        """Test LineItemDefinition"""
+    def testCompaniesFinancialsRetrieve200ResponsePeriodsInner(self):
+        """Test CompaniesFinancialsRetrieve200ResponsePeriodsInner"""
         # inst_req_only = self.make_instance(include_optional=False)
         # inst_req_and_optional = self.make_instance(include_optional=True)
 

@@ -17,8 +17,9 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
 from pydantic import Field, StrictBool, StrictInt, StrictStr, field_validator
-from typing import Any, Dict, Optional
+from typing import Optional
 from typing_extensions import Annotated
+from financial_reports_generated_client.models.companies_financials_retrieve200_response import CompaniesFinancialsRetrieve200Response
 from financial_reports_generated_client.models.company import Company
 from financial_reports_generated_client.models.next_annual_report import NextAnnualReport
 from financial_reports_generated_client.models.paginated_company_minimal_list import PaginatedCompanyMinimalList
@@ -64,7 +65,7 @@ class CompaniesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Dict[str, object]:
+    ) -> CompaniesFinancialsRetrieve200Response:
         """Retrieve Company Financials
 
         **Experimental endpoint — the response schema may change without an API version bump.**  Returns standardized financial KPIs for a company as a structured document: a company envelope containing `periods`, each holding its Income Statement, Balance Sheet and Cash Flow `statements`, each holding `line_items`.  When several filings report the same period, the most recently published filing is selected; every contributing filing is listed in the statement's `sources` array. `source_filing` and `sources` are returned only for accounts with source unmasking enabled (`sources_masked` reports which applies). Use `as_of=YYYY-MM-DD` for a point-in-time view.  Use the `depth` and `parent_code` fields on each line item to render the Capital IQ-style statement hierarchy.  **Access Level Required:** Requires **RAG / Agent (Level 3)**.
@@ -123,7 +124,7 @@ class CompaniesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "CompaniesFinancialsRetrieve200Response",
             '400': None,
             '404': None,
         }
@@ -161,7 +162,7 @@ class CompaniesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Dict[str, object]]:
+    ) -> ApiResponse[CompaniesFinancialsRetrieve200Response]:
         """Retrieve Company Financials
 
         **Experimental endpoint — the response schema may change without an API version bump.**  Returns standardized financial KPIs for a company as a structured document: a company envelope containing `periods`, each holding its Income Statement, Balance Sheet and Cash Flow `statements`, each holding `line_items`.  When several filings report the same period, the most recently published filing is selected; every contributing filing is listed in the statement's `sources` array. `source_filing` and `sources` are returned only for accounts with source unmasking enabled (`sources_masked` reports which applies). Use `as_of=YYYY-MM-DD` for a point-in-time view.  Use the `depth` and `parent_code` fields on each line item to render the Capital IQ-style statement hierarchy.  **Access Level Required:** Requires **RAG / Agent (Level 3)**.
@@ -220,7 +221,7 @@ class CompaniesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "CompaniesFinancialsRetrieve200Response",
             '400': None,
             '404': None,
         }
@@ -317,7 +318,7 @@ class CompaniesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, object]",
+            '200': "CompaniesFinancialsRetrieve200Response",
             '400': None,
             '404': None,
         }

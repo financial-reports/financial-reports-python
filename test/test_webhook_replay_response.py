@@ -15,10 +15,10 @@
 
 import unittest
 
-from financial_reports_generated_client.models.line_item_definition import LineItemDefinition
+from financial_reports_generated_client.models.webhook_replay_response import WebhookReplayResponse
 
-class TestLineItemDefinition(unittest.TestCase):
-    """LineItemDefinition unit test stubs"""
+class TestWebhookReplayResponse(unittest.TestCase):
+    """WebhookReplayResponse unit test stubs"""
 
     def setUp(self):
         pass
@@ -26,44 +26,28 @@ class TestLineItemDefinition(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> LineItemDefinition:
-        """Test LineItemDefinition
+    def make_instance(self, include_optional) -> WebhookReplayResponse:
+        """Test WebhookReplayResponse
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `LineItemDefinition`
+        # uncomment below to create an instance of `WebhookReplayResponse`
         """
-        model = LineItemDefinition()
+        model = WebhookReplayResponse()
         if include_optional:
-            return LineItemDefinition(
-                code = '',
-                name = '',
-                statement_type = 'IS',
-                statement_type_display = '',
-                depth = 0,
-                parent_code = '',
-                sort_order = 0,
-                category = '',
-                description = '',
-                aliases = [
-                    ''
-                    ],
-                is_capital_iq_standard = True
+            return WebhookReplayResponse(
+                status = '',
+                message = ''
             )
         else:
-            return LineItemDefinition(
-                code = '',
-                name = '',
-                statement_type = 'IS',
-                statement_type_display = '',
-                aliases = [
-                    ''
-                    ],
+            return WebhookReplayResponse(
+                status = '',
+                message = '',
         )
         """
 
-    def testLineItemDefinition(self):
-        """Test LineItemDefinition"""
+    def testWebhookReplayResponse(self):
+        """Test WebhookReplayResponse"""
         # inst_req_only = self.make_instance(include_optional=False)
         # inst_req_and_optional = self.make_instance(include_optional=True)
 

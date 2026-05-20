@@ -1171,7 +1171,7 @@ class FilingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> str:
         """Retrieve Filing Markdown
 
         **Access Level Required:** Requires **Processed Filings (Level 2)** access to view full converted content.  --- Retrieve the raw processed content of a single filing in Markdown format.
@@ -1209,7 +1209,7 @@ class FilingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': None,
+            '200': "str",
             '403': "ErrorDetail",
             '404': "ErrorDetail",
         }
@@ -1240,7 +1240,7 @@ class FilingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[str]:
         """Retrieve Filing Markdown
 
         **Access Level Required:** Requires **Processed Filings (Level 2)** access to view full converted content.  --- Retrieve the raw processed content of a single filing in Markdown format.
@@ -1278,7 +1278,7 @@ class FilingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': None,
+            '200': "str",
             '403': "ErrorDetail",
             '404': "ErrorDetail",
         }
@@ -1347,7 +1347,7 @@ class FilingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': None,
+            '200': "str",
             '403': "ErrorDetail",
             '404': "ErrorDetail",
         }
@@ -1394,6 +1394,7 @@ class FilingsApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
+                    'text/markdown', 
                     'application/json'
                 ]
             )

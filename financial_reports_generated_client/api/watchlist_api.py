@@ -17,11 +17,10 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
 from pydantic import StrictInt
-from typing import List
 from financial_reports_generated_client.models.bulk_watchlist import BulkWatchlist
 from financial_reports_generated_client.models.bulk_watchlist_response import BulkWatchlistResponse
 from financial_reports_generated_client.models.watchlist_action import WatchlistAction
-from financial_reports_generated_client.models.watchlist_company import WatchlistCompany
+from financial_reports_generated_client.models.watchlist_page import WatchlistPage
 from financial_reports_generated_client.models.watchlist_response import WatchlistResponse
 
 from financial_reports_generated_client.api_client import ApiClient, RequestSerialized
@@ -99,6 +98,7 @@ class WatchlistApi:
             '200': "BulkWatchlistResponse",
             '400': "ErrorDetail",
             '401': "ErrorDetail",
+            '403': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -168,6 +168,7 @@ class WatchlistApi:
             '200': "BulkWatchlistResponse",
             '400': "ErrorDetail",
             '401': "ErrorDetail",
+            '403': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -237,6 +238,7 @@ class WatchlistApi:
             '200': "BulkWatchlistResponse",
             '400': "ErrorDetail",
             '401': "ErrorDetail",
+            '403': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -380,6 +382,7 @@ class WatchlistApi:
             '200': "BulkWatchlistResponse",
             '400': "ErrorDetail",
             '401': "ErrorDetail",
+            '403': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -449,6 +452,7 @@ class WatchlistApi:
             '200': "BulkWatchlistResponse",
             '400': "ErrorDetail",
             '401': "ErrorDetail",
+            '403': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -518,6 +522,7 @@ class WatchlistApi:
             '200': "BulkWatchlistResponse",
             '400': "ErrorDetail",
             '401': "ErrorDetail",
+            '403': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -661,6 +666,7 @@ class WatchlistApi:
             '201': "WatchlistResponse",
             '400': "WatchlistResponse",
             '401': "ErrorDetail",
+            '403': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -730,6 +736,7 @@ class WatchlistApi:
             '201': "WatchlistResponse",
             '400': "WatchlistResponse",
             '401': "ErrorDetail",
+            '403': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -799,6 +806,7 @@ class WatchlistApi:
             '201': "WatchlistResponse",
             '400': "WatchlistResponse",
             '401': "ErrorDetail",
+            '403': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -941,6 +949,7 @@ class WatchlistApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "WatchlistResponse",
             '401': "ErrorDetail",
+            '403': "ErrorDetail",
             '404': "WatchlistResponse",
         }
         response_data = await self.api_client.call_api(
@@ -1010,6 +1019,7 @@ class WatchlistApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "WatchlistResponse",
             '401': "ErrorDetail",
+            '403': "ErrorDetail",
             '404': "WatchlistResponse",
         }
         response_data = await self.api_client.call_api(
@@ -1079,6 +1089,7 @@ class WatchlistApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "WatchlistResponse",
             '401': "ErrorDetail",
+            '403': "ErrorDetail",
             '404': "WatchlistResponse",
         }
         response_data = await self.api_client.call_api(
@@ -1168,7 +1179,7 @@ class WatchlistApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> List[WatchlistCompany]:
+    ) -> WatchlistPage:
         """Get User's Watchlist
 
         **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Fetches all companies currently in the authenticated user's watchlist. Results are paginated.
@@ -1203,7 +1214,7 @@ class WatchlistApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "List[WatchlistCompany]",
+            '200': "WatchlistPage",
             '401': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
@@ -1232,7 +1243,7 @@ class WatchlistApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[List[WatchlistCompany]]:
+    ) -> ApiResponse[WatchlistPage]:
         """Get User's Watchlist
 
         **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Fetches all companies currently in the authenticated user's watchlist. Results are paginated.
@@ -1267,7 +1278,7 @@ class WatchlistApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "List[WatchlistCompany]",
+            '200': "WatchlistPage",
             '401': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(
@@ -1331,7 +1342,7 @@ class WatchlistApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "List[WatchlistCompany]",
+            '200': "WatchlistPage",
             '401': "ErrorDetail",
         }
         response_data = await self.api_client.call_api(

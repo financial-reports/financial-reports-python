@@ -251,7 +251,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **filings_markdown_retrieve**
-> filings_markdown_retrieve(id)
+> str filings_markdown_retrieve(id)
 
 Retrieve Filing Markdown
 
@@ -300,7 +300,9 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
 
     try:
         # Retrieve Filing Markdown
-        await api_instance.filings_markdown_retrieve(id)
+        api_response = await api_instance.filings_markdown_retrieve(id)
+        print("The response of FilingsApi->filings_markdown_retrieve:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling FilingsApi->filings_markdown_retrieve: %s\n" % e)
 ```
@@ -316,7 +318,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**str**
 
 ### Authorization
 
@@ -325,13 +327,13 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: text/markdown, application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Markdown content as plain text. |  -  |
+**200** | Markdown content of the filing. |  -  |
 **403** | Forbidden. Your plan does not include access to this endpoint. |  -  |
 **404** | Not Found. The filing or its processed content does not exist. |  -  |
 

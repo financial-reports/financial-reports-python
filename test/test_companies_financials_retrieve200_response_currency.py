@@ -15,10 +15,10 @@
 
 import unittest
 
-from financial_reports_generated_client.models.line_item_definition import LineItemDefinition
+from financial_reports_generated_client.models.companies_financials_retrieve200_response_currency import CompaniesFinancialsRetrieve200ResponseCurrency
 
-class TestLineItemDefinition(unittest.TestCase):
-    """LineItemDefinition unit test stubs"""
+class TestCompaniesFinancialsRetrieve200ResponseCurrency(unittest.TestCase):
+    """CompaniesFinancialsRetrieve200ResponseCurrency unit test stubs"""
 
     def setUp(self):
         pass
@@ -26,44 +26,27 @@ class TestLineItemDefinition(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> LineItemDefinition:
-        """Test LineItemDefinition
+    def make_instance(self, include_optional) -> CompaniesFinancialsRetrieve200ResponseCurrency:
+        """Test CompaniesFinancialsRetrieve200ResponseCurrency
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `LineItemDefinition`
+        # uncomment below to create an instance of `CompaniesFinancialsRetrieve200ResponseCurrency`
         """
-        model = LineItemDefinition()
+        model = CompaniesFinancialsRetrieve200ResponseCurrency()
         if include_optional:
-            return LineItemDefinition(
+            return CompaniesFinancialsRetrieve200ResponseCurrency(
                 code = '',
                 name = '',
-                statement_type = 'IS',
-                statement_type_display = '',
-                depth = 0,
-                parent_code = '',
-                sort_order = 0,
-                category = '',
-                description = '',
-                aliases = [
-                    ''
-                    ],
-                is_capital_iq_standard = True
+                symbol = ''
             )
         else:
-            return LineItemDefinition(
-                code = '',
-                name = '',
-                statement_type = 'IS',
-                statement_type_display = '',
-                aliases = [
-                    ''
-                    ],
+            return CompaniesFinancialsRetrieve200ResponseCurrency(
         )
         """
 
-    def testLineItemDefinition(self):
-        """Test LineItemDefinition"""
+    def testCompaniesFinancialsRetrieve200ResponseCurrency(self):
+        """Test CompaniesFinancialsRetrieve200ResponseCurrency"""
         # inst_req_only = self.make_instance(include_optional=False)
         # inst_req_and_optional = self.make_instance(include_optional=True)
 

@@ -99,6 +99,7 @@ Name | Type | Description  | Notes
 **200** | Companies successfully added. |  -  |
 **400** | Validation error. |  -  |
 **401** | Authentication credentials were not provided or are invalid. |  -  |
+**403** | Forbidden. The watchlist is locked by an administrator. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -190,6 +191,7 @@ Name | Type | Description  | Notes
 **200** | Companies successfully removed. |  -  |
 **400** | Validation error. |  -  |
 **401** | Authentication credentials were not provided or are invalid. |  -  |
+**403** | Forbidden. The watchlist is locked by an administrator. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -281,6 +283,7 @@ Name | Type | Description  | Notes
 **201** | Company successfully added to the watchlist. |  -  |
 **400** | Bad Request. The company may already be in the watchlist or the input was invalid. |  -  |
 **401** | Authentication credentials were not provided or are invalid. |  -  |
+**403** | Forbidden. The watchlist is locked by an administrator. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -370,12 +373,13 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | Company successfully removed from the watchlist. |  -  |
 **401** | Authentication credentials were not provided or are invalid. |  -  |
+**403** | Forbidden. The watchlist is locked by an administrator. |  -  |
 **404** | Not Found. The company either does not exist or was not in the user&#39;s watchlist. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **watchlist_retrieve**
-> List[WatchlistCompany] watchlist_retrieve()
+> WatchlistPage watchlist_retrieve()
 
 Get User's Watchlist
 
@@ -391,7 +395,7 @@ Fetches all companies currently in the authenticated user's watchlist. Results a
 
 ```python
 import financial_reports_generated_client
-from financial_reports_generated_client.models.watchlist_company import WatchlistCompany
+from financial_reports_generated_client.models.watchlist_page import WatchlistPage
 from financial_reports_generated_client.rest import ApiException
 from pprint import pprint
 
@@ -439,7 +443,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**List[WatchlistCompany]**](WatchlistCompany.md)
+[**WatchlistPage**](WatchlistPage.md)
 
 ### Authorization
 

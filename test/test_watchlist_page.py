@@ -15,10 +15,10 @@
 
 import unittest
 
-from financial_reports_generated_client.models.line_item_definition import LineItemDefinition
+from financial_reports_generated_client.models.watchlist_page import WatchlistPage
 
-class TestLineItemDefinition(unittest.TestCase):
-    """LineItemDefinition unit test stubs"""
+class TestWatchlistPage(unittest.TestCase):
+    """WatchlistPage unit test stubs"""
 
     def setUp(self):
         pass
@@ -26,44 +26,42 @@ class TestLineItemDefinition(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> LineItemDefinition:
-        """Test LineItemDefinition
+    def make_instance(self, include_optional) -> WatchlistPage:
+        """Test WatchlistPage
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `LineItemDefinition`
+        # uncomment below to create an instance of `WatchlistPage`
         """
-        model = LineItemDefinition()
+        model = WatchlistPage()
         if include_optional:
-            return LineItemDefinition(
-                code = '',
-                name = '',
-                statement_type = 'IS',
-                statement_type_display = '',
-                depth = 0,
-                parent_code = '',
-                sort_order = 0,
-                category = '',
-                description = '',
-                aliases = [
-                    ''
+            return WatchlistPage(
+                count = 56,
+                next = '',
+                previous = '',
+                results = [
+                    financial_reports_generated_client.models.watchlist_company.WatchlistCompany(
+                        id = 56, 
+                        name = '', )
                     ],
-                is_capital_iq_standard = True
+                is_locked = True
             )
         else:
-            return LineItemDefinition(
-                code = '',
-                name = '',
-                statement_type = 'IS',
-                statement_type_display = '',
-                aliases = [
-                    ''
+            return WatchlistPage(
+                count = 56,
+                next = '',
+                previous = '',
+                results = [
+                    financial_reports_generated_client.models.watchlist_company.WatchlistCompany(
+                        id = 56, 
+                        name = '', )
                     ],
+                is_locked = True,
         )
         """
 
-    def testLineItemDefinition(self):
-        """Test LineItemDefinition"""
+    def testWatchlistPage(self):
+        """Test WatchlistPage"""
         # inst_req_only = self.make_instance(include_optional=False)
         # inst_req_and_optional = self.make_instance(include_optional=True)
 

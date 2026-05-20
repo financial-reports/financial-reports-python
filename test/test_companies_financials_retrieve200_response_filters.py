@@ -15,10 +15,10 @@
 
 import unittest
 
-from financial_reports_generated_client.models.line_item_definition import LineItemDefinition
+from financial_reports_generated_client.models.companies_financials_retrieve200_response_filters import CompaniesFinancialsRetrieve200ResponseFilters
 
-class TestLineItemDefinition(unittest.TestCase):
-    """LineItemDefinition unit test stubs"""
+class TestCompaniesFinancialsRetrieve200ResponseFilters(unittest.TestCase):
+    """CompaniesFinancialsRetrieve200ResponseFilters unit test stubs"""
 
     def setUp(self):
         pass
@@ -26,44 +26,33 @@ class TestLineItemDefinition(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> LineItemDefinition:
-        """Test LineItemDefinition
+    def make_instance(self, include_optional) -> CompaniesFinancialsRetrieve200ResponseFilters:
+        """Test CompaniesFinancialsRetrieve200ResponseFilters
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `LineItemDefinition`
+        # uncomment below to create an instance of `CompaniesFinancialsRetrieve200ResponseFilters`
         """
-        model = LineItemDefinition()
+        model = CompaniesFinancialsRetrieve200ResponseFilters()
         if include_optional:
-            return LineItemDefinition(
-                code = '',
-                name = '',
-                statement_type = 'IS',
-                statement_type_display = '',
-                depth = 0,
-                parent_code = '',
-                sort_order = 0,
-                category = '',
-                description = '',
-                aliases = [
+            return CompaniesFinancialsRetrieve200ResponseFilters(
+                statement_type = '',
+                fiscal_year = 56,
+                fiscal_year_from = 56,
+                fiscal_year_to = 56,
+                fiscal_period = '',
+                line_items = [
                     ''
                     ],
-                is_capital_iq_standard = True
+                as_of = datetime.datetime.strptime('1975-12-30', '%Y-%m-%d').date()
             )
         else:
-            return LineItemDefinition(
-                code = '',
-                name = '',
-                statement_type = 'IS',
-                statement_type_display = '',
-                aliases = [
-                    ''
-                    ],
+            return CompaniesFinancialsRetrieve200ResponseFilters(
         )
         """
 
-    def testLineItemDefinition(self):
-        """Test LineItemDefinition"""
+    def testCompaniesFinancialsRetrieve200ResponseFilters(self):
+        """Test CompaniesFinancialsRetrieve200ResponseFilters"""
         # inst_req_only = self.make_instance(include_optional=False)
         # inst_req_and_optional = self.make_instance(include_optional=True)
 

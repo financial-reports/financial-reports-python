@@ -13,5 +13,4 @@ from financial_reports_generated_client.api.languages_api import LanguagesApi
 from financial_reports_generated_client.api.sources_api import SourcesApi
 from financial_reports_generated_client.api.watchlist_api import WatchlistApi
 from financial_reports_generated_client.api.webhooks_management_api import WebhooksManagementApi
-from financial_reports_generated_client.api.filings_api import FilingsApi
 

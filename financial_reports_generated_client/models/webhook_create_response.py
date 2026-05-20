@@ -26,9 +26,9 @@ from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
 
-class Webhook(BaseModel):
+class WebhookCreateResponse(BaseModel):
     """
-    Webhook
+    Response body for `create()` — identical to WebhookSerializer plus the one-time `secret_key`, which the view injects into the create response.
     """ # noqa: E501
     id: StrictInt = Field(description="The unique identifier for the webhook.")
     url: Annotated[str, Field(strict=True, max_length=500)] = Field(description="The endpoint URL (HTTPS required) to which the webhook payloads will be sent.")
@@ -41,7 +41,8 @@ class Webhook(BaseModel):
     subscribed_filing_types: Optional[List[StrictStr]] = Field(default=None, description="A list of filing type codes (e.g., ['10-K', 'Annual Report']) to subscribe to. If this list is empty or omitted, you will be subscribed to all filing types.")
     created_at: datetime = Field(description="Timestamp when the webhook was created.")
     updated_at: datetime = Field(description="Timestamp when the webhook was last updated.")
-    __properties: ClassVar[List[str]] = ["id", "url", "is_active", "include_markdown", "include_isins", "track_all_companies", "trigger_on_filing_received", "trigger_on_filing_processed", "subscribed_filing_types", "created_at", "updated_at"]
+    secret_key: StrictStr = Field(description="The webhook signing secret. Returned only once, in the create response.")
+    __properties: ClassVar[List[str]] = ["id", "url", "is_active", "include_markdown", "include_isins", "track_all_companies", "trigger_on_filing_received", "trigger_on_filing_processed", "subscribed_filing_types", "created_at", "updated_at", "secret_key"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -61,7 +62,7 @@ class Webhook(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of Webhook from a JSON string"""
+        """Create an instance of WebhookCreateResponse from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -76,11 +77,13 @@ class Webhook(BaseModel):
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
             "id",
             "created_at",
             "updated_at",
+            "secret_key",
         ])
 
         _dict = self.model_dump(
@@ -92,7 +95,7 @@ class Webhook(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of Webhook from a dict"""
+        """Create an instance of WebhookCreateResponse from a dict"""
         if obj is None:
             return None
 
@@ -110,7 +113,8 @@ class Webhook(BaseModel):
             "trigger_on_filing_processed": obj.get("trigger_on_filing_processed") if obj.get("trigger_on_filing_processed") is not None else True,
             "subscribed_filing_types": obj.get("subscribed_filing_types"),
             "created_at": obj.get("created_at"),
-            "updated_at": obj.get("updated_at")
+            "updated_at": obj.get("updated_at"),
+            "secret_key": obj.get("secret_key")
         })
         return _obj
 

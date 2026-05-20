@@ -39,8 +39,8 @@ class PatchedWebhook(BaseModel):
     trigger_on_filing_received: Optional[StrictBool] = Field(default=False, description="If true, triggers immediately when a filing is detected (Fastest). Note: Metadata like filing type may be null, and no markdown is included.")
     trigger_on_filing_processed: Optional[StrictBool] = Field(default=True, description="If true, triggers when the filing has been fully analyzed and converted (Complete). Includes verified metadata and markdown content.")
     subscribed_filing_types: Optional[List[StrictStr]] = Field(default=None, description="A list of filing type codes (e.g., ['10-K', 'Annual Report']) to subscribe to. If this list is empty or omitted, you will be subscribed to all filing types.")
-    created_at: Optional[datetime] = None
-    updated_at: Optional[datetime] = None
+    created_at: Optional[datetime] = Field(default=None, description="Timestamp when the webhook was created.")
+    updated_at: Optional[datetime] = Field(default=None, description="Timestamp when the webhook was last updated.")
     __properties: ClassVar[List[str]] = ["id", "url", "is_active", "include_markdown", "include_isins", "track_all_companies", "trigger_on_filing_received", "trigger_on_filing_processed", "subscribed_filing_types", "created_at", "updated_at"]
 
     model_config = ConfigDict(
