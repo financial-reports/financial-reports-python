@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "1.4.40"
+__version__ = "1.4.41"
 
 # Define package exports
 __all__ = [
@@ -31,6 +31,7 @@ __all__ = [
     "SourcesApi",
     "WatchlistApi",
     "WebhooksManagementApi",
+    "CompaniesApi",
     "ApiResponse",
     "ApiClient",
     "Configuration",
@@ -119,6 +120,7 @@ from financial_reports_generated_client.api.languages_api import LanguagesApi as
 from financial_reports_generated_client.api.sources_api import SourcesApi as SourcesApi
 from financial_reports_generated_client.api.watchlist_api import WatchlistApi as WatchlistApi
 from financial_reports_generated_client.api.webhooks_management_api import WebhooksManagementApi as WebhooksManagementApi
+from financial_reports_generated_client.api.companies_api import CompaniesApi as CompaniesApi
 
 # import ApiClient
 from financial_reports_generated_client.api_response import ApiResponse as ApiResponse
