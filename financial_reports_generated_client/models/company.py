@@ -46,6 +46,7 @@ class Company(BaseModel):
     description_last_updated: Optional[datetime] = Field(description="Timestamp of the last update to the company's description.")
     isins: List[StrictStr] = Field(description="ISINs associated with the company (capped at 100; use the ISIN endpoint for the full list).")
     isin_count: StrictInt = Field(description="Total number of ISINs associated with this company.")
+    primary_isin: Optional[StrictStr] = Field(description="The company's primary ISIN (ISO 6166), or null when no primary is designated. Equivalent to isins[0] when a primary exists.")
     lei: StrictStr = Field(description="Legal Entity Identifier (ISO 17442).")
     country_code: StrictStr = Field(description="ISO 3166-1 alpha-2 country code of the company's primary registration or headquarters.")
     address: StrictStr = Field(description="The company's primary street address.")
@@ -92,7 +93,7 @@ class Company(BaseModel):
     legal_address: StrictStr = Field(description="The official registered legal address of the company sourced from GLEIF.")
     legal_city: StrictStr = Field(description="The city of the registered legal address sourced from GLEIF.")
     legal_zip_code: StrictStr = Field(description="The postal code of the registered legal address sourced from GLEIF.")
-    __properties: ClassVar[List[str]] = ["id", "name", "tagline", "description", "description_last_updated", "isins", "isin_count", "lei", "country_code", "address", "city", "zip_code", "sector", "industry_group", "industry", "sub_industry", "ir_link", "homepage_link", "logo", "date_public", "date_ipo", "main_stock_exchange", "is_listed", "listing_status", "delisting_date", "delisting_reason", "social_facebook", "social_instagram", "social_twitter", "social_linkedin", "social_youtube", "social_tiktok", "social_pinterest", "social_xing", "social_glassdoor", "year_founded", "corporate_video_id", "served_area", "headcount", "contact_email", "ticker", "local_company_id", "shares_outstanding", "designated_sponsor", "listed_stock_exchange", "stock_index", "listings", "legal_status", "legal_form", "jurisdiction", "legal_address", "legal_city", "legal_zip_code"]
+    __properties: ClassVar[List[str]] = ["id", "name", "tagline", "description", "description_last_updated", "isins", "isin_count", "primary_isin", "lei", "country_code", "address", "city", "zip_code", "sector", "industry_group", "industry", "sub_industry", "ir_link", "homepage_link", "logo", "date_public", "date_ipo", "main_stock_exchange", "is_listed", "listing_status", "delisting_date", "delisting_reason", "social_facebook", "social_instagram", "social_twitter", "social_linkedin", "social_youtube", "social_tiktok", "social_pinterest", "social_xing", "social_glassdoor", "year_founded", "corporate_video_id", "served_area", "headcount", "contact_email", "ticker", "local_company_id", "shares_outstanding", "designated_sponsor", "listed_stock_exchange", "stock_index", "listings", "legal_status", "legal_form", "jurisdiction", "legal_address", "legal_city", "legal_zip_code"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -177,6 +178,7 @@ class Company(BaseModel):
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
             "id",
@@ -186,6 +188,7 @@ class Company(BaseModel):
             "description_last_updated",
             "isins",
             "isin_count",
+            "primary_isin",
             "lei",
             "country_code",
             "address",
@@ -289,6 +292,11 @@ class Company(BaseModel):
         # and model_fields_set contains the field
         if self.description_last_updated is None and "description_last_updated" in self.model_fields_set:
             _dict['description_last_updated'] = None
+
+        # set to None if primary_isin (nullable) is None
+        # and model_fields_set contains the field
+        if self.primary_isin is None and "primary_isin" in self.model_fields_set:
+            _dict['primary_isin'] = None
 
         # set to None if sector (nullable) is None
         # and model_fields_set contains the field
@@ -459,6 +467,7 @@ class Company(BaseModel):
             "description_last_updated": obj.get("description_last_updated"),
             "isins": obj.get("isins"),
             "isin_count": obj.get("isin_count"),
+            "primary_isin": obj.get("primary_isin"),
             "lei": obj.get("lei"),
             "country_code": obj.get("country_code"),
             "address": obj.get("address"),

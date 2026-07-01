@@ -45,6 +45,7 @@ class TestCompany(unittest.TestCase):
                     ''
                     ],
                 isin_count = 56,
+                primary_isin = '',
                 lei = '',
                 country_code = '',
                 address = '',
@@ -142,6 +143,7 @@ class TestCompany(unittest.TestCase):
                     ''
                     ],
                 isin_count = 56,
+                primary_isin = '',
                 lei = '',
                 country_code = '',
                 address = '',

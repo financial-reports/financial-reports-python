@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **description_last_updated** | **datetime** | Timestamp of the last update to the company&#39;s description. | [readonly] 
 **isins** | **List[str]** | ISINs associated with the company (capped at 100; use the ISIN endpoint for the full list). | [readonly] 
 **isin_count** | **int** | Total number of ISINs associated with this company. | [readonly] 
+**primary_isin** | **str** | The company&#39;s primary ISIN (ISO 6166), or null when no primary is designated. Equivalent to isins[0] when a primary exists. | [readonly] 
 **lei** | **str** | Legal Entity Identifier (ISO 17442). | [readonly] 
 **country_code** | **str** | ISO 3166-1 alpha-2 country code of the company&#39;s primary registration or headquarters. | [readonly] 
 **address** | **str** | The company&#39;s primary street address. | [readonly] 
