@@ -20,11 +20,11 @@ from setuptools import setup, find_packages  # noqa: H301
 # prerequisite: setuptools
 # http://pypi.python.org/pypi/setuptools
 NAME = "financial-reports-generated-client"
-VERSION = "1.4.43"
+VERSION = "1.4.44"
 PYTHON_REQUIRES = ">= 3.10"
 REQUIRES = [
     "python-dateutil >= 2.8.2",
-    "aiohttp >= 3.8.4",
+    "aiohttp >= 3.13.5",
     "aiohttp-retry >= 2.8.3",
     "pydantic >= 2.11",
     "typing-extensions >= 4.7.1",
@@ -41,7 +41,6 @@ setup(
     install_requires=REQUIRES,
     packages=find_packages(exclude=["test", "tests"]),
     include_package_data=True,
-    license="Apache-2.0",
     long_description_content_type='text/markdown',
     long_description="""\
     Public-company filings across G20 markets and Europe. Authenticate every request with the &#x60;X-API-Key&#x60; header. Honor the &#x60;X-RateLimit-Burst-Remaining&#x60; response header.  **Tiered access.** **L1** — metadata, company profiles, ISIC classifications, reference data, point-in-time audit trails. **L2** — Markdown / JSON content, full-text search. **L3** — standardized financial line items (income statement, balance sheet, cash-flow statement) per fiscal period, mapped to a single reusable taxonomy.
