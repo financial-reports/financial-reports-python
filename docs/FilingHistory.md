@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **history_date** | **datetime** | The exact date and time the change was recorded. | 
 **history_type** | **str** | The type of change: &#39;+&#39; (Created), &#39;~&#39; (Changed), or &#39;-&#39; (Deleted). | 
 **changed_by** | **str** |  | [readonly] 
-**changes** | **Dict[str, object]** |  | [readonly] 
+**changes** | **Dict[str, Optional[object]]** |  | [readonly] 
 
 ## Example
 

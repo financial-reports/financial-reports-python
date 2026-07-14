@@ -361,6 +361,7 @@ conf = financial_reports_generated_client.Configuration(
         """
         self.client_session_kwargs = client_session_kwargs
         """Extra kwargs merged into aiohttp.ClientSession(**kwargs).
+
         """
         # Enable client side validation
         self.client_side_validation = client_side_validation
@@ -583,7 +584,7 @@ conf = financial_reports_generated_client.Configuration(
                "OS: {env}\n"\
                "Python Version: {pyversion}\n"\
                "Version of the API: 1.2.0\n"\
-               "SDK Package Version: 1.4.44".\
+               "SDK Package Version: 1.4.45".\
                format(env=sys.platform, pyversion=sys.version)
 
     def get_host_settings(self) -> List[HostSetting]:

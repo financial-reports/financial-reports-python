@@ -14,8 +14,8 @@ Name | Type | Description | Notes
 **duration_ms** | **int** |  | [readonly] 
 **response_body** | **str** |  | [readonly] 
 **created_at** | **datetime** |  | [readonly] 
-**request_headers** | **Dict[str, object]** | Reconstructed request headers that were sent with this delivery. | [readonly] 
-**request_payload** | **Dict[str, object]** | Reconstructed request payload. Built dynamically from the referenced filing. | [readonly] 
+**request_headers** | **Dict[str, Optional[object]]** | Reconstructed request headers that were sent with this delivery. | [readonly] 
+**request_payload** | **Dict[str, Optional[object]]** | Reconstructed request payload. Built dynamically from the referenced filing. | [readonly] 
 
 ## Example
 
