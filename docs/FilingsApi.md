@@ -177,7 +177,7 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
     types = 'types_example' # str | Filter by multiple Filing Type codes. Comma-separated (e.g., 10-K,10-Q). (optional)
     updated_date_from = '2013-10-20T19:20:30+01:00' # datetime | Filter by the date a filing was last updated on the platform (inclusive start, YYYY-MM-DDTHH:MM:SSZ format). (optional)
     updated_date_to = '2013-10-20T19:20:30+01:00' # datetime | Filter by the date a filing was last updated on the platform (inclusive end, YYYY-MM-DDTHH:MM:SSZ format). (optional)
-    view = summary # str | Controls the level of detail. Omit for a default 'summary' view, or use 'full' to include all details for each filing. (optional) (default to summary)
+    view = 'summary' # str | Controls the level of detail. Omit for a default 'summary' view, or use 'full' to include all details for each filing. (optional) (default to 'summary')
 
     try:
         # List Filings
@@ -226,7 +226,7 @@ Name | Type | Description  | Notes
  **types** | **str**| Filter by multiple Filing Type codes. Comma-separated (e.g., 10-K,10-Q). | [optional] 
  **updated_date_from** | **datetime**| Filter by the date a filing was last updated on the platform (inclusive start, YYYY-MM-DDTHH:MM:SSZ format). | [optional] 
  **updated_date_to** | **datetime**| Filter by the date a filing was last updated on the platform (inclusive end, YYYY-MM-DDTHH:MM:SSZ format). | [optional] 
- **view** | **str**| Controls the level of detail. Omit for a default &#39;summary&#39; view, or use &#39;full&#39; to include all details for each filing. | [optional] [default to summary]
+ **view** | **str**| Controls the level of detail. Omit for a default &#39;summary&#39; view, or use &#39;full&#39; to include all details for each filing. | [optional] [default to &#39;summary&#39;]
 
 ### Return type
 

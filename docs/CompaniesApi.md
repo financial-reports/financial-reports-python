@@ -180,7 +180,7 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
     sector = 'sector_example' # str | Filter by ISIC Section code. (optional)
     sub_industry = 'sub_industry_example' # str | Filter by ISIC Class code. (optional)
     ticker = 'ticker_example' # str | Filter by Company primary stock Ticker symbol. Case-insensitive. (optional)
-    view = summary # str | Controls the level of detail. Omit for a default 'summary' view, or use 'full' to include all details for each company. (optional) (default to summary)
+    view = 'summary' # str | Controls the level of detail. Omit for a default 'summary' view, or use 'full' to include all details for each company. (optional) (default to 'summary')
 
     try:
         # List Companies
@@ -212,7 +212,7 @@ Name | Type | Description  | Notes
  **sector** | **str**| Filter by ISIC Section code. | [optional] 
  **sub_industry** | **str**| Filter by ISIC Class code. | [optional] 
  **ticker** | **str**| Filter by Company primary stock Ticker symbol. Case-insensitive. | [optional] 
- **view** | **str**| Controls the level of detail. Omit for a default &#39;summary&#39; view, or use &#39;full&#39; to include all details for each company. | [optional] [default to summary]
+ **view** | **str**| Controls the level of detail. Omit for a default &#39;summary&#39; view, or use &#39;full&#39; to include all details for each company. | [optional] [default to &#39;summary&#39;]
 
 ### Return type
 
