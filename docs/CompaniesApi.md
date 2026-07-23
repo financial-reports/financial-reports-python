@@ -23,7 +23,7 @@ When several filings report the same period, the most recently published filing 
 
 Use the `depth` and `parent_code` fields on each line item to render the Capital IQ-style statement hierarchy.
 
-**Access Level Required:** Requires **RAG / Agent (Level 3)**.
+**Access Level Required:** Requires **Financial KPIs (Level 3)**.
 
 ### Example
 

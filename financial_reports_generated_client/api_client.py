@@ -92,7 +92,7 @@ class ApiClient:
             self.default_headers[header_name] = header_value
         self.cookie = cookie
         # Set default User-Agent.
-        self.user_agent = 'OpenAPI-Generator/1.4.48/python'
+        self.user_agent = 'OpenAPI-Generator/1.4.49/python'
         self.client_side_validation = configuration.client_side_validation
 
     async def __aenter__(self):
@@ -686,11 +686,8 @@ class ApiClient:
                 headers['Cookie'] = ""
             else:
                 headers['Cookie'] += "; "
-            # Account for cookie value containing spaces and special characters
-            cookie_value = str(auth_setting['value'])
-            if not re.match("^\".*\"$", cookie_value):
-                cookie_value = cookie_value.replace("\"", "\\\"")
-                cookie_value = f"\"{cookie_value}\""
+            # Account for cookie value containing spaces and special characters, excluding base64 delimiters
+            cookie_value = quote(str(auth_setting['value']), safe="!#$%&'()*+-./:<=>?@[]^_`{|}~%+/=")
             headers['Cookie'] += f"{auth_setting['key']}={cookie_value}"
         elif auth_setting['in'] == 'header':
             if auth_setting['type'] != 'http-signature':

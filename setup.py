@@ -20,11 +20,11 @@ from setuptools import setup, find_packages  # noqa: H301
 # prerequisite: setuptools
 # http://pypi.python.org/pypi/setuptools
 NAME = "financial-reports-generated-client"
-VERSION = "1.4.48"
+VERSION = "1.4.49"
 PYTHON_REQUIRES = ">= 3.10"
 REQUIRES = [
     "python-dateutil >= 2.8.2",
-    "aiohttp >= 3.13.5",
+    "aiohttp >= 3.14.1",
     "aiohttp-retry >= 2.8.3",
     "pydantic >= 2.11",
     "typing-extensions >= 4.7.1",
