@@ -41,6 +41,13 @@ class TestCompaniesApi(unittest.IsolatedAsyncioTestCase):
         """
         pass
 
+    async def test_companies_merges_retrieve(self) -> None:
+        """Test case for companies_merges_retrieve
+
+        List Company Merges
+        """
+        pass
+
     async def test_companies_next_annual_report_retrieve(self) -> None:
         """Test case for companies_next_annual_report_retrieve
 

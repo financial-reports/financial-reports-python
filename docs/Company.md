@@ -59,6 +59,8 @@ Name | Type | Description | Notes
 **legal_address** | **str** | The official registered legal address of the company sourced from GLEIF. | [readonly] 
 **legal_city** | **str** | The city of the registered legal address sourced from GLEIF. | [readonly] 
 **legal_zip_code** | **str** | The postal code of the registered legal address sourced from GLEIF. | [readonly] 
+**is_merged** | **bool** | True when this company record has been retired as a duplicate and replaced by the company in &#x60;merged_into&#x60;. Retired records are excluded from the company list but remain retrievable by id so an existing integration can discover the replacement rather than receiving a bare 404. See the merges feed at /api/companies/merges/. | [readonly] 
+**merged_into** | [**CompanyMergedInto**](CompanyMergedInto.md) | The canonical company that replaced this one, or null when this record is live. Repoint stored references to this id. | [readonly] 
 
 ## Example
 

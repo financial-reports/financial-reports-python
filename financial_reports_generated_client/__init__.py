@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "1.4.49"
+__version__ = "1.4.50"
 
 # Define package exports
 __all__ = [
@@ -49,6 +49,8 @@ __all__ = [
     "CompaniesFinancialsRetrieve200ResponsePeriodsInner",
     "Company",
     "CompanyListing",
+    "CompanyMerge",
+    "CompanyMergedInto",
     "CompanyMinimal",
     "Country",
     "DesignatedSponsor",
@@ -71,6 +73,7 @@ __all__ = [
     "LineItemDefinition",
     "ListedStockExchange",
     "NextAnnualReport",
+    "PaginatedCompanyMergeList",
     "PaginatedCompanyMinimalList",
     "PaginatedCountryList",
     "PaginatedFilingCategoryList",
@@ -145,6 +148,8 @@ from financial_reports_generated_client.models.companies_financials_retrieve200_
 from financial_reports_generated_client.models.companies_financials_retrieve200_response_periods_inner import CompaniesFinancialsRetrieve200ResponsePeriodsInner as CompaniesFinancialsRetrieve200ResponsePeriodsInner
 from financial_reports_generated_client.models.company import Company as Company
 from financial_reports_generated_client.models.company_listing import CompanyListing as CompanyListing
+from financial_reports_generated_client.models.company_merge import CompanyMerge as CompanyMerge
+from financial_reports_generated_client.models.company_merged_into import CompanyMergedInto as CompanyMergedInto
 from financial_reports_generated_client.models.company_minimal import CompanyMinimal as CompanyMinimal
 from financial_reports_generated_client.models.country import Country as Country
 from financial_reports_generated_client.models.designated_sponsor import DesignatedSponsor as DesignatedSponsor
@@ -167,6 +172,7 @@ from financial_reports_generated_client.models.language import Language as Langu
 from financial_reports_generated_client.models.line_item_definition import LineItemDefinition as LineItemDefinition
 from financial_reports_generated_client.models.listed_stock_exchange import ListedStockExchange as ListedStockExchange
 from financial_reports_generated_client.models.next_annual_report import NextAnnualReport as NextAnnualReport
+from financial_reports_generated_client.models.paginated_company_merge_list import PaginatedCompanyMergeList as PaginatedCompanyMergeList
 from financial_reports_generated_client.models.paginated_company_minimal_list import PaginatedCompanyMinimalList as PaginatedCompanyMinimalList
 from financial_reports_generated_client.models.paginated_country_list import PaginatedCountryList as PaginatedCountryList
 from financial_reports_generated_client.models.paginated_filing_category_list import PaginatedFilingCategoryList as PaginatedFilingCategoryList

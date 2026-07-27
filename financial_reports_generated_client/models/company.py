@@ -22,6 +22,7 @@ from datetime import date, datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from financial_reports_generated_client.models.company_listing import CompanyListing
+from financial_reports_generated_client.models.company_merged_into import CompanyMergedInto
 from financial_reports_generated_client.models.designated_sponsor import DesignatedSponsor
 from financial_reports_generated_client.models.entity_legal_form import EntityLegalForm
 from financial_reports_generated_client.models.isic_class import ISICClass
@@ -93,7 +94,9 @@ class Company(BaseModel):
     legal_address: StrictStr = Field(description="The official registered legal address of the company sourced from GLEIF.")
     legal_city: StrictStr = Field(description="The city of the registered legal address sourced from GLEIF.")
     legal_zip_code: StrictStr = Field(description="The postal code of the registered legal address sourced from GLEIF.")
-    __properties: ClassVar[List[str]] = ["id", "name", "tagline", "description", "description_last_updated", "isins", "isin_count", "primary_isin", "lei", "country_code", "address", "city", "zip_code", "sector", "industry_group", "industry", "sub_industry", "ir_link", "homepage_link", "logo", "date_public", "date_ipo", "main_stock_exchange", "is_listed", "listing_status", "delisting_date", "delisting_reason", "social_facebook", "social_instagram", "social_twitter", "social_linkedin", "social_youtube", "social_tiktok", "social_pinterest", "social_xing", "social_glassdoor", "year_founded", "corporate_video_id", "served_area", "headcount", "contact_email", "ticker", "local_company_id", "shares_outstanding", "designated_sponsor", "listed_stock_exchange", "stock_index", "listings", "legal_status", "legal_form", "jurisdiction", "legal_address", "legal_city", "legal_zip_code"]
+    is_merged: StrictBool = Field(description="True when this company record has been retired as a duplicate and replaced by the company in `merged_into`. Retired records are excluded from the company list but remain retrievable by id so an existing integration can discover the replacement rather than receiving a bare 404. See the merges feed at /api/companies/merges/.")
+    merged_into: Optional[CompanyMergedInto] = Field(description="The canonical company that replaced this one, or null when this record is live. Repoint stored references to this id.")
+    __properties: ClassVar[List[str]] = ["id", "name", "tagline", "description", "description_last_updated", "isins", "isin_count", "primary_isin", "lei", "country_code", "address", "city", "zip_code", "sector", "industry_group", "industry", "sub_industry", "ir_link", "homepage_link", "logo", "date_public", "date_ipo", "main_stock_exchange", "is_listed", "listing_status", "delisting_date", "delisting_reason", "social_facebook", "social_instagram", "social_twitter", "social_linkedin", "social_youtube", "social_tiktok", "social_pinterest", "social_xing", "social_glassdoor", "year_founded", "corporate_video_id", "served_area", "headcount", "contact_email", "ticker", "local_company_id", "shares_outstanding", "designated_sponsor", "listed_stock_exchange", "stock_index", "listings", "legal_status", "legal_form", "jurisdiction", "legal_address", "legal_city", "legal_zip_code", "is_merged", "merged_into"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -125,6 +128,8 @@ class Company(BaseModel):
         * `None` is only added to the output dict for nullable fields that
           were set at model initialization. Other fields with value `None`
           are ignored.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
@@ -235,6 +240,8 @@ class Company(BaseModel):
             "legal_address",
             "legal_city",
             "legal_zip_code",
+            "is_merged",
+            "merged_into",
         ])
 
         _dict = self.model_dump(
@@ -288,6 +295,9 @@ class Company(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of jurisdiction
         if self.jurisdiction:
             _dict['jurisdiction'] = self.jurisdiction.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of merged_into
+        if self.merged_into:
+            _dict['merged_into'] = self.merged_into.to_dict()
         # set to None if description_last_updated (nullable) is None
         # and model_fields_set contains the field
         if self.description_last_updated is None and "description_last_updated" in self.model_fields_set:
@@ -448,6 +458,11 @@ class Company(BaseModel):
         if self.jurisdiction is None and "jurisdiction" in self.model_fields_set:
             _dict['jurisdiction'] = None
 
+        # set to None if merged_into (nullable) is None
+        # and model_fields_set contains the field
+        if self.merged_into is None and "merged_into" in self.model_fields_set:
+            _dict['merged_into'] = None
+
         return _dict
 
     @classmethod
@@ -513,7 +528,9 @@ class Company(BaseModel):
             "jurisdiction": Jurisdiction.from_dict(obj["jurisdiction"]) if obj.get("jurisdiction") is not None else None,
             "legal_address": obj.get("legal_address"),
             "legal_city": obj.get("legal_city"),
-            "legal_zip_code": obj.get("legal_zip_code")
+            "legal_zip_code": obj.get("legal_zip_code"),
+            "is_merged": obj.get("is_merged"),
+            "merged_into": CompanyMergedInto.from_dict(obj["merged_into"]) if obj.get("merged_into") is not None else None
         })
         return _obj
 

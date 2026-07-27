@@ -6,6 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**companies_financials_retrieve**](CompaniesApi.md#companies_financials_retrieve) | **GET** /companies/{id}/financials/ | Retrieve Company Financials
 [**companies_list**](CompaniesApi.md#companies_list) | **GET** /companies/ | List Companies
+[**companies_merges_retrieve**](CompaniesApi.md#companies_merges_retrieve) | **GET** /companies/merges/ | List Company Merges
 [**companies_next_annual_report_retrieve**](CompaniesApi.md#companies_next_annual_report_retrieve) | **GET** /companies/{id}/next-annual-report/ | Predict Next Annual Report
 [**companies_retrieve**](CompaniesApi.md#companies_retrieve) | **GET** /companies/{id}/ | Retrieve Company Details
 
@@ -232,6 +233,99 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Success. The response structure will be the full Company object if &#x60;view&#x3D;full&#x60; is used. |  -  |
+**401** | Unauthorized |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **companies_merges_retrieve**
+> PaginatedCompanyMergeList companies_merges_retrieve()
+
+List Company Merges
+
+**Access Level Required:** Requires **Standard Access (Level 1)**.
+
+---
+Duplicate-company merges, oldest first.
+
+When two records turn out to describe the same issuer we retire one and keep the other. The retired id disappears from the company list, so a warehouse built by incremental sync would otherwise keep the stale row forever. Poll this feed to reconcile.
+
+**Poll `updated_at_from`, not `merged_at_from`.** Merges can be reversed, and a reversal edits the existing record in place rather than adding a new one — it moves `updated_at` but never `merged_at`. A `reversed_at` on a record you already ingested means the merge no longer holds and `shell_id` is a live company again.
+
+Results are ordered by `merged_at` then `id`, so paging is stable even when a bulk merge writes several records in the same instant. Records are never deleted from this feed.
+
+Covers merges recorded since 2026-06-29. Earlier cleanups predate this log and are not represented; companies removed by hard deletion rather than merge do not appear here either.
+
+### Example
+
+* Bearer (JWT) Authentication (CognitoJWT):
+* Api Key Authentication (ApiKeyAuth):
+
+```python
+import financial_reports_generated_client
+from financial_reports_generated_client.models.paginated_company_merge_list import PaginatedCompanyMergeList
+from financial_reports_generated_client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.financialreports.eu
+# See configuration.py for a list of all supported configuration parameters.
+configuration = financial_reports_generated_client.Configuration(
+    host = "https://api.financialreports.eu"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization (JWT): CognitoJWT
+configuration = financial_reports_generated_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Configure API key authorization: ApiKeyAuth
+configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+async with financial_reports_generated_client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = financial_reports_generated_client.CompaniesApi(api_client)
+
+    try:
+        # List Company Merges
+        api_response = await api_instance.companies_merges_retrieve()
+        print("The response of CompaniesApi->companies_merges_retrieve:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling CompaniesApi->companies_merges_retrieve: %s\n" % e)
+```
+
+
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**PaginatedCompanyMergeList**](PaginatedCompanyMergeList.md)
+
+### Authorization
+
+[CognitoJWT](../README.md#CognitoJWT), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Success. |  -  |
 **401** | Unauthorized |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

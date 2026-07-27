@@ -130,7 +130,11 @@ class TestCompany(unittest.TestCase):
                     name = '', ),
                 legal_address = '',
                 legal_city = '',
-                legal_zip_code = ''
+                legal_zip_code = '',
+                is_merged = True,
+                merged_into = financial_reports_generated_client.models.company_merged_into.CompanyMergedInto(
+                    id = 56, 
+                    name = '', )
             )
         else:
             return Company(
@@ -229,6 +233,10 @@ class TestCompany(unittest.TestCase):
                 legal_address = '',
                 legal_city = '',
                 legal_zip_code = '',
+                is_merged = True,
+                merged_into = financial_reports_generated_client.models.company_merged_into.CompanyMergedInto(
+                    id = 56, 
+                    name = '', ),
         )
         """
 
