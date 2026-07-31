@@ -79,8 +79,7 @@ class WatchlistPage(BaseModel):
         _items = []
         if self.results:
             for _item_results in self.results:
-                if _item_results:
-                    _items.append(_item_results.to_dict())
+                _items.append(_item_results.to_dict() if _item_results is not None else None)
             _dict['results'] = _items
         # set to None if next (nullable) is None
         # and model_fields_set contains the field

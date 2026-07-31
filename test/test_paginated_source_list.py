@@ -44,7 +44,8 @@ class TestPaginatedSourceList(unittest.TestCase):
                         id = 56, 
                         name = '', 
                         url = '', 
-                        description = '', )
+                        description = '', 
+                        has_named_speakers = True, )
                     ]
             )
         else:
@@ -55,7 +56,8 @@ class TestPaginatedSourceList(unittest.TestCase):
                         id = 56, 
                         name = '', 
                         url = '', 
-                        description = '', )
+                        description = '', 
+                        has_named_speakers = True, )
                     ],
         )
         """

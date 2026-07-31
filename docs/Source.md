@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **name** | **str** | Generic label identifying the regional authority for this data source. | [readonly] 
 **url** | **str** | Homepage URL for the data source, when available. | [readonly] 
 **description** | **str** | Description of the data source. | [readonly] 
+**has_named_speakers** | **bool** | Tri-state: true if this source&#39;s CT (call transcript) filings are confirmed to carry named speaker attribution (name/title/affiliation), false if confirmed generic labels like &#39;Speaker 1&#39;, null if not yet measured. Treat null as &#39;not a positive match&#39;, not as false — an unmeasured source is not the same claim as a confirmed-generic one. Not meaningful for non-transcript sources. | [readonly] 
 
 ## Example
 

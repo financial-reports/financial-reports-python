@@ -88,8 +88,7 @@ class CompaniesFinancialsRetrieve200Response(BaseModel):
         _items = []
         if self.periods:
             for _item_periods in self.periods:
-                if _item_periods:
-                    _items.append(_item_periods.to_dict())
+                _items.append(_item_periods.to_dict() if _item_periods is not None else None)
             _dict['periods'] = _items
         return _dict
 

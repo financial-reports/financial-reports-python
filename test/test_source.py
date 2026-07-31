@@ -39,7 +39,8 @@ class TestSource(unittest.TestCase):
                 id = 56,
                 name = '',
                 url = '',
-                description = ''
+                description = '',
+                has_named_speakers = True
             )
         else:
             return Source(
@@ -47,6 +48,7 @@ class TestSource(unittest.TestCase):
                 name = '',
                 url = '',
                 description = '',
+                has_named_speakers = True,
         )
         """
 

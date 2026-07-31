@@ -265,29 +265,25 @@ class Company(BaseModel):
         _items = []
         if self.designated_sponsor:
             for _item_designated_sponsor in self.designated_sponsor:
-                if _item_designated_sponsor:
-                    _items.append(_item_designated_sponsor.to_dict())
+                _items.append(_item_designated_sponsor.to_dict() if _item_designated_sponsor is not None else None)
             _dict['designated_sponsor'] = _items
         # override the default output from pydantic by calling `to_dict()` of each item in listed_stock_exchange (list)
         _items = []
         if self.listed_stock_exchange:
             for _item_listed_stock_exchange in self.listed_stock_exchange:
-                if _item_listed_stock_exchange:
-                    _items.append(_item_listed_stock_exchange.to_dict())
+                _items.append(_item_listed_stock_exchange.to_dict() if _item_listed_stock_exchange is not None else None)
             _dict['listed_stock_exchange'] = _items
         # override the default output from pydantic by calling `to_dict()` of each item in stock_index (list)
         _items = []
         if self.stock_index:
             for _item_stock_index in self.stock_index:
-                if _item_stock_index:
-                    _items.append(_item_stock_index.to_dict())
+                _items.append(_item_stock_index.to_dict() if _item_stock_index is not None else None)
             _dict['stock_index'] = _items
         # override the default output from pydantic by calling `to_dict()` of each item in listings (list)
         _items = []
         if self.listings:
             for _item_listings in self.listings:
-                if _item_listings:
-                    _items.append(_item_listings.to_dict())
+                _items.append(_item_listings.to_dict() if _item_listings is not None else None)
             _dict['listings'] = _items
         # override the default output from pydantic by calling `to_dict()` of legal_form
         if self.legal_form:

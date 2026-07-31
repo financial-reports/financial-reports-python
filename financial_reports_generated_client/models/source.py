@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
@@ -32,7 +32,8 @@ class Source(BaseModel):
     name: StrictStr = Field(description="Generic label identifying the regional authority for this data source.")
     url: Optional[StrictStr] = Field(description="Homepage URL for the data source, when available.")
     description: StrictStr = Field(description="Description of the data source.")
-    __properties: ClassVar[List[str]] = ["id", "name", "url", "description"]
+    has_named_speakers: Optional[StrictBool] = Field(description="Tri-state: true if this source's CT (call transcript) filings are confirmed to carry named speaker attribution (name/title/affiliation), false if confirmed generic labels like 'Speaker 1', null if not yet measured. Treat null as 'not a positive match', not as false — an unmeasured source is not the same claim as a confirmed-generic one. Not meaningful for non-transcript sources.")
+    __properties: ClassVar[List[str]] = ["id", "name", "url", "description", "has_named_speakers"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -68,12 +69,14 @@ class Source(BaseModel):
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
             "id",
             "name",
             "url",
             "description",
+            "has_named_speakers",
         ])
 
         _dict = self.model_dump(
@@ -85,6 +88,11 @@ class Source(BaseModel):
         # and model_fields_set contains the field
         if self.url is None and "url" in self.model_fields_set:
             _dict['url'] = None
+
+        # set to None if has_named_speakers (nullable) is None
+        # and model_fields_set contains the field
+        if self.has_named_speakers is None and "has_named_speakers" in self.model_fields_set:
+            _dict['has_named_speakers'] = None
 
         return _dict
 
@@ -101,7 +109,8 @@ class Source(BaseModel):
             "id": obj.get("id"),
             "name": obj.get("name"),
             "url": obj.get("url"),
-            "description": obj.get("description")
+            "description": obj.get("description"),
+            "has_named_speakers": obj.get("has_named_speakers")
         })
         return _obj
 

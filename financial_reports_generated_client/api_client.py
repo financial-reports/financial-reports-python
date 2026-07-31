@@ -92,7 +92,7 @@ class ApiClient:
             self.default_headers[header_name] = header_value
         self.cookie = cookie
         # Set default User-Agent.
-        self.user_agent = 'OpenAPI-Generator/1.4.50/python'
+        self.user_agent = 'OpenAPI-Generator/1.4.51/python'
         self.client_side_validation = configuration.client_side_validation
 
     async def __aenter__(self):
@@ -492,10 +492,15 @@ class ApiClient:
         if collection_formats is None:
             collection_formats = {}
         for k, v in params.items() if isinstance(params, dict) else params:
+            if isinstance(v, bool):
+                v = str(v).lower()
             if k in collection_formats:
                 collection_format = collection_formats[k]
                 if collection_format == 'multi':
-                    new_params.extend((k, value) for value in v)
+                    new_params.extend(
+                        (k, str(value).lower() if isinstance(value, bool) else value)
+                        for value in v
+                    )
                 else:
                     if collection_format == 'ssv':
                         delimiter = ' '
@@ -506,7 +511,9 @@ class ApiClient:
                     else:  # csv is the default
                         delimiter = ','
                     new_params.append(
-                        (k, delimiter.join(str(value) for value in v)))
+                        (k, delimiter.join(
+                            str(value).lower() if isinstance(value, bool) else str(value)
+                            for value in v)))
             else:
                 new_params.append((k, v))
         return new_params
@@ -532,7 +539,10 @@ class ApiClient:
             if k in collection_formats:
                 collection_format = collection_formats[k]
                 if collection_format == 'multi':
-                    new_params.extend((k, quote(str(value))) for value in v)
+                    new_params.extend(
+                        (k, quote(str(value).lower() if isinstance(value, bool) else str(value)))
+                        for value in v
+                    )
                 else:
                     if collection_format == 'ssv':
                         delimiter = ' '
@@ -543,7 +553,9 @@ class ApiClient:
                     else:  # csv is the default
                         delimiter = ','
                     new_params.append(
-                        (k, delimiter.join(quote(str(value)) for value in v))
+                        (k, delimiter.join(
+                            quote(str(value).lower() if isinstance(value, bool) else str(value))
+                            for value in v))
                     )
             else:
                 new_params.append((k, quote(str(v))))
