@@ -174,13 +174,13 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
     lei = 'lei_example' # str | Filter by Company Legal Entity Identifier (LEI). Case-insensitive. (optional)
     listing_status = 'listing_status_example' # str | Filter by exchange-listing state (LISTED, DELISTED, SUSPENDED, UNKNOWN).  * `LISTED` - Listed * `DELISTED` - Delisted * `SUSPENDED` - Suspended * `UNKNOWN` - Unknown (optional)
     on_watchlist = True # bool | Filter by companies on the user's watchlist. Use 'true' to see only watchlist companies, 'false' to exclude them. Omitting the parameter returns all companies. (optional)
-    ordering = 'ordering_example' # str | Which field to use when ordering the results. Available fields: `id`, `name`, `date_ipo`, `year_founded`, `country_iso__name`. Prefix with '-' for descending order (e.g., `-name`). (optional)
+    ordering = 'ordering_example' # str | Which field to use when ordering the results. Available fields: `id`, `name`, `date_ipo`, `year_founded`, `country_iso__name`, `relevance`. Prefix with '-' for descending order (e.g., `-name`).  When `search` or `ticker` is supplied and `ordering` is omitted, results are relevance-ranked (exact ticker match, then exact name, then name prefix, then fuzzy similarity, with filing volume as the tiebreak). `relevance` is only orderable alongside a `search` or `ticker` term; without one it is ignored. (optional)
     page = 56 # int | A page number within the paginated result set. (optional)
     page_size = 56 # int | Number of results to return per page. (optional)
-    search = 'search_example' # str | Search across company name, LEI, ticker symbol, and associated ISIN codes. Case-insensitive. Multiple whitespace-separated terms are AND-combined (each term must match at least one of the searched fields). (optional)
+    search = 'search_example' # str | Search across company name, LEI, ticker symbol, and associated ISIN codes. Case-insensitive, and accent-insensitive on the company name (`Hermes` matches the accented spelling). Multiple whitespace-separated terms are AND-combined (each term must match at least one of the searched fields). Results are relevance-ranked unless an explicit `ordering` is supplied. (optional)
     sector = 'sector_example' # str | Filter by ISIC Section code. (optional)
     sub_industry = 'sub_industry_example' # str | Filter by ISIC Class code. (optional)
-    ticker = 'ticker_example' # str | Filter by Company primary stock Ticker symbol. Case-insensitive. (optional)
+    ticker = 'ticker_example' # str | Filter by stock Ticker symbol. Case-insensitive and separator-insensitive (`BRK.B`, `BRK-B` and `BRK B` are equivalent). Matches the company's primary ticker; when no primary ticker matches, falls back to venue listings, so a secondary share class such as `GOOG` resolves to its issuer. (optional)
     view = 'summary' # str | Controls the level of detail. Omit for a default 'summary' view, or use 'full' to include all details for each company. (optional) (default to 'summary')
 
     try:
@@ -206,13 +206,13 @@ Name | Type | Description  | Notes
  **lei** | **str**| Filter by Company Legal Entity Identifier (LEI). Case-insensitive. | [optional] 
  **listing_status** | **str**| Filter by exchange-listing state (LISTED, DELISTED, SUSPENDED, UNKNOWN).  * &#x60;LISTED&#x60; - Listed * &#x60;DELISTED&#x60; - Delisted * &#x60;SUSPENDED&#x60; - Suspended * &#x60;UNKNOWN&#x60; - Unknown | [optional] 
  **on_watchlist** | **bool**| Filter by companies on the user&#39;s watchlist. Use &#39;true&#39; to see only watchlist companies, &#39;false&#39; to exclude them. Omitting the parameter returns all companies. | [optional] 
- **ordering** | **str**| Which field to use when ordering the results. Available fields: &#x60;id&#x60;, &#x60;name&#x60;, &#x60;date_ipo&#x60;, &#x60;year_founded&#x60;, &#x60;country_iso__name&#x60;. Prefix with &#39;-&#39; for descending order (e.g., &#x60;-name&#x60;). | [optional] 
+ **ordering** | **str**| Which field to use when ordering the results. Available fields: &#x60;id&#x60;, &#x60;name&#x60;, &#x60;date_ipo&#x60;, &#x60;year_founded&#x60;, &#x60;country_iso__name&#x60;, &#x60;relevance&#x60;. Prefix with &#39;-&#39; for descending order (e.g., &#x60;-name&#x60;).  When &#x60;search&#x60; or &#x60;ticker&#x60; is supplied and &#x60;ordering&#x60; is omitted, results are relevance-ranked (exact ticker match, then exact name, then name prefix, then fuzzy similarity, with filing volume as the tiebreak). &#x60;relevance&#x60; is only orderable alongside a &#x60;search&#x60; or &#x60;ticker&#x60; term; without one it is ignored. | [optional] 
  **page** | **int**| A page number within the paginated result set. | [optional] 
  **page_size** | **int**| Number of results to return per page. | [optional] 
- **search** | **str**| Search across company name, LEI, ticker symbol, and associated ISIN codes. Case-insensitive. Multiple whitespace-separated terms are AND-combined (each term must match at least one of the searched fields). | [optional] 
+ **search** | **str**| Search across company name, LEI, ticker symbol, and associated ISIN codes. Case-insensitive, and accent-insensitive on the company name (&#x60;Hermes&#x60; matches the accented spelling). Multiple whitespace-separated terms are AND-combined (each term must match at least one of the searched fields). Results are relevance-ranked unless an explicit &#x60;ordering&#x60; is supplied. | [optional] 
  **sector** | **str**| Filter by ISIC Section code. | [optional] 
  **sub_industry** | **str**| Filter by ISIC Class code. | [optional] 
- **ticker** | **str**| Filter by Company primary stock Ticker symbol. Case-insensitive. | [optional] 
+ **ticker** | **str**| Filter by stock Ticker symbol. Case-insensitive and separator-insensitive (&#x60;BRK.B&#x60;, &#x60;BRK-B&#x60; and &#x60;BRK B&#x60; are equivalent). Matches the company&#39;s primary ticker; when no primary ticker matches, falls back to venue listings, so a secondary share class such as &#x60;GOOG&#x60; resolves to its issuer. | [optional] 
  **view** | **str**| Controls the level of detail. Omit for a default &#39;summary&#39; view, or use &#39;full&#39; to include all details for each company. | [optional] [default to &#39;summary&#39;]
 
 ### Return type

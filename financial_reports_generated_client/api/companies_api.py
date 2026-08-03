@@ -440,13 +440,13 @@ class CompaniesApi:
         lei: Annotated[Optional[StrictStr], Field(description="Filter by Company Legal Entity Identifier (LEI). Case-insensitive.")] = None,
         listing_status: Annotated[Optional[StrictStr], Field(description="Filter by exchange-listing state (LISTED, DELISTED, SUSPENDED, UNKNOWN).  * `LISTED` - Listed * `DELISTED` - Delisted * `SUSPENDED` - Suspended * `UNKNOWN` - Unknown")] = None,
         on_watchlist: Annotated[Optional[StrictBool], Field(description="Filter by companies on the user's watchlist. Use 'true' to see only watchlist companies, 'false' to exclude them. Omitting the parameter returns all companies.")] = None,
-        ordering: Annotated[Optional[StrictStr], Field(description="Which field to use when ordering the results. Available fields: `id`, `name`, `date_ipo`, `year_founded`, `country_iso__name`. Prefix with '-' for descending order (e.g., `-name`).")] = None,
+        ordering: Annotated[Optional[StrictStr], Field(description="Which field to use when ordering the results. Available fields: `id`, `name`, `date_ipo`, `year_founded`, `country_iso__name`, `relevance`. Prefix with '-' for descending order (e.g., `-name`).  When `search` or `ticker` is supplied and `ordering` is omitted, results are relevance-ranked (exact ticker match, then exact name, then name prefix, then fuzzy similarity, with filing volume as the tiebreak). `relevance` is only orderable alongside a `search` or `ticker` term; without one it is ignored.")] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
-        search: Annotated[Optional[StrictStr], Field(description="Search across company name, LEI, ticker symbol, and associated ISIN codes. Case-insensitive. Multiple whitespace-separated terms are AND-combined (each term must match at least one of the searched fields).")] = None,
+        search: Annotated[Optional[StrictStr], Field(description="Search across company name, LEI, ticker symbol, and associated ISIN codes. Case-insensitive, and accent-insensitive on the company name (`Hermes` matches the accented spelling). Multiple whitespace-separated terms are AND-combined (each term must match at least one of the searched fields). Results are relevance-ranked unless an explicit `ordering` is supplied.")] = None,
         sector: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Section code.")] = None,
         sub_industry: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Class code.")] = None,
-        ticker: Annotated[Optional[StrictStr], Field(description="Filter by Company primary stock Ticker symbol. Case-insensitive.")] = None,
+        ticker: Annotated[Optional[StrictStr], Field(description="Filter by stock Ticker symbol. Case-insensitive and separator-insensitive (`BRK.B`, `BRK-B` and `BRK B` are equivalent). Matches the company's primary ticker; when no primary ticker matches, falls back to venue listings, so a secondary share class such as `GOOG` resolves to its issuer.")] = None,
         view: Annotated[Optional[StrictStr], Field(description="Controls the level of detail. Omit for a default 'summary' view, or use 'full' to include all details for each company.")] = None,
         _request_timeout: Union[
             None,
@@ -479,19 +479,19 @@ class CompaniesApi:
         :type listing_status: str
         :param on_watchlist: Filter by companies on the user's watchlist. Use 'true' to see only watchlist companies, 'false' to exclude them. Omitting the parameter returns all companies.
         :type on_watchlist: bool
-        :param ordering: Which field to use when ordering the results. Available fields: `id`, `name`, `date_ipo`, `year_founded`, `country_iso__name`. Prefix with '-' for descending order (e.g., `-name`).
+        :param ordering: Which field to use when ordering the results. Available fields: `id`, `name`, `date_ipo`, `year_founded`, `country_iso__name`, `relevance`. Prefix with '-' for descending order (e.g., `-name`).  When `search` or `ticker` is supplied and `ordering` is omitted, results are relevance-ranked (exact ticker match, then exact name, then name prefix, then fuzzy similarity, with filing volume as the tiebreak). `relevance` is only orderable alongside a `search` or `ticker` term; without one it is ignored.
         :type ordering: str
         :param page: A page number within the paginated result set.
         :type page: int
         :param page_size: Number of results to return per page.
         :type page_size: int
-        :param search: Search across company name, LEI, ticker symbol, and associated ISIN codes. Case-insensitive. Multiple whitespace-separated terms are AND-combined (each term must match at least one of the searched fields).
+        :param search: Search across company name, LEI, ticker symbol, and associated ISIN codes. Case-insensitive, and accent-insensitive on the company name (`Hermes` matches the accented spelling). Multiple whitespace-separated terms are AND-combined (each term must match at least one of the searched fields). Results are relevance-ranked unless an explicit `ordering` is supplied.
         :type search: str
         :param sector: Filter by ISIC Section code.
         :type sector: str
         :param sub_industry: Filter by ISIC Class code.
         :type sub_industry: str
-        :param ticker: Filter by Company primary stock Ticker symbol. Case-insensitive.
+        :param ticker: Filter by stock Ticker symbol. Case-insensitive and separator-insensitive (`BRK.B`, `BRK-B` and `BRK B` are equivalent). Matches the company's primary ticker; when no primary ticker matches, falls back to venue listings, so a secondary share class such as `GOOG` resolves to its issuer.
         :type ticker: str
         :param view: Controls the level of detail. Omit for a default 'summary' view, or use 'full' to include all details for each company.
         :type view: str
@@ -564,13 +564,13 @@ class CompaniesApi:
         lei: Annotated[Optional[StrictStr], Field(description="Filter by Company Legal Entity Identifier (LEI). Case-insensitive.")] = None,
         listing_status: Annotated[Optional[StrictStr], Field(description="Filter by exchange-listing state (LISTED, DELISTED, SUSPENDED, UNKNOWN).  * `LISTED` - Listed * `DELISTED` - Delisted * `SUSPENDED` - Suspended * `UNKNOWN` - Unknown")] = None,
         on_watchlist: Annotated[Optional[StrictBool], Field(description="Filter by companies on the user's watchlist. Use 'true' to see only watchlist companies, 'false' to exclude them. Omitting the parameter returns all companies.")] = None,
-        ordering: Annotated[Optional[StrictStr], Field(description="Which field to use when ordering the results. Available fields: `id`, `name`, `date_ipo`, `year_founded`, `country_iso__name`. Prefix with '-' for descending order (e.g., `-name`).")] = None,
+        ordering: Annotated[Optional[StrictStr], Field(description="Which field to use when ordering the results. Available fields: `id`, `name`, `date_ipo`, `year_founded`, `country_iso__name`, `relevance`. Prefix with '-' for descending order (e.g., `-name`).  When `search` or `ticker` is supplied and `ordering` is omitted, results are relevance-ranked (exact ticker match, then exact name, then name prefix, then fuzzy similarity, with filing volume as the tiebreak). `relevance` is only orderable alongside a `search` or `ticker` term; without one it is ignored.")] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
-        search: Annotated[Optional[StrictStr], Field(description="Search across company name, LEI, ticker symbol, and associated ISIN codes. Case-insensitive. Multiple whitespace-separated terms are AND-combined (each term must match at least one of the searched fields).")] = None,
+        search: Annotated[Optional[StrictStr], Field(description="Search across company name, LEI, ticker symbol, and associated ISIN codes. Case-insensitive, and accent-insensitive on the company name (`Hermes` matches the accented spelling). Multiple whitespace-separated terms are AND-combined (each term must match at least one of the searched fields). Results are relevance-ranked unless an explicit `ordering` is supplied.")] = None,
         sector: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Section code.")] = None,
         sub_industry: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Class code.")] = None,
-        ticker: Annotated[Optional[StrictStr], Field(description="Filter by Company primary stock Ticker symbol. Case-insensitive.")] = None,
+        ticker: Annotated[Optional[StrictStr], Field(description="Filter by stock Ticker symbol. Case-insensitive and separator-insensitive (`BRK.B`, `BRK-B` and `BRK B` are equivalent). Matches the company's primary ticker; when no primary ticker matches, falls back to venue listings, so a secondary share class such as `GOOG` resolves to its issuer.")] = None,
         view: Annotated[Optional[StrictStr], Field(description="Controls the level of detail. Omit for a default 'summary' view, or use 'full' to include all details for each company.")] = None,
         _request_timeout: Union[
             None,
@@ -603,19 +603,19 @@ class CompaniesApi:
         :type listing_status: str
         :param on_watchlist: Filter by companies on the user's watchlist. Use 'true' to see only watchlist companies, 'false' to exclude them. Omitting the parameter returns all companies.
         :type on_watchlist: bool
-        :param ordering: Which field to use when ordering the results. Available fields: `id`, `name`, `date_ipo`, `year_founded`, `country_iso__name`. Prefix with '-' for descending order (e.g., `-name`).
+        :param ordering: Which field to use when ordering the results. Available fields: `id`, `name`, `date_ipo`, `year_founded`, `country_iso__name`, `relevance`. Prefix with '-' for descending order (e.g., `-name`).  When `search` or `ticker` is supplied and `ordering` is omitted, results are relevance-ranked (exact ticker match, then exact name, then name prefix, then fuzzy similarity, with filing volume as the tiebreak). `relevance` is only orderable alongside a `search` or `ticker` term; without one it is ignored.
         :type ordering: str
         :param page: A page number within the paginated result set.
         :type page: int
         :param page_size: Number of results to return per page.
         :type page_size: int
-        :param search: Search across company name, LEI, ticker symbol, and associated ISIN codes. Case-insensitive. Multiple whitespace-separated terms are AND-combined (each term must match at least one of the searched fields).
+        :param search: Search across company name, LEI, ticker symbol, and associated ISIN codes. Case-insensitive, and accent-insensitive on the company name (`Hermes` matches the accented spelling). Multiple whitespace-separated terms are AND-combined (each term must match at least one of the searched fields). Results are relevance-ranked unless an explicit `ordering` is supplied.
         :type search: str
         :param sector: Filter by ISIC Section code.
         :type sector: str
         :param sub_industry: Filter by ISIC Class code.
         :type sub_industry: str
-        :param ticker: Filter by Company primary stock Ticker symbol. Case-insensitive.
+        :param ticker: Filter by stock Ticker symbol. Case-insensitive and separator-insensitive (`BRK.B`, `BRK-B` and `BRK B` are equivalent). Matches the company's primary ticker; when no primary ticker matches, falls back to venue listings, so a secondary share class such as `GOOG` resolves to its issuer.
         :type ticker: str
         :param view: Controls the level of detail. Omit for a default 'summary' view, or use 'full' to include all details for each company.
         :type view: str
@@ -688,13 +688,13 @@ class CompaniesApi:
         lei: Annotated[Optional[StrictStr], Field(description="Filter by Company Legal Entity Identifier (LEI). Case-insensitive.")] = None,
         listing_status: Annotated[Optional[StrictStr], Field(description="Filter by exchange-listing state (LISTED, DELISTED, SUSPENDED, UNKNOWN).  * `LISTED` - Listed * `DELISTED` - Delisted * `SUSPENDED` - Suspended * `UNKNOWN` - Unknown")] = None,
         on_watchlist: Annotated[Optional[StrictBool], Field(description="Filter by companies on the user's watchlist. Use 'true' to see only watchlist companies, 'false' to exclude them. Omitting the parameter returns all companies.")] = None,
-        ordering: Annotated[Optional[StrictStr], Field(description="Which field to use when ordering the results. Available fields: `id`, `name`, `date_ipo`, `year_founded`, `country_iso__name`. Prefix with '-' for descending order (e.g., `-name`).")] = None,
+        ordering: Annotated[Optional[StrictStr], Field(description="Which field to use when ordering the results. Available fields: `id`, `name`, `date_ipo`, `year_founded`, `country_iso__name`, `relevance`. Prefix with '-' for descending order (e.g., `-name`).  When `search` or `ticker` is supplied and `ordering` is omitted, results are relevance-ranked (exact ticker match, then exact name, then name prefix, then fuzzy similarity, with filing volume as the tiebreak). `relevance` is only orderable alongside a `search` or `ticker` term; without one it is ignored.")] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
-        search: Annotated[Optional[StrictStr], Field(description="Search across company name, LEI, ticker symbol, and associated ISIN codes. Case-insensitive. Multiple whitespace-separated terms are AND-combined (each term must match at least one of the searched fields).")] = None,
+        search: Annotated[Optional[StrictStr], Field(description="Search across company name, LEI, ticker symbol, and associated ISIN codes. Case-insensitive, and accent-insensitive on the company name (`Hermes` matches the accented spelling). Multiple whitespace-separated terms are AND-combined (each term must match at least one of the searched fields). Results are relevance-ranked unless an explicit `ordering` is supplied.")] = None,
         sector: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Section code.")] = None,
         sub_industry: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Class code.")] = None,
-        ticker: Annotated[Optional[StrictStr], Field(description="Filter by Company primary stock Ticker symbol. Case-insensitive.")] = None,
+        ticker: Annotated[Optional[StrictStr], Field(description="Filter by stock Ticker symbol. Case-insensitive and separator-insensitive (`BRK.B`, `BRK-B` and `BRK B` are equivalent). Matches the company's primary ticker; when no primary ticker matches, falls back to venue listings, so a secondary share class such as `GOOG` resolves to its issuer.")] = None,
         view: Annotated[Optional[StrictStr], Field(description="Controls the level of detail. Omit for a default 'summary' view, or use 'full' to include all details for each company.")] = None,
         _request_timeout: Union[
             None,
@@ -727,19 +727,19 @@ class CompaniesApi:
         :type listing_status: str
         :param on_watchlist: Filter by companies on the user's watchlist. Use 'true' to see only watchlist companies, 'false' to exclude them. Omitting the parameter returns all companies.
         :type on_watchlist: bool
-        :param ordering: Which field to use when ordering the results. Available fields: `id`, `name`, `date_ipo`, `year_founded`, `country_iso__name`. Prefix with '-' for descending order (e.g., `-name`).
+        :param ordering: Which field to use when ordering the results. Available fields: `id`, `name`, `date_ipo`, `year_founded`, `country_iso__name`, `relevance`. Prefix with '-' for descending order (e.g., `-name`).  When `search` or `ticker` is supplied and `ordering` is omitted, results are relevance-ranked (exact ticker match, then exact name, then name prefix, then fuzzy similarity, with filing volume as the tiebreak). `relevance` is only orderable alongside a `search` or `ticker` term; without one it is ignored.
         :type ordering: str
         :param page: A page number within the paginated result set.
         :type page: int
         :param page_size: Number of results to return per page.
         :type page_size: int
-        :param search: Search across company name, LEI, ticker symbol, and associated ISIN codes. Case-insensitive. Multiple whitespace-separated terms are AND-combined (each term must match at least one of the searched fields).
+        :param search: Search across company name, LEI, ticker symbol, and associated ISIN codes. Case-insensitive, and accent-insensitive on the company name (`Hermes` matches the accented spelling). Multiple whitespace-separated terms are AND-combined (each term must match at least one of the searched fields). Results are relevance-ranked unless an explicit `ordering` is supplied.
         :type search: str
         :param sector: Filter by ISIC Section code.
         :type sector: str
         :param sub_industry: Filter by ISIC Class code.
         :type sub_industry: str
-        :param ticker: Filter by Company primary stock Ticker symbol. Case-insensitive.
+        :param ticker: Filter by stock Ticker symbol. Case-insensitive and separator-insensitive (`BRK.B`, `BRK-B` and `BRK B` are equivalent). Matches the company's primary ticker; when no primary ticker matches, falls back to venue listings, so a secondary share class such as `GOOG` resolves to its issuer.
         :type ticker: str
         :param view: Controls the level of detail. Omit for a default 'summary' view, or use 'full' to include all details for each company.
         :type view: str
