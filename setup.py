@@ -1,5 +1,5 @@
 """
-    FinancialReports API
+    FinancialFilings API
 
     Public-company filings across G20 markets and Europe. Authenticate every request with the `X-API-Key` header. Honor the `X-RateLimit-Burst-Remaining` response header.  **Tiered access.** **L1** — metadata, company profiles, ISIC classifications, reference data, point-in-time audit trails. **L2** — Markdown / JSON content, full-text search. **L3** — standardized financial line items (income statement, balance sheet, cash-flow statement) per fiscal period, mapped to a single reusable taxonomy.
 
@@ -20,7 +20,7 @@ from setuptools import setup, find_packages  # noqa: H301
 # prerequisite: setuptools
 # http://pypi.python.org/pypi/setuptools
 NAME = "financial-reports-generated-client"
-VERSION = "1.4.52"
+VERSION = "1.4.53"
 PYTHON_REQUIRES = ">= 3.10"
 REQUIRES = [
     "python-dateutil >= 2.8.2",
@@ -33,11 +33,11 @@ REQUIRES = [
 setup(
     name=NAME,
     version=VERSION,
-    description="FinancialReports API",
+    description="FinancialFilings API",
     author="API Support",
     author_email="api@financialreports.eu",
     url="",
-    keywords=["OpenAPI", "OpenAPI-Generator", "FinancialReports API"],
+    keywords=["OpenAPI", "OpenAPI-Generator", "FinancialFilings API"],
     install_requires=REQUIRES,
     packages=find_packages(exclude=["test", "tests"]),
     include_package_data=True,

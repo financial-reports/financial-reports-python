@@ -121,7 +121,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **companies_list**
-> PaginatedCompanyMinimalList companies_list(countries=countries, industry=industry, industry_group=industry_group, isin=isin, lei=lei, listing_status=listing_status, on_watchlist=on_watchlist, ordering=ordering, page=page, page_size=page_size, search=search, sector=sector, sub_industry=sub_industry, ticker=ticker, view=view)
+> PaginatedCompanyMinimalList companies_list(cik=cik, countries=countries, industry=industry, industry_group=industry_group, isin=isin, lei=lei, listing_status=listing_status, on_watchlist=on_watchlist, ordering=ordering, page=page, page_size=page_size, search=search, sector=sector, sub_industry=sub_industry, ticker=ticker, view=view)
 
 List Companies
 
@@ -167,6 +167,7 @@ configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
 async with financial_reports_generated_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = financial_reports_generated_client.CompaniesApi(api_client)
+    cik = 'cik_example' # str | Filter by SEC Central Index Key (CIK). Accepts padded or bare (`CIK0000320193`, `0000320193` and `320193` are equivalent). The CIK is assigned by the SEC and survives corporate renames, mergers and ticker changes, so it is the stable key for reconciling a securities universe against our coverage. (optional)
     countries = 'countries_example' # str | Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values. (optional)
     industry = 'industry_example' # str | Filter by ISIC Group code. (optional)
     industry_group = 'industry_group_example' # str | Filter by ISIC Division code. (optional)
@@ -185,7 +186,7 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
 
     try:
         # List Companies
-        api_response = await api_instance.companies_list(countries=countries, industry=industry, industry_group=industry_group, isin=isin, lei=lei, listing_status=listing_status, on_watchlist=on_watchlist, ordering=ordering, page=page, page_size=page_size, search=search, sector=sector, sub_industry=sub_industry, ticker=ticker, view=view)
+        api_response = await api_instance.companies_list(cik=cik, countries=countries, industry=industry, industry_group=industry_group, isin=isin, lei=lei, listing_status=listing_status, on_watchlist=on_watchlist, ordering=ordering, page=page, page_size=page_size, search=search, sector=sector, sub_industry=sub_industry, ticker=ticker, view=view)
         print("The response of CompaniesApi->companies_list:\n")
         pprint(api_response)
     except Exception as e:
@@ -199,6 +200,7 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **cik** | **str**| Filter by SEC Central Index Key (CIK). Accepts padded or bare (&#x60;CIK0000320193&#x60;, &#x60;0000320193&#x60; and &#x60;320193&#x60; are equivalent). The CIK is assigned by the SEC and survives corporate renames, mergers and ticker changes, so it is the stable key for reconciling a securities universe against our coverage. | [optional] 
  **countries** | **str**| Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values. | [optional] 
  **industry** | **str**| Filter by ISIC Group code. | [optional] 
  **industry_group** | **str**| Filter by ISIC Division code. | [optional] 

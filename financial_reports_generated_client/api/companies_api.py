@@ -1,5 +1,5 @@
 """
-    FinancialReports API
+    FinancialFilings API
 
     Public-company filings across G20 markets and Europe. Authenticate every request with the `X-API-Key` header. Honor the `X-RateLimit-Burst-Remaining` response header.  **Tiered access.** **L1** — metadata, company profiles, ISIC classifications, reference data, point-in-time audit trails. **L2** — Markdown / JSON content, full-text search. **L3** — standardized financial line items (income statement, balance sheet, cash-flow statement) per fiscal period, mapped to a single reusable taxonomy.
 
@@ -433,6 +433,7 @@ class CompaniesApi:
     @validate_call
     async def companies_list(
         self,
+        cik: Annotated[Optional[StrictStr], Field(description="Filter by SEC Central Index Key (CIK). Accepts padded or bare (`CIK0000320193`, `0000320193` and `320193` are equivalent). The CIK is assigned by the SEC and survives corporate renames, mergers and ticker changes, so it is the stable key for reconciling a securities universe against our coverage.")] = None,
         countries: Annotated[Optional[StrictStr], Field(description="Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values.")] = None,
         industry: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Group code.")] = None,
         industry_group: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Division code.")] = None,
@@ -465,6 +466,8 @@ class CompaniesApi:
 
         **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve a paginated list of companies.
 
+        :param cik: Filter by SEC Central Index Key (CIK). Accepts padded or bare (`CIK0000320193`, `0000320193` and `320193` are equivalent). The CIK is assigned by the SEC and survives corporate renames, mergers and ticker changes, so it is the stable key for reconciling a securities universe against our coverage.
+        :type cik: str
         :param countries: Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values.
         :type countries: str
         :param industry: Filter by ISIC Group code.
@@ -518,6 +521,7 @@ class CompaniesApi:
         """ # noqa: E501
 
         _param = self._companies_list_serialize(
+            cik=cik,
             countries=countries,
             industry=industry,
             industry_group=industry_group,
@@ -557,6 +561,7 @@ class CompaniesApi:
     @validate_call
     async def companies_list_with_http_info(
         self,
+        cik: Annotated[Optional[StrictStr], Field(description="Filter by SEC Central Index Key (CIK). Accepts padded or bare (`CIK0000320193`, `0000320193` and `320193` are equivalent). The CIK is assigned by the SEC and survives corporate renames, mergers and ticker changes, so it is the stable key for reconciling a securities universe against our coverage.")] = None,
         countries: Annotated[Optional[StrictStr], Field(description="Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values.")] = None,
         industry: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Group code.")] = None,
         industry_group: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Division code.")] = None,
@@ -589,6 +594,8 @@ class CompaniesApi:
 
         **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve a paginated list of companies.
 
+        :param cik: Filter by SEC Central Index Key (CIK). Accepts padded or bare (`CIK0000320193`, `0000320193` and `320193` are equivalent). The CIK is assigned by the SEC and survives corporate renames, mergers and ticker changes, so it is the stable key for reconciling a securities universe against our coverage.
+        :type cik: str
         :param countries: Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values.
         :type countries: str
         :param industry: Filter by ISIC Group code.
@@ -642,6 +649,7 @@ class CompaniesApi:
         """ # noqa: E501
 
         _param = self._companies_list_serialize(
+            cik=cik,
             countries=countries,
             industry=industry,
             industry_group=industry_group,
@@ -681,6 +689,7 @@ class CompaniesApi:
     @validate_call
     async def companies_list_without_preload_content(
         self,
+        cik: Annotated[Optional[StrictStr], Field(description="Filter by SEC Central Index Key (CIK). Accepts padded or bare (`CIK0000320193`, `0000320193` and `320193` are equivalent). The CIK is assigned by the SEC and survives corporate renames, mergers and ticker changes, so it is the stable key for reconciling a securities universe against our coverage.")] = None,
         countries: Annotated[Optional[StrictStr], Field(description="Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values.")] = None,
         industry: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Group code.")] = None,
         industry_group: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Division code.")] = None,
@@ -713,6 +722,8 @@ class CompaniesApi:
 
         **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve a paginated list of companies.
 
+        :param cik: Filter by SEC Central Index Key (CIK). Accepts padded or bare (`CIK0000320193`, `0000320193` and `320193` are equivalent). The CIK is assigned by the SEC and survives corporate renames, mergers and ticker changes, so it is the stable key for reconciling a securities universe against our coverage.
+        :type cik: str
         :param countries: Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values.
         :type countries: str
         :param industry: Filter by ISIC Group code.
@@ -766,6 +777,7 @@ class CompaniesApi:
         """ # noqa: E501
 
         _param = self._companies_list_serialize(
+            cik=cik,
             countries=countries,
             industry=industry,
             industry_group=industry_group,
@@ -800,6 +812,7 @@ class CompaniesApi:
 
     def _companies_list_serialize(
         self,
+        cik,
         countries,
         industry,
         industry_group,
@@ -837,6 +850,10 @@ class CompaniesApi:
 
         # process the path parameters
         # process the query parameters
+        if cik is not None:
+            
+            _query_params.append(('cik', cik))
+            
         if countries is not None:
             
             _query_params.append(('countries', countries))

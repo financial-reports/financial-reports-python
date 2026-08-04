@@ -1,5 +1,5 @@
 """
-    FinancialReports API
+    FinancialFilings API
 
     Public-company filings across G20 markets and Europe. Authenticate every request with the `X-API-Key` header. Honor the `X-RateLimit-Burst-Remaining` response header.  **Tiered access.** **L1** — metadata, company profiles, ISIC classifications, reference data, point-in-time audit trails. **L2** — Markdown / JSON content, full-text search. **L3** — standardized financial line items (income statement, balance sheet, cash-flow statement) per fiscal period, mapped to a single reusable taxonomy.
 
@@ -585,7 +585,7 @@ conf = financial_reports_generated_client.Configuration(
                "OS: {env}\n"\
                "Python Version: {pyversion}\n"\
                "Version of the API: 1.2.0\n"\
-               "SDK Package Version: 1.4.52".\
+               "SDK Package Version: 1.4.53".\
                format(env=sys.platform, pyversion=sys.version)
 
     def get_host_settings(self) -> List[HostSetting]:

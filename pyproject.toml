@@ -1,12 +1,12 @@
 [project]
 name = "financial_reports_generated_client"
-version = "1.4.52"
-description = "FinancialReports API"
+version = "1.4.53"
+description = "FinancialFilings API"
 authors = [
   {name = "API Support",email = "api@financialreports.eu"},
 ]
 readme = "README.md"
-keywords = ["OpenAPI", "OpenAPI-Generator", "FinancialReports API"]
+keywords = ["OpenAPI", "OpenAPI-Generator", "FinancialFilings API"]
 requires-python = ">=3.10"
 
 dependencies = [

@@ -1,7 +1,7 @@
 # coding: utf-8
 
 """
-    FinancialReports API
+    FinancialFilings API
 
     Public-company filings across G20 markets and Europe. Authenticate every request with the `X-API-Key` header. Honor the `X-RateLimit-Burst-Remaining` response header.  **Tiered access.** **L1** — metadata, company profiles, ISIC classifications, reference data, point-in-time audit trails. **L2** — Markdown / JSON content, full-text search. **L3** — standardized financial line items (income statement, balance sheet, cash-flow statement) per fiscal period, mapped to a single reusable taxonomy.
 
@@ -60,7 +60,7 @@ class Company(BaseModel):
     ir_link: Optional[StrictStr] = Field(description="Link to the company's Investor Relations page.")
     homepage_link: Optional[StrictStr] = Field(description="Link to the company's main homepage.")
     logo: Optional[StrictStr] = Field(description="URL of the company's logo file.")
-    date_public: Optional[date] = Field(description="Date this company record was last updated on the FinancialReports platform. This is NOT the IPO date — see `date_ipo` instead.")
+    date_public: Optional[date] = Field(description="Date this company record was last updated on the FinancialFilings platform. This is NOT the IPO date — see `date_ipo` instead.")
     date_ipo: Optional[date] = Field(description="Date of the company's Initial Public Offering (IPO). Returns null when the IPO date is unknown.")
     main_stock_exchange: Optional[StrictStr] = Field(description="Primary stock exchange where the company is listed.")
     is_listed: Optional[StrictBool] = Field(description="Indicates if the company is currently publicly listed.")
