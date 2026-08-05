@@ -8,6 +8,7 @@ Method | HTTP request | Description
 [**companies_list**](CompaniesApi.md#companies_list) | **GET** /companies/ | List Companies
 [**companies_merges_retrieve**](CompaniesApi.md#companies_merges_retrieve) | **GET** /companies/merges/ | List Company Merges
 [**companies_next_annual_report_retrieve**](CompaniesApi.md#companies_next_annual_report_retrieve) | **GET** /companies/{id}/next-annual-report/ | Predict Next Annual Report
+[**companies_resolve_create**](CompaniesApi.md#companies_resolve_create) | **POST** /companies/resolve/ | Resolve Companies by Identifier (Batch)
 [**companies_retrieve**](CompaniesApi.md#companies_retrieve) | **GET** /companies/{id}/ | Retrieve Company Details
 
 
@@ -415,6 +416,110 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | Success. Returns the predicted date window and confidence score. |  -  |
 **404** | Not Found. Not enough historical data to make a confident prediction. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **companies_resolve_create**
+> CompanyResolveResponse companies_resolve_create(company_resolve_request)
+
+Resolve Companies by Identifier (Batch)
+
+**Access Level Required:** Requires **Standard Access (Level 1)**.
+
+---
+Reconcile a list of your identifiers against our coverage in one request.
+
+Each row may carry any mix of `isin`, `lei`, `cik`, `ticker` and `name`, plus an optional opaque `ref` echoed back so you can join results to your source rows. Results are returned in input order.
+
+**Resolution order** — ISIN, LEI, CIK, ticker, venue ticker, name. First hit wins, but every identifier you supply is evaluated: if two of them resolve to different companies the row comes back `ambiguous` with `identifier_conflict` and both in `candidates`, rather than us silently picking one.
+
+**A name alone never returns `matched`.** No matter how close the match, a name-only row caps at `ambiguous` and hands you candidates to choose from. Names are not identifiers, and asserting a match on one is how filings end up attached to the wrong issuer.
+
+**Venue-ticker matches are qualified, not asserted.** A ticker that only resolves through our security-listing data is cross-checked against the `name` you supplied. If they disagree you get `ambiguous` + `name_disagrees`; if you supplied no name we cannot corroborate at all, so you get `matched` carrying `security_listing_unverified` — trust that bucket accordingly.
+
+**Billing** — one request is one call against your quota, whatever the row count. Rows we do not cover are not billed differently from rows we do.
+
+Maximum 500 rows per request. Up to 50 rows per request reach the name lookup; beyond that a row carrying only a name returns `not_covered` with `name_tier_skipped`, so split large name-heavy batches.
+
+### Example
+
+* Bearer (JWT) Authentication (CognitoJWT):
+* Api Key Authentication (ApiKeyAuth):
+
+```python
+import financial_reports_generated_client
+from financial_reports_generated_client.models.company_resolve_request import CompanyResolveRequest
+from financial_reports_generated_client.models.company_resolve_response import CompanyResolveResponse
+from financial_reports_generated_client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.financialreports.eu
+# See configuration.py for a list of all supported configuration parameters.
+configuration = financial_reports_generated_client.Configuration(
+    host = "https://api.financialreports.eu"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization (JWT): CognitoJWT
+configuration = financial_reports_generated_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Configure API key authorization: ApiKeyAuth
+configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+async with financial_reports_generated_client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = financial_reports_generated_client.CompaniesApi(api_client)
+    company_resolve_request = {"rows":[{"ref":"sheet-row-12","ticker":"GOOG","name":"Alphabet Inc."},{"ref":"sheet-row-13","isin":"US5949181045"},{"ref":"sheet-row-14","cik":"0000320193"},{"ref":"sheet-row-15","name":"A Company We Do Not Cover Ltd"}]} # CompanyResolveRequest | 
+
+    try:
+        # Resolve Companies by Identifier (Batch)
+        api_response = await api_instance.companies_resolve_create(company_resolve_request)
+        print("The response of CompaniesApi->companies_resolve_create:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling CompaniesApi->companies_resolve_create: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **company_resolve_request** | [**CompanyResolveRequest**](CompanyResolveRequest.md)|  | 
+
+### Return type
+
+[**CompanyResolveResponse**](CompanyResolveResponse.md)
+
+### Authorization
+
+[CognitoJWT](../README.md#CognitoJWT), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Reconciliation complete. Individual rows may still be unmatched. |  -  |
+**400** | Malformed batch — too many rows, no rows, or duplicate &#x60;ref&#x60; values. |  -  |
+**401** | Unauthorized |  -  |
+**403** | Your API plan does not include access to this endpoint. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

@@ -15,7 +15,7 @@ Name | Type | Description | Notes
 **dissemination_datetime** | **datetime** | The exact time the filing was disseminated by the source. | [readonly] 
 **release_datetime** | **datetime** | The official release time of the filing (e.g., the period end). | [readonly] 
 **document_url** | **str** | A direct, temporary link to download the original filing document (e.g., PDF). | [readonly] 
-**markdown_content** | **str** | The full, processed content of the filing in Markdown format. This field is only included if your webhook is configured with &#39;include_markdown: true&#39; AND the event type is &#39;filing.processed&#39;. It is null for &#39;filing.received&#39;. | [readonly] 
+**markdown_content** | **str** | The full, processed content of the filing in Markdown format. This field is only included if your webhook is configured with &#39;include_markdown: true&#39; AND the event type is &#39;filing.processed&#39;. It is null for &#39;filing.received&#39;. Even with &#39;include_markdown: true&#39; on a &#39;filing.processed&#39; event, this field is null unless the webhook owner&#39;s account has Level 2 (Processed Filings) access -- the same tier gate applied to the REST /markdown/ endpoint. | [readonly] 
 
 ## Example
 
