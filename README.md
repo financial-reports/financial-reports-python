@@ -1,6 +1,6 @@
 # Financial Reports Python SDK
 
-The official Python client for the [FinancialReports API](https://financialreports.eu). 
+The official Python client for the [FinancialReports API](https://financialfilings.com). 
 
 Access a comprehensive database of financial filings, company information, and industry classifications programmatically.
 
@@ -58,7 +58,7 @@ The API response data depends on your subscription tier.
 
 ## Documentation
 
-* **Full API Reference:** [https://financialreports.eu/docs](https://financialreports.eu/docs)
+* **Full API Reference:** [https://financialfilings.com/docs](https://financialfilings.com/docs)
 * **Support:** [support@financialreports.eu](mailto:support@financialreports.eu)
 
 ---
