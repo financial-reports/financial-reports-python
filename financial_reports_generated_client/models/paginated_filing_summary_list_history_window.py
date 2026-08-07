@@ -18,24 +18,22 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from datetime import datetime
+from pydantic import BaseModel, ConfigDict, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from financial_reports_generated_client.models.filing_summary import FilingSummary
-from financial_reports_generated_client.models.paginated_filing_summary_list_history_window import PaginatedFilingSummaryListHistoryWindow
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
 
-class PaginatedFilingSummaryList(BaseModel):
+class PaginatedFilingSummaryListHistoryWindow(BaseModel):
     """
-    PaginatedFilingSummaryList
+    Present when the caller's plan applies a rolling history window AND this request reached past its cutoff. Absent for callers with unrestricted history. It means the PLAN bounds how far back this account can see — filings older than the cutoff exist in the FinancialFilings archive. It is never a statement about catalog coverage, and it does not by itself prove that this particular result set lost rows.
     """ # noqa: E501
-    count: StrictInt = Field(json_schema_extra={"examples": [123]})
-    next: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["http://api.example.org/accounts/?page=4"]})
-    previous: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["http://api.example.org/accounts/?page=2"]})
-    results: List[FilingSummary]
-    history_window: Optional[PaginatedFilingSummaryListHistoryWindow] = None
-    __properties: ClassVar[List[str]] = ["count", "next", "previous", "results", "history_window"]
+    limited: Optional[StrictBool] = None
+    max_history_days: Optional[StrictInt] = None
+    cutoff: Optional[datetime] = None
+    detail: Optional[StrictStr] = None
+    __properties: ClassVar[List[str]] = ["limited", "max_history_days", "cutoff", "detail"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -55,7 +53,7 @@ class PaginatedFilingSummaryList(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of PaginatedFilingSummaryList from a JSON string"""
+        """Create an instance of PaginatedFilingSummaryListHistoryWindow from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -76,20 +74,11 @@ class PaginatedFilingSummaryList(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of each item in results (list)
-        _items = []
-        if self.results:
-            for _item_results in self.results:
-                _items.append(_item_results.to_dict() if _item_results is not None else None)
-            _dict['results'] = _items
-        # override the default output from pydantic by calling `to_dict()` of history_window
-        if self.history_window:
-            _dict['history_window'] = self.history_window.to_dict()
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of PaginatedFilingSummaryList from a dict"""
+        """Create an instance of PaginatedFilingSummaryListHistoryWindow from a dict"""
         if obj is None:
             return None
 
@@ -97,11 +86,10 @@ class PaginatedFilingSummaryList(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "count": obj.get("count"),
-            "next": obj.get("next"),
-            "previous": obj.get("previous"),
-            "results": [FilingSummary.from_dict(_item) for _item in obj["results"]] if obj.get("results") is not None else None,
-            "history_window": PaginatedFilingSummaryListHistoryWindow.from_dict(obj["history_window"]) if obj.get("history_window") is not None else None
+            "limited": obj.get("limited"),
+            "max_history_days": obj.get("max_history_days"),
+            "cutoff": obj.get("cutoff"),
+            "detail": obj.get("detail")
         })
         return _obj
 

@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "1.4.55"
+__version__ = "1.4.56"
 
 # Define package exports
 __all__ = [
@@ -86,6 +86,7 @@ __all__ = [
     "PaginatedFilingCategoryList",
     "PaginatedFilingHistoryList",
     "PaginatedFilingSummaryList",
+    "PaginatedFilingSummaryListHistoryWindow",
     "PaginatedFilingTypeList",
     "PaginatedISICClassList",
     "PaginatedISICDivisionList",
@@ -193,6 +194,7 @@ from financial_reports_generated_client.models.paginated_country_list import Pag
 from financial_reports_generated_client.models.paginated_filing_category_list import PaginatedFilingCategoryList as PaginatedFilingCategoryList
 from financial_reports_generated_client.models.paginated_filing_history_list import PaginatedFilingHistoryList as PaginatedFilingHistoryList
 from financial_reports_generated_client.models.paginated_filing_summary_list import PaginatedFilingSummaryList as PaginatedFilingSummaryList
+from financial_reports_generated_client.models.paginated_filing_summary_list_history_window import PaginatedFilingSummaryListHistoryWindow as PaginatedFilingSummaryListHistoryWindow
 from financial_reports_generated_client.models.paginated_filing_type_list import PaginatedFilingTypeList as PaginatedFilingTypeList
 from financial_reports_generated_client.models.paginated_isic_class_list import PaginatedISICClassList as PaginatedISICClassList
 from financial_reports_generated_client.models.paginated_isic_division_list import PaginatedISICDivisionList as PaginatedISICDivisionList

@@ -52,7 +52,12 @@ class TestPaginatedFilingSummaryList(unittest.TestCase):
                         processing_status = null, 
                         file_extension = '', 
                         file_size = 0, )
-                    ]
+                    ],
+                history_window = financial_reports_generated_client.models.paginated_filing_summary_list_history_window.PaginatedFilingSummaryList_history_window(
+                    limited = True, 
+                    max_history_days = 56, 
+                    cutoff = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
+                    detail = '', )
             )
         else:
             return PaginatedFilingSummaryList(

@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **next** | **str** |  | [optional] 
 **previous** | **str** |  | [optional] 
 **results** | [**List[FilingSummary]**](FilingSummary.md) |  | 
+**history_window** | [**PaginatedFilingSummaryListHistoryWindow**](PaginatedFilingSummaryListHistoryWindow.md) |  | [optional] 
 
 ## Example
 
