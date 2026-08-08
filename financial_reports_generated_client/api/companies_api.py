@@ -54,7 +54,7 @@ class CompaniesApi:
         fiscal_year: Annotated[Optional[StrictInt], Field(description="Filter by exact fiscal year (e.g. `2024`).")] = None,
         fiscal_year_from: Annotated[Optional[StrictInt], Field(description="Fiscal year range start (inclusive).")] = None,
         fiscal_year_to: Annotated[Optional[StrictInt], Field(description="Fiscal year range end (inclusive).")] = None,
-        line_items: Annotated[Optional[StrictStr], Field(description="Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Statements with none of the requested codes are dropped. Unknown codes return `400` — see `/api/line-item-definitions/`.")] = None,
+        line_items: Annotated[Optional[StrictStr], Field(description="Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Statements with none of the requested codes are dropped. Unknown codes return `400` — see `/line-item-definitions/`.")] = None,
         statement_type: Annotated[Optional[StrictStr], Field(description="Filter to a single statement type.")] = None,
         _request_timeout: Union[
             None,
@@ -85,7 +85,7 @@ class CompaniesApi:
         :type fiscal_year_from: int
         :param fiscal_year_to: Fiscal year range end (inclusive).
         :type fiscal_year_to: int
-        :param line_items: Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Statements with none of the requested codes are dropped. Unknown codes return `400` — see `/api/line-item-definitions/`.
+        :param line_items: Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Statements with none of the requested codes are dropped. Unknown codes return `400` — see `/line-item-definitions/`.
         :type line_items: str
         :param statement_type: Filter to a single statement type.
         :type statement_type: str
@@ -151,7 +151,7 @@ class CompaniesApi:
         fiscal_year: Annotated[Optional[StrictInt], Field(description="Filter by exact fiscal year (e.g. `2024`).")] = None,
         fiscal_year_from: Annotated[Optional[StrictInt], Field(description="Fiscal year range start (inclusive).")] = None,
         fiscal_year_to: Annotated[Optional[StrictInt], Field(description="Fiscal year range end (inclusive).")] = None,
-        line_items: Annotated[Optional[StrictStr], Field(description="Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Statements with none of the requested codes are dropped. Unknown codes return `400` — see `/api/line-item-definitions/`.")] = None,
+        line_items: Annotated[Optional[StrictStr], Field(description="Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Statements with none of the requested codes are dropped. Unknown codes return `400` — see `/line-item-definitions/`.")] = None,
         statement_type: Annotated[Optional[StrictStr], Field(description="Filter to a single statement type.")] = None,
         _request_timeout: Union[
             None,
@@ -182,7 +182,7 @@ class CompaniesApi:
         :type fiscal_year_from: int
         :param fiscal_year_to: Fiscal year range end (inclusive).
         :type fiscal_year_to: int
-        :param line_items: Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Statements with none of the requested codes are dropped. Unknown codes return `400` — see `/api/line-item-definitions/`.
+        :param line_items: Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Statements with none of the requested codes are dropped. Unknown codes return `400` — see `/line-item-definitions/`.
         :type line_items: str
         :param statement_type: Filter to a single statement type.
         :type statement_type: str
@@ -248,7 +248,7 @@ class CompaniesApi:
         fiscal_year: Annotated[Optional[StrictInt], Field(description="Filter by exact fiscal year (e.g. `2024`).")] = None,
         fiscal_year_from: Annotated[Optional[StrictInt], Field(description="Fiscal year range start (inclusive).")] = None,
         fiscal_year_to: Annotated[Optional[StrictInt], Field(description="Fiscal year range end (inclusive).")] = None,
-        line_items: Annotated[Optional[StrictStr], Field(description="Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Statements with none of the requested codes are dropped. Unknown codes return `400` — see `/api/line-item-definitions/`.")] = None,
+        line_items: Annotated[Optional[StrictStr], Field(description="Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Statements with none of the requested codes are dropped. Unknown codes return `400` — see `/line-item-definitions/`.")] = None,
         statement_type: Annotated[Optional[StrictStr], Field(description="Filter to a single statement type.")] = None,
         _request_timeout: Union[
             None,
@@ -279,7 +279,7 @@ class CompaniesApi:
         :type fiscal_year_from: int
         :param fiscal_year_to: Fiscal year range end (inclusive).
         :type fiscal_year_to: int
-        :param line_items: Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Statements with none of the requested codes are dropped. Unknown codes return `400` — see `/api/line-item-definitions/`.
+        :param line_items: Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Statements with none of the requested codes are dropped. Unknown codes return `400` — see `/line-item-definitions/`.
         :type line_items: str
         :param statement_type: Filter to a single statement type.
         :type statement_type: str

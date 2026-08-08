@@ -70,7 +70,7 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
     fiscal_year = 56 # int | Filter by exact fiscal year (e.g. `2024`). (optional)
     fiscal_year_from = 56 # int | Fiscal year range start (inclusive). (optional)
     fiscal_year_to = 56 # int | Fiscal year range end (inclusive). (optional)
-    line_items = 'line_items_example' # str | Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Statements with none of the requested codes are dropped. Unknown codes return `400` — see `/api/line-item-definitions/`. (optional)
+    line_items = 'line_items_example' # str | Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Statements with none of the requested codes are dropped. Unknown codes return `400` — see `/line-item-definitions/`. (optional)
     statement_type = 'statement_type_example' # str | Filter to a single statement type. (optional)
 
     try:
@@ -95,7 +95,7 @@ Name | Type | Description  | Notes
  **fiscal_year** | **int**| Filter by exact fiscal year (e.g. &#x60;2024&#x60;). | [optional] 
  **fiscal_year_from** | **int**| Fiscal year range start (inclusive). | [optional] 
  **fiscal_year_to** | **int**| Fiscal year range end (inclusive). | [optional] 
- **line_items** | **str**| Comma-separated KPI codes to include (e.g. &#x60;revenue,ebitda,net_income_loss&#x60;). Omit to return all extracted line items. Statements with none of the requested codes are dropped. Unknown codes return &#x60;400&#x60; — see &#x60;/api/line-item-definitions/&#x60;. | [optional] 
+ **line_items** | **str**| Comma-separated KPI codes to include (e.g. &#x60;revenue,ebitda,net_income_loss&#x60;). Omit to return all extracted line items. Statements with none of the requested codes are dropped. Unknown codes return &#x60;400&#x60; — see &#x60;/line-item-definitions/&#x60;. | [optional] 
  **statement_type** | **str**| Filter to a single statement type. | [optional] 
 
 ### Return type
