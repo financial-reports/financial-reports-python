@@ -585,7 +585,7 @@ conf = financial_reports_generated_client.Configuration(
                "OS: {env}\n"\
                "Python Version: {pyversion}\n"\
                "Version of the API: 1.3.0\n"\
-               "SDK Package Version: 1.4.58".\
+               "SDK Package Version: 1.4.59".\
                format(env=sys.platform, pyversion=sys.version)
 
     def get_host_settings(self) -> List[HostSetting]:

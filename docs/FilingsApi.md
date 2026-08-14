@@ -335,7 +335,7 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | Markdown content of the filing. |  -  |
 **403** | Forbidden. Your plan does not include access to this endpoint. |  -  |
-**404** | Not Found. The filing or its processed content does not exist. |  -  |
+**404** | Not Found. The filing has no markdown to serve. &#x60;reason&#x60; says why: &#x60;not_processed&#x60; (no processed record yet), &#x60;no_narrative_content&#x60; (the source genuinely carries no narrative text - do not retry), or &#x60;content_missing&#x60; (the record exists but its content is unavailable). |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
