@@ -19,7 +19,7 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
@@ -38,9 +38,17 @@ class WebhookFilingPayload(BaseModel):
     title: StrictStr = Field(description="The title of the filing.")
     dissemination_datetime: datetime = Field(description="The exact time the filing was disseminated by the source.")
     release_datetime: datetime = Field(description="The official release time of the filing (e.g., the period end).")
+    ingestion_mode: StrictStr = Field(description="How this filing entered the platform: REALTIME (captured by the live scraper within the source's normal publication-to-ingest window) or BACKFILLED (historical import, recovery, or bulk backfill). Webhook deliveries are effectively always REALTIME — backfilled rows are age-suppressed by design — but replays and authorised recovery windows can deliver BACKFILLED rows.  * `REALTIME` - Realtime * `BACKFILLED` - Backfilled")
     document_url: StrictStr = Field(description="A direct, temporary link to download the original filing document (e.g., PDF).")
     markdown_content: Optional[StrictStr] = Field(description="The full, processed content of the filing in Markdown format. This field is only included if your webhook is configured with 'include_markdown: true' AND the event type is 'filing.processed'. It is null for 'filing.received'. Even with 'include_markdown: true' on a 'filing.processed' event, this field is null unless the webhook owner's account has Level 2 (Processed Filings) access -- the same tier gate applied to the REST /markdown/ endpoint.")
-    __properties: ClassVar[List[str]] = ["id", "processing_status", "filing_type_code", "filing_type_name", "language_code", "language_name", "title", "dissemination_datetime", "release_datetime", "document_url", "markdown_content"]
+    __properties: ClassVar[List[str]] = ["id", "processing_status", "filing_type_code", "filing_type_name", "language_code", "language_name", "title", "dissemination_datetime", "release_datetime", "ingestion_mode", "document_url", "markdown_content"]
+
+    @field_validator('ingestion_mode')
+    def ingestion_mode_validate_enum(cls, value):
+        """Validates the enum"""
+        if value not in set(['REALTIME', 'BACKFILLED']):
+            raise ValueError("must be one of enum values ('REALTIME', 'BACKFILLED')")
+        return value
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -83,6 +91,7 @@ class WebhookFilingPayload(BaseModel):
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
             "id",
@@ -94,6 +103,7 @@ class WebhookFilingPayload(BaseModel):
             "title",
             "dissemination_datetime",
             "release_datetime",
+            "ingestion_mode",
             "document_url",
             "markdown_content",
         ])
@@ -149,6 +159,7 @@ class WebhookFilingPayload(BaseModel):
             "title": obj.get("title"),
             "dissemination_datetime": obj.get("dissemination_datetime"),
             "release_datetime": obj.get("release_datetime"),
+            "ingestion_mode": obj.get("ingestion_mode"),
             "document_url": obj.get("document_url"),
             "markdown_content": obj.get("markdown_content")
         })

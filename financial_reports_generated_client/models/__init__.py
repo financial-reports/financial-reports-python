@@ -48,6 +48,7 @@ from financial_reports_generated_client.models.isic_division import ISICDivision
 from financial_reports_generated_client.models.isic_group import ISICGroup
 from financial_reports_generated_client.models.isic_section import ISICSection
 from financial_reports_generated_client.models.isin import ISIN
+from financial_reports_generated_client.models.ingestion_mode_enum import IngestionModeEnum
 from financial_reports_generated_client.models.jurisdiction import Jurisdiction
 from financial_reports_generated_client.models.language import Language
 from financial_reports_generated_client.models.line_item_definition import LineItemDefinition

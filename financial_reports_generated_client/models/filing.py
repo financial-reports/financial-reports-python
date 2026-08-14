@@ -25,6 +25,7 @@ from typing_extensions import Annotated
 from financial_reports_generated_client.models.company_minimal import CompanyMinimal
 from financial_reports_generated_client.models.filing_type import FilingType
 from financial_reports_generated_client.models.fiscal_period_enum import FiscalPeriodEnum
+from financial_reports_generated_client.models.ingestion_mode_enum import IngestionModeEnum
 from financial_reports_generated_client.models.language import Language
 from financial_reports_generated_client.models.source import Source
 from typing import Optional, Set
@@ -57,7 +58,8 @@ class Filing(BaseModel):
     fiscal_year: Optional[StrictInt] = Field(description="The accounting fiscal year this filing covers (e.g., 2024). Populated for annual, quarterly, interim reports and earnings releases. Null if not yet determined.")
     fiscal_period: Optional[FiscalPeriodEnum] = Field(description="The specific fiscal period covered by this filing. Possible values: FY (Full Year), Q1, Q2, Q3, Q4, H1 (First Half), H2 (Second Half). Populated for annual, quarterly, interim reports and earnings releases. Null if not yet determined.  * `FY` - Full Year * `Q1` - First Quarter * `Q2` - Second Quarter * `Q3` - Third Quarter * `Q4` - Fourth Quarter * `H1` - First Half * `H2` - Second Half * `9M` - Nine Months")
     period_ending_date: Optional[date] = Field(description="The exact date the reported financial period ends (e.g., 2024-12-31). Populated for annual, quarterly, interim reports and earnings releases. Null if not yet determined.")
-    __properties: ClassVar[List[str]] = ["id", "company", "filing_type", "language", "filing_date", "title", "added_to_platform", "updated_date", "dissemination_datetime", "release_datetime", "source", "document", "proxy_url", "viewer_url", "file_extension", "file_size", "markdown_url", "filing_type_confidence", "filing_type_reasoning", "fiscal_year", "fiscal_period", "period_ending_date"]
+    ingestion_mode: IngestionModeEnum = Field(description="How this filing entered the platform: REALTIME (captured by the live scraper within the source's normal publication-to-ingest window) or BACKFILLED (historical import, recovery, or bulk backfill).  * `REALTIME` - Realtime * `BACKFILLED` - Backfilled")
+    __properties: ClassVar[List[str]] = ["id", "company", "filing_type", "language", "filing_date", "title", "added_to_platform", "updated_date", "dissemination_datetime", "release_datetime", "source", "document", "proxy_url", "viewer_url", "file_extension", "file_size", "markdown_url", "filing_type_confidence", "filing_type_reasoning", "fiscal_year", "fiscal_period", "period_ending_date", "ingestion_mode"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -105,6 +107,7 @@ class Filing(BaseModel):
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
             "id",
@@ -123,6 +126,7 @@ class Filing(BaseModel):
             "fiscal_year",
             "fiscal_period",
             "period_ending_date",
+            "ingestion_mode",
         ])
 
         _dict = self.model_dump(
@@ -245,7 +249,8 @@ class Filing(BaseModel):
             "filing_type_reasoning": obj.get("filing_type_reasoning"),
             "fiscal_year": obj.get("fiscal_year"),
             "fiscal_period": obj.get("fiscal_period"),
-            "period_ending_date": obj.get("period_ending_date")
+            "period_ending_date": obj.get("period_ending_date"),
+            "ingestion_mode": obj.get("ingestion_mode")
         })
         return _obj
 

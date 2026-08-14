@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "1.4.59"
+__version__ = "1.4.60"
 
 # Define package exports
 __all__ = [
@@ -75,6 +75,7 @@ __all__ = [
     "ISICGroup",
     "ISICSection",
     "ISIN",
+    "IngestionModeEnum",
     "Jurisdiction",
     "Language",
     "LineItemDefinition",
@@ -183,6 +184,7 @@ from financial_reports_generated_client.models.isic_division import ISICDivision
 from financial_reports_generated_client.models.isic_group import ISICGroup as ISICGroup
 from financial_reports_generated_client.models.isic_section import ISICSection as ISICSection
 from financial_reports_generated_client.models.isin import ISIN as ISIN
+from financial_reports_generated_client.models.ingestion_mode_enum import IngestionModeEnum as IngestionModeEnum
 from financial_reports_generated_client.models.jurisdiction import Jurisdiction as Jurisdiction
 from financial_reports_generated_client.models.language import Language as Language
 from financial_reports_generated_client.models.line_item_definition import LineItemDefinition as LineItemDefinition

@@ -45,6 +45,7 @@ class TestWebhookFilingPayload(unittest.TestCase):
                 title = '',
                 dissemination_datetime = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
                 release_datetime = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
+                ingestion_mode = 'REALTIME',
                 document_url = '',
                 markdown_content = ''
             )
@@ -59,6 +60,7 @@ class TestWebhookFilingPayload(unittest.TestCase):
                 title = '',
                 dissemination_datetime = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
                 release_datetime = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
+                ingestion_mode = 'REALTIME',
                 document_url = '',
                 markdown_content = '',
         )

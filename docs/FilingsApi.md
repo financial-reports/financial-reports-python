@@ -100,7 +100,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **filings_list**
-> PaginatedFilingSummaryList filings_list(added_to_platform_from=added_to_platform_from, added_to_platform_to=added_to_platform_to, categories=categories, category=category, company=company, company_isin=company_isin, countries=countries, extensions=extensions, file_size_max=file_size_max, file_size_min=file_size_min, fiscal_period=fiscal_period, fiscal_year=fiscal_year, language=language, languages=languages, lei=lei, on_watchlist=on_watchlist, ordering=ordering, page=page, page_size=page_size, period_ending_date=period_ending_date, period_ending_date_from=period_ending_date_from, period_ending_date_to=period_ending_date_to, release_datetime_from=release_datetime_from, release_datetime_to=release_datetime_to, search=search, source=source, sources=sources, type=type, types=types, updated_date_from=updated_date_from, updated_date_to=updated_date_to, view=view)
+> PaginatedFilingSummaryList filings_list(added_to_platform_from=added_to_platform_from, added_to_platform_to=added_to_platform_to, categories=categories, category=category, company=company, company_isin=company_isin, countries=countries, extensions=extensions, file_size_max=file_size_max, file_size_min=file_size_min, fiscal_period=fiscal_period, fiscal_year=fiscal_year, ingestion_mode=ingestion_mode, language=language, languages=languages, lei=lei, on_watchlist=on_watchlist, ordering=ordering, page=page, page_size=page_size, period_ending_date=period_ending_date, period_ending_date_from=period_ending_date_from, period_ending_date_to=period_ending_date_to, release_datetime_from=release_datetime_from, release_datetime_to=release_datetime_to, search=search, source=source, sources=sources, type=type, types=types, updated_date_from=updated_date_from, updated_date_to=updated_date_to, view=view)
 
 List Filings
 
@@ -158,6 +158,7 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
     file_size_min = 56 # int | Filter by minimum file size in bytes. (optional)
     fiscal_period = 'fiscal_period_example' # str | Filter by fiscal period. Possible values: `FY` (Full Year), `Q1`, `Q2`, `Q3`, `Q4`, `H1` (First Half), `H2` (Second Half). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER. (optional)
     fiscal_year = 56 # int | Filter by fiscal year (e.g., `2024`). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER. (optional)
+    ingestion_mode = 'ingestion_mode_example' # str | Filter by how the filing entered the platform: `REALTIME` (captured by the live scraper within the source's normal publication-to-ingest window) or `BACKFILLED` (historical import, recovery, or bulk backfill). (optional)
     language = 'language_example' # str | Filter by a single filing language ISO 639-1 code (e.g., en). (optional)
     languages = 'languages_example' # str | Filter by filing language ISO 639-1 code(s). Comma-separated for multiple values (e.g., en,de). (optional)
     lei = 'lei_example' # str | Filter by Company Legal Entity Identifier (LEI). (optional)
@@ -181,7 +182,7 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
 
     try:
         # List Filings
-        api_response = await api_instance.filings_list(added_to_platform_from=added_to_platform_from, added_to_platform_to=added_to_platform_to, categories=categories, category=category, company=company, company_isin=company_isin, countries=countries, extensions=extensions, file_size_max=file_size_max, file_size_min=file_size_min, fiscal_period=fiscal_period, fiscal_year=fiscal_year, language=language, languages=languages, lei=lei, on_watchlist=on_watchlist, ordering=ordering, page=page, page_size=page_size, period_ending_date=period_ending_date, period_ending_date_from=period_ending_date_from, period_ending_date_to=period_ending_date_to, release_datetime_from=release_datetime_from, release_datetime_to=release_datetime_to, search=search, source=source, sources=sources, type=type, types=types, updated_date_from=updated_date_from, updated_date_to=updated_date_to, view=view)
+        api_response = await api_instance.filings_list(added_to_platform_from=added_to_platform_from, added_to_platform_to=added_to_platform_to, categories=categories, category=category, company=company, company_isin=company_isin, countries=countries, extensions=extensions, file_size_max=file_size_max, file_size_min=file_size_min, fiscal_period=fiscal_period, fiscal_year=fiscal_year, ingestion_mode=ingestion_mode, language=language, languages=languages, lei=lei, on_watchlist=on_watchlist, ordering=ordering, page=page, page_size=page_size, period_ending_date=period_ending_date, period_ending_date_from=period_ending_date_from, period_ending_date_to=period_ending_date_to, release_datetime_from=release_datetime_from, release_datetime_to=release_datetime_to, search=search, source=source, sources=sources, type=type, types=types, updated_date_from=updated_date_from, updated_date_to=updated_date_to, view=view)
         print("The response of FilingsApi->filings_list:\n")
         pprint(api_response)
     except Exception as e:
@@ -207,6 +208,7 @@ Name | Type | Description  | Notes
  **file_size_min** | **int**| Filter by minimum file size in bytes. | [optional] 
  **fiscal_period** | **str**| Filter by fiscal period. Possible values: &#x60;FY&#x60; (Full Year), &#x60;Q1&#x60;, &#x60;Q2&#x60;, &#x60;Q3&#x60;, &#x60;Q4&#x60;, &#x60;H1&#x60; (First Half), &#x60;H2&#x60; (Second Half). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER. | [optional] 
  **fiscal_year** | **int**| Filter by fiscal year (e.g., &#x60;2024&#x60;). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER. | [optional] 
+ **ingestion_mode** | **str**| Filter by how the filing entered the platform: &#x60;REALTIME&#x60; (captured by the live scraper within the source&#39;s normal publication-to-ingest window) or &#x60;BACKFILLED&#x60; (historical import, recovery, or bulk backfill). | [optional] 
  **language** | **str**| Filter by a single filing language ISO 639-1 code (e.g., en). | [optional] 
  **languages** | **str**| Filter by filing language ISO 639-1 code(s). Comma-separated for multiple values (e.g., en,de). | [optional] 
  **lei** | **str**| Filter by Company Legal Entity Identifier (LEI). | [optional] 

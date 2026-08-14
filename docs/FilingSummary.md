@@ -16,6 +16,7 @@ Name | Type | Description | Notes
 **processing_status** | [**ProcessingStatusEnum**](ProcessingStatusEnum.md) | The lifecycle status of the raw document to markdown conversion.  * &#x60;PENDING&#x60; - Pending * &#x60;QUEUED&#x60; - Queued * &#x60;PROCESSING&#x60; - Processing * &#x60;COMPLETED&#x60; - Completed * &#x60;FAILED&#x60; - Failed * &#x60;SKIPPED&#x60; - Skipped | [optional] 
 **file_extension** | **str** | File extension (e.g., PDF, HTML). | [optional] 
 **file_size** | **int** | File size in bytes. Stores locally to avoid storage backend hits. | [optional] 
+**ingestion_mode** | [**IngestionModeEnum**](IngestionModeEnum.md) | How this filing entered the platform: REALTIME (captured by the live scraper within the source&#39;s normal publication-to-ingest window) or BACKFILLED (historical import, recovery, or bulk backfill).  * &#x60;REALTIME&#x60; - Realtime * &#x60;BACKFILLED&#x60; - Backfilled | [readonly] 
 
 ## Example
 
