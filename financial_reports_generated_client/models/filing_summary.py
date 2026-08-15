@@ -46,7 +46,9 @@ class FilingSummary(BaseModel):
     file_extension: Optional[Annotated[str, Field(strict=True, max_length=10)]] = Field(default=None, description="File extension (e.g., PDF, HTML).")
     file_size: Optional[Annotated[int, Field(le=2147483647, strict=True, ge=0)]] = Field(default=None, description="File size in bytes. Stores locally to avoid storage backend hits.")
     ingestion_mode: IngestionModeEnum = Field(description="How this filing entered the platform: REALTIME (captured by the live scraper within the source's normal publication-to-ingest window) or BACKFILLED (historical import, recovery, or bulk backfill).  * `REALTIME` - Realtime * `BACKFILLED` - Backfilled")
-    __properties: ClassVar[List[str]] = ["id", "title", "release_datetime", "document_url", "proxy_url", "viewer_url", "company", "filing_type", "processing_status", "file_extension", "file_size", "ingestion_mode"]
+    source_url: Optional[StrictStr] = Field(description="Original public link for this filing at the source authority. Null when unavailable, for anonymised sources, or when the account does not have source identities unlocked.")
+    source_filing_type: Optional[StrictStr] = Field(description="The source authority's own classification label, verbatim. Null when the source publishes no label, it was not captured, or the account does not have source identities unlocked.")
+    __properties: ClassVar[List[str]] = ["id", "title", "release_datetime", "document_url", "proxy_url", "viewer_url", "company", "filing_type", "processing_status", "file_extension", "file_size", "ingestion_mode", "source_url", "source_filing_type"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -85,6 +87,8 @@ class FilingSummary(BaseModel):
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
             "id",
@@ -94,6 +98,8 @@ class FilingSummary(BaseModel):
             "company",
             "filing_type",
             "ingestion_mode",
+            "source_url",
+            "source_filing_type",
         ])
 
         _dict = self.model_dump(
@@ -137,6 +143,16 @@ class FilingSummary(BaseModel):
         if self.file_size is None and "file_size" in self.model_fields_set:
             _dict['file_size'] = None
 
+        # set to None if source_url (nullable) is None
+        # and model_fields_set contains the field
+        if self.source_url is None and "source_url" in self.model_fields_set:
+            _dict['source_url'] = None
+
+        # set to None if source_filing_type (nullable) is None
+        # and model_fields_set contains the field
+        if self.source_filing_type is None and "source_filing_type" in self.model_fields_set:
+            _dict['source_filing_type'] = None
+
         return _dict
 
     @classmethod
@@ -160,7 +176,9 @@ class FilingSummary(BaseModel):
             "processing_status": obj.get("processing_status"),
             "file_extension": obj.get("file_extension"),
             "file_size": obj.get("file_size"),
-            "ingestion_mode": obj.get("ingestion_mode")
+            "ingestion_mode": obj.get("ingestion_mode"),
+            "source_url": obj.get("source_url"),
+            "source_filing_type": obj.get("source_filing_type")
         })
         return _obj
 

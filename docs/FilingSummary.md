@@ -17,6 +17,8 @@ Name | Type | Description | Notes
 **file_extension** | **str** | File extension (e.g., PDF, HTML). | [optional] 
 **file_size** | **int** | File size in bytes. Stores locally to avoid storage backend hits. | [optional] 
 **ingestion_mode** | [**IngestionModeEnum**](IngestionModeEnum.md) | How this filing entered the platform: REALTIME (captured by the live scraper within the source&#39;s normal publication-to-ingest window) or BACKFILLED (historical import, recovery, or bulk backfill).  * &#x60;REALTIME&#x60; - Realtime * &#x60;BACKFILLED&#x60; - Backfilled | [readonly] 
+**source_url** | **str** | Original public link for this filing at the source authority. Null when unavailable, for anonymised sources, or when the account does not have source identities unlocked. | [readonly] 
+**source_filing_type** | **str** | The source authority&#39;s own classification label, verbatim. Null when the source publishes no label, it was not captured, or the account does not have source identities unlocked. | [readonly] 
 
 ## Example
 

@@ -61,7 +61,9 @@ class TestFilingSummary(unittest.TestCase):
                 processing_status = 'PENDING',
                 file_extension = '',
                 file_size = 0,
-                ingestion_mode = 'REALTIME'
+                ingestion_mode = 'REALTIME',
+                source_url = '',
+                source_filing_type = ''
             )
         else:
             return FilingSummary(
@@ -86,6 +88,8 @@ class TestFilingSummary(unittest.TestCase):
                     description = '', 
                     category = null, ),
                 ingestion_mode = 'REALTIME',
+                source_url = '',
+                source_filing_type = '',
         )
         """
 

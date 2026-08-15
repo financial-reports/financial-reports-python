@@ -80,7 +80,9 @@ class TestFiling(unittest.TestCase):
                 fiscal_year = 56,
                 fiscal_period = 'FY',
                 period_ending_date = datetime.datetime.strptime('1975-12-30', '%Y-%m-%d').date(),
-                ingestion_mode = 'REALTIME'
+                ingestion_mode = 'REALTIME',
+                source_url = '',
+                source_filing_type = ''
             )
         else:
             return Filing(
@@ -124,6 +126,8 @@ class TestFiling(unittest.TestCase):
                 fiscal_period = 'FY',
                 period_ending_date = datetime.datetime.strptime('1975-12-30', '%Y-%m-%d').date(),
                 ingestion_mode = 'REALTIME',
+                source_url = '',
+                source_filing_type = '',
         )
         """
 

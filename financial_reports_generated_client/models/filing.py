@@ -59,7 +59,9 @@ class Filing(BaseModel):
     fiscal_period: Optional[FiscalPeriodEnum] = Field(description="The specific fiscal period covered by this filing. Possible values: FY (Full Year), Q1, Q2, Q3, Q4, H1 (First Half), H2 (Second Half). Populated for annual, quarterly, interim reports and earnings releases. Null if not yet determined.  * `FY` - Full Year * `Q1` - First Quarter * `Q2` - Second Quarter * `Q3` - Third Quarter * `Q4` - Fourth Quarter * `H1` - First Half * `H2` - Second Half * `9M` - Nine Months")
     period_ending_date: Optional[date] = Field(description="The exact date the reported financial period ends (e.g., 2024-12-31). Populated for annual, quarterly, interim reports and earnings releases. Null if not yet determined.")
     ingestion_mode: IngestionModeEnum = Field(description="How this filing entered the platform: REALTIME (captured by the live scraper within the source's normal publication-to-ingest window) or BACKFILLED (historical import, recovery, or bulk backfill).  * `REALTIME` - Realtime * `BACKFILLED` - Backfilled")
-    __properties: ClassVar[List[str]] = ["id", "company", "filing_type", "language", "filing_date", "title", "added_to_platform", "updated_date", "dissemination_datetime", "release_datetime", "source", "document", "proxy_url", "viewer_url", "file_extension", "file_size", "markdown_url", "filing_type_confidence", "filing_type_reasoning", "fiscal_year", "fiscal_period", "period_ending_date", "ingestion_mode"]
+    source_url: Optional[StrictStr] = Field(description="Original public link for this filing at the source authority. Null when unavailable, for anonymised sources, or when the account does not have source identities unlocked.")
+    source_filing_type: Optional[StrictStr] = Field(description="The source authority's own classification label, verbatim. Null when the source publishes no label, it was not captured, or the account does not have source identities unlocked.")
+    __properties: ClassVar[List[str]] = ["id", "company", "filing_type", "language", "filing_date", "title", "added_to_platform", "updated_date", "dissemination_datetime", "release_datetime", "source", "document", "proxy_url", "viewer_url", "file_extension", "file_size", "markdown_url", "filing_type_confidence", "filing_type_reasoning", "fiscal_year", "fiscal_period", "period_ending_date", "ingestion_mode", "source_url", "source_filing_type"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -108,6 +110,8 @@ class Filing(BaseModel):
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
             "id",
@@ -127,6 +131,8 @@ class Filing(BaseModel):
             "fiscal_period",
             "period_ending_date",
             "ingestion_mode",
+            "source_url",
+            "source_filing_type",
         ])
 
         _dict = self.model_dump(
@@ -216,6 +222,16 @@ class Filing(BaseModel):
         if self.period_ending_date is None and "period_ending_date" in self.model_fields_set:
             _dict['period_ending_date'] = None
 
+        # set to None if source_url (nullable) is None
+        # and model_fields_set contains the field
+        if self.source_url is None and "source_url" in self.model_fields_set:
+            _dict['source_url'] = None
+
+        # set to None if source_filing_type (nullable) is None
+        # and model_fields_set contains the field
+        if self.source_filing_type is None and "source_filing_type" in self.model_fields_set:
+            _dict['source_filing_type'] = None
+
         return _dict
 
     @classmethod
@@ -250,7 +266,9 @@ class Filing(BaseModel):
             "fiscal_year": obj.get("fiscal_year"),
             "fiscal_period": obj.get("fiscal_period"),
             "period_ending_date": obj.get("period_ending_date"),
-            "ingestion_mode": obj.get("ingestion_mode")
+            "ingestion_mode": obj.get("ingestion_mode"),
+            "source_url": obj.get("source_url"),
+            "source_filing_type": obj.get("source_filing_type")
         })
         return _obj
 

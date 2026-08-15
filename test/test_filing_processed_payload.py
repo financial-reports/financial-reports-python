@@ -63,6 +63,8 @@ class TestFilingProcessedPayload(unittest.TestCase):
                     release_datetime = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
                     ingestion_mode = 'REALTIME', 
                     document_url = '', 
+                    source_url = '', 
+                    source_filing_type = '', 
                     markdown_content = '', ),
                 triggered_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f')
             )
@@ -95,6 +97,8 @@ class TestFilingProcessedPayload(unittest.TestCase):
                     release_datetime = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
                     ingestion_mode = 'REALTIME', 
                     document_url = '', 
+                    source_url = '', 
+                    source_filing_type = '', 
                     markdown_content = '', ),
                 triggered_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
         )

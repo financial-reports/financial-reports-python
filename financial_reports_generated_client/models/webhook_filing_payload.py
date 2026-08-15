@@ -40,8 +40,10 @@ class WebhookFilingPayload(BaseModel):
     release_datetime: datetime = Field(description="The official release time of the filing (e.g., the period end).")
     ingestion_mode: StrictStr = Field(description="How this filing entered the platform: REALTIME (captured by the live scraper within the source's normal publication-to-ingest window) or BACKFILLED (historical import, recovery, or bulk backfill). Webhook deliveries are effectively always REALTIME — backfilled rows are age-suppressed by design — but replays and authorised recovery windows can deliver BACKFILLED rows.  * `REALTIME` - Realtime * `BACKFILLED` - Backfilled")
     document_url: StrictStr = Field(description="A direct, temporary link to download the original filing document (e.g., PDF).")
+    source_url: Optional[StrictStr] = Field(description="Original public link for the filing at the source authority. Null unless the webhook owner's account has source identities unlocked, the source is anonymised, or no stable link exists.")
+    source_filing_type: Optional[StrictStr] = Field(description="The source authority's own classification label, verbatim. Null unless the webhook owner's account has source identities unlocked, or the source publishes no label.")
     markdown_content: Optional[StrictStr] = Field(description="The full, processed content of the filing in Markdown format. This field is only included if your webhook is configured with 'include_markdown: true' AND the event type is 'filing.processed'. It is null for 'filing.received'. Even with 'include_markdown: true' on a 'filing.processed' event, this field is null unless the webhook owner's account has Level 2 (Processed Filings) access -- the same tier gate applied to the REST /markdown/ endpoint.")
-    __properties: ClassVar[List[str]] = ["id", "processing_status", "filing_type_code", "filing_type_name", "language_code", "language_name", "title", "dissemination_datetime", "release_datetime", "ingestion_mode", "document_url", "markdown_content"]
+    __properties: ClassVar[List[str]] = ["id", "processing_status", "filing_type_code", "filing_type_name", "language_code", "language_name", "title", "dissemination_datetime", "release_datetime", "ingestion_mode", "document_url", "source_url", "source_filing_type", "markdown_content"]
 
     @field_validator('ingestion_mode')
     def ingestion_mode_validate_enum(cls, value):
@@ -92,6 +94,8 @@ class WebhookFilingPayload(BaseModel):
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
             "id",
@@ -105,6 +109,8 @@ class WebhookFilingPayload(BaseModel):
             "release_datetime",
             "ingestion_mode",
             "document_url",
+            "source_url",
+            "source_filing_type",
             "markdown_content",
         ])
 
@@ -132,6 +138,16 @@ class WebhookFilingPayload(BaseModel):
         # and model_fields_set contains the field
         if self.language_name is None and "language_name" in self.model_fields_set:
             _dict['language_name'] = None
+
+        # set to None if source_url (nullable) is None
+        # and model_fields_set contains the field
+        if self.source_url is None and "source_url" in self.model_fields_set:
+            _dict['source_url'] = None
+
+        # set to None if source_filing_type (nullable) is None
+        # and model_fields_set contains the field
+        if self.source_filing_type is None and "source_filing_type" in self.model_fields_set:
+            _dict['source_filing_type'] = None
 
         # set to None if markdown_content (nullable) is None
         # and model_fields_set contains the field
@@ -161,6 +177,8 @@ class WebhookFilingPayload(BaseModel):
             "release_datetime": obj.get("release_datetime"),
             "ingestion_mode": obj.get("ingestion_mode"),
             "document_url": obj.get("document_url"),
+            "source_url": obj.get("source_url"),
+            "source_filing_type": obj.get("source_filing_type"),
             "markdown_content": obj.get("markdown_content")
         })
         return _obj

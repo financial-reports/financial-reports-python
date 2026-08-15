@@ -52,7 +52,9 @@ class TestPaginatedFilingSummaryList(unittest.TestCase):
                         processing_status = null, 
                         file_extension = '', 
                         file_size = 0, 
-                        ingestion_mode = null, )
+                        ingestion_mode = null, 
+                        source_url = '', 
+                        source_filing_type = '', )
                     ],
                 history_window = financial_reports_generated_client.models.paginated_filing_summary_list_history_window.PaginatedFilingSummaryList_history_window(
                     limited = True, 
@@ -76,7 +78,9 @@ class TestPaginatedFilingSummaryList(unittest.TestCase):
                         processing_status = null, 
                         file_extension = '', 
                         file_size = 0, 
-                        ingestion_mode = null, )
+                        ingestion_mode = null, 
+                        source_url = '', 
+                        source_filing_type = '', )
                     ],
         )
         """
