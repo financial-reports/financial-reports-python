@@ -14,7 +14,7 @@ Name | Type | Description | Notes
 **duration_ms** | **int** |  | [readonly] 
 **response_body** | **str** |  | [readonly] 
 **created_at** | **datetime** |  | [readonly] 
-**request_headers** | **Dict[str, Optional[object]]** | Reconstructed request headers that were sent with this delivery. | [readonly] 
+**request_headers** | **Dict[str, Optional[object]]** | Reconstructed request headers. Headers are not stored per delivery, so this is rebuilt from the webhook config and is not a wire log. X-Filing-Timestamp and X-Filing-Signature-256 are recomputed on every attempt at send time and appear here as placeholders, not as the values your endpoint received. | [readonly] 
 **request_payload** | **Dict[str, Optional[object]]** | Reconstructed request payload. Built dynamically from the referenced filing. | [readonly] 
 
 ## Example

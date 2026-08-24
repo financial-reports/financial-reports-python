@@ -40,7 +40,7 @@ class WebhookDeliveryDetail(BaseModel):
     duration_ms: Optional[StrictInt]
     response_body: Optional[StrictStr]
     created_at: datetime
-    request_headers: Dict[str, Any] = Field(description="Reconstructed request headers that were sent with this delivery.")
+    request_headers: Dict[str, Any] = Field(description="Reconstructed request headers. Headers are not stored per delivery, so this is rebuilt from the webhook config and is not a wire log. X-Filing-Timestamp and X-Filing-Signature-256 are recomputed on every attempt at send time and appear here as placeholders, not as the values your endpoint received.")
     request_payload: Dict[str, Any] = Field(description="Reconstructed request payload. Built dynamically from the referenced filing.")
     __properties: ClassVar[List[str]] = ["uuid", "webhook_id", "event_type", "filing_id", "status", "response_status_code", "duration_ms", "response_body", "created_at", "request_headers", "request_payload"]
 
