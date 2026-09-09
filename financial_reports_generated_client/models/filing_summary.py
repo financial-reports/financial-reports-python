@@ -48,7 +48,8 @@ class FilingSummary(BaseModel):
     ingestion_mode: IngestionModeEnum = Field(description="How this filing entered the platform: REALTIME (captured by the live scraper within the source's normal publication-to-ingest window) or BACKFILLED (historical import, recovery, or bulk backfill).  * `REALTIME` - Realtime * `BACKFILLED` - Backfilled")
     source_url: Optional[StrictStr] = Field(description="Original public link for this filing at the source authority. Null when unavailable, for anonymised sources, or when the account does not have source identities unlocked.")
     source_filing_type: Optional[StrictStr] = Field(description="The source authority's own classification label, verbatim. Null when the source publishes no label, it was not captured, or the account does not have source identities unlocked.")
-    __properties: ClassVar[List[str]] = ["id", "title", "release_datetime", "document_url", "proxy_url", "viewer_url", "company", "filing_type", "processing_status", "file_extension", "file_size", "ingestion_mode", "source_url", "source_filing_type"]
+    source_filing_id: Optional[StrictStr] = Field(description="The publisher's own identifier for this document, verbatim. Unique per source. On sources that publish one record per event and fan it out into one row per language and per attachment, the leading portion is a shared event stem, so rows of one disclosure sort together -- see the cross-language grouping recipe in the API docs. Null on legacy rows ingested before the identifier was retained.")
+    __properties: ClassVar[List[str]] = ["id", "title", "release_datetime", "document_url", "proxy_url", "viewer_url", "company", "filing_type", "processing_status", "file_extension", "file_size", "ingestion_mode", "source_url", "source_filing_type", "source_filing_id"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -89,6 +90,7 @@ class FilingSummary(BaseModel):
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
             "id",
@@ -100,6 +102,7 @@ class FilingSummary(BaseModel):
             "ingestion_mode",
             "source_url",
             "source_filing_type",
+            "source_filing_id",
         ])
 
         _dict = self.model_dump(
@@ -153,6 +156,11 @@ class FilingSummary(BaseModel):
         if self.source_filing_type is None and "source_filing_type" in self.model_fields_set:
             _dict['source_filing_type'] = None
 
+        # set to None if source_filing_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.source_filing_id is None and "source_filing_id" in self.model_fields_set:
+            _dict['source_filing_id'] = None
+
         return _dict
 
     @classmethod
@@ -178,7 +186,8 @@ class FilingSummary(BaseModel):
             "file_size": obj.get("file_size"),
             "ingestion_mode": obj.get("ingestion_mode"),
             "source_url": obj.get("source_url"),
-            "source_filing_type": obj.get("source_filing_type")
+            "source_filing_type": obj.get("source_filing_type"),
+            "source_filing_id": obj.get("source_filing_id")
         })
         return _obj
 

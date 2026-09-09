@@ -77,12 +77,15 @@ class TestFiling(unittest.TestCase):
                 markdown_url = '',
                 filing_type_confidence = 1.337,
                 filing_type_reasoning = '',
+                language_confidence = 1.337,
+                language_verified_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
                 fiscal_year = 56,
                 fiscal_period = 'FY',
                 period_ending_date = datetime.datetime.strptime('1975-12-30', '%Y-%m-%d').date(),
                 ingestion_mode = 'REALTIME',
                 source_url = '',
-                source_filing_type = ''
+                source_filing_type = '',
+                source_filing_id = ''
             )
         else:
             return Filing(
@@ -122,12 +125,15 @@ class TestFiling(unittest.TestCase):
                 markdown_url = '',
                 filing_type_confidence = 1.337,
                 filing_type_reasoning = '',
+                language_confidence = 1.337,
+                language_verified_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
                 fiscal_year = 56,
                 fiscal_period = 'FY',
                 period_ending_date = datetime.datetime.strptime('1975-12-30', '%Y-%m-%d').date(),
                 ingestion_mode = 'REALTIME',
                 source_url = '',
                 source_filing_type = '',
+                source_filing_id = '',
         )
         """
 

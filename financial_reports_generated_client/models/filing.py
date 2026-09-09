@@ -55,13 +55,16 @@ class Filing(BaseModel):
     markdown_url: Optional[StrictStr]
     filing_type_confidence: Optional[Union[StrictFloat, StrictInt]] = Field(description="Confidence score (0.0–1.0) assigned by the automated classification system for the filing type.")
     filing_type_reasoning: Optional[StrictStr] = Field(description="Step-by-step rationale produced by the automated classification system for the assigned filing type. Indicative only — not manually reviewed.")
+    language_confidence: Optional[Union[StrictFloat, StrictInt]] = Field(description="Confidence score (0.0–1.0) from detecting the language against the document's own text. Null when detection reached no usable answer, which includes the case where it never ran — use language_verified_at to tell those apart.")
+    language_verified_at: Optional[datetime] = Field(description="When the language was checked against the document's own text. Null means it never was: the language is the value asserted when the filing was ingested, which is reliable for a source that files in one language and a guess for one that publishes the same disclosure in several. A non-null value with a null language_confidence means the document was read but no confident answer came out of it.")
     fiscal_year: Optional[StrictInt] = Field(description="The accounting fiscal year this filing covers (e.g., 2024). Populated for annual, quarterly, interim reports and earnings releases. Null if not yet determined.")
     fiscal_period: Optional[FiscalPeriodEnum] = Field(description="The specific fiscal period covered by this filing. Possible values: FY (Full Year), Q1, Q2, Q3, Q4, H1 (First Half), H2 (Second Half). Populated for annual, quarterly, interim reports and earnings releases. Null if not yet determined.  * `FY` - Full Year * `Q1` - First Quarter * `Q2` - Second Quarter * `Q3` - Third Quarter * `Q4` - Fourth Quarter * `H1` - First Half * `H2` - Second Half * `9M` - Nine Months")
     period_ending_date: Optional[date] = Field(description="The exact date the reported financial period ends (e.g., 2024-12-31). Populated for annual, quarterly, interim reports and earnings releases. Null if not yet determined.")
     ingestion_mode: IngestionModeEnum = Field(description="How this filing entered the platform: REALTIME (captured by the live scraper within the source's normal publication-to-ingest window) or BACKFILLED (historical import, recovery, or bulk backfill).  * `REALTIME` - Realtime * `BACKFILLED` - Backfilled")
     source_url: Optional[StrictStr] = Field(description="Original public link for this filing at the source authority. Null when unavailable, for anonymised sources, or when the account does not have source identities unlocked.")
     source_filing_type: Optional[StrictStr] = Field(description="The source authority's own classification label, verbatim. Null when the source publishes no label, it was not captured, or the account does not have source identities unlocked.")
-    __properties: ClassVar[List[str]] = ["id", "company", "filing_type", "language", "filing_date", "title", "added_to_platform", "updated_date", "dissemination_datetime", "release_datetime", "source", "document", "proxy_url", "viewer_url", "file_extension", "file_size", "markdown_url", "filing_type_confidence", "filing_type_reasoning", "fiscal_year", "fiscal_period", "period_ending_date", "ingestion_mode", "source_url", "source_filing_type"]
+    source_filing_id: Optional[StrictStr] = Field(description="The publisher's own identifier for this document, verbatim. Unique per source. On sources that publish one record per event and fan it out into one row per language and per attachment, the leading portion is a shared event stem, so rows of one disclosure sort together -- see the cross-language grouping recipe in the API docs. Null on legacy rows ingested before the identifier was retained.")
+    __properties: ClassVar[List[str]] = ["id", "company", "filing_type", "language", "filing_date", "title", "added_to_platform", "updated_date", "dissemination_datetime", "release_datetime", "source", "document", "proxy_url", "viewer_url", "file_extension", "file_size", "markdown_url", "filing_type_confidence", "filing_type_reasoning", "language_confidence", "language_verified_at", "fiscal_year", "fiscal_period", "period_ending_date", "ingestion_mode", "source_url", "source_filing_type", "source_filing_id"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -112,6 +115,9 @@ class Filing(BaseModel):
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
             "id",
@@ -127,12 +133,15 @@ class Filing(BaseModel):
             "markdown_url",
             "filing_type_confidence",
             "filing_type_reasoning",
+            "language_confidence",
+            "language_verified_at",
             "fiscal_year",
             "fiscal_period",
             "period_ending_date",
             "ingestion_mode",
             "source_url",
             "source_filing_type",
+            "source_filing_id",
         ])
 
         _dict = self.model_dump(
@@ -207,6 +216,16 @@ class Filing(BaseModel):
         if self.filing_type_reasoning is None and "filing_type_reasoning" in self.model_fields_set:
             _dict['filing_type_reasoning'] = None
 
+        # set to None if language_confidence (nullable) is None
+        # and model_fields_set contains the field
+        if self.language_confidence is None and "language_confidence" in self.model_fields_set:
+            _dict['language_confidence'] = None
+
+        # set to None if language_verified_at (nullable) is None
+        # and model_fields_set contains the field
+        if self.language_verified_at is None and "language_verified_at" in self.model_fields_set:
+            _dict['language_verified_at'] = None
+
         # set to None if fiscal_year (nullable) is None
         # and model_fields_set contains the field
         if self.fiscal_year is None and "fiscal_year" in self.model_fields_set:
@@ -231,6 +250,11 @@ class Filing(BaseModel):
         # and model_fields_set contains the field
         if self.source_filing_type is None and "source_filing_type" in self.model_fields_set:
             _dict['source_filing_type'] = None
+
+        # set to None if source_filing_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.source_filing_id is None and "source_filing_id" in self.model_fields_set:
+            _dict['source_filing_id'] = None
 
         return _dict
 
@@ -263,12 +287,15 @@ class Filing(BaseModel):
             "markdown_url": obj.get("markdown_url"),
             "filing_type_confidence": obj.get("filing_type_confidence"),
             "filing_type_reasoning": obj.get("filing_type_reasoning"),
+            "language_confidence": obj.get("language_confidence"),
+            "language_verified_at": obj.get("language_verified_at"),
             "fiscal_year": obj.get("fiscal_year"),
             "fiscal_period": obj.get("fiscal_period"),
             "period_ending_date": obj.get("period_ending_date"),
             "ingestion_mode": obj.get("ingestion_mode"),
             "source_url": obj.get("source_url"),
-            "source_filing_type": obj.get("source_filing_type")
+            "source_filing_type": obj.get("source_filing_type"),
+            "source_filing_id": obj.get("source_filing_id")
         })
         return _obj
 

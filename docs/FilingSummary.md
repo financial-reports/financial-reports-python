@@ -19,6 +19,7 @@ Name | Type | Description | Notes
 **ingestion_mode** | [**IngestionModeEnum**](IngestionModeEnum.md) | How this filing entered the platform: REALTIME (captured by the live scraper within the source&#39;s normal publication-to-ingest window) or BACKFILLED (historical import, recovery, or bulk backfill).  * &#x60;REALTIME&#x60; - Realtime * &#x60;BACKFILLED&#x60; - Backfilled | [readonly] 
 **source_url** | **str** | Original public link for this filing at the source authority. Null when unavailable, for anonymised sources, or when the account does not have source identities unlocked. | [readonly] 
 **source_filing_type** | **str** | The source authority&#39;s own classification label, verbatim. Null when the source publishes no label, it was not captured, or the account does not have source identities unlocked. | [readonly] 
+**source_filing_id** | **str** | The publisher&#39;s own identifier for this document, verbatim. Unique per source. On sources that publish one record per event and fan it out into one row per language and per attachment, the leading portion is a shared event stem, so rows of one disclosure sort together -- see the cross-language grouping recipe in the API docs. Null on legacy rows ingested before the identifier was retained. | [readonly] 
 
 ## Example
 

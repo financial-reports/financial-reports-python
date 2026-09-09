@@ -63,7 +63,8 @@ class TestFilingSummary(unittest.TestCase):
                 file_size = 0,
                 ingestion_mode = 'REALTIME',
                 source_url = '',
-                source_filing_type = ''
+                source_filing_type = '',
+                source_filing_id = ''
             )
         else:
             return FilingSummary(
@@ -90,6 +91,7 @@ class TestFilingSummary(unittest.TestCase):
                 ingestion_mode = 'REALTIME',
                 source_url = '',
                 source_filing_type = '',
+                source_filing_id = '',
         )
         """
 

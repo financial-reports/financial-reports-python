@@ -21,7 +21,9 @@ Retrieve Company Financials
 
 Returns standardized financial KPIs for a company as a structured document: a company envelope containing `periods`, each holding its Income Statement, Balance Sheet and Cash Flow `statements`, each holding `line_items`.
 
-When several filings report the same period, the most recently published filing is selected; every contributing filing is listed in the statement's `sources` array. `source_filing` and `sources` are returned only for accounts with source unmasking enabled (`sources_masked` reports which applies). Use `as_of=YYYY-MM-DD` for a point-in-time view.
+When several filings report the same period, the candidates are ranked and one statement is selected. A filing the company reports its own financials in beats one it does not, such as an employee benefit plan's Form 11-K or a filing notice. A statement in the currency the company reports in beats an off-currency one, which is usually a subsidiary's filing that resolved to the parent. A complete statement beats a fragment, such as the single restated line in an amendment. Only then does the most recently published filing win. A selected statement denominated in a currency other than the company's carries `currency_mismatch: true`.
+
+Every contributing filing is listed in the statement's `sources` array. `source_filing` and `sources` are returned only for accounts with source unmasking enabled (`sources_masked` reports which applies). Use `as_of=YYYY-MM-DD` for a point-in-time view.
 
 Use the `depth` and `parent_code` fields on each line item to render the Capital IQ-style statement hierarchy.
 
