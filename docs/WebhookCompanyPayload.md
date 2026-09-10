@@ -5,12 +5,12 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **str** | Internal Financial Reports Company ID. | [readonly] 
+**id** | **str** | Internal FinancialFilings Company ID. | [readonly] 
 **name** | **str** | Company name. | [readonly] 
 **ticker** | **str** | Primary stock ticker. | [readonly] 
 **lei** | **str** | Legal Entity Identifier. | [readonly] 
 **website** | **str** | Company&#39;s official website. | [readonly] 
-**company_page** | **str** | URL to the company&#39;s page on Financial Reports. | [readonly] 
+**company_page** | **str** | URL to the company&#39;s page on FinancialFilings. | [readonly] 
 **country_name** | **str** | Name of the company&#39;s country of incorporation. | [readonly] 
 **country_code_alpha2** | **str** | ISO 3166-1 alpha-2 country code. | [readonly] 
 **isins** | **List[str]** | List of ISIN codes (strings) associated with the company. The Primary ISIN is always at index 0. Only included if your webhook is configured with &#39;include_isins: true&#39;. | [readonly] 

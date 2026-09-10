@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **str** | Internal Financial Reports Filing ID. | [readonly] 
+**id** | **str** | Internal FinancialFilings Filing ID. | [readonly] 
 **processing_status** | **str** | The current processing status of the filing (e.g., &#39;PENDING&#39;, &#39;COMPLETED&#39;). | [readonly] 
 **filing_type_code** | **str** | Short code for the filing type (e.g., &#39;10-K&#39;). May be null for &#39;filing.received&#39; events. | [readonly] 
 **filing_type_name** | **str** | Human-readable filing type (e.g., &#39;Annual Report&#39;). May be null for &#39;filing.received&#39; events. | [readonly] 

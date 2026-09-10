@@ -29,7 +29,7 @@ class WebhookFilingPayload(BaseModel):
     """
     WebhookFilingPayload
     """ # noqa: E501
-    id: StrictStr = Field(description="Internal Financial Reports Filing ID.")
+    id: StrictStr = Field(description="Internal FinancialFilings Filing ID.")
     processing_status: StrictStr = Field(description="The current processing status of the filing (e.g., 'PENDING', 'COMPLETED').")
     filing_type_code: Optional[StrictStr] = Field(description="Short code for the filing type (e.g., '10-K'). May be null for 'filing.received' events.")
     filing_type_name: Optional[StrictStr] = Field(description="Human-readable filing type (e.g., 'Annual Report'). May be null for 'filing.received' events.")

@@ -36,7 +36,7 @@ class ResourceWrapper:
 
 class FinancialReports:
     """
-    The main entry point for the Financial Reports SDK.
+    The main entry point for the FinancialFilings SDK.
     
     Usage:
         async with FinancialReports(api_key="your_key") as client:

@@ -28,12 +28,12 @@ class WebhookCompanyPayload(BaseModel):
     """
     WebhookCompanyPayload
     """ # noqa: E501
-    id: StrictStr = Field(description="Internal Financial Reports Company ID.")
+    id: StrictStr = Field(description="Internal FinancialFilings Company ID.")
     name: StrictStr = Field(description="Company name.")
     ticker: StrictStr = Field(description="Primary stock ticker.")
     lei: StrictStr = Field(description="Legal Entity Identifier.")
     website: StrictStr = Field(description="Company's official website.")
-    company_page: StrictStr = Field(description="URL to the company's page on Financial Reports.")
+    company_page: StrictStr = Field(description="URL to the company's page on FinancialFilings.")
     country_name: StrictStr = Field(description="Name of the company's country of incorporation.")
     country_code_alpha2: StrictStr = Field(description="ISO 3166-1 alpha-2 country code.")
     isins: List[StrictStr] = Field(description="List of ISIN codes (strings) associated with the company. The Primary ISIN is always at index 0. Only included if your webhook is configured with 'include_isins: true'.")
