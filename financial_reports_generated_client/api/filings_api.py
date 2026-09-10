@@ -322,7 +322,7 @@ class FilingsApi:
         file_size_min: Annotated[Optional[StrictInt], Field(description="Filter by minimum file size in bytes.")] = None,
         fiscal_period: Annotated[Optional[StrictStr], Field(description="Filter by fiscal period. Possible values: `FY` (Full Year), `Q1`, `Q2`, `Q3`, `Q4`, `H1` (First Half), `H2` (Second Half). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.")] = None,
         fiscal_year: Annotated[Optional[StrictInt], Field(description="Filter by fiscal year (e.g., `2024`). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.")] = None,
-        ingestion_mode: Annotated[Optional[StrictStr], Field(description="Filter by how the filing entered the platform: `REALTIME` (captured by the live scraper within the source's normal publication-to-ingest window) or `BACKFILLED` (historical import, recovery, or bulk backfill).")] = None,
+        ingestion_mode: Annotated[Optional[StrictStr], Field(description="Filter by how the filing entered the platform: `REALTIME` (picked up within the source's normal publication-to-availability window) or `BACKFILLED` (historical import, recovery, or bulk backfill).")] = None,
         language: Annotated[Optional[StrictStr], Field(description="Filter by a single filing language ISO 639-1 code (e.g., en).")] = None,
         languages: Annotated[Optional[StrictStr], Field(description="Filter by filing language ISO 639-1 code(s). Comma-separated for multiple values (e.g., en,de).")] = None,
         lei: Annotated[Optional[StrictStr], Field(description="Filter by Company Legal Entity Identifier (LEI).")] = None,
@@ -384,7 +384,7 @@ class FilingsApi:
         :type fiscal_period: str
         :param fiscal_year: Filter by fiscal year (e.g., `2024`). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.
         :type fiscal_year: int
-        :param ingestion_mode: Filter by how the filing entered the platform: `REALTIME` (captured by the live scraper within the source's normal publication-to-ingest window) or `BACKFILLED` (historical import, recovery, or bulk backfill).
+        :param ingestion_mode: Filter by how the filing entered the platform: `REALTIME` (picked up within the source's normal publication-to-availability window) or `BACKFILLED` (historical import, recovery, or bulk backfill).
         :type ingestion_mode: str
         :param language: Filter by a single filing language ISO 639-1 code (e.g., en).
         :type language: str
@@ -518,7 +518,7 @@ class FilingsApi:
         file_size_min: Annotated[Optional[StrictInt], Field(description="Filter by minimum file size in bytes.")] = None,
         fiscal_period: Annotated[Optional[StrictStr], Field(description="Filter by fiscal period. Possible values: `FY` (Full Year), `Q1`, `Q2`, `Q3`, `Q4`, `H1` (First Half), `H2` (Second Half). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.")] = None,
         fiscal_year: Annotated[Optional[StrictInt], Field(description="Filter by fiscal year (e.g., `2024`). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.")] = None,
-        ingestion_mode: Annotated[Optional[StrictStr], Field(description="Filter by how the filing entered the platform: `REALTIME` (captured by the live scraper within the source's normal publication-to-ingest window) or `BACKFILLED` (historical import, recovery, or bulk backfill).")] = None,
+        ingestion_mode: Annotated[Optional[StrictStr], Field(description="Filter by how the filing entered the platform: `REALTIME` (picked up within the source's normal publication-to-availability window) or `BACKFILLED` (historical import, recovery, or bulk backfill).")] = None,
         language: Annotated[Optional[StrictStr], Field(description="Filter by a single filing language ISO 639-1 code (e.g., en).")] = None,
         languages: Annotated[Optional[StrictStr], Field(description="Filter by filing language ISO 639-1 code(s). Comma-separated for multiple values (e.g., en,de).")] = None,
         lei: Annotated[Optional[StrictStr], Field(description="Filter by Company Legal Entity Identifier (LEI).")] = None,
@@ -580,7 +580,7 @@ class FilingsApi:
         :type fiscal_period: str
         :param fiscal_year: Filter by fiscal year (e.g., `2024`). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.
         :type fiscal_year: int
-        :param ingestion_mode: Filter by how the filing entered the platform: `REALTIME` (captured by the live scraper within the source's normal publication-to-ingest window) or `BACKFILLED` (historical import, recovery, or bulk backfill).
+        :param ingestion_mode: Filter by how the filing entered the platform: `REALTIME` (picked up within the source's normal publication-to-availability window) or `BACKFILLED` (historical import, recovery, or bulk backfill).
         :type ingestion_mode: str
         :param language: Filter by a single filing language ISO 639-1 code (e.g., en).
         :type language: str
@@ -714,7 +714,7 @@ class FilingsApi:
         file_size_min: Annotated[Optional[StrictInt], Field(description="Filter by minimum file size in bytes.")] = None,
         fiscal_period: Annotated[Optional[StrictStr], Field(description="Filter by fiscal period. Possible values: `FY` (Full Year), `Q1`, `Q2`, `Q3`, `Q4`, `H1` (First Half), `H2` (Second Half). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.")] = None,
         fiscal_year: Annotated[Optional[StrictInt], Field(description="Filter by fiscal year (e.g., `2024`). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.")] = None,
-        ingestion_mode: Annotated[Optional[StrictStr], Field(description="Filter by how the filing entered the platform: `REALTIME` (captured by the live scraper within the source's normal publication-to-ingest window) or `BACKFILLED` (historical import, recovery, or bulk backfill).")] = None,
+        ingestion_mode: Annotated[Optional[StrictStr], Field(description="Filter by how the filing entered the platform: `REALTIME` (picked up within the source's normal publication-to-availability window) or `BACKFILLED` (historical import, recovery, or bulk backfill).")] = None,
         language: Annotated[Optional[StrictStr], Field(description="Filter by a single filing language ISO 639-1 code (e.g., en).")] = None,
         languages: Annotated[Optional[StrictStr], Field(description="Filter by filing language ISO 639-1 code(s). Comma-separated for multiple values (e.g., en,de).")] = None,
         lei: Annotated[Optional[StrictStr], Field(description="Filter by Company Legal Entity Identifier (LEI).")] = None,
@@ -776,7 +776,7 @@ class FilingsApi:
         :type fiscal_period: str
         :param fiscal_year: Filter by fiscal year (e.g., `2024`). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.
         :type fiscal_year: int
-        :param ingestion_mode: Filter by how the filing entered the platform: `REALTIME` (captured by the live scraper within the source's normal publication-to-ingest window) or `BACKFILLED` (historical import, recovery, or bulk backfill).
+        :param ingestion_mode: Filter by how the filing entered the platform: `REALTIME` (picked up within the source's normal publication-to-availability window) or `BACKFILLED` (historical import, recovery, or bulk backfill).
         :type ingestion_mode: str
         :param language: Filter by a single filing language ISO 639-1 code (e.g., en).
         :type language: str
