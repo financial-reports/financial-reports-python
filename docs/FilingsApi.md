@@ -158,7 +158,7 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
     file_size_min = 56 # int | Filter by minimum file size in bytes. (optional)
     fiscal_period = 'fiscal_period_example' # str | Filter by fiscal period. Possible values: `FY` (Full Year), `Q1`, `Q2`, `Q3`, `Q4`, `H1` (First Half), `H2` (Second Half). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER. (optional)
     fiscal_year = 56 # int | Filter by fiscal year (e.g., `2024`). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER. (optional)
-    ingestion_mode = 'ingestion_mode_example' # str | Filter by how the filing entered the platform: `REALTIME` (picked up within the source's normal publication-to-availability window) or `BACKFILLED` (historical import, recovery, or bulk backfill). (optional)
+    ingestion_mode = 'ingestion_mode_example' # str | Filter by ingestion mode. Whether the filing was added to the platform promptly after publication. `REALTIME`: added within the source's normal publication delay (5 to 48 hours after `release_datetime`, depending on the source). `BACKFILLED`: everything else, including historical imports and new filings that reached the platform late, for example after a source outage. Set once when the filing is added and not recalculated afterwards. (optional)
     language = 'language_example' # str | Filter by a single filing language ISO 639-1 code (e.g., en). (optional)
     languages = 'languages_example' # str | Filter by filing language ISO 639-1 code(s). Comma-separated for multiple values (e.g., en,de). (optional)
     lei = 'lei_example' # str | Filter by Company Legal Entity Identifier (LEI). (optional)
@@ -208,7 +208,7 @@ Name | Type | Description  | Notes
  **file_size_min** | **int**| Filter by minimum file size in bytes. | [optional] 
  **fiscal_period** | **str**| Filter by fiscal period. Possible values: &#x60;FY&#x60; (Full Year), &#x60;Q1&#x60;, &#x60;Q2&#x60;, &#x60;Q3&#x60;, &#x60;Q4&#x60;, &#x60;H1&#x60; (First Half), &#x60;H2&#x60; (Second Half). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER. | [optional] 
  **fiscal_year** | **int**| Filter by fiscal year (e.g., &#x60;2024&#x60;). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER. | [optional] 
- **ingestion_mode** | **str**| Filter by how the filing entered the platform: &#x60;REALTIME&#x60; (picked up within the source&#39;s normal publication-to-availability window) or &#x60;BACKFILLED&#x60; (historical import, recovery, or bulk backfill). | [optional] 
+ **ingestion_mode** | **str**| Filter by ingestion mode. Whether the filing was added to the platform promptly after publication. &#x60;REALTIME&#x60;: added within the source&#39;s normal publication delay (5 to 48 hours after &#x60;release_datetime&#x60;, depending on the source). &#x60;BACKFILLED&#x60;: everything else, including historical imports and new filings that reached the platform late, for example after a source outage. Set once when the filing is added and not recalculated afterwards. | [optional] 
  **language** | **str**| Filter by a single filing language ISO 639-1 code (e.g., en). | [optional] 
  **languages** | **str**| Filter by filing language ISO 639-1 code(s). Comma-separated for multiple values (e.g., en,de). | [optional] 
  **lei** | **str**| Filter by Company Legal Entity Identifier (LEI). | [optional] 
