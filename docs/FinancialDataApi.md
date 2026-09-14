@@ -9,7 +9,7 @@ Method | HTTP request | Description
 
 
 # **line_item_definitions_list**
-> PaginatedLineItemDefinitionList line_item_definitions_list(depth=depth, is_capital_iq_standard=is_capital_iq_standard, page=page, page_size=page_size, parent_code=parent_code, search=search, statement_type=statement_type)
+> PaginatedLineItemDefinitionList line_item_definitions_list(depth=depth, page=page, page_size=page_size, parent_code=parent_code, search=search, statement_type=statement_type)
 
 List Line Item Definitions
 
@@ -57,7 +57,6 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
     # Create an instance of the API class
     api_instance = financial_reports_generated_client.FinancialDataApi(api_client)
     depth = 56 # int | Filter by hierarchy depth (0 = top-level, 1 = component, 2 = sub-component). (optional)
-    is_capital_iq_standard = True # bool |  (optional)
     page = 56 # int | A page number within the paginated result set. (optional)
     page_size = 56 # int | Number of results to return per page. (optional)
     parent_code = 'parent_code_example' # str | Filter by parent line item code (e.g. 'gross_profit' returns its children). (optional)
@@ -66,7 +65,7 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
 
     try:
         # List Line Item Definitions
-        api_response = await api_instance.line_item_definitions_list(depth=depth, is_capital_iq_standard=is_capital_iq_standard, page=page, page_size=page_size, parent_code=parent_code, search=search, statement_type=statement_type)
+        api_response = await api_instance.line_item_definitions_list(depth=depth, page=page, page_size=page_size, parent_code=parent_code, search=search, statement_type=statement_type)
         print("The response of FinancialDataApi->line_item_definitions_list:\n")
         pprint(api_response)
     except Exception as e:
@@ -81,7 +80,6 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **depth** | **int**| Filter by hierarchy depth (0 &#x3D; top-level, 1 &#x3D; component, 2 &#x3D; sub-component). | [optional] 
- **is_capital_iq_standard** | **bool**|  | [optional] 
  **page** | **int**| A page number within the paginated result set. | [optional] 
  **page_size** | **int**| Number of results to return per page. | [optional] 
  **parent_code** | **str**| Filter by parent line item code (e.g. &#39;gross_profit&#39; returns its children). | [optional] 
