@@ -62,7 +62,8 @@ class TestCompaniesFinancialsRetrieve200Response(unittest.TestCase):
                         statements = [
                             None
                             ], )
-                    ]
+                    ],
+                notice = ''
             )
         else:
             return CompaniesFinancialsRetrieve200Response(

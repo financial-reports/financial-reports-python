@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictBool, StrictInt
+from pydantic import BaseModel, ConfigDict, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from financial_reports_generated_client.models.companies_financials_retrieve200_response_currency import CompaniesFinancialsRetrieve200ResponseCurrency
 from financial_reports_generated_client.models.companies_financials_retrieve200_response_filters import CompaniesFinancialsRetrieve200ResponseFilters
@@ -37,7 +37,8 @@ class CompaniesFinancialsRetrieve200Response(BaseModel):
     filters: CompaniesFinancialsRetrieve200ResponseFilters
     period_count: StrictInt
     periods: List[CompaniesFinancialsRetrieve200ResponsePeriodsInner]
-    __properties: ClassVar[List[str]] = ["company_id", "currency", "sources_masked", "filters", "period_count", "periods"]
+    notice: Optional[StrictStr] = None
+    __properties: ClassVar[List[str]] = ["company_id", "currency", "sources_masked", "filters", "period_count", "periods", "notice"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -107,7 +108,8 @@ class CompaniesFinancialsRetrieve200Response(BaseModel):
             "sources_masked": obj.get("sources_masked"),
             "filters": CompaniesFinancialsRetrieve200ResponseFilters.from_dict(obj["filters"]) if obj.get("filters") is not None else None,
             "period_count": obj.get("period_count"),
-            "periods": [CompaniesFinancialsRetrieve200ResponsePeriodsInner.from_dict(_item) for _item in obj["periods"]] if obj.get("periods") is not None else None
+            "periods": [CompaniesFinancialsRetrieve200ResponsePeriodsInner.from_dict(_item) for _item in obj["periods"]] if obj.get("periods") is not None else None,
+            "notice": obj.get("notice")
         })
         return _obj
 

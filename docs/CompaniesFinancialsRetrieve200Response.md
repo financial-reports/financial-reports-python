@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **filters** | [**CompaniesFinancialsRetrieve200ResponseFilters**](CompaniesFinancialsRetrieve200ResponseFilters.md) |  | 
 **period_count** | **int** |  | 
 **periods** | [**List[CompaniesFinancialsRetrieve200ResponsePeriodsInner]**](CompaniesFinancialsRetrieve200ResponsePeriodsInner.md) |  | 
+**notice** | **str** |  | [optional] 
 
 ## Example
 
