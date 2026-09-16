@@ -21,6 +21,7 @@ import json
 from datetime import date
 from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
+from financial_reports_generated_client.models.companies_financials_retrieve200_response_periods_inner_statements_inner import CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInner
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
@@ -33,7 +34,7 @@ class CompaniesFinancialsRetrieve200ResponsePeriodsInner(BaseModel):
     fiscal_period: Optional[StrictStr] = None
     period_start_date: Optional[date] = None
     period_end_date: Optional[date] = None
-    statements: Optional[List[Dict[str, Any]]] = None
+    statements: Optional[List[CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInner]] = None
     __properties: ClassVar[List[str]] = ["fiscal_year", "fiscal_period", "period_start_date", "period_end_date", "statements"]
 
     model_config = ConfigDict(
@@ -75,6 +76,32 @@ class CompaniesFinancialsRetrieve200ResponsePeriodsInner(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of each item in statements (list)
+        _items = []
+        if self.statements:
+            for _item_statements in self.statements:
+                _items.append(_item_statements.to_dict() if _item_statements is not None else None)
+            _dict['statements'] = _items
+        # set to None if fiscal_year (nullable) is None
+        # and model_fields_set contains the field
+        if self.fiscal_year is None and "fiscal_year" in self.model_fields_set:
+            _dict['fiscal_year'] = None
+
+        # set to None if fiscal_period (nullable) is None
+        # and model_fields_set contains the field
+        if self.fiscal_period is None and "fiscal_period" in self.model_fields_set:
+            _dict['fiscal_period'] = None
+
+        # set to None if period_start_date (nullable) is None
+        # and model_fields_set contains the field
+        if self.period_start_date is None and "period_start_date" in self.model_fields_set:
+            _dict['period_start_date'] = None
+
+        # set to None if period_end_date (nullable) is None
+        # and model_fields_set contains the field
+        if self.period_end_date is None and "period_end_date" in self.model_fields_set:
+            _dict['period_end_date'] = None
+
         return _dict
 
     @classmethod
@@ -91,7 +118,7 @@ class CompaniesFinancialsRetrieve200ResponsePeriodsInner(BaseModel):
             "fiscal_period": obj.get("fiscal_period"),
             "period_start_date": obj.get("period_start_date"),
             "period_end_date": obj.get("period_end_date"),
-            "statements": obj.get("statements")
+            "statements": [CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInner.from_dict(_item) for _item in obj["statements"]] if obj.get("statements") is not None else None
         })
         return _obj
 

@@ -41,7 +41,45 @@ class TestCompaniesFinancialsRetrieve200ResponsePeriodsInner(unittest.TestCase):
                 period_start_date = datetime.datetime.strptime('1975-12-30', '%Y-%m-%d').date(),
                 period_end_date = datetime.datetime.strptime('1975-12-30', '%Y-%m-%d').date(),
                 statements = [
-                    None
+                    financial_reports_generated_client.models.companies_financials_retrieve_200_response_periods_inner_statements_inner.companies_financials_retrieve_200_response_periods_inner_statements_inner(
+                        statement_type = 'IS', 
+                        statement_type_display = '', 
+                        currency = financial_reports_generated_client.models.companies_financials_retrieve_200_response_currency.companies_financials_retrieve_200_response_currency(
+                            code = '', 
+                            name = '', 
+                            symbol = '', ), 
+                        currency_mismatch = True, 
+                        extraction = financial_reports_generated_client.models.companies_financials_retrieve_200_response_periods_inner_statements_inner_extraction.companies_financials_retrieve_200_response_periods_inner_statements_inner_extraction(
+                            model = '', 
+                            prompt_version = '', 
+                            extracted_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
+                            notes = '', ), 
+                        line_items = [
+                            financial_reports_generated_client.models.companies_financials_retrieve_200_response_periods_inner_statements_inner_line_items_inner.companies_financials_retrieve_200_response_periods_inner_statements_inner_line_items_inner(
+                                code = '', 
+                                name = '', 
+                                statement_type = 'IS', 
+                                depth = 56, 
+                                parent_code = '', 
+                                sort_order = 56, 
+                                value = '', 
+                                raw_value = '', 
+                                scale = 'units', 
+                                currency = '', 
+                                confidence = 1.337, 
+                                source_page = 56, )
+                            ], 
+                        source_filing = financial_reports_generated_client.models.companies_financials_retrieve_200_response_periods_inner_statements_inner_source_filing.companies_financials_retrieve_200_response_periods_inner_statements_inner_source_filing(
+                            id = 56, 
+                            filing_type = '', 
+                            release_datetime = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), ), 
+                        sources = [
+                            financial_reports_generated_client.models.companies_financials_retrieve_200_response_periods_inner_statements_inner_sources_inner.companies_financials_retrieve_200_response_periods_inner_statements_inner_sources_inner(
+                                filing_id = 56, 
+                                filing_type = '', 
+                                release_datetime = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
+                                is_selected = True, )
+                            ], )
                     ]
             )
         else:

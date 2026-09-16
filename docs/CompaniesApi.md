@@ -27,6 +27,12 @@ Every contributing filing is listed in the statement's `sources` array. `source_
 
 Use the `depth` and `parent_code` fields on each line item to render the Capital IQ-style statement hierarchy.
 
+`value` and `raw_value` are exact **decimal strings**, not numbers - parse them with a decimal type. `raw_value` and `scale` come back `null` when the figure was computed rather than read off the page. `confidence` and `source_page` are reserved and are currently `null` on every line item; provenance is filing-level.
+
+**Scope - this is not the bulk dataset.** This endpoint serves one selected statement per (fiscal year, period, statement type). Comparatives, restatements, the `validation_n_hard`/`validation_n_soft` quality flags, `derivation_method` and stable row ids are available only in the S3 `line_items/` parquet delivery, not here at any plan level.
+
+**Cost:** 40 credits per request, flat - independent of how many periods or line items are returned, and not reduced by filtering. Pay-as-you-go accounts are limited to a rolling window on filing release date - 730 days by DEFAULT, widenable per account - and when that applies the response carries a `history_window` object. Read the effective limit from `history_window.max_history_days` rather than assuming 730. The deep back-catalogue requires an unfenced plan.
+
 **Access Level Required:** Requires **Financial KPIs (Level 3)**.
 
 ### Example

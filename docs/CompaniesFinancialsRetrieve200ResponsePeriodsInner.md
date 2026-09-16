@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **fiscal_period** | **str** |  | [optional] 
 **period_start_date** | **date** |  | [optional] 
 **period_end_date** | **date** |  | [optional] 
-**statements** | **List[object]** |  | [optional] 
+**statements** | [**List[CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInner]**](CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInner.md) |  | [optional] 
 
 ## Example
 

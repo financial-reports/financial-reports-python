@@ -18,25 +18,22 @@ import pprint
 import re  # noqa: F401
 import json
 
-from datetime import date
-from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr
+from datetime import datetime
+from pydantic import BaseModel, ConfigDict, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
 
-class CompaniesFinancialsRetrieve200ResponseFilters(BaseModel):
+class CompaniesFinancialsRetrieve200ResponseHistoryWindow(BaseModel):
     """
-    CompaniesFinancialsRetrieve200ResponseFilters
+    CompaniesFinancialsRetrieve200ResponseHistoryWindow
     """ # noqa: E501
-    statement_type: Optional[StrictStr] = None
-    fiscal_year: Optional[StrictInt] = None
-    fiscal_year_from: Optional[StrictInt] = None
-    fiscal_year_to: Optional[StrictInt] = None
-    fiscal_period: Optional[StrictStr] = None
-    line_items: Optional[List[StrictStr]] = None
-    as_of: Optional[date] = None
-    __properties: ClassVar[List[str]] = ["statement_type", "fiscal_year", "fiscal_year_from", "fiscal_year_to", "fiscal_period", "line_items", "as_of"]
+    limited: Optional[StrictBool] = None
+    max_history_days: Optional[StrictInt] = None
+    cutoff: Optional[datetime] = None
+    detail: Optional[StrictStr] = None
+    __properties: ClassVar[List[str]] = ["limited", "max_history_days", "cutoff", "detail"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -56,7 +53,7 @@ class CompaniesFinancialsRetrieve200ResponseFilters(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of CompaniesFinancialsRetrieve200ResponseFilters from a JSON string"""
+        """Create an instance of CompaniesFinancialsRetrieve200ResponseHistoryWindow from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -77,46 +74,11 @@ class CompaniesFinancialsRetrieve200ResponseFilters(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if statement_type (nullable) is None
-        # and model_fields_set contains the field
-        if self.statement_type is None and "statement_type" in self.model_fields_set:
-            _dict['statement_type'] = None
-
-        # set to None if fiscal_year (nullable) is None
-        # and model_fields_set contains the field
-        if self.fiscal_year is None and "fiscal_year" in self.model_fields_set:
-            _dict['fiscal_year'] = None
-
-        # set to None if fiscal_year_from (nullable) is None
-        # and model_fields_set contains the field
-        if self.fiscal_year_from is None and "fiscal_year_from" in self.model_fields_set:
-            _dict['fiscal_year_from'] = None
-
-        # set to None if fiscal_year_to (nullable) is None
-        # and model_fields_set contains the field
-        if self.fiscal_year_to is None and "fiscal_year_to" in self.model_fields_set:
-            _dict['fiscal_year_to'] = None
-
-        # set to None if fiscal_period (nullable) is None
-        # and model_fields_set contains the field
-        if self.fiscal_period is None and "fiscal_period" in self.model_fields_set:
-            _dict['fiscal_period'] = None
-
-        # set to None if line_items (nullable) is None
-        # and model_fields_set contains the field
-        if self.line_items is None and "line_items" in self.model_fields_set:
-            _dict['line_items'] = None
-
-        # set to None if as_of (nullable) is None
-        # and model_fields_set contains the field
-        if self.as_of is None and "as_of" in self.model_fields_set:
-            _dict['as_of'] = None
-
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of CompaniesFinancialsRetrieve200ResponseFilters from a dict"""
+        """Create an instance of CompaniesFinancialsRetrieve200ResponseHistoryWindow from a dict"""
         if obj is None:
             return None
 
@@ -124,13 +86,10 @@ class CompaniesFinancialsRetrieve200ResponseFilters(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "statement_type": obj.get("statement_type"),
-            "fiscal_year": obj.get("fiscal_year"),
-            "fiscal_year_from": obj.get("fiscal_year_from"),
-            "fiscal_year_to": obj.get("fiscal_year_to"),
-            "fiscal_period": obj.get("fiscal_period"),
-            "line_items": obj.get("line_items"),
-            "as_of": obj.get("as_of")
+            "limited": obj.get("limited"),
+            "max_history_days": obj.get("max_history_days"),
+            "cutoff": obj.get("cutoff"),
+            "detail": obj.get("detail")
         })
         return _obj
 

@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **period_count** | **int** |  | 
 **periods** | [**List[CompaniesFinancialsRetrieve200ResponsePeriodsInner]**](CompaniesFinancialsRetrieve200ResponsePeriodsInner.md) |  | 
 **notice** | **str** |  | [optional] 
+**history_window** | [**CompaniesFinancialsRetrieve200ResponseHistoryWindow**](CompaniesFinancialsRetrieve200ResponseHistoryWindow.md) |  | [optional] 
 
 ## Example
 

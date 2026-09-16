@@ -22,6 +22,7 @@ from pydantic import BaseModel, ConfigDict, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from financial_reports_generated_client.models.companies_financials_retrieve200_response_currency import CompaniesFinancialsRetrieve200ResponseCurrency
 from financial_reports_generated_client.models.companies_financials_retrieve200_response_filters import CompaniesFinancialsRetrieve200ResponseFilters
+from financial_reports_generated_client.models.companies_financials_retrieve200_response_history_window import CompaniesFinancialsRetrieve200ResponseHistoryWindow
 from financial_reports_generated_client.models.companies_financials_retrieve200_response_periods_inner import CompaniesFinancialsRetrieve200ResponsePeriodsInner
 from typing import Optional, Set
 from typing_extensions import Self
@@ -38,7 +39,8 @@ class CompaniesFinancialsRetrieve200Response(BaseModel):
     period_count: StrictInt
     periods: List[CompaniesFinancialsRetrieve200ResponsePeriodsInner]
     notice: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["company_id", "currency", "sources_masked", "filters", "period_count", "periods", "notice"]
+    history_window: Optional[CompaniesFinancialsRetrieve200ResponseHistoryWindow] = None
+    __properties: ClassVar[List[str]] = ["company_id", "currency", "sources_masked", "filters", "period_count", "periods", "notice", "history_window"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -91,6 +93,14 @@ class CompaniesFinancialsRetrieve200Response(BaseModel):
             for _item_periods in self.periods:
                 _items.append(_item_periods.to_dict() if _item_periods is not None else None)
             _dict['periods'] = _items
+        # override the default output from pydantic by calling `to_dict()` of history_window
+        if self.history_window:
+            _dict['history_window'] = self.history_window.to_dict()
+        # set to None if currency (nullable) is None
+        # and model_fields_set contains the field
+        if self.currency is None and "currency" in self.model_fields_set:
+            _dict['currency'] = None
+
         return _dict
 
     @classmethod
@@ -109,7 +119,8 @@ class CompaniesFinancialsRetrieve200Response(BaseModel):
             "filters": CompaniesFinancialsRetrieve200ResponseFilters.from_dict(obj["filters"]) if obj.get("filters") is not None else None,
             "period_count": obj.get("period_count"),
             "periods": [CompaniesFinancialsRetrieve200ResponsePeriodsInner.from_dict(_item) for _item in obj["periods"]] if obj.get("periods") is not None else None,
-            "notice": obj.get("notice")
+            "notice": obj.get("notice"),
+            "history_window": CompaniesFinancialsRetrieve200ResponseHistoryWindow.from_dict(obj["history_window"]) if obj.get("history_window") is not None else None
         })
         return _obj
 
