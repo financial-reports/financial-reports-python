@@ -253,7 +253,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **filings_markdown_retrieve**
-> str filings_markdown_retrieve(id)
+> str filings_markdown_retrieve(id, format=format)
 
 Retrieve Filing Markdown
 
@@ -299,10 +299,11 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
     # Create an instance of the API class
     api_instance = financial_reports_generated_client.FilingsApi(api_client)
     id = 56 # int | A unique integer value identifying this filing.
+    format = 'format_example' # str |  (optional)
 
     try:
         # Retrieve Filing Markdown
-        api_response = await api_instance.filings_markdown_retrieve(id)
+        api_response = await api_instance.filings_markdown_retrieve(id, format=format)
         print("The response of FilingsApi->filings_markdown_retrieve:\n")
         pprint(api_response)
     except Exception as e:
@@ -317,6 +318,7 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer value identifying this filing. | 
+ **format** | **str**|  | [optional] 
 
 ### Return type
 

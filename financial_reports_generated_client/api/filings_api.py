@@ -1176,6 +1176,7 @@ class FilingsApi:
     async def filings_markdown_retrieve(
         self,
         id: Annotated[StrictInt, Field(description="A unique integer value identifying this filing.")],
+        format: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1195,6 +1196,8 @@ class FilingsApi:
 
         :param id: A unique integer value identifying this filing. (required)
         :type id: int
+        :param format:
+        :type format: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1219,6 +1222,7 @@ class FilingsApi:
 
         _param = self._filings_markdown_retrieve_serialize(
             id=id,
+            format=format,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1245,6 +1249,7 @@ class FilingsApi:
     async def filings_markdown_retrieve_with_http_info(
         self,
         id: Annotated[StrictInt, Field(description="A unique integer value identifying this filing.")],
+        format: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1264,6 +1269,8 @@ class FilingsApi:
 
         :param id: A unique integer value identifying this filing. (required)
         :type id: int
+        :param format:
+        :type format: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1288,6 +1295,7 @@ class FilingsApi:
 
         _param = self._filings_markdown_retrieve_serialize(
             id=id,
+            format=format,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1314,6 +1322,7 @@ class FilingsApi:
     async def filings_markdown_retrieve_without_preload_content(
         self,
         id: Annotated[StrictInt, Field(description="A unique integer value identifying this filing.")],
+        format: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1333,6 +1342,8 @@ class FilingsApi:
 
         :param id: A unique integer value identifying this filing. (required)
         :type id: int
+        :param format:
+        :type format: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1357,6 +1368,7 @@ class FilingsApi:
 
         _param = self._filings_markdown_retrieve_serialize(
             id=id,
+            format=format,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1378,6 +1390,7 @@ class FilingsApi:
     def _filings_markdown_retrieve_serialize(
         self,
         id,
+        format,
         _request_auth,
         _content_type,
         _headers,
@@ -1402,6 +1415,10 @@ class FilingsApi:
         if id is not None:
             _path_params['id'] = id
         # process the query parameters
+        if format is not None:
+            
+            _query_params.append(('format', format))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
