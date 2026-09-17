@@ -19,7 +19,7 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
@@ -30,9 +30,11 @@ class CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerSourceFil
     CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerSourceFiling
     """ # noqa: E501
     id: Optional[StrictInt] = None
-    filing_type: Optional[StrictStr] = None
+    filing_type: Optional[StrictStr] = Field(default=None, description="Our own normalised filing-type code, not the publishing authority's label.")
     release_datetime: Optional[datetime] = None
-    __properties: ClassVar[List[str]] = ["id", "filing_type", "release_datetime"]
+    document_url: Optional[StrictStr] = Field(default=None, description="Direct link to our hosted copy of the document. Null in the rare case we hold no document for the filing.")
+    viewer_url: Optional[StrictStr] = Field(default=None, description="Link to the document on our own platform.")
+    __properties: ClassVar[List[str]] = ["id", "filing_type", "release_datetime", "document_url", "viewer_url"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -88,6 +90,16 @@ class CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerSourceFil
         if self.release_datetime is None and "release_datetime" in self.model_fields_set:
             _dict['release_datetime'] = None
 
+        # set to None if document_url (nullable) is None
+        # and model_fields_set contains the field
+        if self.document_url is None and "document_url" in self.model_fields_set:
+            _dict['document_url'] = None
+
+        # set to None if viewer_url (nullable) is None
+        # and model_fields_set contains the field
+        if self.viewer_url is None and "viewer_url" in self.model_fields_set:
+            _dict['viewer_url'] = None
+
         return _dict
 
     @classmethod
@@ -102,7 +114,9 @@ class CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerSourceFil
         _obj = cls.model_validate({
             "id": obj.get("id"),
             "filing_type": obj.get("filing_type"),
-            "release_datetime": obj.get("release_datetime")
+            "release_datetime": obj.get("release_datetime"),
+            "document_url": obj.get("document_url"),
+            "viewer_url": obj.get("viewer_url")
         })
         return _obj
 

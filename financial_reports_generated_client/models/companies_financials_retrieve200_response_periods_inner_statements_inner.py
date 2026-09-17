@@ -39,9 +39,10 @@ class CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInner(BaseMode
     currency_mismatch: StrictBool = Field(description="True when this statement's currency differs from the company's modal reporting currency. A data-quality signal, not provenance, so it is returned even to masked accounts.")
     extraction: CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerExtraction
     line_items: List[CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItemsInner]
+    is_comparative: StrictBool = Field(description="True when this period was read from the comparative (prior-year) column of a later report, because no report presented it as its own period. A data-quality signal, not provenance, so it is returned even to masked accounts.")
     source_filing: Optional[CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerSourceFiling] = None
-    sources: Optional[List[CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerSourcesInner]] = Field(default=None, description="Every filing that reported this (period, statement_type). Omitted unless the account has source unmasking.")
-    __properties: ClassVar[List[str]] = ["statement_type", "statement_type_display", "currency", "currency_mismatch", "extraction", "line_items", "source_filing", "sources"]
+    sources: Optional[List[CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerSourcesInner]] = Field(default=None, description="Every filing that reported this (period, statement_type), including the candidates selection rejected. Omitted unless the account has source unmasking. The selected filing is always available as `source_filing`.")
+    __properties: ClassVar[List[str]] = ["statement_type", "statement_type_display", "currency", "currency_mismatch", "extraction", "line_items", "is_comparative", "source_filing", "sources"]
 
     @field_validator('statement_type')
     def statement_type_validate_enum(cls, value):
@@ -138,6 +139,7 @@ class CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInner(BaseMode
             "currency_mismatch": obj.get("currency_mismatch"),
             "extraction": CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerExtraction.from_dict(obj["extraction"]) if obj.get("extraction") is not None else None,
             "line_items": [CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItemsInner.from_dict(_item) for _item in obj["line_items"]] if obj.get("line_items") is not None else None,
+            "is_comparative": obj.get("is_comparative"),
             "source_filing": CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerSourceFiling.from_dict(obj["source_filing"]) if obj.get("source_filing") is not None else None,
             "sources": [CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerSourcesInner.from_dict(_item) for _item in obj["sources"]] if obj.get("sources") is not None else None
         })

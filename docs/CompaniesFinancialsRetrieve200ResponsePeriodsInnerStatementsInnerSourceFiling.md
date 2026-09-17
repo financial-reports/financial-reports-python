@@ -6,8 +6,10 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **int** |  | [optional] 
-**filing_type** | **str** |  | [optional] 
+**filing_type** | **str** | Our own normalised filing-type code, not the publishing authority&#39;s label. | [optional] 
 **release_datetime** | **datetime** |  | [optional] 
+**document_url** | **str** | Direct link to our hosted copy of the document. Null in the rare case we hold no document for the filing. | [optional] 
+**viewer_url** | **str** | Link to the document on our own platform. | [optional] 
 
 ## Example
 

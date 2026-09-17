@@ -11,8 +11,9 @@ Name | Type | Description | Notes
 **currency_mismatch** | **bool** | True when this statement&#39;s currency differs from the company&#39;s modal reporting currency. A data-quality signal, not provenance, so it is returned even to masked accounts. | 
 **extraction** | [**CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerExtraction**](CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerExtraction.md) |  | 
 **line_items** | [**List[CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItemsInner]**](CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItemsInner.md) |  | 
+**is_comparative** | **bool** | True when this period was read from the comparative (prior-year) column of a later report, because no report presented it as its own period. A data-quality signal, not provenance, so it is returned even to masked accounts. | 
 **source_filing** | [**CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerSourceFiling**](CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerSourceFiling.md) |  | [optional] 
-**sources** | [**List[CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerSourcesInner]**](CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerSourcesInner.md) | Every filing that reported this (period, statement_type). Omitted unless the account has source unmasking. | [optional] 
+**sources** | [**List[CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerSourcesInner]**](CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerSourcesInner.md) | Every filing that reported this (period, statement_type), including the candidates selection rejected. Omitted unless the account has source unmasking. The selected filing is always available as &#x60;source_filing&#x60;. | [optional] 
 
 ## Example
 

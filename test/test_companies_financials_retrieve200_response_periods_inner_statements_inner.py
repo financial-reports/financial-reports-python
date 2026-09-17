@@ -63,10 +63,13 @@ class TestCompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInner(unit
                         confidence = 1.337, 
                         source_page = 56, )
                     ],
+                is_comparative = True,
                 source_filing = financial_reports_generated_client.models.companies_financials_retrieve_200_response_periods_inner_statements_inner_source_filing.companies_financials_retrieve_200_response_periods_inner_statements_inner_source_filing(
                     id = 56, 
                     filing_type = '', 
-                    release_datetime = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), ),
+                    release_datetime = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
+                    document_url = '', 
+                    viewer_url = '', ),
                 sources = [
                     financial_reports_generated_client.models.companies_financials_retrieve_200_response_periods_inner_statements_inner_sources_inner.companies_financials_retrieve_200_response_periods_inner_statements_inner_sources_inner(
                         filing_id = 56, 
@@ -104,6 +107,7 @@ class TestCompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInner(unit
                         confidence = 1.337, 
                         source_page = 56, )
                     ],
+                is_comparative = True,
         )
         """
 

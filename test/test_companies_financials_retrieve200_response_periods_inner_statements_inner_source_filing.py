@@ -38,7 +38,9 @@ class TestCompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerSourc
             return CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerSourceFiling(
                 id = 56,
                 filing_type = '',
-                release_datetime = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f')
+                release_datetime = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
+                document_url = '',
+                viewer_url = ''
             )
         else:
             return CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerSourceFiling(
