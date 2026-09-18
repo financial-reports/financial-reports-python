@@ -337,9 +337,10 @@ class FilingsApi:
         release_datetime_to: Annotated[Optional[datetime], Field(description="Filter by release datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         search: Annotated[Optional[StrictStr], Field(description="Search across filing title and associated company name. Case-insensitive. Multiple whitespace-separated terms are AND-combined (each term must match either the title or the company name).")] = None,
         source: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Filter by a single data source ID.")] = None,
+        source_filing_type: Annotated[Optional[StrictStr], Field(description="Filter by the regulator's own form name, exactly as the source publishes it (e.g., 10-Q, 8-K, 6-K for SEC). Case-sensitive exact match; this is open free text that varies by regulator, not a controlled vocabulary.")] = None,
         sources: Annotated[Optional[StrictStr], Field(description="Filter by data source ID(s). Comma-separated for multiple values (e.g., 38,40,51).")] = None,
-        type: Annotated[Optional[StrictStr], Field(description="Filter by Filing Type code (e.g., 10-K).")] = None,
-        types: Annotated[Optional[StrictStr], Field(description="Filter by multiple Filing Type codes. Comma-separated (e.g., 10-K,10-Q).")] = None,
+        type: Annotated[Optional[StrictStr], Field(description="Filter by a single FinancialFilings Filing Type code (e.g., 10-K). An unrecognised code is rejected with a 400. These are FinancialFilings taxonomy codes, not regulator form names -- see GET /filing-types/.")] = None,
+        types: Annotated[Optional[StrictStr], Field(description="Filter by multiple FinancialFilings Filing Type codes. Comma-separated (e.g., 10-K,IR). An unrecognised code is rejected with a 400. These are FinancialFilings taxonomy codes, not regulator form names -- a regulator's own form name belongs on the source_filing_type filter. See GET /filing-types/.")] = None,
         updated_date_from: Annotated[Optional[datetime], Field(description="Filter by the date a filing was last updated on the platform (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         updated_date_to: Annotated[Optional[datetime], Field(description="Filter by the date a filing was last updated on the platform (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         view: Annotated[Optional[StrictStr], Field(description="Controls the level of detail. Omit for a default 'summary' view, or use 'full' to include all details for each filing.")] = None,
@@ -414,11 +415,13 @@ class FilingsApi:
         :type search: str
         :param source: Filter by a single data source ID.
         :type source: float
+        :param source_filing_type: Filter by the regulator's own form name, exactly as the source publishes it (e.g., 10-Q, 8-K, 6-K for SEC). Case-sensitive exact match; this is open free text that varies by regulator, not a controlled vocabulary.
+        :type source_filing_type: str
         :param sources: Filter by data source ID(s). Comma-separated for multiple values (e.g., 38,40,51).
         :type sources: str
-        :param type: Filter by Filing Type code (e.g., 10-K).
+        :param type: Filter by a single FinancialFilings Filing Type code (e.g., 10-K). An unrecognised code is rejected with a 400. These are FinancialFilings taxonomy codes, not regulator form names -- see GET /filing-types/.
         :type type: str
-        :param types: Filter by multiple Filing Type codes. Comma-separated (e.g., 10-K,10-Q).
+        :param types: Filter by multiple FinancialFilings Filing Type codes. Comma-separated (e.g., 10-K,IR). An unrecognised code is rejected with a 400. These are FinancialFilings taxonomy codes, not regulator form names -- a regulator's own form name belongs on the source_filing_type filter. See GET /filing-types/.
         :type types: str
         :param updated_date_from: Filter by the date a filing was last updated on the platform (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).
         :type updated_date_from: datetime
@@ -476,6 +479,7 @@ class FilingsApi:
             release_datetime_to=release_datetime_to,
             search=search,
             source=source,
+            source_filing_type=source_filing_type,
             sources=sources,
             type=type,
             types=types,
@@ -533,9 +537,10 @@ class FilingsApi:
         release_datetime_to: Annotated[Optional[datetime], Field(description="Filter by release datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         search: Annotated[Optional[StrictStr], Field(description="Search across filing title and associated company name. Case-insensitive. Multiple whitespace-separated terms are AND-combined (each term must match either the title or the company name).")] = None,
         source: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Filter by a single data source ID.")] = None,
+        source_filing_type: Annotated[Optional[StrictStr], Field(description="Filter by the regulator's own form name, exactly as the source publishes it (e.g., 10-Q, 8-K, 6-K for SEC). Case-sensitive exact match; this is open free text that varies by regulator, not a controlled vocabulary.")] = None,
         sources: Annotated[Optional[StrictStr], Field(description="Filter by data source ID(s). Comma-separated for multiple values (e.g., 38,40,51).")] = None,
-        type: Annotated[Optional[StrictStr], Field(description="Filter by Filing Type code (e.g., 10-K).")] = None,
-        types: Annotated[Optional[StrictStr], Field(description="Filter by multiple Filing Type codes. Comma-separated (e.g., 10-K,10-Q).")] = None,
+        type: Annotated[Optional[StrictStr], Field(description="Filter by a single FinancialFilings Filing Type code (e.g., 10-K). An unrecognised code is rejected with a 400. These are FinancialFilings taxonomy codes, not regulator form names -- see GET /filing-types/.")] = None,
+        types: Annotated[Optional[StrictStr], Field(description="Filter by multiple FinancialFilings Filing Type codes. Comma-separated (e.g., 10-K,IR). An unrecognised code is rejected with a 400. These are FinancialFilings taxonomy codes, not regulator form names -- a regulator's own form name belongs on the source_filing_type filter. See GET /filing-types/.")] = None,
         updated_date_from: Annotated[Optional[datetime], Field(description="Filter by the date a filing was last updated on the platform (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         updated_date_to: Annotated[Optional[datetime], Field(description="Filter by the date a filing was last updated on the platform (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         view: Annotated[Optional[StrictStr], Field(description="Controls the level of detail. Omit for a default 'summary' view, or use 'full' to include all details for each filing.")] = None,
@@ -610,11 +615,13 @@ class FilingsApi:
         :type search: str
         :param source: Filter by a single data source ID.
         :type source: float
+        :param source_filing_type: Filter by the regulator's own form name, exactly as the source publishes it (e.g., 10-Q, 8-K, 6-K for SEC). Case-sensitive exact match; this is open free text that varies by regulator, not a controlled vocabulary.
+        :type source_filing_type: str
         :param sources: Filter by data source ID(s). Comma-separated for multiple values (e.g., 38,40,51).
         :type sources: str
-        :param type: Filter by Filing Type code (e.g., 10-K).
+        :param type: Filter by a single FinancialFilings Filing Type code (e.g., 10-K). An unrecognised code is rejected with a 400. These are FinancialFilings taxonomy codes, not regulator form names -- see GET /filing-types/.
         :type type: str
-        :param types: Filter by multiple Filing Type codes. Comma-separated (e.g., 10-K,10-Q).
+        :param types: Filter by multiple FinancialFilings Filing Type codes. Comma-separated (e.g., 10-K,IR). An unrecognised code is rejected with a 400. These are FinancialFilings taxonomy codes, not regulator form names -- a regulator's own form name belongs on the source_filing_type filter. See GET /filing-types/.
         :type types: str
         :param updated_date_from: Filter by the date a filing was last updated on the platform (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).
         :type updated_date_from: datetime
@@ -672,6 +679,7 @@ class FilingsApi:
             release_datetime_to=release_datetime_to,
             search=search,
             source=source,
+            source_filing_type=source_filing_type,
             sources=sources,
             type=type,
             types=types,
@@ -729,9 +737,10 @@ class FilingsApi:
         release_datetime_to: Annotated[Optional[datetime], Field(description="Filter by release datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         search: Annotated[Optional[StrictStr], Field(description="Search across filing title and associated company name. Case-insensitive. Multiple whitespace-separated terms are AND-combined (each term must match either the title or the company name).")] = None,
         source: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Filter by a single data source ID.")] = None,
+        source_filing_type: Annotated[Optional[StrictStr], Field(description="Filter by the regulator's own form name, exactly as the source publishes it (e.g., 10-Q, 8-K, 6-K for SEC). Case-sensitive exact match; this is open free text that varies by regulator, not a controlled vocabulary.")] = None,
         sources: Annotated[Optional[StrictStr], Field(description="Filter by data source ID(s). Comma-separated for multiple values (e.g., 38,40,51).")] = None,
-        type: Annotated[Optional[StrictStr], Field(description="Filter by Filing Type code (e.g., 10-K).")] = None,
-        types: Annotated[Optional[StrictStr], Field(description="Filter by multiple Filing Type codes. Comma-separated (e.g., 10-K,10-Q).")] = None,
+        type: Annotated[Optional[StrictStr], Field(description="Filter by a single FinancialFilings Filing Type code (e.g., 10-K). An unrecognised code is rejected with a 400. These are FinancialFilings taxonomy codes, not regulator form names -- see GET /filing-types/.")] = None,
+        types: Annotated[Optional[StrictStr], Field(description="Filter by multiple FinancialFilings Filing Type codes. Comma-separated (e.g., 10-K,IR). An unrecognised code is rejected with a 400. These are FinancialFilings taxonomy codes, not regulator form names -- a regulator's own form name belongs on the source_filing_type filter. See GET /filing-types/.")] = None,
         updated_date_from: Annotated[Optional[datetime], Field(description="Filter by the date a filing was last updated on the platform (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         updated_date_to: Annotated[Optional[datetime], Field(description="Filter by the date a filing was last updated on the platform (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         view: Annotated[Optional[StrictStr], Field(description="Controls the level of detail. Omit for a default 'summary' view, or use 'full' to include all details for each filing.")] = None,
@@ -806,11 +815,13 @@ class FilingsApi:
         :type search: str
         :param source: Filter by a single data source ID.
         :type source: float
+        :param source_filing_type: Filter by the regulator's own form name, exactly as the source publishes it (e.g., 10-Q, 8-K, 6-K for SEC). Case-sensitive exact match; this is open free text that varies by regulator, not a controlled vocabulary.
+        :type source_filing_type: str
         :param sources: Filter by data source ID(s). Comma-separated for multiple values (e.g., 38,40,51).
         :type sources: str
-        :param type: Filter by Filing Type code (e.g., 10-K).
+        :param type: Filter by a single FinancialFilings Filing Type code (e.g., 10-K). An unrecognised code is rejected with a 400. These are FinancialFilings taxonomy codes, not regulator form names -- see GET /filing-types/.
         :type type: str
-        :param types: Filter by multiple Filing Type codes. Comma-separated (e.g., 10-K,10-Q).
+        :param types: Filter by multiple FinancialFilings Filing Type codes. Comma-separated (e.g., 10-K,IR). An unrecognised code is rejected with a 400. These are FinancialFilings taxonomy codes, not regulator form names -- a regulator's own form name belongs on the source_filing_type filter. See GET /filing-types/.
         :type types: str
         :param updated_date_from: Filter by the date a filing was last updated on the platform (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).
         :type updated_date_from: datetime
@@ -868,6 +879,7 @@ class FilingsApi:
             release_datetime_to=release_datetime_to,
             search=search,
             source=source,
+            source_filing_type=source_filing_type,
             sources=sources,
             type=type,
             types=types,
@@ -920,6 +932,7 @@ class FilingsApi:
         release_datetime_to,
         search,
         source,
+        source_filing_type,
         sources,
         type,
         types,
@@ -1091,6 +1104,10 @@ class FilingsApi:
         if source is not None:
             
             _query_params.append(('source', source))
+            
+        if source_filing_type is not None:
+            
+            _query_params.append(('source_filing_type', source_filing_type))
             
         if sources is not None:
             

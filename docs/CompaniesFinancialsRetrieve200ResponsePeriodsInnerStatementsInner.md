@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **statement_type** | **str** |  | 
 **statement_type_display** | **str** |  | 
 **currency** | [**CompaniesFinancialsRetrieve200ResponseCurrency**](CompaniesFinancialsRetrieve200ResponseCurrency.md) |  | 
-**currency_mismatch** | **bool** | True when this statement&#39;s currency differs from the company&#39;s modal reporting currency. A data-quality signal, not provenance, so it is returned even to masked accounts. | 
+**currency_mismatch** | **bool** | True when this statement&#39;s currency differs from the company&#39;s modal reporting currency - the code held by more than 60% of the statements we serve for that company. When no code clears 60% (a genuinely dual-currency issuer, or one mid-transition) there is no modal currency and this is &#x60;false&#x60; on every statement, including the off-currency ones. A data-quality signal, not provenance, so it is returned even to masked accounts. It compares a statement against its company&#39;s history; it does not mean the statement itself mixes currencies. | 
 **extraction** | [**CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerExtraction**](CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerExtraction.md) |  | 
 **line_items** | [**List[CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItemsInner]**](CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItemsInner.md) |  | 
 **is_comparative** | **bool** | True when this period was read from the comparative (prior-year) column of a later report, because no report presented it as its own period. A data-quality signal, not provenance, so it is returned even to masked accounts. | 

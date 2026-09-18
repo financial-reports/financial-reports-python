@@ -36,7 +36,7 @@ class CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInner(BaseMode
     statement_type: StrictStr
     statement_type_display: StrictStr
     currency: Optional[CompaniesFinancialsRetrieve200ResponseCurrency]
-    currency_mismatch: StrictBool = Field(description="True when this statement's currency differs from the company's modal reporting currency. A data-quality signal, not provenance, so it is returned even to masked accounts.")
+    currency_mismatch: StrictBool = Field(description="True when this statement's currency differs from the company's modal reporting currency - the code held by more than 60% of the statements we serve for that company. When no code clears 60% (a genuinely dual-currency issuer, or one mid-transition) there is no modal currency and this is `false` on every statement, including the off-currency ones. A data-quality signal, not provenance, so it is returned even to masked accounts. It compares a statement against its company's history; it does not mean the statement itself mixes currencies.")
     extraction: CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerExtraction
     line_items: List[CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItemsInner]
     is_comparative: StrictBool = Field(description="True when this period was read from the comparative (prior-year) column of a later report, because no report presented it as its own period. A data-quality signal, not provenance, so it is returned even to masked accounts.")
