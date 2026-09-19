@@ -20,7 +20,7 @@ from setuptools import setup, find_packages  # noqa: H301
 # prerequisite: setuptools
 # http://pypi.python.org/pypi/setuptools
 NAME = "financial-reports-generated-client"
-VERSION = "1.4.79"
+VERSION = "1.4.80"
 PYTHON_REQUIRES = ">= 3.10"
 REQUIRES = [
     "python-dateutil >= 2.8.2",

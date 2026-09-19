@@ -19,8 +19,8 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
-from typing import Any, ClassVar, Dict, List, Optional
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, StrictInt, StrictStr, field_validator
+from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
@@ -38,12 +38,14 @@ class WebhookFilingPayload(BaseModel):
     title: StrictStr = Field(description="The title of the filing.")
     dissemination_datetime: datetime = Field(description="The exact time the filing was disseminated by the source.")
     release_datetime: datetime = Field(description="The official release time of the filing (e.g., the period end).")
-    ingestion_mode: StrictStr = Field(description="Whether the filing was added to the platform promptly after publication. `REALTIME`: added within the source's normal publication delay (5 to 48 hours after `release_datetime`, depending on the source). `BACKFILLED`: everything else, including historical imports and new filings that reached the platform late, for example after a source outage. Set once when the filing is added and not recalculated afterwards. Webhooks are not sent for filings added more than 48 hours after `release_datetime` (for FSMA, after `dissemination_datetime`; outside authorised recovery windows), so most deliveries are REALTIME. A delivery can still carry BACKFILLED when the filing arrived after its source's normal delay but inside those 48 hours, has no `release_datetime`, or falls in an authorised recovery window.  * `REALTIME` - Realtime * `BACKFILLED` - Backfilled")
+    ingestion_mode: StrictStr = Field(description="Whether the filing was added to the platform promptly after publication. `REALTIME`: added within the source's normal publication delay (5 to 48 hours after `release_datetime`, depending on the source). `BACKFILLED`: everything else, including historical imports and new filings that reached the platform late, for example after a source outage. Set once when the filing is added and not recalculated afterwards. Webhooks are not sent for filings added more than 48 hours after `release_datetime` (for FSMA, after `dissemination_datetime`; outside authorised recovery windows) unless the webhook has `deliver_late_filings` enabled, so most deliveries are REALTIME. A delivery can still carry BACKFILLED when the filing arrived after its source's normal delay but inside those 48 hours, has no `release_datetime`, falls in an authorised recovery window, or is a late delivery (`late: true`).  * `REALTIME` - Realtime * `BACKFILLED` - Backfilled")
+    late: StrictBool = Field(description="True when the filing reached the platform more than 48 hours after publication. Such filings are sent only to webhooks with `deliver_late_filings` enabled, and only up to 30 days late; the one exception is a deliberate re-send after an outage on our side, which can reach every webhook at any lag. Always present.")
+    ingest_lag_hours: Optional[Union[StrictFloat, StrictInt]] = Field(description="Hours between publication (`release_datetime`; for FSMA, `dissemination_datetime`) and the filing reaching the platform, to one decimal. Null when the filing has no `release_datetime`. Negative when the source dates the filing in the future.")
     document_url: StrictStr = Field(description="A direct, temporary link to download the original filing document (e.g., PDF).")
     source_url: Optional[StrictStr] = Field(description="Original public link for the filing at the source authority. Null unless the webhook owner's account has source identities unlocked, the source is anonymised, or no stable link exists.")
     source_filing_type: Optional[StrictStr] = Field(description="The source authority's own classification label, verbatim. Null when the source publishes no label, it was not captured, or the source is anonymised. Not gated on source identities.")
     markdown_content: Optional[StrictStr] = Field(description="The full, processed content of the filing in Markdown format. This field is only included if your webhook is configured with 'include_markdown: true' AND the event type is 'filing.processed'. It is null for 'filing.received'. Even with 'include_markdown: true' on a 'filing.processed' event, this field is null unless the webhook owner's account has Level 2 (Processed Filings) access -- the same tier gate applied to the REST /markdown/ endpoint.")
-    __properties: ClassVar[List[str]] = ["id", "processing_status", "filing_type_code", "filing_type_name", "language_code", "language_name", "title", "dissemination_datetime", "release_datetime", "ingestion_mode", "document_url", "source_url", "source_filing_type", "markdown_content"]
+    __properties: ClassVar[List[str]] = ["id", "processing_status", "filing_type_code", "filing_type_name", "language_code", "language_name", "title", "dissemination_datetime", "release_datetime", "ingestion_mode", "late", "ingest_lag_hours", "document_url", "source_url", "source_filing_type", "markdown_content"]
 
     @field_validator('ingestion_mode')
     def ingestion_mode_validate_enum(cls, value):
@@ -96,6 +98,8 @@ class WebhookFilingPayload(BaseModel):
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
             "id",
@@ -108,6 +112,8 @@ class WebhookFilingPayload(BaseModel):
             "dissemination_datetime",
             "release_datetime",
             "ingestion_mode",
+            "late",
+            "ingest_lag_hours",
             "document_url",
             "source_url",
             "source_filing_type",
@@ -138,6 +144,11 @@ class WebhookFilingPayload(BaseModel):
         # and model_fields_set contains the field
         if self.language_name is None and "language_name" in self.model_fields_set:
             _dict['language_name'] = None
+
+        # set to None if ingest_lag_hours (nullable) is None
+        # and model_fields_set contains the field
+        if self.ingest_lag_hours is None and "ingest_lag_hours" in self.model_fields_set:
+            _dict['ingest_lag_hours'] = None
 
         # set to None if source_url (nullable) is None
         # and model_fields_set contains the field
@@ -176,6 +187,8 @@ class WebhookFilingPayload(BaseModel):
             "dissemination_datetime": obj.get("dissemination_datetime"),
             "release_datetime": obj.get("release_datetime"),
             "ingestion_mode": obj.get("ingestion_mode"),
+            "late": obj.get("late"),
+            "ingest_lag_hours": obj.get("ingest_lag_hours"),
             "document_url": obj.get("document_url"),
             "source_url": obj.get("source_url"),
             "source_filing_type": obj.get("source_filing_type"),

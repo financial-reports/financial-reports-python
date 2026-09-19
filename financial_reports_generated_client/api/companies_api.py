@@ -16,6 +16,7 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
+from datetime import date
 from pydantic import Field, StrictBool, StrictInt, StrictStr, field_validator
 from typing import Optional
 from typing_extensions import Annotated
@@ -437,6 +438,8 @@ class CompaniesApi:
         self,
         cik: Annotated[Optional[StrictStr], Field(description="Filter by SEC Central Index Key (CIK). Accepts padded or bare (`CIK0000320193`, `0000320193` and `320193` are equivalent). The CIK is assigned by the SEC and survives corporate renames, mergers and ticker changes, so it is the stable key for reconciling a securities universe against our coverage.")] = None,
         countries: Annotated[Optional[StrictStr], Field(description="Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values.")] = None,
+        date_public_after: Annotated[Optional[date], Field(description="Companies last updated on or after this date (YYYY-MM-DD). Granularity is one day. NOTE: roughly 790 listed companies have no date_public yet and a range filter cannot return them, so seed the catalogue once before relying on incremental syncs — and partition that first pass (by `countries=`, say), because a single unfiltered walk stops at the 50,000-row offset cap well short of the ~95,000 companies.")] = None,
+        date_public_before: Annotated[Optional[date], Field(description="Companies last updated on or before this date (YYYY-MM-DD). Granularity is one day. NOTE: roughly 790 listed companies have no date_public yet and a range filter cannot return them, so seed the catalogue once before relying on incremental syncs — and partition that first pass (by `countries=`, say), because a single unfiltered walk stops at the 50,000-row offset cap well short of the ~95,000 companies.")] = None,
         industry: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Group code.")] = None,
         industry_group: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Division code.")] = None,
         isin: Annotated[Optional[StrictStr], Field(description="Filter by Company ISIN. Case-insensitive.")] = None,
@@ -472,6 +475,10 @@ class CompaniesApi:
         :type cik: str
         :param countries: Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values.
         :type countries: str
+        :param date_public_after: Companies last updated on or after this date (YYYY-MM-DD). Granularity is one day. NOTE: roughly 790 listed companies have no date_public yet and a range filter cannot return them, so seed the catalogue once before relying on incremental syncs — and partition that first pass (by `countries=`, say), because a single unfiltered walk stops at the 50,000-row offset cap well short of the ~95,000 companies.
+        :type date_public_after: date
+        :param date_public_before: Companies last updated on or before this date (YYYY-MM-DD). Granularity is one day. NOTE: roughly 790 listed companies have no date_public yet and a range filter cannot return them, so seed the catalogue once before relying on incremental syncs — and partition that first pass (by `countries=`, say), because a single unfiltered walk stops at the 50,000-row offset cap well short of the ~95,000 companies.
+        :type date_public_before: date
         :param industry: Filter by ISIC Group code.
         :type industry: str
         :param industry_group: Filter by ISIC Division code.
@@ -525,6 +532,8 @@ class CompaniesApi:
         _param = self._companies_list_serialize(
             cik=cik,
             countries=countries,
+            date_public_after=date_public_after,
+            date_public_before=date_public_before,
             industry=industry,
             industry_group=industry_group,
             isin=isin,
@@ -565,6 +574,8 @@ class CompaniesApi:
         self,
         cik: Annotated[Optional[StrictStr], Field(description="Filter by SEC Central Index Key (CIK). Accepts padded or bare (`CIK0000320193`, `0000320193` and `320193` are equivalent). The CIK is assigned by the SEC and survives corporate renames, mergers and ticker changes, so it is the stable key for reconciling a securities universe against our coverage.")] = None,
         countries: Annotated[Optional[StrictStr], Field(description="Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values.")] = None,
+        date_public_after: Annotated[Optional[date], Field(description="Companies last updated on or after this date (YYYY-MM-DD). Granularity is one day. NOTE: roughly 790 listed companies have no date_public yet and a range filter cannot return them, so seed the catalogue once before relying on incremental syncs — and partition that first pass (by `countries=`, say), because a single unfiltered walk stops at the 50,000-row offset cap well short of the ~95,000 companies.")] = None,
+        date_public_before: Annotated[Optional[date], Field(description="Companies last updated on or before this date (YYYY-MM-DD). Granularity is one day. NOTE: roughly 790 listed companies have no date_public yet and a range filter cannot return them, so seed the catalogue once before relying on incremental syncs — and partition that first pass (by `countries=`, say), because a single unfiltered walk stops at the 50,000-row offset cap well short of the ~95,000 companies.")] = None,
         industry: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Group code.")] = None,
         industry_group: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Division code.")] = None,
         isin: Annotated[Optional[StrictStr], Field(description="Filter by Company ISIN. Case-insensitive.")] = None,
@@ -600,6 +611,10 @@ class CompaniesApi:
         :type cik: str
         :param countries: Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values.
         :type countries: str
+        :param date_public_after: Companies last updated on or after this date (YYYY-MM-DD). Granularity is one day. NOTE: roughly 790 listed companies have no date_public yet and a range filter cannot return them, so seed the catalogue once before relying on incremental syncs — and partition that first pass (by `countries=`, say), because a single unfiltered walk stops at the 50,000-row offset cap well short of the ~95,000 companies.
+        :type date_public_after: date
+        :param date_public_before: Companies last updated on or before this date (YYYY-MM-DD). Granularity is one day. NOTE: roughly 790 listed companies have no date_public yet and a range filter cannot return them, so seed the catalogue once before relying on incremental syncs — and partition that first pass (by `countries=`, say), because a single unfiltered walk stops at the 50,000-row offset cap well short of the ~95,000 companies.
+        :type date_public_before: date
         :param industry: Filter by ISIC Group code.
         :type industry: str
         :param industry_group: Filter by ISIC Division code.
@@ -653,6 +668,8 @@ class CompaniesApi:
         _param = self._companies_list_serialize(
             cik=cik,
             countries=countries,
+            date_public_after=date_public_after,
+            date_public_before=date_public_before,
             industry=industry,
             industry_group=industry_group,
             isin=isin,
@@ -693,6 +710,8 @@ class CompaniesApi:
         self,
         cik: Annotated[Optional[StrictStr], Field(description="Filter by SEC Central Index Key (CIK). Accepts padded or bare (`CIK0000320193`, `0000320193` and `320193` are equivalent). The CIK is assigned by the SEC and survives corporate renames, mergers and ticker changes, so it is the stable key for reconciling a securities universe against our coverage.")] = None,
         countries: Annotated[Optional[StrictStr], Field(description="Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values.")] = None,
+        date_public_after: Annotated[Optional[date], Field(description="Companies last updated on or after this date (YYYY-MM-DD). Granularity is one day. NOTE: roughly 790 listed companies have no date_public yet and a range filter cannot return them, so seed the catalogue once before relying on incremental syncs — and partition that first pass (by `countries=`, say), because a single unfiltered walk stops at the 50,000-row offset cap well short of the ~95,000 companies.")] = None,
+        date_public_before: Annotated[Optional[date], Field(description="Companies last updated on or before this date (YYYY-MM-DD). Granularity is one day. NOTE: roughly 790 listed companies have no date_public yet and a range filter cannot return them, so seed the catalogue once before relying on incremental syncs — and partition that first pass (by `countries=`, say), because a single unfiltered walk stops at the 50,000-row offset cap well short of the ~95,000 companies.")] = None,
         industry: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Group code.")] = None,
         industry_group: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Division code.")] = None,
         isin: Annotated[Optional[StrictStr], Field(description="Filter by Company ISIN. Case-insensitive.")] = None,
@@ -728,6 +747,10 @@ class CompaniesApi:
         :type cik: str
         :param countries: Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values.
         :type countries: str
+        :param date_public_after: Companies last updated on or after this date (YYYY-MM-DD). Granularity is one day. NOTE: roughly 790 listed companies have no date_public yet and a range filter cannot return them, so seed the catalogue once before relying on incremental syncs — and partition that first pass (by `countries=`, say), because a single unfiltered walk stops at the 50,000-row offset cap well short of the ~95,000 companies.
+        :type date_public_after: date
+        :param date_public_before: Companies last updated on or before this date (YYYY-MM-DD). Granularity is one day. NOTE: roughly 790 listed companies have no date_public yet and a range filter cannot return them, so seed the catalogue once before relying on incremental syncs — and partition that first pass (by `countries=`, say), because a single unfiltered walk stops at the 50,000-row offset cap well short of the ~95,000 companies.
+        :type date_public_before: date
         :param industry: Filter by ISIC Group code.
         :type industry: str
         :param industry_group: Filter by ISIC Division code.
@@ -781,6 +804,8 @@ class CompaniesApi:
         _param = self._companies_list_serialize(
             cik=cik,
             countries=countries,
+            date_public_after=date_public_after,
+            date_public_before=date_public_before,
             industry=industry,
             industry_group=industry_group,
             isin=isin,
@@ -816,6 +841,8 @@ class CompaniesApi:
         self,
         cik,
         countries,
+        date_public_after,
+        date_public_before,
         industry,
         industry_group,
         isin,
@@ -859,6 +886,32 @@ class CompaniesApi:
         if countries is not None:
             
             _query_params.append(('countries', countries))
+            
+        if date_public_after is not None:
+            if isinstance(date_public_after, date):
+                _query_params.append(
+                    (
+                        'date_public_after',
+                        date_public_after.strftime(
+                            self.api_client.configuration.date_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('date_public_after', date_public_after))
+            
+        if date_public_before is not None:
+            if isinstance(date_public_before, date):
+                _query_params.append(
+                    (
+                        'date_public_before',
+                        date_public_before.strftime(
+                            self.api_client.configuration.date_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('date_public_before', date_public_before))
             
         if industry is not None:
             

@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **track_all_companies** | **bool** | Set to &#39;true&#39; to subscribe to the Global Firehose. You will receive notifications for filings from ALL companies in the database, regardless of your Watchlist. | [optional] [default to False]
 **trigger_on_filing_received** | **bool** | If true, triggers immediately when a filing is detected (Fastest). Note: Metadata like filing type may be null, and no markdown is included. | [optional] [default to False]
 **trigger_on_filing_processed** | **bool** | If true, triggers when the filing has been fully analyzed and converted (Complete). Includes verified metadata and markdown content. | [optional] [default to True]
+**deliver_late_filings** | **bool** | If true, also deliver filings that reached the platform more than 48 hours after publication, as long as they are at most 30 days late. These deliveries carry &#39;late&#39;: true. Off by default, because late arrivals are mostly backfills. | [optional] [default to False]
 **subscribed_filing_types** | **List[str]** | A list of filing type codes (e.g., [&#39;10-K&#39;, &#39;Annual Report&#39;]) to subscribe to. If this list is empty or omitted, you will be subscribed to all filing types. | [optional] 
 **created_at** | **datetime** | Timestamp when the webhook was created. | [readonly] 
 **updated_at** | **datetime** | Timestamp when the webhook was last updated. | [readonly] 

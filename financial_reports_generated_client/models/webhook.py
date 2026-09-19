@@ -38,10 +38,11 @@ class Webhook(BaseModel):
     track_all_companies: Optional[StrictBool] = Field(default=False, description="Set to 'true' to subscribe to the Global Firehose. You will receive notifications for filings from ALL companies in the database, regardless of your Watchlist.")
     trigger_on_filing_received: Optional[StrictBool] = Field(default=False, description="If true, triggers immediately when a filing is detected (Fastest). Note: Metadata like filing type may be null, and no markdown is included.")
     trigger_on_filing_processed: Optional[StrictBool] = Field(default=True, description="If true, triggers when the filing has been fully analyzed and converted (Complete). Includes verified metadata and markdown content.")
+    deliver_late_filings: Optional[StrictBool] = Field(default=False, description="If true, also deliver filings that reached the platform more than 48 hours after publication, as long as they are at most 30 days late. These deliveries carry 'late': true. Off by default, because late arrivals are mostly backfills.")
     subscribed_filing_types: Optional[List[StrictStr]] = Field(default=None, description="A list of filing type codes (e.g., ['10-K', 'Annual Report']) to subscribe to. If this list is empty or omitted, you will be subscribed to all filing types.")
     created_at: datetime = Field(description="Timestamp when the webhook was created.")
     updated_at: datetime = Field(description="Timestamp when the webhook was last updated.")
-    __properties: ClassVar[List[str]] = ["id", "url", "is_active", "include_markdown", "include_isins", "track_all_companies", "trigger_on_filing_received", "trigger_on_filing_processed", "subscribed_filing_types", "created_at", "updated_at"]
+    __properties: ClassVar[List[str]] = ["id", "url", "is_active", "include_markdown", "include_isins", "track_all_companies", "trigger_on_filing_received", "trigger_on_filing_processed", "deliver_late_filings", "subscribed_filing_types", "created_at", "updated_at"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -108,6 +109,7 @@ class Webhook(BaseModel):
             "track_all_companies": obj.get("track_all_companies") if obj.get("track_all_companies") is not None else False,
             "trigger_on_filing_received": obj.get("trigger_on_filing_received") if obj.get("trigger_on_filing_received") is not None else False,
             "trigger_on_filing_processed": obj.get("trigger_on_filing_processed") if obj.get("trigger_on_filing_processed") is not None else True,
+            "deliver_late_filings": obj.get("deliver_late_filings") if obj.get("deliver_late_filings") is not None else False,
             "subscribed_filing_types": obj.get("subscribed_filing_types"),
             "created_at": obj.get("created_at"),
             "updated_at": obj.get("updated_at")

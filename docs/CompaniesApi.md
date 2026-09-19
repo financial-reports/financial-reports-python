@@ -132,7 +132,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **companies_list**
-> PaginatedCompanyMinimalList companies_list(cik=cik, countries=countries, industry=industry, industry_group=industry_group, isin=isin, lei=lei, listing_status=listing_status, on_watchlist=on_watchlist, ordering=ordering, page=page, page_size=page_size, search=search, sector=sector, sub_industry=sub_industry, ticker=ticker, view=view)
+> PaginatedCompanyMinimalList companies_list(cik=cik, countries=countries, date_public_after=date_public_after, date_public_before=date_public_before, industry=industry, industry_group=industry_group, isin=isin, lei=lei, listing_status=listing_status, on_watchlist=on_watchlist, ordering=ordering, page=page, page_size=page_size, search=search, sector=sector, sub_industry=sub_industry, ticker=ticker, view=view)
 
 List Companies
 
@@ -180,6 +180,8 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
     api_instance = financial_reports_generated_client.CompaniesApi(api_client)
     cik = 'cik_example' # str | Filter by SEC Central Index Key (CIK). Accepts padded or bare (`CIK0000320193`, `0000320193` and `320193` are equivalent). The CIK is assigned by the SEC and survives corporate renames, mergers and ticker changes, so it is the stable key for reconciling a securities universe against our coverage. (optional)
     countries = 'countries_example' # str | Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values. (optional)
+    date_public_after = '2013-10-20' # date | Companies last updated on or after this date (YYYY-MM-DD). Granularity is one day. NOTE: roughly 790 listed companies have no date_public yet and a range filter cannot return them, so seed the catalogue once before relying on incremental syncs — and partition that first pass (by `countries=`, say), because a single unfiltered walk stops at the 50,000-row offset cap well short of the ~95,000 companies. (optional)
+    date_public_before = '2013-10-20' # date | Companies last updated on or before this date (YYYY-MM-DD). Granularity is one day. NOTE: roughly 790 listed companies have no date_public yet and a range filter cannot return them, so seed the catalogue once before relying on incremental syncs — and partition that first pass (by `countries=`, say), because a single unfiltered walk stops at the 50,000-row offset cap well short of the ~95,000 companies. (optional)
     industry = 'industry_example' # str | Filter by ISIC Group code. (optional)
     industry_group = 'industry_group_example' # str | Filter by ISIC Division code. (optional)
     isin = 'isin_example' # str | Filter by Company ISIN. Case-insensitive. (optional)
@@ -197,7 +199,7 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
 
     try:
         # List Companies
-        api_response = await api_instance.companies_list(cik=cik, countries=countries, industry=industry, industry_group=industry_group, isin=isin, lei=lei, listing_status=listing_status, on_watchlist=on_watchlist, ordering=ordering, page=page, page_size=page_size, search=search, sector=sector, sub_industry=sub_industry, ticker=ticker, view=view)
+        api_response = await api_instance.companies_list(cik=cik, countries=countries, date_public_after=date_public_after, date_public_before=date_public_before, industry=industry, industry_group=industry_group, isin=isin, lei=lei, listing_status=listing_status, on_watchlist=on_watchlist, ordering=ordering, page=page, page_size=page_size, search=search, sector=sector, sub_industry=sub_industry, ticker=ticker, view=view)
         print("The response of CompaniesApi->companies_list:\n")
         pprint(api_response)
     except Exception as e:
@@ -213,6 +215,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **cik** | **str**| Filter by SEC Central Index Key (CIK). Accepts padded or bare (&#x60;CIK0000320193&#x60;, &#x60;0000320193&#x60; and &#x60;320193&#x60; are equivalent). The CIK is assigned by the SEC and survives corporate renames, mergers and ticker changes, so it is the stable key for reconciling a securities universe against our coverage. | [optional] 
  **countries** | **str**| Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values. | [optional] 
+ **date_public_after** | **date**| Companies last updated on or after this date (YYYY-MM-DD). Granularity is one day. NOTE: roughly 790 listed companies have no date_public yet and a range filter cannot return them, so seed the catalogue once before relying on incremental syncs — and partition that first pass (by &#x60;countries&#x3D;&#x60;, say), because a single unfiltered walk stops at the 50,000-row offset cap well short of the ~95,000 companies. | [optional] 
+ **date_public_before** | **date**| Companies last updated on or before this date (YYYY-MM-DD). Granularity is one day. NOTE: roughly 790 listed companies have no date_public yet and a range filter cannot return them, so seed the catalogue once before relying on incremental syncs — and partition that first pass (by &#x60;countries&#x3D;&#x60;, say), because a single unfiltered walk stops at the 50,000-row offset cap well short of the ~95,000 companies. | [optional] 
  **industry** | **str**| Filter by ISIC Group code. | [optional] 
  **industry_group** | **str**| Filter by ISIC Division code. | [optional] 
  **isin** | **str**| Filter by Company ISIN. Case-insensitive. | [optional] 
