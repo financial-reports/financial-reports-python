@@ -46,7 +46,9 @@ class TestWebhookCompanyPayload(unittest.TestCase):
                 country_code_alpha2 = '',
                 isins = [
                     ''
-                    ]
+                    ],
+                isin_count = 56,
+                isins_url = ''
             )
         else:
             return WebhookCompanyPayload(
@@ -61,6 +63,8 @@ class TestWebhookCompanyPayload(unittest.TestCase):
                 isins = [
                     ''
                     ],
+                isin_count = 56,
+                isins_url = '',
         )
         """
 

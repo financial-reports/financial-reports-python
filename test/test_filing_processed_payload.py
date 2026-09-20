@@ -50,7 +50,9 @@ class TestFilingProcessedPayload(unittest.TestCase):
                     country_code_alpha2 = '', 
                     isins = [
                         ''
-                        ], ),
+                        ], 
+                    isin_count = 56, 
+                    isins_url = '', ),
                 filing = financial_reports_generated_client.models.webhook_filing_payload.WebhookFilingPayload(
                     id = '', 
                     processing_status = '', 
@@ -86,7 +88,9 @@ class TestFilingProcessedPayload(unittest.TestCase):
                     country_code_alpha2 = '', 
                     isins = [
                         ''
-                        ], ),
+                        ], 
+                    isin_count = 56, 
+                    isins_url = '', ),
                 filing = financial_reports_generated_client.models.webhook_filing_payload.WebhookFilingPayload(
                     id = '', 
                     processing_status = '', 
