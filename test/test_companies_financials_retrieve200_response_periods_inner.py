@@ -67,7 +67,8 @@ class TestCompaniesFinancialsRetrieve200ResponsePeriodsInner(unittest.TestCase):
                                 scale = 'units', 
                                 currency = '', 
                                 confidence = 1.337, 
-                                source_page = 56, )
+                                source_page = 56, 
+                                updated_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), )
                             ], 
                         is_comparative = True, 
                         source_filing = financial_reports_generated_client.models.companies_financials_retrieve_200_response_periods_inner_statements_inner_source_filing.companies_financials_retrieve_200_response_periods_inner_statements_inner_source_filing(

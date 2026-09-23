@@ -17,6 +17,7 @@ Name | Type | Description | Notes
 **currency** | **str** | The value&#39;s own currency code, which may differ from the statement&#39;s reporting currency for per-share figures. NULL for ratios. | 
 **confidence** | **float** | RESERVED - currently null on every line item. Nothing in the extraction pipeline writes this field. Do not branch on it. | 
 **source_page** | **int** | RESERVED - currently null on every line item. Provenance is filing-level (&#x60;sources&#x60;), not page-level. | 
+**updated_at** | **datetime** | When this value was last written. Equal to the extraction time for an untouched value; moves when a later correction pass rewrites the value in place (a re-extraction replaces the whole statement and sets a new one). Compare it with the value from your previous poll to detect a changed figure without diffing. It does not move when a whole statement is withdrawn or when a different filing starts supplying the period - watch &#x60;source_filing&#x60; for that. | 
 
 ## Example
 

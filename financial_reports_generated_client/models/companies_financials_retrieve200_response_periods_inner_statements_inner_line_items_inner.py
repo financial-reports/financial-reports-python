@@ -18,6 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
+from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing import Optional, Set
@@ -40,7 +41,8 @@ class CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItems
     currency: Optional[StrictStr] = Field(description="The value's own currency code, which may differ from the statement's reporting currency for per-share figures. NULL for ratios.")
     confidence: Optional[Union[StrictFloat, StrictInt]] = Field(description="RESERVED - currently null on every line item. Nothing in the extraction pipeline writes this field. Do not branch on it.")
     source_page: Optional[StrictInt] = Field(description="RESERVED - currently null on every line item. Provenance is filing-level (`sources`), not page-level.")
-    __properties: ClassVar[List[str]] = ["code", "name", "statement_type", "depth", "parent_code", "sort_order", "value", "raw_value", "scale", "currency", "confidence", "source_page"]
+    updated_at: datetime = Field(description="When this value was last written. Equal to the extraction time for an untouched value; moves when a later correction pass rewrites the value in place (a re-extraction replaces the whole statement and sets a new one). Compare it with the value from your previous poll to detect a changed figure without diffing. It does not move when a whole statement is withdrawn or when a different filing starts supplying the period - watch `source_filing` for that.")
+    __properties: ClassVar[List[str]] = ["code", "name", "statement_type", "depth", "parent_code", "sort_order", "value", "raw_value", "scale", "currency", "confidence", "source_page", "updated_at"]
 
     @field_validator('statement_type')
     def statement_type_validate_enum(cls, value):
@@ -156,7 +158,8 @@ class CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItems
             "scale": obj.get("scale"),
             "currency": obj.get("currency"),
             "confidence": obj.get("confidence"),
-            "source_page": obj.get("source_page")
+            "source_page": obj.get("source_page"),
+            "updated_at": obj.get("updated_at")
         })
         return _obj
 

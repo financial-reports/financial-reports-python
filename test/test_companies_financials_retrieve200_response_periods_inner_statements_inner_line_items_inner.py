@@ -47,7 +47,8 @@ class TestCompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineI
                 scale = 'units',
                 currency = '',
                 confidence = 1.337,
-                source_page = 56
+                source_page = 56,
+                updated_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f')
             )
         else:
             return CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItemsInner(
@@ -63,6 +64,7 @@ class TestCompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineI
                 currency = '',
                 confidence = 1.337,
                 source_page = 56,
+                updated_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
         )
         """
 

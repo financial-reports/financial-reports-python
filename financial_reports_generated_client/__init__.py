@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "1.4.83"
+__version__ = "1.4.84"
 
 # Define package exports
 __all__ = [
@@ -86,6 +86,7 @@ __all__ = [
     "Language",
     "LineItemDefinition",
     "ListedStockExchange",
+    "MarkdownNotFound",
     "NextAnnualReport",
     "PaginatedCompanyMergeList",
     "PaginatedCompanyMinimalList",
@@ -108,6 +109,7 @@ __all__ = [
     "PaginatedWebhookList",
     "PatchedWebhook",
     "ProcessingStatusEnum",
+    "ReasonEnum",
     "ResolveRow",
     "SecurityListing",
     "Source",
@@ -201,6 +203,7 @@ from financial_reports_generated_client.models.jurisdiction import Jurisdiction 
 from financial_reports_generated_client.models.language import Language as Language
 from financial_reports_generated_client.models.line_item_definition import LineItemDefinition as LineItemDefinition
 from financial_reports_generated_client.models.listed_stock_exchange import ListedStockExchange as ListedStockExchange
+from financial_reports_generated_client.models.markdown_not_found import MarkdownNotFound as MarkdownNotFound
 from financial_reports_generated_client.models.next_annual_report import NextAnnualReport as NextAnnualReport
 from financial_reports_generated_client.models.paginated_company_merge_list import PaginatedCompanyMergeList as PaginatedCompanyMergeList
 from financial_reports_generated_client.models.paginated_company_minimal_list import PaginatedCompanyMinimalList as PaginatedCompanyMinimalList
@@ -223,6 +226,7 @@ from financial_reports_generated_client.models.paginated_webhook_delivery_list i
 from financial_reports_generated_client.models.paginated_webhook_list import PaginatedWebhookList as PaginatedWebhookList
 from financial_reports_generated_client.models.patched_webhook import PatchedWebhook as PatchedWebhook
 from financial_reports_generated_client.models.processing_status_enum import ProcessingStatusEnum as ProcessingStatusEnum
+from financial_reports_generated_client.models.reason_enum import ReasonEnum as ReasonEnum
 from financial_reports_generated_client.models.resolve_row import ResolveRow as ResolveRow
 from financial_reports_generated_client.models.security_listing import SecurityListing as SecurityListing
 from financial_reports_generated_client.models.source import Source as Source

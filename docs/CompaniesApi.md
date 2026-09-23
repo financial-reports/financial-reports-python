@@ -25,7 +25,7 @@ When several filings report the same period, the candidates are ranked and one s
 
 **Currency is as presented, and is never converted.** `currency` is the currency the statement is denominated in as the filer presented it - the presentation currency, not the functional currency, which we do not capture. No figure in this payload is ever translated into another currency at any rate, and `value` being in absolute units makes values comparable across scales, not across currencies. A company that re-presents in a new currency therefore produces a series whose units change partway through, with no restatement of the earlier years: compare `currency.code` across periods before aggregating or charting. A line item may carry its own `currency` differing from the statement's - that is a dual-currency filing, not an error.
 
-Each statement carries `source_filing`: the filing the figures were read from, with `document_url` and `viewer_url` pointing at our hosted copy of that document. This is returned to every account. The publishing authority's identity and its own direct URL remain masked unless the account has source unmasking enabled. The full `sources` array — every contributing filing, including candidates that selection rejected — is returned only with source unmasking (`sources_masked` reports which applies). Use `as_of=YYYY-MM-DD` for a point-in-time view.
+Each statement carries `source_filing`: the filing the figures were read from, with `document_url` and `viewer_url` pointing at our hosted copy of that document. This is returned to every account. The publishing authority's identity and its own direct URL remain masked unless the account has source unmasking enabled. The full `sources` array — every contributing filing, including candidates that selection rejected — is returned only with source unmasking (`sources_masked` reports which applies). `as_of=YYYY-MM-DD` restricts selection to filings released on or before that date; it does not reproduce the values served on that date, because figures are corrected in place. Each line item's `updated_at` says when its value was last written.
 
 Use the `depth` and `parent_code` fields on each line item to render the Capital IQ-style statement hierarchy.
 
@@ -75,7 +75,7 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
     # Create an instance of the API class
     api_instance = financial_reports_generated_client.CompaniesApi(api_client)
     id = 56 # int | A unique integer value identifying this company.
-    as_of = 'as_of_example' # str | Point-in-time query (`YYYY-MM-DD`). Returns the financials as they were known on that date — only filings released on or before `as_of` are considered when picking the statement for each period. (optional)
+    as_of = 'as_of_example' # str | Filing-date cutoff (`YYYY-MM-DD`): only filings released on or before `as_of` are considered when picking the statement for each period. This is NOT a snapshot of the values we served on that date - figures are corrected in place, and a request with `as_of` returns today's version of each value from those filings. Use each line item's `updated_at` to see when a value last changed. (optional)
     fiscal_period = 'fiscal_period_example' # str | Filter by fiscal period. (optional)
     fiscal_year = 56 # int | Filter by exact fiscal year (e.g. `2024`). (optional)
     fiscal_year_from = 56 # int | Fiscal year range start (inclusive). (optional)
@@ -100,7 +100,7 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer value identifying this company. | 
- **as_of** | **str**| Point-in-time query (&#x60;YYYY-MM-DD&#x60;). Returns the financials as they were known on that date — only filings released on or before &#x60;as_of&#x60; are considered when picking the statement for each period. | [optional] 
+ **as_of** | **str**| Filing-date cutoff (&#x60;YYYY-MM-DD&#x60;): only filings released on or before &#x60;as_of&#x60; are considered when picking the statement for each period. This is NOT a snapshot of the values we served on that date - figures are corrected in place, and a request with &#x60;as_of&#x60; returns today&#39;s version of each value from those filings. Use each line item&#39;s &#x60;updated_at&#x60; to see when a value last changed. | [optional] 
  **fiscal_period** | **str**| Filter by fiscal period. | [optional] 
  **fiscal_year** | **int**| Filter by exact fiscal year (e.g. &#x60;2024&#x60;). | [optional] 
  **fiscal_year_from** | **int**| Fiscal year range start (inclusive). | [optional] 

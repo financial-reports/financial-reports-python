@@ -326,6 +326,7 @@ class FilingsApi:
         language: Annotated[Optional[StrictStr], Field(description="Filter by a single filing language ISO 639-1 code (e.g., en).")] = None,
         languages: Annotated[Optional[StrictStr], Field(description="Filter by filing language ISO 639-1 code(s). Comma-separated for multiple values (e.g., en,de).")] = None,
         lei: Annotated[Optional[StrictStr], Field(description="Filter by Company Legal Entity Identifier (LEI).")] = None,
+        listing_status: Annotated[Optional[StrictStr], Field(description="Filter by the issuing company's listing status, e.g. `LISTED` for listed firms only. This is the company's status **today**, not at the time of the filing. Exact, case-sensitive match; an unknown value returns `400`.")] = None,
         max_confidence: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Maximum classifier confidence for the assigned filing type (0.0-1.0).")] = None,
         min_confidence: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Minimum classifier confidence for the assigned filing type (0.0-1.0).")] = None,
         on_watchlist: Annotated[Optional[StrictBool], Field(description="Filter by companies on the user's watchlist. Use 'true' to see only watchlist companies, 'false' to exclude them. Omitting the parameter returns all companies.")] = None,
@@ -335,6 +336,8 @@ class FilingsApi:
         period_ending_date: Annotated[Optional[StrictStr], Field(description="Filter by the exact period ending date (YYYY-MM-DD, e.g., `2024-12-31`). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.")] = None,
         period_ending_date_from: Annotated[Optional[StrictStr], Field(description="Filter by period ending date — inclusive start (YYYY-MM-DD).")] = None,
         period_ending_date_to: Annotated[Optional[StrictStr], Field(description="Filter by period ending date — inclusive end (YYYY-MM-DD).")] = None,
+        processing_status: Annotated[Optional[StrictStr], Field(description="Filter by processing status. `COMPLETED` means the document has been processed and is ready to download; the other values are still in, or dropped out of, the processing pipeline. Exact, case-sensitive match; an unknown value returns `400`.")] = None,
+        processing_statuses: Annotated[Optional[StrictStr], Field(description="Comma-separated processing statuses (e.g. `COMPLETED,FAILED`). Case-insensitive. An unknown value returns `400` naming it.")] = None,
         reasoning_contains: Annotated[Optional[StrictStr], Field(description="Case-insensitive substring match on `filing_type_reasoning`, minimum 3 characters. Requires at least one other filter that actually constrains the query (a date range, company/ISIN/LEI, type, category or source), otherwise returns 400 — the field is unindexed. NOTE the guard checks that a companion filter constrains the query, not HOW MUCH: a deliberately wide date range is accepted and the request is then bounded by the API statement timeout rather than rejected. Narrow the companion filter for a fast answer. CAVEAT: this text is evidence of what the model looked at, NOT a statement of our classification policy; it can cite rules that do not exist.")] = None,
         release_datetime_from: Annotated[Optional[datetime], Field(description="Filter by release datetime (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         release_datetime_to: Annotated[Optional[datetime], Field(description="Filter by release datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
@@ -396,6 +399,8 @@ class FilingsApi:
         :type languages: str
         :param lei: Filter by Company Legal Entity Identifier (LEI).
         :type lei: str
+        :param listing_status: Filter by the issuing company's listing status, e.g. `LISTED` for listed firms only. This is the company's status **today**, not at the time of the filing. Exact, case-sensitive match; an unknown value returns `400`.
+        :type listing_status: str
         :param max_confidence: Maximum classifier confidence for the assigned filing type (0.0-1.0).
         :type max_confidence: float
         :param min_confidence: Minimum classifier confidence for the assigned filing type (0.0-1.0).
@@ -414,6 +419,10 @@ class FilingsApi:
         :type period_ending_date_from: str
         :param period_ending_date_to: Filter by period ending date — inclusive end (YYYY-MM-DD).
         :type period_ending_date_to: str
+        :param processing_status: Filter by processing status. `COMPLETED` means the document has been processed and is ready to download; the other values are still in, or dropped out of, the processing pipeline. Exact, case-sensitive match; an unknown value returns `400`.
+        :type processing_status: str
+        :param processing_statuses: Comma-separated processing statuses (e.g. `COMPLETED,FAILED`). Case-insensitive. An unknown value returns `400` naming it.
+        :type processing_statuses: str
         :param reasoning_contains: Case-insensitive substring match on `filing_type_reasoning`, minimum 3 characters. Requires at least one other filter that actually constrains the query (a date range, company/ISIN/LEI, type, category or source), otherwise returns 400 — the field is unindexed. NOTE the guard checks that a companion filter constrains the query, not HOW MUCH: a deliberately wide date range is accepted and the request is then bounded by the API statement timeout rather than rejected. Narrow the companion filter for a fast answer. CAVEAT: this text is evidence of what the model looked at, NOT a statement of our classification policy; it can cite rules that do not exist.
         :type reasoning_contains: str
         :param release_datetime_from: Filter by release datetime (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).
@@ -477,6 +486,7 @@ class FilingsApi:
             language=language,
             languages=languages,
             lei=lei,
+            listing_status=listing_status,
             max_confidence=max_confidence,
             min_confidence=min_confidence,
             on_watchlist=on_watchlist,
@@ -486,6 +496,8 @@ class FilingsApi:
             period_ending_date=period_ending_date,
             period_ending_date_from=period_ending_date_from,
             period_ending_date_to=period_ending_date_to,
+            processing_status=processing_status,
+            processing_statuses=processing_statuses,
             reasoning_contains=reasoning_contains,
             release_datetime_from=release_datetime_from,
             release_datetime_to=release_datetime_to,
@@ -538,6 +550,7 @@ class FilingsApi:
         language: Annotated[Optional[StrictStr], Field(description="Filter by a single filing language ISO 639-1 code (e.g., en).")] = None,
         languages: Annotated[Optional[StrictStr], Field(description="Filter by filing language ISO 639-1 code(s). Comma-separated for multiple values (e.g., en,de).")] = None,
         lei: Annotated[Optional[StrictStr], Field(description="Filter by Company Legal Entity Identifier (LEI).")] = None,
+        listing_status: Annotated[Optional[StrictStr], Field(description="Filter by the issuing company's listing status, e.g. `LISTED` for listed firms only. This is the company's status **today**, not at the time of the filing. Exact, case-sensitive match; an unknown value returns `400`.")] = None,
         max_confidence: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Maximum classifier confidence for the assigned filing type (0.0-1.0).")] = None,
         min_confidence: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Minimum classifier confidence for the assigned filing type (0.0-1.0).")] = None,
         on_watchlist: Annotated[Optional[StrictBool], Field(description="Filter by companies on the user's watchlist. Use 'true' to see only watchlist companies, 'false' to exclude them. Omitting the parameter returns all companies.")] = None,
@@ -547,6 +560,8 @@ class FilingsApi:
         period_ending_date: Annotated[Optional[StrictStr], Field(description="Filter by the exact period ending date (YYYY-MM-DD, e.g., `2024-12-31`). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.")] = None,
         period_ending_date_from: Annotated[Optional[StrictStr], Field(description="Filter by period ending date — inclusive start (YYYY-MM-DD).")] = None,
         period_ending_date_to: Annotated[Optional[StrictStr], Field(description="Filter by period ending date — inclusive end (YYYY-MM-DD).")] = None,
+        processing_status: Annotated[Optional[StrictStr], Field(description="Filter by processing status. `COMPLETED` means the document has been processed and is ready to download; the other values are still in, or dropped out of, the processing pipeline. Exact, case-sensitive match; an unknown value returns `400`.")] = None,
+        processing_statuses: Annotated[Optional[StrictStr], Field(description="Comma-separated processing statuses (e.g. `COMPLETED,FAILED`). Case-insensitive. An unknown value returns `400` naming it.")] = None,
         reasoning_contains: Annotated[Optional[StrictStr], Field(description="Case-insensitive substring match on `filing_type_reasoning`, minimum 3 characters. Requires at least one other filter that actually constrains the query (a date range, company/ISIN/LEI, type, category or source), otherwise returns 400 — the field is unindexed. NOTE the guard checks that a companion filter constrains the query, not HOW MUCH: a deliberately wide date range is accepted and the request is then bounded by the API statement timeout rather than rejected. Narrow the companion filter for a fast answer. CAVEAT: this text is evidence of what the model looked at, NOT a statement of our classification policy; it can cite rules that do not exist.")] = None,
         release_datetime_from: Annotated[Optional[datetime], Field(description="Filter by release datetime (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         release_datetime_to: Annotated[Optional[datetime], Field(description="Filter by release datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
@@ -608,6 +623,8 @@ class FilingsApi:
         :type languages: str
         :param lei: Filter by Company Legal Entity Identifier (LEI).
         :type lei: str
+        :param listing_status: Filter by the issuing company's listing status, e.g. `LISTED` for listed firms only. This is the company's status **today**, not at the time of the filing. Exact, case-sensitive match; an unknown value returns `400`.
+        :type listing_status: str
         :param max_confidence: Maximum classifier confidence for the assigned filing type (0.0-1.0).
         :type max_confidence: float
         :param min_confidence: Minimum classifier confidence for the assigned filing type (0.0-1.0).
@@ -626,6 +643,10 @@ class FilingsApi:
         :type period_ending_date_from: str
         :param period_ending_date_to: Filter by period ending date — inclusive end (YYYY-MM-DD).
         :type period_ending_date_to: str
+        :param processing_status: Filter by processing status. `COMPLETED` means the document has been processed and is ready to download; the other values are still in, or dropped out of, the processing pipeline. Exact, case-sensitive match; an unknown value returns `400`.
+        :type processing_status: str
+        :param processing_statuses: Comma-separated processing statuses (e.g. `COMPLETED,FAILED`). Case-insensitive. An unknown value returns `400` naming it.
+        :type processing_statuses: str
         :param reasoning_contains: Case-insensitive substring match on `filing_type_reasoning`, minimum 3 characters. Requires at least one other filter that actually constrains the query (a date range, company/ISIN/LEI, type, category or source), otherwise returns 400 — the field is unindexed. NOTE the guard checks that a companion filter constrains the query, not HOW MUCH: a deliberately wide date range is accepted and the request is then bounded by the API statement timeout rather than rejected. Narrow the companion filter for a fast answer. CAVEAT: this text is evidence of what the model looked at, NOT a statement of our classification policy; it can cite rules that do not exist.
         :type reasoning_contains: str
         :param release_datetime_from: Filter by release datetime (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).
@@ -689,6 +710,7 @@ class FilingsApi:
             language=language,
             languages=languages,
             lei=lei,
+            listing_status=listing_status,
             max_confidence=max_confidence,
             min_confidence=min_confidence,
             on_watchlist=on_watchlist,
@@ -698,6 +720,8 @@ class FilingsApi:
             period_ending_date=period_ending_date,
             period_ending_date_from=period_ending_date_from,
             period_ending_date_to=period_ending_date_to,
+            processing_status=processing_status,
+            processing_statuses=processing_statuses,
             reasoning_contains=reasoning_contains,
             release_datetime_from=release_datetime_from,
             release_datetime_to=release_datetime_to,
@@ -750,6 +774,7 @@ class FilingsApi:
         language: Annotated[Optional[StrictStr], Field(description="Filter by a single filing language ISO 639-1 code (e.g., en).")] = None,
         languages: Annotated[Optional[StrictStr], Field(description="Filter by filing language ISO 639-1 code(s). Comma-separated for multiple values (e.g., en,de).")] = None,
         lei: Annotated[Optional[StrictStr], Field(description="Filter by Company Legal Entity Identifier (LEI).")] = None,
+        listing_status: Annotated[Optional[StrictStr], Field(description="Filter by the issuing company's listing status, e.g. `LISTED` for listed firms only. This is the company's status **today**, not at the time of the filing. Exact, case-sensitive match; an unknown value returns `400`.")] = None,
         max_confidence: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Maximum classifier confidence for the assigned filing type (0.0-1.0).")] = None,
         min_confidence: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Minimum classifier confidence for the assigned filing type (0.0-1.0).")] = None,
         on_watchlist: Annotated[Optional[StrictBool], Field(description="Filter by companies on the user's watchlist. Use 'true' to see only watchlist companies, 'false' to exclude them. Omitting the parameter returns all companies.")] = None,
@@ -759,6 +784,8 @@ class FilingsApi:
         period_ending_date: Annotated[Optional[StrictStr], Field(description="Filter by the exact period ending date (YYYY-MM-DD, e.g., `2024-12-31`). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.")] = None,
         period_ending_date_from: Annotated[Optional[StrictStr], Field(description="Filter by period ending date — inclusive start (YYYY-MM-DD).")] = None,
         period_ending_date_to: Annotated[Optional[StrictStr], Field(description="Filter by period ending date — inclusive end (YYYY-MM-DD).")] = None,
+        processing_status: Annotated[Optional[StrictStr], Field(description="Filter by processing status. `COMPLETED` means the document has been processed and is ready to download; the other values are still in, or dropped out of, the processing pipeline. Exact, case-sensitive match; an unknown value returns `400`.")] = None,
+        processing_statuses: Annotated[Optional[StrictStr], Field(description="Comma-separated processing statuses (e.g. `COMPLETED,FAILED`). Case-insensitive. An unknown value returns `400` naming it.")] = None,
         reasoning_contains: Annotated[Optional[StrictStr], Field(description="Case-insensitive substring match on `filing_type_reasoning`, minimum 3 characters. Requires at least one other filter that actually constrains the query (a date range, company/ISIN/LEI, type, category or source), otherwise returns 400 — the field is unindexed. NOTE the guard checks that a companion filter constrains the query, not HOW MUCH: a deliberately wide date range is accepted and the request is then bounded by the API statement timeout rather than rejected. Narrow the companion filter for a fast answer. CAVEAT: this text is evidence of what the model looked at, NOT a statement of our classification policy; it can cite rules that do not exist.")] = None,
         release_datetime_from: Annotated[Optional[datetime], Field(description="Filter by release datetime (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         release_datetime_to: Annotated[Optional[datetime], Field(description="Filter by release datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
@@ -820,6 +847,8 @@ class FilingsApi:
         :type languages: str
         :param lei: Filter by Company Legal Entity Identifier (LEI).
         :type lei: str
+        :param listing_status: Filter by the issuing company's listing status, e.g. `LISTED` for listed firms only. This is the company's status **today**, not at the time of the filing. Exact, case-sensitive match; an unknown value returns `400`.
+        :type listing_status: str
         :param max_confidence: Maximum classifier confidence for the assigned filing type (0.0-1.0).
         :type max_confidence: float
         :param min_confidence: Minimum classifier confidence for the assigned filing type (0.0-1.0).
@@ -838,6 +867,10 @@ class FilingsApi:
         :type period_ending_date_from: str
         :param period_ending_date_to: Filter by period ending date — inclusive end (YYYY-MM-DD).
         :type period_ending_date_to: str
+        :param processing_status: Filter by processing status. `COMPLETED` means the document has been processed and is ready to download; the other values are still in, or dropped out of, the processing pipeline. Exact, case-sensitive match; an unknown value returns `400`.
+        :type processing_status: str
+        :param processing_statuses: Comma-separated processing statuses (e.g. `COMPLETED,FAILED`). Case-insensitive. An unknown value returns `400` naming it.
+        :type processing_statuses: str
         :param reasoning_contains: Case-insensitive substring match on `filing_type_reasoning`, minimum 3 characters. Requires at least one other filter that actually constrains the query (a date range, company/ISIN/LEI, type, category or source), otherwise returns 400 — the field is unindexed. NOTE the guard checks that a companion filter constrains the query, not HOW MUCH: a deliberately wide date range is accepted and the request is then bounded by the API statement timeout rather than rejected. Narrow the companion filter for a fast answer. CAVEAT: this text is evidence of what the model looked at, NOT a statement of our classification policy; it can cite rules that do not exist.
         :type reasoning_contains: str
         :param release_datetime_from: Filter by release datetime (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).
@@ -901,6 +934,7 @@ class FilingsApi:
             language=language,
             languages=languages,
             lei=lei,
+            listing_status=listing_status,
             max_confidence=max_confidence,
             min_confidence=min_confidence,
             on_watchlist=on_watchlist,
@@ -910,6 +944,8 @@ class FilingsApi:
             period_ending_date=period_ending_date,
             period_ending_date_from=period_ending_date_from,
             period_ending_date_to=period_ending_date_to,
+            processing_status=processing_status,
+            processing_statuses=processing_statuses,
             reasoning_contains=reasoning_contains,
             release_datetime_from=release_datetime_from,
             release_datetime_to=release_datetime_to,
@@ -957,6 +993,7 @@ class FilingsApi:
         language,
         languages,
         lei,
+        listing_status,
         max_confidence,
         min_confidence,
         on_watchlist,
@@ -966,6 +1003,8 @@ class FilingsApi:
         period_ending_date,
         period_ending_date_from,
         period_ending_date_to,
+        processing_status,
+        processing_statuses,
         reasoning_contains,
         release_datetime_from,
         release_datetime_to,
@@ -1082,6 +1121,10 @@ class FilingsApi:
             
             _query_params.append(('lei', lei))
             
+        if listing_status is not None:
+            
+            _query_params.append(('listing_status', listing_status))
+            
         if max_confidence is not None:
             
             _query_params.append(('max_confidence', max_confidence))
@@ -1117,6 +1160,14 @@ class FilingsApi:
         if period_ending_date_to is not None:
             
             _query_params.append(('period_ending_date_to', period_ending_date_to))
+            
+        if processing_status is not None:
+            
+            _query_params.append(('processing_status', processing_status))
+            
+        if processing_statuses is not None:
+            
+            _query_params.append(('processing_statuses', processing_statuses))
             
         if reasoning_contains is not None:
             
@@ -1300,7 +1351,7 @@ class FilingsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "str",
             '403': "ErrorDetail",
-            '404': "ErrorDetail",
+            '404': "MarkdownNotFound",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1373,7 +1424,7 @@ class FilingsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "str",
             '403': "ErrorDetail",
-            '404': "ErrorDetail",
+            '404': "MarkdownNotFound",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1446,7 +1497,7 @@ class FilingsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "str",
             '403': "ErrorDetail",
-            '404': "ErrorDetail",
+            '404': "MarkdownNotFound",
         }
         response_data = await self.api_client.call_api(
             *_param,
