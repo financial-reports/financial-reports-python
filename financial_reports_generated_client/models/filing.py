@@ -41,7 +41,7 @@ class Filing(BaseModel):
     filing_type: FilingType
     language: Language
     filing_date: date = Field(description="The official date of the filing (soon to be deprecated).")
-    title: Optional[Annotated[str, Field(strict=True, max_length=200)]] = Field(default=None, description="Optional title for the filing")
+    title: Optional[Annotated[str, Field(strict=True, max_length=4000)]] = Field(default=None, description="Optional title for the filing")
     added_to_platform: datetime = Field(description="Date and time when the filing was added to our platform")
     updated_date: datetime = Field(description="The date and time this filing record was last modified.")
     dissemination_datetime: Optional[datetime] = Field(default=None, description="Time the document was released to the public and sent to the authority")
