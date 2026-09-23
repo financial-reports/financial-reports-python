@@ -37,8 +37,8 @@ class FilingSummary(BaseModel):
     id: StrictInt
     title: Optional[Annotated[str, Field(strict=True, max_length=200)]] = Field(default=None, description="Optional title for the filing")
     release_datetime: Optional[datetime] = Field(default=None, description="Time the document was published on the authority page")
-    document_url: Optional[StrictStr] = Field(description="Direct URL to the raw filing package (e.g., ZIP/PDF) on S3.")
-    proxy_url: Optional[StrictStr] = Field(description="Direct URL to the extracted, browser-renderable main document.")
+    document_url: Optional[StrictStr] = Field(description="Direct link to our hosted copy of the original filing document or package (e.g. PDF/ZIP). Not signed and does not expire; anyone holding the link can download the file. Returns 404 if the filing is later removed or its document replaced.")
+    proxy_url: Optional[StrictStr] = Field(description="Browser-renderable main document: for ZIP packages, a link that extracts and serves the main document; for every other format, the same link as the original document.")
     viewer_url: Optional[StrictStr] = Field(description="URL to view the filing in the interactive web platform.")
     company: CompanyMinimal
     filing_type: FilingType
