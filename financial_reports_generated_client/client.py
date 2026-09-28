@@ -56,6 +56,11 @@ class FinancialReports:
         # SSL FIX: Force usage of certifi bundle
         # This prevents SSL errors on macOS and bare-bones containers
         self.config.ssl_ca_cert = certifi.where()
+
+        # The API's Content-Security-Policy header is ~12 KB, over aiohttp's
+        # default 8190-byte max_field_size: without this every call raised
+        # "400, Got more than 8190 bytes when reading" (#4141).
+        self.config.client_session_kwargs = {"max_field_size": 65536}
         self.config.assert_hostname = False # Optional: strict hostname checking can sometimes be flaky behind proxies, but usually safe to leave True.
         
         self.api_client = ApiClient(self.config)
