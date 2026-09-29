@@ -15,10 +15,11 @@
 """  # noqa: E501
 
 
-__version__ = "1.4.93"
+__version__ = "1.4.94"
 
 # Define package exports
 __all__ = [
+    "AgentAccountApi",
     "CompaniesApi",
     "CountriesApi",
     "FilingCategoriesApi",
@@ -41,6 +42,7 @@ __all__ = [
     "ApiKeyError",
     "ApiAttributeError",
     "ApiException",
+    "AgentSignupRequest",
     "BulkWatchlist",
     "BulkWatchlistResponse",
     "CompaniesFinancialsRetrieve200Response",
@@ -133,6 +135,7 @@ __all__ = [
 ]
 
 # import apis into sdk package
+from financial_reports_generated_client.api.agent_account_api import AgentAccountApi as AgentAccountApi
 from financial_reports_generated_client.api.companies_api import CompaniesApi as CompaniesApi
 from financial_reports_generated_client.api.countries_api import CountriesApi as CountriesApi
 from financial_reports_generated_client.api.filing_categories_api import FilingCategoriesApi as FilingCategoriesApi
@@ -159,6 +162,7 @@ from financial_reports_generated_client.exceptions import ApiAttributeError as A
 from financial_reports_generated_client.exceptions import ApiException as ApiException
 
 # import models into sdk package
+from financial_reports_generated_client.models.agent_signup_request import AgentSignupRequest as AgentSignupRequest
 from financial_reports_generated_client.models.bulk_watchlist import BulkWatchlist as BulkWatchlist
 from financial_reports_generated_client.models.bulk_watchlist_response import BulkWatchlistResponse as BulkWatchlistResponse
 from financial_reports_generated_client.models.companies_financials_retrieve200_response import CompaniesFinancialsRetrieve200Response as CompaniesFinancialsRetrieve200Response
