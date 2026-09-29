@@ -27,6 +27,7 @@ from financial_reports_generated_client.models.filing_type import FilingType
 from financial_reports_generated_client.models.fiscal_period_enum import FiscalPeriodEnum
 from financial_reports_generated_client.models.ingestion_mode_enum import IngestionModeEnum
 from financial_reports_generated_client.models.language import Language
+from financial_reports_generated_client.models.processing_status_enum import ProcessingStatusEnum
 from financial_reports_generated_client.models.source import Source
 from typing import Optional, Set
 from typing_extensions import Self
@@ -53,6 +54,7 @@ class Filing(BaseModel):
     file_extension: Optional[Annotated[str, Field(strict=True, max_length=10)]] = Field(default=None, description="File extension (e.g., PDF, HTML).")
     file_size: Optional[Annotated[int, Field(le=2147483647, strict=True, ge=0)]] = Field(default=None, description="File size in bytes. Stores locally to avoid storage backend hits.")
     markdown_url: Optional[StrictStr]
+    processing_status: Optional[ProcessingStatusEnum] = Field(default=None, description="The lifecycle status of the raw document to markdown conversion.  * `PENDING` - Pending * `QUEUED` - Queued * `PROCESSING` - Processing * `COMPLETED` - Completed * `FAILED` - Failed * `SKIPPED` - Skipped")
     filing_type_confidence: Optional[Union[StrictFloat, StrictInt]] = Field(description="Confidence score (0.0–1.0) assigned by the automated classification system for the filing type.")
     filing_type_reasoning: Optional[StrictStr] = Field(description="Step-by-step rationale produced by the automated classification system for the assigned filing type. Indicative only — not manually reviewed.")
     language_confidence: Optional[Union[StrictFloat, StrictInt]] = Field(description="Confidence score (0.0–1.0) from detecting the language against the document's own text. Null when detection reached no usable answer, which includes the case where it never ran — use language_verified_at to tell those apart.")
@@ -64,7 +66,7 @@ class Filing(BaseModel):
     source_url: Optional[StrictStr] = Field(description="Original public link for this filing at the source authority. Null when unavailable, for anonymised sources, or when the account does not have source identities unlocked.")
     source_filing_type: Optional[StrictStr] = Field(description="The source authority's own classification label, verbatim. Null when the source publishes no label, it was not captured, or the source is anonymised. Not gated on source identities.")
     source_filing_id: Optional[StrictStr] = Field(description="The publisher's own identifier for this document, verbatim. Unique per source. On sources that publish one record per event and fan it out into one row per language and per attachment, the leading portion is a shared event stem, so rows of one disclosure sort together -- see the cross-language grouping recipe in the API docs. Null on legacy rows ingested before the identifier was retained.")
-    __properties: ClassVar[List[str]] = ["id", "company", "filing_type", "language", "filing_date", "title", "added_to_platform", "updated_date", "dissemination_datetime", "release_datetime", "source", "document", "proxy_url", "viewer_url", "file_extension", "file_size", "markdown_url", "filing_type_confidence", "filing_type_reasoning", "language_confidence", "language_verified_at", "fiscal_year", "fiscal_period", "period_ending_date", "ingestion_mode", "source_url", "source_filing_type", "source_filing_id"]
+    __properties: ClassVar[List[str]] = ["id", "company", "filing_type", "language", "filing_date", "title", "added_to_platform", "updated_date", "dissemination_datetime", "release_datetime", "source", "document", "proxy_url", "viewer_url", "file_extension", "file_size", "markdown_url", "processing_status", "filing_type_confidence", "filing_type_reasoning", "language_confidence", "language_verified_at", "fiscal_year", "fiscal_period", "period_ending_date", "ingestion_mode", "source_url", "source_filing_type", "source_filing_id"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -285,6 +287,7 @@ class Filing(BaseModel):
             "file_extension": obj.get("file_extension"),
             "file_size": obj.get("file_size"),
             "markdown_url": obj.get("markdown_url"),
+            "processing_status": obj.get("processing_status"),
             "filing_type_confidence": obj.get("filing_type_confidence"),
             "filing_type_reasoning": obj.get("filing_type_reasoning"),
             "language_confidence": obj.get("language_confidence"),

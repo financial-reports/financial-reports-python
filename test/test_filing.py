@@ -75,6 +75,7 @@ class TestFiling(unittest.TestCase):
                 file_extension = '',
                 file_size = 0,
                 markdown_url = '',
+                processing_status = 'PENDING',
                 filing_type_confidence = 1.337,
                 filing_type_reasoning = '',
                 language_confidence = 1.337,

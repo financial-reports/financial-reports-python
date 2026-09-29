@@ -22,6 +22,7 @@ Name | Type | Description | Notes
 **file_extension** | **str** | File extension (e.g., PDF, HTML). | [optional] 
 **file_size** | **int** | File size in bytes. Stores locally to avoid storage backend hits. | [optional] 
 **markdown_url** | **str** |  | [readonly] 
+**processing_status** | [**ProcessingStatusEnum**](ProcessingStatusEnum.md) | The lifecycle status of the raw document to markdown conversion.  * &#x60;PENDING&#x60; - Pending * &#x60;QUEUED&#x60; - Queued * &#x60;PROCESSING&#x60; - Processing * &#x60;COMPLETED&#x60; - Completed * &#x60;FAILED&#x60; - Failed * &#x60;SKIPPED&#x60; - Skipped | [optional] 
 **filing_type_confidence** | **float** | Confidence score (0.0–1.0) assigned by the automated classification system for the filing type. | [readonly] 
 **filing_type_reasoning** | **str** | Step-by-step rationale produced by the automated classification system for the assigned filing type. Indicative only — not manually reviewed. | [readonly] 
 **language_confidence** | **float** | Confidence score (0.0–1.0) from detecting the language against the document&#39;s own text. Null when detection reached no usable answer, which includes the case where it never ran — use language_verified_at to tell those apart. | [readonly] 
