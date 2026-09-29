@@ -102,6 +102,8 @@ class WebhooksManagementApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "WebhookCreateResponse",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -169,6 +171,8 @@ class WebhooksManagementApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "WebhookCreateResponse",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -236,6 +240,8 @@ class WebhooksManagementApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "WebhookCreateResponse",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -386,6 +392,8 @@ class WebhooksManagementApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '202': "WebhookReplayResponse",
             '404': None,
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -462,6 +470,8 @@ class WebhooksManagementApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '202': "WebhookReplayResponse",
             '404': None,
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -538,6 +548,8 @@ class WebhooksManagementApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '202': "WebhookReplayResponse",
             '404': None,
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -685,6 +697,8 @@ class WebhooksManagementApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedWebhookDeliveryList",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -752,6 +766,8 @@ class WebhooksManagementApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedWebhookDeliveryList",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -819,6 +835,8 @@ class WebhooksManagementApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedWebhookDeliveryList",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -952,6 +970,8 @@ class WebhooksManagementApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "WebhookDeliveryDetail",
             '404': None,
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1024,6 +1044,8 @@ class WebhooksManagementApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "WebhookDeliveryDetail",
             '404': None,
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1096,6 +1118,8 @@ class WebhooksManagementApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "WebhookDeliveryDetail",
             '404': None,
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1227,6 +1251,8 @@ class WebhooksManagementApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '204': None,
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1294,6 +1320,8 @@ class WebhooksManagementApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '204': None,
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1361,6 +1389,8 @@ class WebhooksManagementApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '204': None,
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1401,6 +1431,13 @@ class WebhooksManagementApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1486,6 +1523,8 @@ class WebhooksManagementApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedWebhookList",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1557,6 +1596,8 @@ class WebhooksManagementApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedWebhookList",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1628,6 +1669,8 @@ class WebhooksManagementApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedWebhookList",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1767,6 +1810,8 @@ class WebhooksManagementApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Webhook",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1838,6 +1883,8 @@ class WebhooksManagementApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Webhook",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1909,6 +1956,8 @@ class WebhooksManagementApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Webhook",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -2057,6 +2106,8 @@ class WebhooksManagementApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "WebhookSecret",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -2128,6 +2179,8 @@ class WebhooksManagementApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "WebhookSecret",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -2199,6 +2252,8 @@ class WebhooksManagementApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "WebhookSecret",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -2343,6 +2398,8 @@ class WebhooksManagementApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Webhook",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -2410,6 +2467,8 @@ class WebhooksManagementApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Webhook",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -2477,6 +2536,8 @@ class WebhooksManagementApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Webhook",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -2610,6 +2671,8 @@ class WebhooksManagementApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "WebhookTestResponse",
             '400': "WebhookTestResponse",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -2682,6 +2745,8 @@ class WebhooksManagementApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "WebhookTestResponse",
             '400': "WebhookTestResponse",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -2754,6 +2819,8 @@ class WebhooksManagementApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "WebhookTestResponse",
             '400': "WebhookTestResponse",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -2902,6 +2969,8 @@ class WebhooksManagementApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Webhook",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -2973,6 +3042,8 @@ class WebhooksManagementApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Webhook",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -3044,6 +3115,8 @@ class WebhooksManagementApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Webhook",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,

@@ -62,7 +62,7 @@ configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
 async with financial_reports_generated_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = financial_reports_generated_client.WebhooksManagementApi(api_client)
-    webhook = {"url":"https://api.your-domain.com/webhook-receiver","is_active":true,"include_markdown":false,"include_isins":false,"trigger_on_filing_received":false,"trigger_on_filing_processed":true,"deliver_late_filings":false,"track_all_companies":false,"subscribed_filing_types":["10-K","Annual Report"]} # Webhook | 
+    webhook = {"url":"https://api.your-domain.com/webhook-receiver","is_active":true,"include_markdown":false,"include_isins":false,"trigger_on_filing_received":false,"trigger_on_filing_processed":true,"deliver_late_filings":false,"track_all_companies":false,"subscribed_filing_types":["10-K","IR"]} # Webhook | 
 
     try:
         # Create Webhook
@@ -100,6 +100,8 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **201** | Webhook created. The &#x60;secret_key&#x60; is returned only in this response. |  -  |
+**403** | Missing or invalid API key, or the plan does not include this endpoint. |  -  |
+**429** | Rate limit, plan quota or spend cap reached. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -191,6 +193,8 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **202** | Replay has been queued. |  -  |
 **404** | Delivery not found for this webhook. |  -  |
+**403** | Missing or invalid API key, or the plan does not include this endpoint. |  -  |
+**429** | Rate limit, plan quota or spend cap reached. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -276,6 +280,8 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Successfully retrieved delivery logs. |  -  |
+**403** | Missing or invalid API key, or the plan does not include this endpoint. |  -  |
+**429** | Rate limit, plan quota or spend cap reached. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -364,6 +370,8 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | Successfully retrieved delivery details. |  -  |
 **404** | Delivery not found for this webhook. |  -  |
+**403** | Missing or invalid API key, or the plan does not include this endpoint. |  -  |
+**429** | Rate limit, plan quota or spend cap reached. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -439,13 +447,15 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **204** | No response body |  -  |
+**403** | Missing or invalid API key, or the plan does not include this endpoint. |  -  |
+**429** | Rate limit, plan quota or spend cap reached. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -533,6 +543,8 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** |  |  -  |
+**403** | Missing or invalid API key, or the plan does not include this endpoint. |  -  |
+**429** | Rate limit, plan quota or spend cap reached. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -621,6 +633,8 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** |  |  -  |
+**403** | Missing or invalid API key, or the plan does not include this endpoint. |  -  |
+**429** | Rate limit, plan quota or spend cap reached. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -709,6 +723,8 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Successfully regenerated the secret key. |  -  |
+**403** | Missing or invalid API key, or the plan does not include this endpoint. |  -  |
+**429** | Rate limit, plan quota or spend cap reached. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -794,6 +810,8 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** |  |  -  |
+**403** | Missing or invalid API key, or the plan does not include this endpoint. |  -  |
+**429** | Rate limit, plan quota or spend cap reached. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -883,6 +901,8 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | Test event was sent and the endpoint responded successfully. |  -  |
 **400** | Test event failed (e.g., endpoint returned an error, invalid URL). |  -  |
+**403** | Missing or invalid API key, or the plan does not include this endpoint. |  -  |
+**429** | Rate limit, plan quota or spend cap reached. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -931,7 +951,7 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
     # Create an instance of the API class
     api_instance = financial_reports_generated_client.WebhooksManagementApi(api_client)
     id = 56 # int | A unique integer value identifying this webhook.
-    webhook = {url=https://api.your-domain.com/webhook-receiver, is_active=true, include_markdown=false, include_isins=false, trigger_on_filing_received=false, trigger_on_filing_processed=true, deliver_late_filings=false, track_all_companies=false, subscribed_filing_types=[10-K, Annual Report]} # Webhook | 
+    webhook = {url=https://api.your-domain.com/webhook-receiver, is_active=true, include_markdown=false, include_isins=false, trigger_on_filing_received=false, trigger_on_filing_processed=true, deliver_late_filings=false, track_all_companies=false, subscribed_filing_types=[10-K, IR]} # Webhook | 
 
     try:
         # Update Webhook
@@ -970,6 +990,8 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** |  |  -  |
+**403** | Missing or invalid API key, or the plan does not include this endpoint. |  -  |
+**429** | Rate limit, plan quota or spend cap reached. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

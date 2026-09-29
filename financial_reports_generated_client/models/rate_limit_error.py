@@ -18,21 +18,29 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
 
-class ErrorDetail(BaseModel):
+class RateLimitError(BaseModel):
     """
-    ErrorDetail
+    Body of a 429 response. The `Retry-After` header carries the same wait as `retry_after_seconds`. Only `detail` is always present.
     """ # noqa: E501
     detail: StrictStr = Field(description="A human-readable message describing the error.")
-    type: Optional[StrictStr] = Field(default=None, description="Machine-readable error code, e.g. `authentication_required`. Present on some errors only.")
-    resolution: Optional[StrictStr] = Field(default=None, description="A human-readable hint on how to fix the request. Present on some errors only.")
-    error_type: Optional[StrictStr] = Field(default=None, description="Machine-readable error code on validation errors. Present on some errors only.")
-    __properties: ClassVar[List[str]] = ["detail", "type", "resolution", "error_type"]
+    error: Optional[StrictStr] = Field(default=None, description="Always `Too Many Requests`.")
+    retry_after_seconds: Optional[StrictInt] = Field(default=None, description="Seconds until the request may be retried, when known.")
+    scope: Optional[StrictStr] = Field(default=None, description="Which limit was hit, e.g. `burst`, `quota` or `payg_velocity`.")
+    type: Optional[StrictStr] = Field(default=None, description="Machine-readable error code, e.g. `burst_limit_exceeded`, `quota_limit_exceeded`, `daily_spend_cap_reached` or `monthly_spend_ceiling_reached`.")
+    message: Optional[StrictStr] = Field(default=None, description="A human-readable explanation of the limit.")
+    resolution: Optional[StrictStr] = Field(default=None, description="A human-readable hint on what to do next.")
+    upgrade_url: Optional[StrictStr] = Field(default=None, description="Where to upgrade the plan (quota errors).")
+    limit: Optional[StrictInt] = Field(default=None, description="The plan allowance that was used up (quota errors).")
+    interval: Optional[StrictStr] = Field(default=None, description="`monthly` or `annual` (quota errors).")
+    payg_url: Optional[StrictStr] = Field(default=None, description="Where to enable pay-as-you-go (some quota errors).")
+    contact: Optional[StrictStr] = Field(default=None, description="Who to contact to raise the limit (spend-ceiling errors).")
+    __properties: ClassVar[List[str]] = ["detail", "error", "retry_after_seconds", "scope", "type", "message", "resolution", "upgrade_url", "limit", "interval", "payg_url", "contact"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -52,7 +60,7 @@ class ErrorDetail(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ErrorDetail from a JSON string"""
+        """Create an instance of RateLimitError from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -73,11 +81,21 @@ class ErrorDetail(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if retry_after_seconds (nullable) is None
+        # and model_fields_set contains the field
+        if self.retry_after_seconds is None and "retry_after_seconds" in self.model_fields_set:
+            _dict['retry_after_seconds'] = None
+
+        # set to None if scope (nullable) is None
+        # and model_fields_set contains the field
+        if self.scope is None and "scope" in self.model_fields_set:
+            _dict['scope'] = None
+
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ErrorDetail from a dict"""
+        """Create an instance of RateLimitError from a dict"""
         if obj is None:
             return None
 
@@ -86,9 +104,17 @@ class ErrorDetail(BaseModel):
 
         _obj = cls.model_validate({
             "detail": obj.get("detail"),
+            "error": obj.get("error"),
+            "retry_after_seconds": obj.get("retry_after_seconds"),
+            "scope": obj.get("scope"),
             "type": obj.get("type"),
+            "message": obj.get("message"),
             "resolution": obj.get("resolution"),
-            "error_type": obj.get("error_type")
+            "upgrade_url": obj.get("upgrade_url"),
+            "limit": obj.get("limit"),
+            "interval": obj.get("interval"),
+            "payg_url": obj.get("payg_url"),
+            "contact": obj.get("contact")
         })
         return _obj
 

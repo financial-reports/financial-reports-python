@@ -133,6 +133,8 @@ class ISICClassificationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedISICClassList",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -232,6 +234,8 @@ class ISICClassificationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedISICClassList",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -331,6 +335,8 @@ class ISICClassificationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedISICClassList",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -502,6 +508,8 @@ class ISICClassificationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ISICClass",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -569,6 +577,8 @@ class ISICClassificationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ISICClass",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -636,6 +646,8 @@ class ISICClassificationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ISICClass",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -788,6 +800,8 @@ class ISICClassificationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedISICDivisionList",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -879,6 +893,8 @@ class ISICClassificationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedISICDivisionList",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -970,6 +986,8 @@ class ISICClassificationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedISICDivisionList",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1131,6 +1149,8 @@ class ISICClassificationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ISICDivision",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1198,6 +1218,8 @@ class ISICClassificationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ISICDivision",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1265,6 +1287,8 @@ class ISICClassificationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ISICDivision",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1421,6 +1445,8 @@ class ISICClassificationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedISICGroupList",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1516,6 +1542,8 @@ class ISICClassificationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedISICGroupList",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1611,6 +1639,8 @@ class ISICClassificationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedISICGroupList",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1777,6 +1807,8 @@ class ISICClassificationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ISICGroup",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1844,6 +1876,8 @@ class ISICClassificationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ISICGroup",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1911,6 +1945,8 @@ class ISICClassificationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ISICGroup",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -2059,6 +2095,8 @@ class ISICClassificationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedISICSectionList",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -2146,6 +2184,8 @@ class ISICClassificationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedISICSectionList",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -2233,6 +2273,8 @@ class ISICClassificationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedISICSectionList",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -2389,6 +2431,8 @@ class ISICClassificationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ISICSection",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -2456,6 +2500,8 @@ class ISICClassificationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ISICSection",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -2523,6 +2569,8 @@ class ISICClassificationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ISICSection",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,

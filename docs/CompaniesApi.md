@@ -128,6 +128,8 @@ Name | Type | Description  | Notes
 **200** | Structured company financials document. |  -  |
 **400** | Invalid query parameter. |  -  |
 **404** | Company not found. |  -  |
+**403** | Missing or invalid API key, or the plan does not include this endpoint. |  -  |
+**429** | Rate limit, plan quota or spend cap reached. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -251,6 +253,8 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | Success. The response structure will be the full Company object if &#x60;view&#x3D;full&#x60; is used. |  -  |
 **401** | Unauthorized |  -  |
+**403** | Missing or invalid API key, or the plan does not include this endpoint. |  -  |
+**429** | Rate limit, plan quota or spend cap reached. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -344,6 +348,8 @@ This endpoint does not need any parameter.
 |-------------|-------------|------------------|
 **200** | Success. |  -  |
 **401** | Unauthorized |  -  |
+**403** | Missing or invalid API key, or the plan does not include this endpoint. |  -  |
+**429** | Rate limit, plan quota or spend cap reached. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -430,6 +436,8 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | Success. Returns the predicted date window and confidence score. |  -  |
 **404** | Not Found. Not enough historical data to make a confident prediction. |  -  |
+**403** | Missing or invalid API key, or the plan does not include this endpoint. |  -  |
+**429** | Rate limit, plan quota or spend cap reached. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -534,6 +542,7 @@ Name | Type | Description  | Notes
 **400** | Malformed batch — too many rows, no rows, or duplicate &#x60;ref&#x60; values. |  -  |
 **401** | Unauthorized |  -  |
 **403** | Your API plan does not include access to this endpoint. |  -  |
+**429** | Rate limit, plan quota or spend cap reached. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -624,6 +633,8 @@ Name | Type | Description  | Notes
 **200** | Success |  -  |
 **401** | Unauthorized |  -  |
 **404** | Not Found |  -  |
+**403** | Missing or invalid API key, or the plan does not include this endpoint. |  -  |
+**429** | Rate limit, plan quota or spend cap reached. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

@@ -99,6 +99,7 @@ class WatchlistApi:
             '400': "ErrorDetail",
             '401': "ErrorDetail",
             '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -169,6 +170,7 @@ class WatchlistApi:
             '400': "ErrorDetail",
             '401': "ErrorDetail",
             '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -239,6 +241,7 @@ class WatchlistApi:
             '400': "ErrorDetail",
             '401': "ErrorDetail",
             '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -383,6 +386,7 @@ class WatchlistApi:
             '400': "ErrorDetail",
             '401': "ErrorDetail",
             '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -453,6 +457,7 @@ class WatchlistApi:
             '400': "ErrorDetail",
             '401': "ErrorDetail",
             '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -523,6 +528,7 @@ class WatchlistApi:
             '400': "ErrorDetail",
             '401': "ErrorDetail",
             '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -667,6 +673,7 @@ class WatchlistApi:
             '400': "WatchlistResponse",
             '401': "ErrorDetail",
             '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -737,6 +744,7 @@ class WatchlistApi:
             '400': "WatchlistResponse",
             '401': "ErrorDetail",
             '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -807,6 +815,7 @@ class WatchlistApi:
             '400': "WatchlistResponse",
             '401': "ErrorDetail",
             '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -951,6 +960,7 @@ class WatchlistApi:
             '401': "ErrorDetail",
             '403': "ErrorDetail",
             '404': "WatchlistResponse",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1021,6 +1031,7 @@ class WatchlistApi:
             '401': "ErrorDetail",
             '403': "ErrorDetail",
             '404': "WatchlistResponse",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1091,6 +1102,7 @@ class WatchlistApi:
             '401': "ErrorDetail",
             '403': "ErrorDetail",
             '404': "WatchlistResponse",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1216,6 +1228,8 @@ class WatchlistApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "WatchlistPage",
             '401': "ErrorDetail",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1280,6 +1294,8 @@ class WatchlistApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "WatchlistPage",
             '401': "ErrorDetail",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1344,6 +1360,8 @@ class WatchlistApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "WatchlistPage",
             '401': "ErrorDetail",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,

@@ -96,6 +96,8 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | Success. Returns a paginated list of historical changes, ordered newest first. |  -  |
 **404** | Not Found. |  -  |
+**403** | Missing or invalid API key, or the plan does not include this endpoint. |  -  |
+**429** | Rate limit, plan quota or spend cap reached. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -262,7 +264,10 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Success. The response structure will be the full Filing object if &#x60;view&#x3D;full&#x60; is used. |  -  |
+**400** | Invalid query parameter, e.g. an unknown &#x60;types&#x60; code or a page beyond the limits. |  -  |
 **401** | Unauthorized |  -  |
+**403** | Missing or invalid API key, or the plan does not include this endpoint. |  -  |
+**429** | Rate limit, plan quota or spend cap reached. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -354,6 +359,7 @@ Name | Type | Description  | Notes
 **200** | Markdown content of the filing. |  -  |
 **403** | Forbidden. Your plan does not include access to this endpoint. |  -  |
 **404** | Not Found. The filing has no markdown to serve. &#x60;reason&#x60; says why: &#x60;not_processed&#x60; (no processed record yet), &#x60;no_narrative_content&#x60; (the source genuinely carries no narrative text), or &#x60;content_missing&#x60; (the record exists but its content is unavailable). &#x60;retryable&#x60; is &#x60;true&#x60; only while a conversion is scheduled or running; the response then also carries a &#x60;Retry-After&#x60; header (seconds). When &#x60;retryable&#x60; is &#x60;false&#x60;, do not poll: wait for the filing&#39;s &#x60;markdown_url&#x60; to become non-null. |  -  |
+**429** | Rate limit, plan quota or spend cap reached. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -444,6 +450,8 @@ Name | Type | Description  | Notes
 **200** | Success |  -  |
 **401** | Unauthorized |  -  |
 **404** | Not Found |  -  |
+**403** | Missing or invalid API key, or the plan does not include this endpoint. |  -  |
+**429** | Rate limit, plan quota or spend cap reached. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

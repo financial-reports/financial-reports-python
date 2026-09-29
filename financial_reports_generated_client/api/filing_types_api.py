@@ -107,6 +107,8 @@ class FilingTypesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedFilingTypeList",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -186,6 +188,8 @@ class FilingTypesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedFilingTypeList",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -265,6 +269,8 @@ class FilingTypesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedFilingTypeList",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -410,6 +416,8 @@ class FilingTypesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "FilingType",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -477,6 +485,8 @@ class FilingTypesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "FilingType",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -544,6 +554,8 @@ class FilingTypesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "FilingType",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,

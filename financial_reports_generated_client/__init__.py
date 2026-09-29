@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "1.4.88"
+__version__ = "1.4.89"
 
 # Define package exports
 __all__ = [
@@ -109,6 +109,7 @@ __all__ = [
     "PaginatedWebhookList",
     "PatchedWebhook",
     "ProcessingStatusEnum",
+    "RateLimitError",
     "ReasonEnum",
     "ResolveRow",
     "SecurityListing",
@@ -226,6 +227,7 @@ from financial_reports_generated_client.models.paginated_webhook_delivery_list i
 from financial_reports_generated_client.models.paginated_webhook_list import PaginatedWebhookList as PaginatedWebhookList
 from financial_reports_generated_client.models.patched_webhook import PatchedWebhook as PatchedWebhook
 from financial_reports_generated_client.models.processing_status_enum import ProcessingStatusEnum as ProcessingStatusEnum
+from financial_reports_generated_client.models.rate_limit_error import RateLimitError as RateLimitError
 from financial_reports_generated_client.models.reason_enum import ReasonEnum as ReasonEnum
 from financial_reports_generated_client.models.resolve_row import ResolveRow as ResolveRow
 from financial_reports_generated_client.models.security_listing import SecurityListing as SecurityListing

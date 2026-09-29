@@ -98,6 +98,8 @@ class FilingsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedFilingHistoryList",
             '404': "ErrorDetail",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -166,6 +168,8 @@ class FilingsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedFilingHistoryList",
             '404': "ErrorDetail",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -234,6 +238,8 @@ class FilingsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedFilingHistoryList",
             '404': "ErrorDetail",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -518,7 +524,10 @@ class FilingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedFilingSummaryList",
+            '400': "Dict[str, object]",
             '401': "ErrorDetail",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -742,7 +751,10 @@ class FilingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedFilingSummaryList",
+            '400': "Dict[str, object]",
             '401': "ErrorDetail",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -966,7 +978,10 @@ class FilingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedFilingSummaryList",
+            '400': "Dict[str, object]",
             '401': "ErrorDetail",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1352,6 +1367,7 @@ class FilingsApi:
             '200': "str",
             '403': "ErrorDetail",
             '404': "MarkdownNotFound",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1425,6 +1441,7 @@ class FilingsApi:
             '200': "str",
             '403': "ErrorDetail",
             '404': "MarkdownNotFound",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1498,6 +1515,7 @@ class FilingsApi:
             '200': "str",
             '403': "ErrorDetail",
             '404': "MarkdownNotFound",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1634,6 +1652,8 @@ class FilingsApi:
             '200': "Filing",
             '401': "ErrorDetail",
             '404': "ErrorDetail",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1703,6 +1723,8 @@ class FilingsApi:
             '200': "Filing",
             '401': "ErrorDetail",
             '404': "ErrorDetail",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1772,6 +1794,8 @@ class FilingsApi:
             '200': "Filing",
             '401': "ErrorDetail",
             '404': "ErrorDetail",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,

@@ -129,8 +129,10 @@ class CompaniesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CompaniesFinancialsRetrieve200Response",
-            '400': None,
+            '400': "Dict[str, Optional[object]]",
             '404': None,
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -226,8 +228,10 @@ class CompaniesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CompaniesFinancialsRetrieve200Response",
-            '400': None,
+            '400': "Dict[str, Optional[object]]",
             '404': None,
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -323,8 +327,10 @@ class CompaniesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CompaniesFinancialsRetrieve200Response",
-            '400': None,
+            '400': "Dict[str, Optional[object]]",
             '404': None,
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -557,6 +563,8 @@ class CompaniesApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedCompanyMinimalList",
             '401': "ErrorDetail",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -693,6 +701,8 @@ class CompaniesApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedCompanyMinimalList",
             '401': "ErrorDetail",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -829,6 +839,8 @@ class CompaniesApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedCompanyMinimalList",
             '401': "ErrorDetail",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1059,6 +1071,8 @@ class CompaniesApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedCompanyMergeList",
             '401': "ErrorDetail",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1123,6 +1137,8 @@ class CompaniesApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedCompanyMergeList",
             '401': "ErrorDetail",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1187,6 +1203,8 @@ class CompaniesApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedCompanyMergeList",
             '401': "ErrorDetail",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1313,6 +1331,8 @@ class CompaniesApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "NextAnnualReport",
             '404': None,
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1381,6 +1401,8 @@ class CompaniesApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "NextAnnualReport",
             '404': None,
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1449,6 +1471,8 @@ class CompaniesApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "NextAnnualReport",
             '404': None,
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1580,6 +1604,7 @@ class CompaniesApi:
             '400': "ErrorDetail",
             '401': "ErrorDetail",
             '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1650,6 +1675,7 @@ class CompaniesApi:
             '400': "ErrorDetail",
             '401': "ErrorDetail",
             '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1720,6 +1746,7 @@ class CompaniesApi:
             '400': "ErrorDetail",
             '401': "ErrorDetail",
             '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1863,6 +1890,8 @@ class CompaniesApi:
             '200': "Company",
             '401': "ErrorDetail",
             '404': "ErrorDetail",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -1932,6 +1961,8 @@ class CompaniesApi:
             '200': "Company",
             '401': "ErrorDetail",
             '404': "ErrorDetail",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -2001,6 +2032,8 @@ class CompaniesApi:
             '200': "Company",
             '401': "ErrorDetail",
             '404': "ErrorDetail",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,

@@ -99,6 +99,8 @@ class LanguagesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedLanguageList",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -170,6 +172,8 @@ class LanguagesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedLanguageList",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -241,6 +245,8 @@ class LanguagesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedLanguageList",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -376,6 +382,8 @@ class LanguagesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Language",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -443,6 +451,8 @@ class LanguagesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Language",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -510,6 +520,8 @@ class LanguagesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Language",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,

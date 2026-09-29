@@ -115,6 +115,8 @@ class FinancialDataApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedLineItemDefinitionList",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -202,6 +204,8 @@ class FinancialDataApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedLineItemDefinitionList",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -289,6 +293,8 @@ class FinancialDataApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedLineItemDefinitionList",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -444,6 +450,8 @@ class FinancialDataApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "LineItemDefinition",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -511,6 +519,8 @@ class FinancialDataApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "LineItemDefinition",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -578,6 +588,8 @@ class FinancialDataApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "LineItemDefinition",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,

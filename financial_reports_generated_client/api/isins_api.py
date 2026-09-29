@@ -119,6 +119,8 @@ class ISINsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedISINList",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -210,6 +212,8 @@ class ISINsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedISINList",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -301,6 +305,8 @@ class ISINsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedISINList",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -461,6 +467,8 @@ class ISINsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ISIN",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -528,6 +536,8 @@ class ISINsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ISIN",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -595,6 +605,8 @@ class ISINsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ISIN",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,

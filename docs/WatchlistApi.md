@@ -100,6 +100,7 @@ Name | Type | Description  | Notes
 **400** | Validation error. |  -  |
 **401** | Authentication credentials were not provided or are invalid. |  -  |
 **403** | Forbidden. The watchlist is locked by an administrator. |  -  |
+**429** | Rate limit, plan quota or spend cap reached. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -192,6 +193,7 @@ Name | Type | Description  | Notes
 **400** | Validation error. |  -  |
 **401** | Authentication credentials were not provided or are invalid. |  -  |
 **403** | Forbidden. The watchlist is locked by an administrator. |  -  |
+**429** | Rate limit, plan quota or spend cap reached. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -284,6 +286,7 @@ Name | Type | Description  | Notes
 **400** | Bad Request. The company may already be in the watchlist or the input was invalid. |  -  |
 **401** | Authentication credentials were not provided or are invalid. |  -  |
 **403** | Forbidden. The watchlist is locked by an administrator. |  -  |
+**429** | Rate limit, plan quota or spend cap reached. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -375,6 +378,7 @@ Name | Type | Description  | Notes
 **401** | Authentication credentials were not provided or are invalid. |  -  |
 **403** | Forbidden. The watchlist is locked by an administrator. |  -  |
 **404** | Not Found. The company either does not exist or was not in the user&#39;s watchlist. |  -  |
+**429** | Rate limit, plan quota or spend cap reached. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -460,6 +464,8 @@ This endpoint does not need any parameter.
 |-------------|-------------|------------------|
 **200** | Successfully retrieved the watchlist. |  -  |
 **401** | Authentication credentials were not provided or are invalid. |  -  |
+**403** | Missing or invalid API key, or the plan does not include this endpoint. |  -  |
+**429** | Rate limit, plan quota or spend cap reached. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

@@ -39,7 +39,7 @@ class WebhookCreateResponse(BaseModel):
     trigger_on_filing_received: Optional[StrictBool] = Field(default=False, description="If true, triggers immediately when a filing is detected (Fastest). Note: Metadata like filing type may be null, and no markdown is included.")
     trigger_on_filing_processed: Optional[StrictBool] = Field(default=True, description="If true, triggers when the filing has been fully analyzed and converted (Complete). Includes verified metadata and markdown content.")
     deliver_late_filings: Optional[StrictBool] = Field(default=False, description="If true, also deliver filings that reached the platform more than 48 hours after publication, as long as they are at most 30 days late. These deliveries carry 'late': true. Off by default, because late arrivals are mostly backfills.")
-    subscribed_filing_types: Optional[List[StrictStr]] = Field(default=None, description="A list of filing type codes (e.g., ['10-K', 'Annual Report']) to subscribe to. If this list is empty or omitted, you will be subscribed to all filing types.")
+    subscribed_filing_types: Optional[List[StrictStr]] = Field(default=None, description="A list of filing type codes (e.g., ['10-K', 'IR']) to subscribe to. If this list is empty or omitted, you will be subscribed to all filing types.")
     created_at: datetime = Field(description="Timestamp when the webhook was created.")
     updated_at: datetime = Field(description="Timestamp when the webhook was last updated.")
     secret_key: StrictStr = Field(description="The webhook signing secret. Returned only once, in the create response.")

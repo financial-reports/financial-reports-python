@@ -123,6 +123,8 @@ class SecurityListingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedSecurityListingList",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -218,6 +220,8 @@ class SecurityListingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedSecurityListingList",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -313,6 +317,8 @@ class SecurityListingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PaginatedSecurityListingList",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -477,6 +483,8 @@ class SecurityListingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "SecurityListing",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -543,6 +551,8 @@ class SecurityListingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "SecurityListing",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -609,6 +619,8 @@ class SecurityListingsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "SecurityListing",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
