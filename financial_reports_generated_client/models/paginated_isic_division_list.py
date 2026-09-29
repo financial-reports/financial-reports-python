@@ -29,7 +29,7 @@ class PaginatedISICDivisionList(BaseModel):
     """
     PaginatedISICDivisionList
     """ # noqa: E501
-    count: StrictInt = Field(json_schema_extra={"examples": [123]})
+    count: StrictInt = Field(description="Total matching results. Exact for cheap queries, an estimate on broad or expensive ones. Do not use it to decide when to stop: follow `next` until it is null.", json_schema_extra={"examples": [123]})
     next: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["http://api.example.org/accounts/?page=4"]})
     previous: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["http://api.example.org/accounts/?page=2"]})
     results: List[ISICDivision]

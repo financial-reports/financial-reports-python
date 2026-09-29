@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**count** | **int** |  | 
+**count** | **int** | Total matching results. Exact for cheap queries, an estimate on broad or expensive ones. Do not use it to decide when to stop: follow &#x60;next&#x60; until it is null. | 
 **next** | **str** |  | [optional] 
 **previous** | **str** |  | [optional] 
 **results** | [**List[CompanyMinimal]**](CompanyMinimal.md) |  | 
