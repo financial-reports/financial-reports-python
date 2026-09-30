@@ -1,6 +1,6 @@
 # CompanyResolveStatusEnum
 
-* `matched` - Resolved to exactly one company * `matched_via_alias` - Reserved; never returned in this version * `ambiguous` - Several plausible companies — see candidates * `not_covered` - No company found
+* `matched` - Resolved to exactly one company * `matched_via_alias` - Name is a recorded former or alternative name of exactly one company * `ambiguous` - Several plausible companies — see candidates * `not_covered` - No company found
 
 ## Enum
 

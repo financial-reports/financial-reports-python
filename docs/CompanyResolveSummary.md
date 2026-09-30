@@ -6,7 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **matched** | **int** |  | 
-**matched_via_alias** | **int** | Always 0 in this version; reserved for alias-based matching. | 
+**matched_via_alias** | **int** | Rows resolved through a recorded former or alternative name. | 
 **ambiguous** | **int** |  | 
 **not_covered** | **int** |  | 
 

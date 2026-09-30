@@ -29,7 +29,7 @@ class CompanyResolveSummary(BaseModel):
     CompanyResolveSummary
     """ # noqa: E501
     matched: StrictInt
-    matched_via_alias: StrictInt = Field(description="Always 0 in this version; reserved for alias-based matching.")
+    matched_via_alias: StrictInt = Field(description="Rows resolved through a recorded former or alternative name.")
     ambiguous: StrictInt
     not_covered: StrictInt
     __properties: ClassVar[List[str]] = ["matched", "matched_via_alias", "ambiguous", "not_covered"]
