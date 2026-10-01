@@ -16,7 +16,7 @@ The SDK is designed to be simple and intuitive. It uses `asyncio` for high-perfo
 
 ### 1. Initialize the Client
 
-You can pass your API key directly or set it as an environment variable `FINANCIAL_REPORTS_API_KEY`.
+You can pass your API key directly or set it as an environment variable `FR_API_KEY`.
 
 ```python
 import asyncio

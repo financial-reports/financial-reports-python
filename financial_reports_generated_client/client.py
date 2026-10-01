@@ -44,10 +44,11 @@ class FinancialReports:
     """
     def __init__(self, api_key=None):
         if api_key is None:
-            api_key = os.environ.get('FINANCIAL_REPORTS_API_KEY')
+            # FR_API_KEY is the name every snippet uses; the old name still works.
+            api_key = os.environ.get('FR_API_KEY') or os.environ.get('FINANCIAL_REPORTS_API_KEY')
         
         if not api_key:
-            raise ValueError("API Key is required. Pass it to the constructor or set FINANCIAL_REPORTS_API_KEY env var.")
+            raise ValueError("API Key is required. Pass it to the constructor or set the FR_API_KEY env var.")
 
         # Hardcode the Production Host
         self.config = Configuration(host="https://api.financialreports.eu")
