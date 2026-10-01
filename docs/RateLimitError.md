@@ -17,7 +17,6 @@ Name | Type | Description | Notes
 **limit** | **int** | The plan allowance that was used up (quota errors). | [optional] 
 **interval** | **str** | &#x60;monthly&#x60; or &#x60;annual&#x60; (quota errors). | [optional] 
 **payg_url** | **str** | Where to enable pay-as-you-go (some quota errors). | [optional] 
-**contact** | **str** | Who to contact to raise the limit (spend-ceiling errors). | [optional] 
 **dashboard_url** | **str** | Where to see current spend (spend-cap and spend-ceiling errors). | [optional] 
 **contact_url** | **str** | Where to ask for a higher limit (spend-cap and spend-ceiling errors). | [optional] 
 
