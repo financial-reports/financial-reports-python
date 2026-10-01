@@ -40,7 +40,9 @@ class RateLimitError(BaseModel):
     interval: Optional[StrictStr] = Field(default=None, description="`monthly` or `annual` (quota errors).")
     payg_url: Optional[StrictStr] = Field(default=None, description="Where to enable pay-as-you-go (some quota errors).")
     contact: Optional[StrictStr] = Field(default=None, description="Who to contact to raise the limit (spend-ceiling errors).")
-    __properties: ClassVar[List[str]] = ["detail", "error", "retry_after_seconds", "scope", "type", "message", "resolution", "upgrade_url", "limit", "interval", "payg_url", "contact"]
+    dashboard_url: Optional[StrictStr] = Field(default=None, description="Where to see current spend (spend-cap and spend-ceiling errors).")
+    contact_url: Optional[StrictStr] = Field(default=None, description="Where to ask for a higher limit (spend-cap and spend-ceiling errors).")
+    __properties: ClassVar[List[str]] = ["detail", "error", "retry_after_seconds", "scope", "type", "message", "resolution", "upgrade_url", "limit", "interval", "payg_url", "contact", "dashboard_url", "contact_url"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -114,7 +116,9 @@ class RateLimitError(BaseModel):
             "limit": obj.get("limit"),
             "interval": obj.get("interval"),
             "payg_url": obj.get("payg_url"),
-            "contact": obj.get("contact")
+            "contact": obj.get("contact"),
+            "dashboard_url": obj.get("dashboard_url"),
+            "contact_url": obj.get("contact_url")
         })
         return _obj
 

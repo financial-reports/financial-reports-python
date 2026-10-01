@@ -33,7 +33,7 @@ Use the `depth` and `parent_code` fields on each line item to render the Capital
 
 **Scope - this is not the bulk dataset.** This endpoint serves one selected statement per (fiscal year, period, statement type). The comparative statements themselves, restatements, the `validation_n_hard`/`validation_n_soft` quality flags, `derivation_method` and stable row ids are available only in the S3 `line_items/` parquet delivery, not here at any plan level. The `is_comparative` flag on each statement does tell you whether the selected figures were read from a later report's prior-year column.
 
-**Cost:** 40 credits per request, flat - independent of how many periods or line items are returned, and not reduced by filtering. Pay-as-you-go accounts are limited to a rolling window on filing release date - 730 days by DEFAULT, widenable per account - and when that applies the response carries a `history_window` object. Read the effective limit from `history_window.max_history_days` rather than assuming 730. The deep back-catalogue requires an unfenced plan.
+**Cost:** 40 credits per request, flat - independent of how many periods or line items are returned, and not reduced by filtering. Pay-as-you-go accounts read the full history by default. If an account has been limited to a rolling window on filing release date, the response carries a `history_window` object; read the effective limit from `history_window.max_history_days`. The deep back-catalogue is not reachable through such a window.
 
 **Access Level Required:** Requires **Financial KPIs (Level 3)**.
 

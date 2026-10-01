@@ -47,7 +47,9 @@ class TestRateLimitError(unittest.TestCase):
                 limit = 56,
                 interval = '',
                 payg_url = '',
-                contact = ''
+                contact = '',
+                dashboard_url = '',
+                contact_url = ''
             )
         else:
             return RateLimitError(
