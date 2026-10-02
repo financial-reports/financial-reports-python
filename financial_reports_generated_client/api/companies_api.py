@@ -1294,7 +1294,7 @@ class CompaniesApi:
     ) -> NextAnnualReport:
         """Predict Next Annual Report
 
-        Calculates the expected release window for the next annual report based on historical filing patterns.
+        Calculates the expected release window for the next annual report from when the company published its last five annual reports. `confidence` is the share of those reports released within the predicted window (0-100), not a probability.
 
         :param id: A unique integer value identifying this company. (required)
         :type id: int
@@ -1364,7 +1364,7 @@ class CompaniesApi:
     ) -> ApiResponse[NextAnnualReport]:
         """Predict Next Annual Report
 
-        Calculates the expected release window for the next annual report based on historical filing patterns.
+        Calculates the expected release window for the next annual report from when the company published its last five annual reports. `confidence` is the share of those reports released within the predicted window (0-100), not a probability.
 
         :param id: A unique integer value identifying this company. (required)
         :type id: int
@@ -1434,7 +1434,7 @@ class CompaniesApi:
     ) -> RESTResponseType:
         """Predict Next Annual Report
 
-        Calculates the expected release window for the next annual report based on historical filing patterns.
+        Calculates the expected release window for the next annual report from when the company published its last five annual reports. `confidence` is the share of those reports released within the predicted window (0-100), not a probability.
 
         :param id: A unique integer value identifying this company. (required)
         :type id: int
