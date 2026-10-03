@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **isin** | **str** |  | [optional] 
 **lei** | **str** |  | [optional] 
 **cik** | **str** | Accepted padded or bare: &#x60;CIK0000320193&#x60; and &#x60;320193&#x60; are equivalent. | [optional] 
-**ticker** | **str** | Separator-insensitive: &#x60;BRK.B&#x60;, &#x60;BRK-B&#x60; and &#x60;BRK B&#x60; are equivalent. | [optional] 
+**ticker** | **str** | Separator-insensitive: &#x60;BRK.B&#x60;, &#x60;BRK-B&#x60; and &#x60;BRK B&#x60; are equivalent. May carry the market as an ISO country suffix (&#x60;01316.HK&#x60;, &#x60;VOLV B.SE&#x60;, &#x60;PETR4.BR&#x60;): the ticker is then matched only against companies listed in that market. | [optional] 
 **name** | **str** | Used to corroborate a ticker match, and as a last-resort candidate lookup. A name alone NEVER produces a &#x60;matched&#x60; result. | [optional] 
 
 ## Example

@@ -33,7 +33,7 @@ class ResolveRow(BaseModel):
     isin: Optional[Annotated[str, Field(strict=True, max_length=12)]] = None
     lei: Optional[Annotated[str, Field(strict=True, max_length=20)]] = None
     cik: Optional[Annotated[str, Field(strict=True, max_length=13)]] = Field(default=None, description="Accepted padded or bare: `CIK0000320193` and `320193` are equivalent.")
-    ticker: Optional[Annotated[str, Field(strict=True, max_length=32)]] = Field(default=None, description="Separator-insensitive: `BRK.B`, `BRK-B` and `BRK B` are equivalent.")
+    ticker: Optional[Annotated[str, Field(strict=True, max_length=32)]] = Field(default=None, description="Separator-insensitive: `BRK.B`, `BRK-B` and `BRK B` are equivalent. May carry the market as an ISO country suffix (`01316.HK`, `VOLV B.SE`, `PETR4.BR`): the ticker is then matched only against companies listed in that market.")
     name: Optional[Annotated[str, Field(strict=True, max_length=250)]] = Field(default=None, description="Used to corroborate a ticker match, and as a last-resort candidate lookup. A name alone NEVER produces a `matched` result.")
     __properties: ClassVar[List[str]] = ["ref", "isin", "lei", "cik", "ticker", "name"]
 
