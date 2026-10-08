@@ -7,6 +7,7 @@ Method | HTTP request | Description
 [**filings_history_retrieve**](FilingsApi.md#filings_history_retrieve) | **GET** /filings/{id}/history/ | Retrieve Filing History (Audit Trail)
 [**filings_list**](FilingsApi.md#filings_list) | **GET** /filings/ | List Filings
 [**filings_markdown_retrieve**](FilingsApi.md#filings_markdown_retrieve) | **GET** /filings/{id}/markdown/ | Retrieve Filing Markdown
+[**filings_markdown_search_retrieve**](FilingsApi.md#filings_markdown_search_retrieve) | **GET** /filings/{id}/markdown/search/ | Search Within a Filing&#39;s Markdown
 [**filings_retrieve**](FilingsApi.md#filings_retrieve) | **GET** /filings/{id}/ | Retrieve Filing Details
 
 
@@ -272,7 +273,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **filings_markdown_retrieve**
-> str filings_markdown_retrieve(id, format=format)
+> str filings_markdown_retrieve(id, format=format, limit=limit, offset=offset)
 
 Retrieve Filing Markdown
 
@@ -280,6 +281,8 @@ Retrieve Filing Markdown
 
 ---
 Retrieve the raw processed content of a single filing in Markdown format.
+
+**Large filings.** An annual report can run to several hundred thousand tokens. Every response carries `X-Total-Chars`, the full document's length in characters. Pass `offset` and/or `limit` (characters) to read one window instead of the whole document; while characters remain after the window, the response also carries `X-Next-Offset`. To find the part you need first, use `GET /filings/{id}/markdown/search/?q=`. Each call, whole or windowed, is billed as one Markdown request.
 
 ### Example
 
@@ -319,10 +322,12 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
     api_instance = financial_reports_generated_client.FilingsApi(api_client)
     id = 56 # int | A unique integer value identifying this filing.
     format = 'format_example' # str |  (optional)
+    limit = 56 # int | Characters to return, 1-200,000 (default 200,000 when offset is given). (optional)
+    offset = 56 # int | Character offset to start reading at (default 0). Passing offset or limit returns a window instead of the whole document. (optional)
 
     try:
         # Retrieve Filing Markdown
-        api_response = await api_instance.filings_markdown_retrieve(id, format=format)
+        api_response = await api_instance.filings_markdown_retrieve(id, format=format, limit=limit, offset=offset)
         print("The response of FilingsApi->filings_markdown_retrieve:\n")
         pprint(api_response)
     except Exception as e:
@@ -338,6 +343,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer value identifying this filing. | 
  **format** | **str**|  | [optional] 
+ **limit** | **int**| Characters to return, 1-200,000 (default 200,000 when offset is given). | [optional] 
+ **offset** | **int**| Character offset to start reading at (default 0). Passing offset or limit returns a window instead of the whole document. | [optional] 
 
 ### Return type
 
@@ -359,6 +366,97 @@ Name | Type | Description  | Notes
 **200** | Markdown content of the filing. |  -  |
 **403** | Forbidden. Your plan does not include access to this endpoint. |  -  |
 **404** | Not Found. The filing has no markdown to serve. &#x60;reason&#x60; says why: &#x60;not_processed&#x60; (no processed record yet), &#x60;no_narrative_content&#x60; (the source genuinely carries no narrative text), or &#x60;content_missing&#x60; (the record exists but its content is unavailable). &#x60;retryable&#x60; is &#x60;true&#x60; only while a conversion is scheduled or running; the response then also carries a &#x60;Retry-After&#x60; header (seconds). When &#x60;retryable&#x60; is &#x60;false&#x60;, do not poll: wait for the filing&#39;s &#x60;markdown_url&#x60; to become non-null. |  -  |
+**429** | Rate limit, plan quota or spend cap reached. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **filings_markdown_search_retrieve**
+> filings_markdown_search_retrieve(id, q, max_hits=max_hits)
+
+Search Within a Filing's Markdown
+
+**Access Level Required:** Requires **Processed Filings (Level 2)** access to search converted content.
+
+---
+Find text inside one filing's processed Markdown without downloading all of it. Case-insensitive substring match; hits come back in document order, each with ~440 characters of context and its character `offset`. Pass that offset (minus a margin) to `GET /filings/{id}/markdown/?offset=&limit=` to read the surrounding section. `total_hits` counts every match, so you can tell when `max_hits` was spent on the table of contents. Billed as one Markdown request.
+
+### Example
+
+* Bearer (JWT) Authentication (CognitoJWT):
+* Api Key Authentication (ApiKeyAuth):
+
+```python
+import financial_reports_generated_client
+from financial_reports_generated_client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.financialreports.eu
+# See configuration.py for a list of all supported configuration parameters.
+configuration = financial_reports_generated_client.Configuration(
+    host = "https://api.financialreports.eu"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization (JWT): CognitoJWT
+configuration = financial_reports_generated_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Configure API key authorization: ApiKeyAuth
+configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+async with financial_reports_generated_client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = financial_reports_generated_client.FilingsApi(api_client)
+    id = 56 # int | A unique integer value identifying this filing.
+    q = 'q_example' # str | Text to find (1-200 characters).
+    max_hits = 56 # int | Hits to return, 1-50 (default 10). (optional)
+
+    try:
+        # Search Within a Filing's Markdown
+        await api_instance.filings_markdown_search_retrieve(id, q, max_hits=max_hits)
+    except Exception as e:
+        print("Exception when calling FilingsApi->filings_markdown_search_retrieve: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **int**| A unique integer value identifying this filing. | 
+ **q** | **str**| Text to find (1-200 characters). | 
+ **max_hits** | **int**| Hits to return, 1-50 (default 10). | [optional] 
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[CognitoJWT](../README.md#CognitoJWT), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Matches with their character offsets. |  -  |
+**403** | Missing or invalid API key, or the plan does not include this endpoint. |  -  |
 **429** | Rate limit, plan quota or spend cap reached. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

@@ -62,7 +62,7 @@ configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
 async with financial_reports_generated_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = financial_reports_generated_client.WebhooksManagementApi(api_client)
-    webhook = {"url":"https://api.your-domain.com/webhook-receiver","is_active":true,"include_markdown":false,"include_isins":false,"trigger_on_filing_received":false,"trigger_on_filing_processed":true,"deliver_late_filings":false,"track_all_companies":false,"subscribed_filing_types":["10-K","IR"]} # Webhook | 
+    webhook = {"url":"https://api.your-domain.com/webhook-receiver","is_active":true,"include_markdown":false,"include_isins":false,"trigger_on_filing_received":false,"trigger_on_filing_processed":true,"trigger_on_filing_updated":false,"deliver_late_filings":false,"track_all_companies":false,"subscribed_filing_types":["10-K","IR"]} # Webhook | 
 
     try:
         # Create Webhook
@@ -951,7 +951,7 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
     # Create an instance of the API class
     api_instance = financial_reports_generated_client.WebhooksManagementApi(api_client)
     id = 56 # int | A unique integer value identifying this webhook.
-    webhook = {url=https://api.your-domain.com/webhook-receiver, is_active=true, include_markdown=false, include_isins=false, trigger_on_filing_received=false, trigger_on_filing_processed=true, deliver_late_filings=false, track_all_companies=false, subscribed_filing_types=[10-K, IR]} # Webhook | 
+    webhook = {url=https://api.your-domain.com/webhook-receiver, is_active=true, include_markdown=false, include_isins=false, trigger_on_filing_received=false, trigger_on_filing_processed=true, trigger_on_filing_updated=false, deliver_late_filings=false, track_all_companies=false, subscribed_filing_types=[10-K, IR]} # Webhook | 
 
     try:
         # Update Webhook

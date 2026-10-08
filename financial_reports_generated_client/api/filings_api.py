@@ -1311,6 +1311,8 @@ class FilingsApi:
         self,
         id: Annotated[StrictInt, Field(description="A unique integer value identifying this filing.")],
         format: Optional[StrictStr] = None,
+        limit: Annotated[Optional[StrictInt], Field(description="Characters to return, 1-200,000 (default 200,000 when offset is given).")] = None,
+        offset: Annotated[Optional[StrictInt], Field(description="Character offset to start reading at (default 0). Passing offset or limit returns a window instead of the whole document.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1326,12 +1328,16 @@ class FilingsApi:
     ) -> str:
         """Retrieve Filing Markdown
 
-        **Access Level Required:** Requires **Processed Filings (Level 2)** access to view full converted content.  --- Retrieve the raw processed content of a single filing in Markdown format.
+        **Access Level Required:** Requires **Processed Filings (Level 2)** access to view full converted content.  --- Retrieve the raw processed content of a single filing in Markdown format.  **Large filings.** An annual report can run to several hundred thousand tokens. Every response carries `X-Total-Chars`, the full document's length in characters. Pass `offset` and/or `limit` (characters) to read one window instead of the whole document; while characters remain after the window, the response also carries `X-Next-Offset`. To find the part you need first, use `GET /filings/{id}/markdown/search/?q=`. Each call, whole or windowed, is billed as one Markdown request.
 
         :param id: A unique integer value identifying this filing. (required)
         :type id: int
         :param format:
         :type format: str
+        :param limit: Characters to return, 1-200,000 (default 200,000 when offset is given).
+        :type limit: int
+        :param offset: Character offset to start reading at (default 0). Passing offset or limit returns a window instead of the whole document.
+        :type offset: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1357,6 +1363,8 @@ class FilingsApi:
         _param = self._filings_markdown_retrieve_serialize(
             id=id,
             format=format,
+            limit=limit,
+            offset=offset,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1385,6 +1393,8 @@ class FilingsApi:
         self,
         id: Annotated[StrictInt, Field(description="A unique integer value identifying this filing.")],
         format: Optional[StrictStr] = None,
+        limit: Annotated[Optional[StrictInt], Field(description="Characters to return, 1-200,000 (default 200,000 when offset is given).")] = None,
+        offset: Annotated[Optional[StrictInt], Field(description="Character offset to start reading at (default 0). Passing offset or limit returns a window instead of the whole document.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1400,12 +1410,16 @@ class FilingsApi:
     ) -> ApiResponse[str]:
         """Retrieve Filing Markdown
 
-        **Access Level Required:** Requires **Processed Filings (Level 2)** access to view full converted content.  --- Retrieve the raw processed content of a single filing in Markdown format.
+        **Access Level Required:** Requires **Processed Filings (Level 2)** access to view full converted content.  --- Retrieve the raw processed content of a single filing in Markdown format.  **Large filings.** An annual report can run to several hundred thousand tokens. Every response carries `X-Total-Chars`, the full document's length in characters. Pass `offset` and/or `limit` (characters) to read one window instead of the whole document; while characters remain after the window, the response also carries `X-Next-Offset`. To find the part you need first, use `GET /filings/{id}/markdown/search/?q=`. Each call, whole or windowed, is billed as one Markdown request.
 
         :param id: A unique integer value identifying this filing. (required)
         :type id: int
         :param format:
         :type format: str
+        :param limit: Characters to return, 1-200,000 (default 200,000 when offset is given).
+        :type limit: int
+        :param offset: Character offset to start reading at (default 0). Passing offset or limit returns a window instead of the whole document.
+        :type offset: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1431,6 +1445,8 @@ class FilingsApi:
         _param = self._filings_markdown_retrieve_serialize(
             id=id,
             format=format,
+            limit=limit,
+            offset=offset,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1459,6 +1475,8 @@ class FilingsApi:
         self,
         id: Annotated[StrictInt, Field(description="A unique integer value identifying this filing.")],
         format: Optional[StrictStr] = None,
+        limit: Annotated[Optional[StrictInt], Field(description="Characters to return, 1-200,000 (default 200,000 when offset is given).")] = None,
+        offset: Annotated[Optional[StrictInt], Field(description="Character offset to start reading at (default 0). Passing offset or limit returns a window instead of the whole document.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1474,12 +1492,16 @@ class FilingsApi:
     ) -> RESTResponseType:
         """Retrieve Filing Markdown
 
-        **Access Level Required:** Requires **Processed Filings (Level 2)** access to view full converted content.  --- Retrieve the raw processed content of a single filing in Markdown format.
+        **Access Level Required:** Requires **Processed Filings (Level 2)** access to view full converted content.  --- Retrieve the raw processed content of a single filing in Markdown format.  **Large filings.** An annual report can run to several hundred thousand tokens. Every response carries `X-Total-Chars`, the full document's length in characters. Pass `offset` and/or `limit` (characters) to read one window instead of the whole document; while characters remain after the window, the response also carries `X-Next-Offset`. To find the part you need first, use `GET /filings/{id}/markdown/search/?q=`. Each call, whole or windowed, is billed as one Markdown request.
 
         :param id: A unique integer value identifying this filing. (required)
         :type id: int
         :param format:
         :type format: str
+        :param limit: Characters to return, 1-200,000 (default 200,000 when offset is given).
+        :type limit: int
+        :param offset: Character offset to start reading at (default 0). Passing offset or limit returns a window instead of the whole document.
+        :type offset: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1505,6 +1527,8 @@ class FilingsApi:
         _param = self._filings_markdown_retrieve_serialize(
             id=id,
             format=format,
+            limit=limit,
+            offset=offset,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1528,6 +1552,8 @@ class FilingsApi:
         self,
         id,
         format,
+        limit,
+        offset,
         _request_auth,
         _content_type,
         _headers,
@@ -1556,6 +1582,14 @@ class FilingsApi:
             
             _query_params.append(('format', format))
             
+        if limit is not None:
+            
+            _query_params.append(('limit', limit))
+            
+        if offset is not None:
+            
+            _query_params.append(('offset', offset))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
@@ -1580,6 +1614,308 @@ class FilingsApi:
         return self.api_client.param_serialize(
             method='GET',
             resource_path='/filings/{id}/markdown/',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    async def filings_markdown_search_retrieve(
+        self,
+        id: Annotated[StrictInt, Field(description="A unique integer value identifying this filing.")],
+        q: Annotated[StrictStr, Field(description="Text to find (1-200 characters).")],
+        max_hits: Annotated[Optional[StrictInt], Field(description="Hits to return, 1-50 (default 10).")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> None:
+        """Search Within a Filing's Markdown
+
+        **Access Level Required:** Requires **Processed Filings (Level 2)** access to search converted content.  --- Find text inside one filing's processed Markdown without downloading all of it. Case-insensitive substring match; hits come back in document order, each with ~440 characters of context and its character `offset`. Pass that offset (minus a margin) to `GET /filings/{id}/markdown/?offset=&limit=` to read the surrounding section. `total_hits` counts every match, so you can tell when `max_hits` was spent on the table of contents. Billed as one Markdown request.
+
+        :param id: A unique integer value identifying this filing. (required)
+        :type id: int
+        :param q: Text to find (1-200 characters). (required)
+        :type q: str
+        :param max_hits: Hits to return, 1-50 (default 10).
+        :type max_hits: int
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._filings_markdown_search_retrieve_serialize(
+            id=id,
+            q=q,
+            max_hits=max_hits,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': None,
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    async def filings_markdown_search_retrieve_with_http_info(
+        self,
+        id: Annotated[StrictInt, Field(description="A unique integer value identifying this filing.")],
+        q: Annotated[StrictStr, Field(description="Text to find (1-200 characters).")],
+        max_hits: Annotated[Optional[StrictInt], Field(description="Hits to return, 1-50 (default 10).")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[None]:
+        """Search Within a Filing's Markdown
+
+        **Access Level Required:** Requires **Processed Filings (Level 2)** access to search converted content.  --- Find text inside one filing's processed Markdown without downloading all of it. Case-insensitive substring match; hits come back in document order, each with ~440 characters of context and its character `offset`. Pass that offset (minus a margin) to `GET /filings/{id}/markdown/?offset=&limit=` to read the surrounding section. `total_hits` counts every match, so you can tell when `max_hits` was spent on the table of contents. Billed as one Markdown request.
+
+        :param id: A unique integer value identifying this filing. (required)
+        :type id: int
+        :param q: Text to find (1-200 characters). (required)
+        :type q: str
+        :param max_hits: Hits to return, 1-50 (default 10).
+        :type max_hits: int
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._filings_markdown_search_retrieve_serialize(
+            id=id,
+            q=q,
+            max_hits=max_hits,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': None,
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    async def filings_markdown_search_retrieve_without_preload_content(
+        self,
+        id: Annotated[StrictInt, Field(description="A unique integer value identifying this filing.")],
+        q: Annotated[StrictStr, Field(description="Text to find (1-200 characters).")],
+        max_hits: Annotated[Optional[StrictInt], Field(description="Hits to return, 1-50 (default 10).")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Search Within a Filing's Markdown
+
+        **Access Level Required:** Requires **Processed Filings (Level 2)** access to search converted content.  --- Find text inside one filing's processed Markdown without downloading all of it. Case-insensitive substring match; hits come back in document order, each with ~440 characters of context and its character `offset`. Pass that offset (minus a margin) to `GET /filings/{id}/markdown/?offset=&limit=` to read the surrounding section. `total_hits` counts every match, so you can tell when `max_hits` was spent on the table of contents. Billed as one Markdown request.
+
+        :param id: A unique integer value identifying this filing. (required)
+        :type id: int
+        :param q: Text to find (1-200 characters). (required)
+        :type q: str
+        :param max_hits: Hits to return, 1-50 (default 10).
+        :type max_hits: int
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._filings_markdown_search_retrieve_serialize(
+            id=id,
+            q=q,
+            max_hits=max_hits,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': None,
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _filings_markdown_search_retrieve_serialize(
+        self,
+        id,
+        q,
+        max_hits,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if id is not None:
+            _path_params['id'] = id
+        # process the query parameters
+        if max_hits is not None:
+            
+            _query_params.append(('max_hits', max_hits))
+            
+        if q is not None:
+            
+            _query_params.append(('q', q))
+            
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'CognitoJWT', 
+            'ApiKeyAuth'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/filings/{id}/markdown/search/',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,

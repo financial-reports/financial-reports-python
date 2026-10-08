@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "1.4.103"
+__version__ = "1.4.104"
 
 # Define package exports
 __all__ = [
@@ -75,8 +75,10 @@ __all__ = [
     "FilingCategory",
     "FilingHistory",
     "FilingProcessedPayload",
+    "FilingRemovedPayload",
     "FilingSummary",
     "FilingType",
+    "FilingUpdatedPayload",
     "FiscalPeriodEnum",
     "ISICClass",
     "ISICDivision",
@@ -195,8 +197,10 @@ from financial_reports_generated_client.models.filing import Filing as Filing
 from financial_reports_generated_client.models.filing_category import FilingCategory as FilingCategory
 from financial_reports_generated_client.models.filing_history import FilingHistory as FilingHistory
 from financial_reports_generated_client.models.filing_processed_payload import FilingProcessedPayload as FilingProcessedPayload
+from financial_reports_generated_client.models.filing_removed_payload import FilingRemovedPayload as FilingRemovedPayload
 from financial_reports_generated_client.models.filing_summary import FilingSummary as FilingSummary
 from financial_reports_generated_client.models.filing_type import FilingType as FilingType
+from financial_reports_generated_client.models.filing_updated_payload import FilingUpdatedPayload as FilingUpdatedPayload
 from financial_reports_generated_client.models.fiscal_period_enum import FiscalPeriodEnum as FiscalPeriodEnum
 from financial_reports_generated_client.models.isic_class import ISICClass as ISICClass
 from financial_reports_generated_client.models.isic_division import ISICDivision as ISICDivision

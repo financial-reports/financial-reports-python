@@ -15,10 +15,10 @@
 
 import unittest
 
-from financial_reports_generated_client.models.webhook_create_response import WebhookCreateResponse
+from financial_reports_generated_client.models.filing_removed_payload import FilingRemovedPayload
 
-class TestWebhookCreateResponse(unittest.TestCase):
-    """WebhookCreateResponse unit test stubs"""
+class TestFilingRemovedPayload(unittest.TestCase):
+    """FilingRemovedPayload unit test stubs"""
 
     def setUp(self):
         pass
@@ -26,45 +26,34 @@ class TestWebhookCreateResponse(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> WebhookCreateResponse:
-        """Test WebhookCreateResponse
+    def make_instance(self, include_optional) -> FilingRemovedPayload:
+        """Test FilingRemovedPayload
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `WebhookCreateResponse`
+        # uncomment below to create an instance of `FilingRemovedPayload`
         """
-        model = WebhookCreateResponse()
+        model = FilingRemovedPayload()
         if include_optional:
-            return WebhookCreateResponse(
-                id = 56,
-                url = '',
-                is_active = True,
-                include_markdown = True,
-                include_isins = True,
-                track_all_companies = True,
-                trigger_on_filing_received = True,
-                trigger_on_filing_processed = True,
-                trigger_on_filing_updated = True,
-                deliver_late_filings = True,
-                subscribed_filing_types = [
-                    ''
-                    ],
-                created_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
-                updated_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
-                secret_key = ''
+            return FilingRemovedPayload(
+                event_type = '',
+                webhook_id = '',
+                filing_id = '',
+                reason = 'deleted',
+                triggered_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f')
             )
         else:
-            return WebhookCreateResponse(
-                id = 56,
-                url = '',
-                created_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
-                updated_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
-                secret_key = '',
+            return FilingRemovedPayload(
+                event_type = '',
+                webhook_id = '',
+                filing_id = '',
+                reason = 'deleted',
+                triggered_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
         )
         """
 
-    def testWebhookCreateResponse(self):
-        """Test WebhookCreateResponse"""
+    def testFilingRemovedPayload(self):
+        """Test FilingRemovedPayload"""
         # inst_req_only = self.make_instance(include_optional=False)
         # inst_req_and_optional = self.make_instance(include_optional=True)
 
