@@ -49,6 +49,7 @@ class FinancialDataApi:
         parent_code: Annotated[Optional[StrictStr], Field(description="Filter by parent line item code (e.g. 'gross_profit' returns its children).")] = None,
         search: Annotated[Optional[StrictStr], Field(description="A search term.")] = None,
         statement_type: Annotated[Optional[StrictStr], Field(description="Filter by statement type (IS, BS, CFS, SUP).  * `IS` - Income Statement * `BS` - Balance Sheet * `CFS` - Cash Flow Statement * `SUP` - Supplemental / Ratio")] = None,
+        template: Annotated[Optional[StrictStr], Field(description="Filter to the line items meaningful for a KPI template (industrial, bank, insurer).  * `industrial` - industrial * `bank` - bank * `insurer` - insurer")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -64,7 +65,7 @@ class FinancialDataApi:
     ) -> PaginatedLineItemDefinitionList:
         """List Line Item Definitions
 
-        Retrieve the full dictionary of standardized financial KPIs.  Each definition describes one line item that may appear in extracted financial statements (Income Statement, Balance Sheet, Cash Flow Statement). Use the `depth` and `parent_code` fields to reconstruct the Capital IQ-style hierarchy.  **Access Level Required:** Requires **Standard Access (Level 1)**.
+        Retrieve the full dictionary of standardized financial KPIs.  Each definition describes one line item that may appear in extracted financial statements (Income Statement, Balance Sheet, Cash Flow Statement). Use the `depth` and `parent_code` fields to reconstruct the Capital IQ-style hierarchy.  `templates` lists the KPI templates a line item is meaningful for (`industrial`, `bank`, `insurer`); filter with `?template=bank`. Industrial-only items are still served for banks and insurers, but do not mean the same thing there.  **Access Level Required:** Requires **Standard Access (Level 1)**.
 
         :param depth: Filter by hierarchy depth (0 = top-level, 1 = component, 2 = sub-component).
         :type depth: int
@@ -78,6 +79,8 @@ class FinancialDataApi:
         :type search: str
         :param statement_type: Filter by statement type (IS, BS, CFS, SUP).  * `IS` - Income Statement * `BS` - Balance Sheet * `CFS` - Cash Flow Statement * `SUP` - Supplemental / Ratio
         :type statement_type: str
+        :param template: Filter to the line items meaningful for a KPI template (industrial, bank, insurer).  * `industrial` - industrial * `bank` - bank * `insurer` - insurer
+        :type template: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -107,6 +110,7 @@ class FinancialDataApi:
             parent_code=parent_code,
             search=search,
             statement_type=statement_type,
+            template=template,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -138,6 +142,7 @@ class FinancialDataApi:
         parent_code: Annotated[Optional[StrictStr], Field(description="Filter by parent line item code (e.g. 'gross_profit' returns its children).")] = None,
         search: Annotated[Optional[StrictStr], Field(description="A search term.")] = None,
         statement_type: Annotated[Optional[StrictStr], Field(description="Filter by statement type (IS, BS, CFS, SUP).  * `IS` - Income Statement * `BS` - Balance Sheet * `CFS` - Cash Flow Statement * `SUP` - Supplemental / Ratio")] = None,
+        template: Annotated[Optional[StrictStr], Field(description="Filter to the line items meaningful for a KPI template (industrial, bank, insurer).  * `industrial` - industrial * `bank` - bank * `insurer` - insurer")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -153,7 +158,7 @@ class FinancialDataApi:
     ) -> ApiResponse[PaginatedLineItemDefinitionList]:
         """List Line Item Definitions
 
-        Retrieve the full dictionary of standardized financial KPIs.  Each definition describes one line item that may appear in extracted financial statements (Income Statement, Balance Sheet, Cash Flow Statement). Use the `depth` and `parent_code` fields to reconstruct the Capital IQ-style hierarchy.  **Access Level Required:** Requires **Standard Access (Level 1)**.
+        Retrieve the full dictionary of standardized financial KPIs.  Each definition describes one line item that may appear in extracted financial statements (Income Statement, Balance Sheet, Cash Flow Statement). Use the `depth` and `parent_code` fields to reconstruct the Capital IQ-style hierarchy.  `templates` lists the KPI templates a line item is meaningful for (`industrial`, `bank`, `insurer`); filter with `?template=bank`. Industrial-only items are still served for banks and insurers, but do not mean the same thing there.  **Access Level Required:** Requires **Standard Access (Level 1)**.
 
         :param depth: Filter by hierarchy depth (0 = top-level, 1 = component, 2 = sub-component).
         :type depth: int
@@ -167,6 +172,8 @@ class FinancialDataApi:
         :type search: str
         :param statement_type: Filter by statement type (IS, BS, CFS, SUP).  * `IS` - Income Statement * `BS` - Balance Sheet * `CFS` - Cash Flow Statement * `SUP` - Supplemental / Ratio
         :type statement_type: str
+        :param template: Filter to the line items meaningful for a KPI template (industrial, bank, insurer).  * `industrial` - industrial * `bank` - bank * `insurer` - insurer
+        :type template: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -196,6 +203,7 @@ class FinancialDataApi:
             parent_code=parent_code,
             search=search,
             statement_type=statement_type,
+            template=template,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -227,6 +235,7 @@ class FinancialDataApi:
         parent_code: Annotated[Optional[StrictStr], Field(description="Filter by parent line item code (e.g. 'gross_profit' returns its children).")] = None,
         search: Annotated[Optional[StrictStr], Field(description="A search term.")] = None,
         statement_type: Annotated[Optional[StrictStr], Field(description="Filter by statement type (IS, BS, CFS, SUP).  * `IS` - Income Statement * `BS` - Balance Sheet * `CFS` - Cash Flow Statement * `SUP` - Supplemental / Ratio")] = None,
+        template: Annotated[Optional[StrictStr], Field(description="Filter to the line items meaningful for a KPI template (industrial, bank, insurer).  * `industrial` - industrial * `bank` - bank * `insurer` - insurer")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -242,7 +251,7 @@ class FinancialDataApi:
     ) -> RESTResponseType:
         """List Line Item Definitions
 
-        Retrieve the full dictionary of standardized financial KPIs.  Each definition describes one line item that may appear in extracted financial statements (Income Statement, Balance Sheet, Cash Flow Statement). Use the `depth` and `parent_code` fields to reconstruct the Capital IQ-style hierarchy.  **Access Level Required:** Requires **Standard Access (Level 1)**.
+        Retrieve the full dictionary of standardized financial KPIs.  Each definition describes one line item that may appear in extracted financial statements (Income Statement, Balance Sheet, Cash Flow Statement). Use the `depth` and `parent_code` fields to reconstruct the Capital IQ-style hierarchy.  `templates` lists the KPI templates a line item is meaningful for (`industrial`, `bank`, `insurer`); filter with `?template=bank`. Industrial-only items are still served for banks and insurers, but do not mean the same thing there.  **Access Level Required:** Requires **Standard Access (Level 1)**.
 
         :param depth: Filter by hierarchy depth (0 = top-level, 1 = component, 2 = sub-component).
         :type depth: int
@@ -256,6 +265,8 @@ class FinancialDataApi:
         :type search: str
         :param statement_type: Filter by statement type (IS, BS, CFS, SUP).  * `IS` - Income Statement * `BS` - Balance Sheet * `CFS` - Cash Flow Statement * `SUP` - Supplemental / Ratio
         :type statement_type: str
+        :param template: Filter to the line items meaningful for a KPI template (industrial, bank, insurer).  * `industrial` - industrial * `bank` - bank * `insurer` - insurer
+        :type template: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -285,6 +296,7 @@ class FinancialDataApi:
             parent_code=parent_code,
             search=search,
             statement_type=statement_type,
+            template=template,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -311,6 +323,7 @@ class FinancialDataApi:
         parent_code,
         search,
         statement_type,
+        template,
         _request_auth,
         _content_type,
         _headers,
@@ -356,6 +369,10 @@ class FinancialDataApi:
         if statement_type is not None:
             
             _query_params.append(('statement_type', statement_type))
+            
+        if template is not None:
+            
+            _query_params.append(('template', template))
             
         # process the header parameters
         # process the form parameters

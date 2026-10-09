@@ -37,6 +37,7 @@ class TestCompaniesFinancialsRetrieve200Response(unittest.TestCase):
         if include_optional:
             return CompaniesFinancialsRetrieve200Response(
                 company_id = 56,
+                template = 'industrial',
                 currency = financial_reports_generated_client.models.companies_financials_retrieve_200_response_currency.companies_financials_retrieve_200_response_currency(
                     code = '', 
                     name = '', 

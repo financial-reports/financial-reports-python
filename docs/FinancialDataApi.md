@@ -9,13 +9,15 @@ Method | HTTP request | Description
 
 
 # **line_item_definitions_list**
-> PaginatedLineItemDefinitionList line_item_definitions_list(depth=depth, page=page, page_size=page_size, parent_code=parent_code, search=search, statement_type=statement_type)
+> PaginatedLineItemDefinitionList line_item_definitions_list(depth=depth, page=page, page_size=page_size, parent_code=parent_code, search=search, statement_type=statement_type, template=template)
 
 List Line Item Definitions
 
 Retrieve the full dictionary of standardized financial KPIs.
 
 Each definition describes one line item that may appear in extracted financial statements (Income Statement, Balance Sheet, Cash Flow Statement). Use the `depth` and `parent_code` fields to reconstruct the Capital IQ-style hierarchy.
+
+`templates` lists the KPI templates a line item is meaningful for (`industrial`, `bank`, `insurer`); filter with `?template=bank`. Industrial-only items are still served for banks and insurers, but do not mean the same thing there.
 
 **Access Level Required:** Requires **Standard Access (Level 1)**.
 
@@ -62,10 +64,11 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
     parent_code = 'parent_code_example' # str | Filter by parent line item code (e.g. 'gross_profit' returns its children). (optional)
     search = 'search_example' # str | A search term. (optional)
     statement_type = 'statement_type_example' # str | Filter by statement type (IS, BS, CFS, SUP).  * `IS` - Income Statement * `BS` - Balance Sheet * `CFS` - Cash Flow Statement * `SUP` - Supplemental / Ratio (optional)
+    template = 'template_example' # str | Filter to the line items meaningful for a KPI template (industrial, bank, insurer).  * `industrial` - industrial * `bank` - bank * `insurer` - insurer (optional)
 
     try:
         # List Line Item Definitions
-        api_response = await api_instance.line_item_definitions_list(depth=depth, page=page, page_size=page_size, parent_code=parent_code, search=search, statement_type=statement_type)
+        api_response = await api_instance.line_item_definitions_list(depth=depth, page=page, page_size=page_size, parent_code=parent_code, search=search, statement_type=statement_type, template=template)
         print("The response of FinancialDataApi->line_item_definitions_list:\n")
         pprint(api_response)
     except Exception as e:
@@ -85,6 +88,7 @@ Name | Type | Description  | Notes
  **parent_code** | **str**| Filter by parent line item code (e.g. &#39;gross_profit&#39; returns its children). | [optional] 
  **search** | **str**| A search term. | [optional] 
  **statement_type** | **str**| Filter by statement type (IS, BS, CFS, SUP).  * &#x60;IS&#x60; - Income Statement * &#x60;BS&#x60; - Balance Sheet * &#x60;CFS&#x60; - Cash Flow Statement * &#x60;SUP&#x60; - Supplemental / Ratio | [optional] 
+ **template** | **str**| Filter to the line items meaningful for a KPI template (industrial, bank, insurer).  * &#x60;industrial&#x60; - industrial * &#x60;bank&#x60; - bank * &#x60;insurer&#x60; - insurer | [optional] 
 
 ### Return type
 

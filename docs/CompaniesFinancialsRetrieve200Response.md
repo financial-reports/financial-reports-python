@@ -6,6 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **company_id** | **int** |  | 
+**template** | **str** | The company&#39;s KPI template. Banks and insurers also get their template&#39;s own line items; see &#x60;templates&#x60; on /api/line-item-definitions/ for which items are meaningful for it. | [optional] 
 **currency** | [**CompaniesFinancialsRetrieve200ResponseCurrency**](CompaniesFinancialsRetrieve200ResponseCurrency.md) |  | [optional] 
 **sources_masked** | **bool** |  | 
 **filters** | [**CompaniesFinancialsRetrieve200ResponseFilters**](CompaniesFinancialsRetrieve200ResponseFilters.md) |  | 

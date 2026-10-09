@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictBool, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from financial_reports_generated_client.models.companies_financials_retrieve200_response_currency import CompaniesFinancialsRetrieve200ResponseCurrency
 from financial_reports_generated_client.models.companies_financials_retrieve200_response_filters import CompaniesFinancialsRetrieve200ResponseFilters
@@ -33,6 +33,7 @@ class CompaniesFinancialsRetrieve200Response(BaseModel):
     CompaniesFinancialsRetrieve200Response
     """ # noqa: E501
     company_id: StrictInt
+    template: Optional[StrictStr] = Field(default=None, description="The company's KPI template. Banks and insurers also get their template's own line items; see `templates` on /api/line-item-definitions/ for which items are meaningful for it.")
     currency: Optional[CompaniesFinancialsRetrieve200ResponseCurrency] = None
     sources_masked: StrictBool
     filters: CompaniesFinancialsRetrieve200ResponseFilters
@@ -40,7 +41,17 @@ class CompaniesFinancialsRetrieve200Response(BaseModel):
     periods: List[CompaniesFinancialsRetrieve200ResponsePeriodsInner]
     notice: Optional[StrictStr] = None
     history_window: Optional[CompaniesFinancialsRetrieve200ResponseHistoryWindow] = None
-    __properties: ClassVar[List[str]] = ["company_id", "currency", "sources_masked", "filters", "period_count", "periods", "notice", "history_window"]
+    __properties: ClassVar[List[str]] = ["company_id", "template", "currency", "sources_masked", "filters", "period_count", "periods", "notice", "history_window"]
+
+    @field_validator('template')
+    def template_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['industrial', 'bank', 'insurer']):
+            raise ValueError("must be one of enum values ('industrial', 'bank', 'insurer')")
+        return value
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -114,6 +125,7 @@ class CompaniesFinancialsRetrieve200Response(BaseModel):
 
         _obj = cls.model_validate({
             "company_id": obj.get("company_id"),
+            "template": obj.get("template"),
             "currency": CompaniesFinancialsRetrieve200ResponseCurrency.from_dict(obj["currency"]) if obj.get("currency") is not None else None,
             "sources_masked": obj.get("sources_masked"),
             "filters": CompaniesFinancialsRetrieve200ResponseFilters.from_dict(obj["filters"]) if obj.get("filters") is not None else None,

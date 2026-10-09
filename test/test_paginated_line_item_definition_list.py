@@ -52,6 +52,9 @@ class TestPaginatedLineItemDefinitionList(unittest.TestCase):
                         description = '', 
                         aliases = [
                             ''
+                            ], 
+                        templates = [
+                            ''
                             ], )
                     ]
             )
@@ -70,6 +73,9 @@ class TestPaginatedLineItemDefinitionList(unittest.TestCase):
                         category = '', 
                         description = '', 
                         aliases = [
+                            ''
+                            ], 
+                        templates = [
                             ''
                             ], )
                     ],

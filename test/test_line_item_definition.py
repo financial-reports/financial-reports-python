@@ -47,6 +47,9 @@ class TestLineItemDefinition(unittest.TestCase):
                 description = '',
                 aliases = [
                     ''
+                    ],
+                templates = [
+                    ''
                     ]
             )
         else:
@@ -56,6 +59,9 @@ class TestLineItemDefinition(unittest.TestCase):
                 statement_type = 'IS',
                 statement_type_display = '',
                 aliases = [
+                    ''
+                    ],
+                templates = [
                     ''
                     ],
         )

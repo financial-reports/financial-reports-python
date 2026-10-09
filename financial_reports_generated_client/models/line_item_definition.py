@@ -40,7 +40,8 @@ class LineItemDefinition(BaseModel):
     category: Optional[Annotated[str, Field(strict=True, max_length=80)]] = Field(default=None, description="Optional grouping within a statement (e.g. 'Operating Expenses').")
     description: Optional[StrictStr] = Field(default=None, description="Definition of the KPI. Used in the extraction prompt.")
     aliases: List[StrictStr] = Field(description="Alternative labels this line item may appear under in source filings.")
-    __properties: ClassVar[List[str]] = ["code", "name", "statement_type", "statement_type_display", "depth", "parent_code", "sort_order", "category", "description", "aliases"]
+    templates: List[StrictStr] = Field(description="KPI templates this line item is meaningful for: `industrial`, `bank`, `insurer`. Industrial-only items (gross profit, current assets, ...) are still served for banks and insurers but do not mean the same thing there. A company's template is the `template` field of its financials.")
+    __properties: ClassVar[List[str]] = ["code", "name", "statement_type", "statement_type_display", "depth", "parent_code", "sort_order", "category", "description", "aliases", "templates"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -73,9 +74,11 @@ class LineItemDefinition(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
             "aliases",
+            "templates",
         ])
 
         _dict = self.model_dump(
@@ -109,7 +112,8 @@ class LineItemDefinition(BaseModel):
             "sort_order": obj.get("sort_order"),
             "category": obj.get("category"),
             "description": obj.get("description"),
-            "aliases": obj.get("aliases")
+            "aliases": obj.get("aliases"),
+            "templates": obj.get("templates")
         })
         return _obj
 
