@@ -29,7 +29,7 @@ Each statement carries `source_filing`: the filing the figures were read from, w
 
 Use the `depth` and `parent_code` fields on each line item to render the Capital IQ-style statement hierarchy.
 
-`value` and `raw_value` are exact **decimal strings**, not numbers - parse them with a decimal type. `raw_value` and `scale` come back `null` when the figure was computed rather than read off the page. `confidence` and `source_page` are reserved and are currently `null` on every line item; provenance is filing-level.
+`value` and `raw_value` are exact **decimal strings**, not numbers - parse them with a decimal type. `raw_value` and `scale` come back `null` when the figure was computed rather than read off the page. `source_page` is reserved and is currently `null` on every line item; provenance is filing-level. `confidence` is non-null only where the KPI verifier independently re-derived the figure and agreed - null means unjudged, not low-confidence.
 
 **Scope - this is not the bulk dataset.** This endpoint serves one selected statement per (fiscal year, period, statement type). The comparative statements themselves, restatements, the `validation_n_hard`/`validation_n_soft` quality flags, `derivation_method` and stable row ids are available only in the S3 `line_items/` parquet delivery, not here at any plan level. The `is_comparative` flag on each statement does tell you whether the selected figures were read from a later report's prior-year column.
 
