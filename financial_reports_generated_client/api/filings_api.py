@@ -328,6 +328,7 @@ class FilingsApi:
         file_size_min: Annotated[Optional[StrictInt], Field(description="Filter by minimum file size in bytes.")] = None,
         fiscal_period: Annotated[Optional[StrictStr], Field(description="Filter by fiscal period. Possible values: `FY` (Full Year), `Q1`, `Q2`, `Q3`, `Q4`, `H1` (First Half), `H2` (Second Half). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.")] = None,
         fiscal_year: Annotated[Optional[StrictInt], Field(description="Filter by fiscal year (e.g., `2024`). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.")] = None,
+        include_companions: Annotated[Optional[StrictBool], Field(description="Include companion data files in type and category filters. Companions are small machine-readable XBRL/XML/JSON files stored beside a report for financial extraction, typed like that report. Default false: type, types, category and categories return the reports only.")] = None,
         ingestion_mode: Annotated[Optional[StrictStr], Field(description="Filter by ingestion mode. Whether the filing was added to the platform promptly after publication. `REALTIME`: added within the source's normal publication delay (5 to 48 hours after `release_datetime`, depending on the source). `BACKFILLED`: everything else, including historical imports and new filings that reached the platform late, for example after a source outage. Set once when the filing is added and not recalculated afterwards.")] = None,
         language: Annotated[Optional[StrictStr], Field(description="Filter by a single filing language ISO 639-1 code (e.g., en).")] = None,
         languages: Annotated[Optional[StrictStr], Field(description="Filter by filing language ISO 639-1 code(s). Comma-separated for multiple values (e.g., en,de).")] = None,
@@ -397,6 +398,8 @@ class FilingsApi:
         :type fiscal_period: str
         :param fiscal_year: Filter by fiscal year (e.g., `2024`). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.
         :type fiscal_year: int
+        :param include_companions: Include companion data files in type and category filters. Companions are small machine-readable XBRL/XML/JSON files stored beside a report for financial extraction, typed like that report. Default false: type, types, category and categories return the reports only.
+        :type include_companions: bool
         :param ingestion_mode: Filter by ingestion mode. Whether the filing was added to the platform promptly after publication. `REALTIME`: added within the source's normal publication delay (5 to 48 hours after `release_datetime`, depending on the source). `BACKFILLED`: everything else, including historical imports and new filings that reached the platform late, for example after a source outage. Set once when the filing is added and not recalculated afterwards.
         :type ingestion_mode: str
         :param language: Filter by a single filing language ISO 639-1 code (e.g., en).
@@ -488,6 +491,7 @@ class FilingsApi:
             file_size_min=file_size_min,
             fiscal_period=fiscal_period,
             fiscal_year=fiscal_year,
+            include_companions=include_companions,
             ingestion_mode=ingestion_mode,
             language=language,
             languages=languages,
@@ -555,6 +559,7 @@ class FilingsApi:
         file_size_min: Annotated[Optional[StrictInt], Field(description="Filter by minimum file size in bytes.")] = None,
         fiscal_period: Annotated[Optional[StrictStr], Field(description="Filter by fiscal period. Possible values: `FY` (Full Year), `Q1`, `Q2`, `Q3`, `Q4`, `H1` (First Half), `H2` (Second Half). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.")] = None,
         fiscal_year: Annotated[Optional[StrictInt], Field(description="Filter by fiscal year (e.g., `2024`). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.")] = None,
+        include_companions: Annotated[Optional[StrictBool], Field(description="Include companion data files in type and category filters. Companions are small machine-readable XBRL/XML/JSON files stored beside a report for financial extraction, typed like that report. Default false: type, types, category and categories return the reports only.")] = None,
         ingestion_mode: Annotated[Optional[StrictStr], Field(description="Filter by ingestion mode. Whether the filing was added to the platform promptly after publication. `REALTIME`: added within the source's normal publication delay (5 to 48 hours after `release_datetime`, depending on the source). `BACKFILLED`: everything else, including historical imports and new filings that reached the platform late, for example after a source outage. Set once when the filing is added and not recalculated afterwards.")] = None,
         language: Annotated[Optional[StrictStr], Field(description="Filter by a single filing language ISO 639-1 code (e.g., en).")] = None,
         languages: Annotated[Optional[StrictStr], Field(description="Filter by filing language ISO 639-1 code(s). Comma-separated for multiple values (e.g., en,de).")] = None,
@@ -624,6 +629,8 @@ class FilingsApi:
         :type fiscal_period: str
         :param fiscal_year: Filter by fiscal year (e.g., `2024`). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.
         :type fiscal_year: int
+        :param include_companions: Include companion data files in type and category filters. Companions are small machine-readable XBRL/XML/JSON files stored beside a report for financial extraction, typed like that report. Default false: type, types, category and categories return the reports only.
+        :type include_companions: bool
         :param ingestion_mode: Filter by ingestion mode. Whether the filing was added to the platform promptly after publication. `REALTIME`: added within the source's normal publication delay (5 to 48 hours after `release_datetime`, depending on the source). `BACKFILLED`: everything else, including historical imports and new filings that reached the platform late, for example after a source outage. Set once when the filing is added and not recalculated afterwards.
         :type ingestion_mode: str
         :param language: Filter by a single filing language ISO 639-1 code (e.g., en).
@@ -715,6 +722,7 @@ class FilingsApi:
             file_size_min=file_size_min,
             fiscal_period=fiscal_period,
             fiscal_year=fiscal_year,
+            include_companions=include_companions,
             ingestion_mode=ingestion_mode,
             language=language,
             languages=languages,
@@ -782,6 +790,7 @@ class FilingsApi:
         file_size_min: Annotated[Optional[StrictInt], Field(description="Filter by minimum file size in bytes.")] = None,
         fiscal_period: Annotated[Optional[StrictStr], Field(description="Filter by fiscal period. Possible values: `FY` (Full Year), `Q1`, `Q2`, `Q3`, `Q4`, `H1` (First Half), `H2` (Second Half). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.")] = None,
         fiscal_year: Annotated[Optional[StrictInt], Field(description="Filter by fiscal year (e.g., `2024`). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.")] = None,
+        include_companions: Annotated[Optional[StrictBool], Field(description="Include companion data files in type and category filters. Companions are small machine-readable XBRL/XML/JSON files stored beside a report for financial extraction, typed like that report. Default false: type, types, category and categories return the reports only.")] = None,
         ingestion_mode: Annotated[Optional[StrictStr], Field(description="Filter by ingestion mode. Whether the filing was added to the platform promptly after publication. `REALTIME`: added within the source's normal publication delay (5 to 48 hours after `release_datetime`, depending on the source). `BACKFILLED`: everything else, including historical imports and new filings that reached the platform late, for example after a source outage. Set once when the filing is added and not recalculated afterwards.")] = None,
         language: Annotated[Optional[StrictStr], Field(description="Filter by a single filing language ISO 639-1 code (e.g., en).")] = None,
         languages: Annotated[Optional[StrictStr], Field(description="Filter by filing language ISO 639-1 code(s). Comma-separated for multiple values (e.g., en,de).")] = None,
@@ -851,6 +860,8 @@ class FilingsApi:
         :type fiscal_period: str
         :param fiscal_year: Filter by fiscal year (e.g., `2024`). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.
         :type fiscal_year: int
+        :param include_companions: Include companion data files in type and category filters. Companions are small machine-readable XBRL/XML/JSON files stored beside a report for financial extraction, typed like that report. Default false: type, types, category and categories return the reports only.
+        :type include_companions: bool
         :param ingestion_mode: Filter by ingestion mode. Whether the filing was added to the platform promptly after publication. `REALTIME`: added within the source's normal publication delay (5 to 48 hours after `release_datetime`, depending on the source). `BACKFILLED`: everything else, including historical imports and new filings that reached the platform late, for example after a source outage. Set once when the filing is added and not recalculated afterwards.
         :type ingestion_mode: str
         :param language: Filter by a single filing language ISO 639-1 code (e.g., en).
@@ -942,6 +953,7 @@ class FilingsApi:
             file_size_min=file_size_min,
             fiscal_period=fiscal_period,
             fiscal_year=fiscal_year,
+            include_companions=include_companions,
             ingestion_mode=ingestion_mode,
             language=language,
             languages=languages,
@@ -1004,6 +1016,7 @@ class FilingsApi:
         file_size_min,
         fiscal_period,
         fiscal_year,
+        include_companions,
         ingestion_mode,
         language,
         languages,
@@ -1119,6 +1132,10 @@ class FilingsApi:
         if fiscal_year is not None:
             
             _query_params.append(('fiscal_year', fiscal_year))
+            
+        if include_companions is not None:
+            
+            _query_params.append(('include_companions', include_companions))
             
         if ingestion_mode is not None:
             
