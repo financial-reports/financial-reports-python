@@ -82,7 +82,7 @@ class Company(BaseModel):
     headcount: Optional[StrictInt] = Field(description="Approximate number of employees.")
     contact_email: Optional[StrictStr] = Field(description="General contact email address.")
     ticker: Optional[StrictStr] = Field(description="Primary stock ticker symbol.")
-    local_company_id: StrictStr = Field(description="Local registration or jurisdiction-specific ID (e.g., HRB 24902, CIK 123456).")
+    local_company_id: Optional[StrictStr] = Field(description="Local registration or jurisdiction-specific ID (e.g., HRB 24902, CIK 123456).")
     shares_outstanding: Optional[StrictInt] = Field(description="The total number of a corporation's stock shares that have been authorized and issued.")
     designated_sponsor: List[DesignatedSponsor] = Field(description="Financial institutions that act as market makers for the company's stock.")
     listed_stock_exchange: List[ListedStockExchange] = Field(description="A list of stock exchanges where the company is listed.")
@@ -438,6 +438,11 @@ class Company(BaseModel):
         # and model_fields_set contains the field
         if self.ticker is None and "ticker" in self.model_fields_set:
             _dict['ticker'] = None
+
+        # set to None if local_company_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.local_company_id is None and "local_company_id" in self.model_fields_set:
+            _dict['local_company_id'] = None
 
         # set to None if shares_outstanding (nullable) is None
         # and model_fields_set contains the field
