@@ -18,6 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
+from datetime import date
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
@@ -36,7 +37,8 @@ class CompanyMinimal(BaseModel):
     sub_industry_code: Optional[StrictStr] = Field(description="ISIC classification code classifying the company.")
     oics_code: Optional[StrictStr] = Field(description="The company's primary OICS class code (public preview, OICS v0.3), e.g. `TC.SC.SEM.CHP`. Null when the company has no class under the current OICS version, including entity types that carry none (funds, shells, financing vehicles). The full label is the `oics` object on the full company representation.")
     country_code: StrictStr = Field(description="ISO 3166-1 alpha-2 country code of the company's primary registration or headquarters.")
-    __properties: ClassVar[List[str]] = ["id", "name", "tagline", "isins", "lei", "sub_industry_code", "oics_code", "country_code"]
+    date_public: Optional[date] = Field(description="Date this company record was last updated on the FinancialFilings platform. With `id`, it is the `date_public_cursor` of an incremental company sync.")
+    __properties: ClassVar[List[str]] = ["id", "name", "tagline", "isins", "lei", "sub_industry_code", "oics_code", "country_code", "date_public"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -76,6 +78,7 @@ class CompanyMinimal(BaseModel):
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
             "id",
@@ -86,6 +89,7 @@ class CompanyMinimal(BaseModel):
             "sub_industry_code",
             "oics_code",
             "country_code",
+            "date_public",
         ])
 
         _dict = self.model_dump(
@@ -102,6 +106,11 @@ class CompanyMinimal(BaseModel):
         # and model_fields_set contains the field
         if self.oics_code is None and "oics_code" in self.model_fields_set:
             _dict['oics_code'] = None
+
+        # set to None if date_public (nullable) is None
+        # and model_fields_set contains the field
+        if self.date_public is None and "date_public" in self.model_fields_set:
+            _dict['date_public'] = None
 
         return _dict
 
@@ -122,7 +131,8 @@ class CompanyMinimal(BaseModel):
             "lei": obj.get("lei"),
             "sub_industry_code": obj.get("sub_industry_code"),
             "oics_code": obj.get("oics_code"),
-            "country_code": obj.get("country_code")
+            "country_code": obj.get("country_code"),
+            "date_public": obj.get("date_public")
         })
         return _obj
 

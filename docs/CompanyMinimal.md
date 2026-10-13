@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **sub_industry_code** | **str** | ISIC classification code classifying the company. | [readonly] 
 **oics_code** | **str** | The company&#39;s primary OICS class code (public preview, OICS v0.3), e.g. &#x60;TC.SC.SEM.CHP&#x60;. Null when the company has no class under the current OICS version, including entity types that carry none (funds, shells, financing vehicles). The full label is the &#x60;oics&#x60; object on the full company representation. | [readonly] 
 **country_code** | **str** | ISO 3166-1 alpha-2 country code of the company&#39;s primary registration or headquarters. | [readonly] 
+**date_public** | **date** | Date this company record was last updated on the FinancialFilings platform. With &#x60;id&#x60;, it is the &#x60;date_public_cursor&#x60; of an incremental company sync. | [readonly] 
 
 ## Example
 

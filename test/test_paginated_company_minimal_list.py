@@ -50,7 +50,8 @@ class TestPaginatedCompanyMinimalList(unittest.TestCase):
                         lei = '', 
                         sub_industry_code = '', 
                         oics_code = '', 
-                        country_code = '', )
+                        country_code = '', 
+                        date_public = datetime.datetime.strptime('1975-12-30', '%Y-%m-%d').date(), )
                     ]
             )
         else:
@@ -67,7 +68,8 @@ class TestPaginatedCompanyMinimalList(unittest.TestCase):
                         lei = '', 
                         sub_industry_code = '', 
                         oics_code = '', 
-                        country_code = '', )
+                        country_code = '', 
+                        date_public = datetime.datetime.strptime('1975-12-30', '%Y-%m-%d').date(), )
                     ],
         )
         """
