@@ -134,7 +134,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **companies_list**
-> PaginatedCompanyMinimalList companies_list(cik=cik, countries=countries, date_public_after=date_public_after, date_public_before=date_public_before, industry=industry, industry_group=industry_group, isin=isin, lei=lei, listing_status=listing_status, on_watchlist=on_watchlist, ordering=ordering, page=page, page_size=page_size, search=search, sector=sector, sub_industry=sub_industry, ticker=ticker, view=view)
+> PaginatedCompanyMinimalList companies_list(cik=cik, countries=countries, date_public_after=date_public_after, date_public_before=date_public_before, industry=industry, industry_group=industry_group, isin=isin, lei=lei, listing_status=listing_status, oics_class=oics_class, oics_entity_type=oics_entity_type, oics_group=oics_group, oics_industry=oics_industry, oics_sector=oics_sector, on_watchlist=on_watchlist, ordering=ordering, page=page, page_size=page_size, search=search, sector=sector, sub_industry=sub_industry, ticker=ticker, view=view)
 
 List Companies
 
@@ -189,6 +189,11 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
     isin = 'isin_example' # str | Filter by Company ISIN. Case-insensitive. (optional)
     lei = 'lei_example' # str | Filter by Company Legal Entity Identifier (LEI). Case-insensitive. (optional)
     listing_status = 'listing_status_example' # str | Filter by exchange-listing state (LISTED, DELISTED, SUSPENDED, UNKNOWN).  * `LISTED` - Listed * `DELISTED` - Delisted * `SUSPENDED` - Suspended * `UNKNOWN` - Unknown (optional)
+    oics_class = 'oics_class_example' # str | Filter by OICS class code (e.g. `TC.SC.SEM.CHP`). Matches the company's primary class, not its secondaries. Public preview, OICS v0.3. (optional)
+    oics_entity_type = 'oics_entity_type_example' # str | Filter by OICS entity type: OPERATING, HOLDING, FUND, SPAC_SHELL, FINANCING_VEHICLE or PUBLIC_SECTOR. Public preview, OICS v0.3. (optional)
+    oics_group = 'oics_group_example' # str | Filter by OICS industry group code (e.g. `TC.SC`). Matches the company's primary class. Public preview, OICS v0.3. (optional)
+    oics_industry = 'oics_industry_example' # str | Filter by OICS industry code (e.g. `TC.SC.SEM`). Matches the company's primary class. Public preview, OICS v0.3. (optional)
+    oics_sector = 'oics_sector_example' # str | Filter by OICS sector code (e.g. `TC`). Matches the company's primary class. Public preview, OICS v0.3. (optional)
     on_watchlist = True # bool | Filter by companies on the user's watchlist. Use 'true' to see only watchlist companies, 'false' to exclude them. Omitting the parameter returns all companies. (optional)
     ordering = 'ordering_example' # str | Which field to use when ordering the results. Available fields: `id`, `name`, `date_ipo`, `year_founded`, `country_iso__name`, `date_public`, `relevance`. Prefix with '-' for descending order (e.g., `-name`).  `date_public` is the date the company record was last updated, as a Europe/Berlin calendar date. `-date_public` lists companies with NO date_public (NULL) FIRST, because descending sorts place NULLs first; combine it with `date_public_after` to exclude them.  When `search` or `ticker` is supplied and `ordering` is omitted, results are relevance-ranked (exact ticker match, then exact name, then name prefix, then fuzzy similarity, with filing volume as the tiebreak). `relevance` is only orderable alongside a `search` or `ticker` term; without one it is ignored. (optional)
     page = 56 # int | A page number within the paginated result set. (optional)
@@ -201,7 +206,7 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
 
     try:
         # List Companies
-        api_response = await api_instance.companies_list(cik=cik, countries=countries, date_public_after=date_public_after, date_public_before=date_public_before, industry=industry, industry_group=industry_group, isin=isin, lei=lei, listing_status=listing_status, on_watchlist=on_watchlist, ordering=ordering, page=page, page_size=page_size, search=search, sector=sector, sub_industry=sub_industry, ticker=ticker, view=view)
+        api_response = await api_instance.companies_list(cik=cik, countries=countries, date_public_after=date_public_after, date_public_before=date_public_before, industry=industry, industry_group=industry_group, isin=isin, lei=lei, listing_status=listing_status, oics_class=oics_class, oics_entity_type=oics_entity_type, oics_group=oics_group, oics_industry=oics_industry, oics_sector=oics_sector, on_watchlist=on_watchlist, ordering=ordering, page=page, page_size=page_size, search=search, sector=sector, sub_industry=sub_industry, ticker=ticker, view=view)
         print("The response of CompaniesApi->companies_list:\n")
         pprint(api_response)
     except Exception as e:
@@ -224,6 +229,11 @@ Name | Type | Description  | Notes
  **isin** | **str**| Filter by Company ISIN. Case-insensitive. | [optional] 
  **lei** | **str**| Filter by Company Legal Entity Identifier (LEI). Case-insensitive. | [optional] 
  **listing_status** | **str**| Filter by exchange-listing state (LISTED, DELISTED, SUSPENDED, UNKNOWN).  * &#x60;LISTED&#x60; - Listed * &#x60;DELISTED&#x60; - Delisted * &#x60;SUSPENDED&#x60; - Suspended * &#x60;UNKNOWN&#x60; - Unknown | [optional] 
+ **oics_class** | **str**| Filter by OICS class code (e.g. &#x60;TC.SC.SEM.CHP&#x60;). Matches the company&#39;s primary class, not its secondaries. Public preview, OICS v0.3. | [optional] 
+ **oics_entity_type** | **str**| Filter by OICS entity type: OPERATING, HOLDING, FUND, SPAC_SHELL, FINANCING_VEHICLE or PUBLIC_SECTOR. Public preview, OICS v0.3. | [optional] 
+ **oics_group** | **str**| Filter by OICS industry group code (e.g. &#x60;TC.SC&#x60;). Matches the company&#39;s primary class. Public preview, OICS v0.3. | [optional] 
+ **oics_industry** | **str**| Filter by OICS industry code (e.g. &#x60;TC.SC.SEM&#x60;). Matches the company&#39;s primary class. Public preview, OICS v0.3. | [optional] 
+ **oics_sector** | **str**| Filter by OICS sector code (e.g. &#x60;TC&#x60;). Matches the company&#39;s primary class. Public preview, OICS v0.3. | [optional] 
  **on_watchlist** | **bool**| Filter by companies on the user&#39;s watchlist. Use &#39;true&#39; to see only watchlist companies, &#39;false&#39; to exclude them. Omitting the parameter returns all companies. | [optional] 
  **ordering** | **str**| Which field to use when ordering the results. Available fields: &#x60;id&#x60;, &#x60;name&#x60;, &#x60;date_ipo&#x60;, &#x60;year_founded&#x60;, &#x60;country_iso__name&#x60;, &#x60;date_public&#x60;, &#x60;relevance&#x60;. Prefix with &#39;-&#39; for descending order (e.g., &#x60;-name&#x60;).  &#x60;date_public&#x60; is the date the company record was last updated, as a Europe/Berlin calendar date. &#x60;-date_public&#x60; lists companies with NO date_public (NULL) FIRST, because descending sorts place NULLs first; combine it with &#x60;date_public_after&#x60; to exclude them.  When &#x60;search&#x60; or &#x60;ticker&#x60; is supplied and &#x60;ordering&#x60; is omitted, results are relevance-ranked (exact ticker match, then exact name, then name prefix, then fuzzy similarity, with filing volume as the tiebreak). &#x60;relevance&#x60; is only orderable alongside a &#x60;search&#x60; or &#x60;ticker&#x60; term; without one it is ignored. | [optional] 
  **page** | **int**| A page number within the paginated result set. | [optional] 

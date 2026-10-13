@@ -23,6 +23,7 @@ from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, Strict
 from typing import Any, ClassVar, Dict, List, Optional
 from financial_reports_generated_client.models.company_listing import CompanyListing
 from financial_reports_generated_client.models.company_merged_into import CompanyMergedInto
+from financial_reports_generated_client.models.company_oics import CompanyOics
 from financial_reports_generated_client.models.designated_sponsor import DesignatedSponsor
 from financial_reports_generated_client.models.entity_legal_form import EntityLegalForm
 from financial_reports_generated_client.models.isic_class import ISICClass
@@ -57,6 +58,7 @@ class Company(BaseModel):
     industry_group: Optional[ISICDivision] = Field(description="Company's ISIC Division classification.")
     industry: Optional[ISICGroup] = Field(description="Company's ISIC Group classification.")
     sub_industry: Optional[ISICClass] = Field(description="Company's ISIC Class classification.")
+    oics: Optional[CompanyOics] = Field(description="The company's label under the Open Industry Classification Standard (OICS), an investor-oriented taxonomy served alongside ISIC. Public preview, OICS v0.3: codes and names can still change before v1.0. Null when the company has no label under the current OICS version.")
     ir_link: Optional[StrictStr] = Field(description="Link to the company's Investor Relations page.")
     homepage_link: Optional[StrictStr] = Field(description="Link to the company's main homepage.")
     logo: Optional[StrictStr] = Field(description="URL of the company's logo file.")
@@ -96,7 +98,7 @@ class Company(BaseModel):
     legal_zip_code: StrictStr = Field(description="The postal code of the registered legal address sourced from GLEIF.")
     is_merged: StrictBool = Field(description="True when this company record has been retired as a duplicate and replaced by the company in `merged_into`. Retired records are excluded from the company list but remain retrievable by id so an existing integration can discover the replacement rather than receiving a bare 404. See the merges feed at /companies/merges/.")
     merged_into: Optional[CompanyMergedInto] = Field(description="The canonical company that replaced this one, or null when this record is live. Repoint stored references to this id.")
-    __properties: ClassVar[List[str]] = ["id", "name", "tagline", "description", "description_last_updated", "isins", "isin_count", "primary_isin", "lei", "country_code", "address", "city", "zip_code", "sector", "industry_group", "industry", "sub_industry", "ir_link", "homepage_link", "logo", "date_public", "date_ipo", "main_stock_exchange", "is_listed", "listing_status", "delisting_date", "delisting_reason", "social_facebook", "social_instagram", "social_twitter", "social_linkedin", "social_youtube", "social_tiktok", "social_pinterest", "social_xing", "social_glassdoor", "year_founded", "corporate_video_id", "served_area", "headcount", "contact_email", "ticker", "local_company_id", "shares_outstanding", "designated_sponsor", "listed_stock_exchange", "stock_index", "listings", "legal_status", "legal_form", "jurisdiction", "legal_address", "legal_city", "legal_zip_code", "is_merged", "merged_into"]
+    __properties: ClassVar[List[str]] = ["id", "name", "tagline", "description", "description_last_updated", "isins", "isin_count", "primary_isin", "lei", "country_code", "address", "city", "zip_code", "sector", "industry_group", "industry", "sub_industry", "oics", "ir_link", "homepage_link", "logo", "date_public", "date_ipo", "main_stock_exchange", "is_listed", "listing_status", "delisting_date", "delisting_reason", "social_facebook", "social_instagram", "social_twitter", "social_linkedin", "social_youtube", "social_tiktok", "social_pinterest", "social_xing", "social_glassdoor", "year_founded", "corporate_video_id", "served_area", "headcount", "contact_email", "ticker", "local_company_id", "shares_outstanding", "designated_sponsor", "listed_stock_exchange", "stock_index", "listings", "legal_status", "legal_form", "jurisdiction", "legal_address", "legal_city", "legal_zip_code", "is_merged", "merged_into"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -184,6 +186,7 @@ class Company(BaseModel):
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
             "id",
@@ -203,6 +206,7 @@ class Company(BaseModel):
             "industry_group",
             "industry",
             "sub_industry",
+            "oics",
             "ir_link",
             "homepage_link",
             "logo",
@@ -261,6 +265,9 @@ class Company(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of sub_industry
         if self.sub_industry:
             _dict['sub_industry'] = self.sub_industry.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of oics
+        if self.oics:
+            _dict['oics'] = self.oics.to_dict()
         # override the default output from pydantic by calling `to_dict()` of each item in designated_sponsor (list)
         _items = []
         if self.designated_sponsor:
@@ -323,6 +330,11 @@ class Company(BaseModel):
         # and model_fields_set contains the field
         if self.sub_industry is None and "sub_industry" in self.model_fields_set:
             _dict['sub_industry'] = None
+
+        # set to None if oics (nullable) is None
+        # and model_fields_set contains the field
+        if self.oics is None and "oics" in self.model_fields_set:
+            _dict['oics'] = None
 
         # set to None if ir_link (nullable) is None
         # and model_fields_set contains the field
@@ -493,6 +505,7 @@ class Company(BaseModel):
             "industry_group": ISICDivision.from_dict(obj["industry_group"]) if obj.get("industry_group") is not None else None,
             "industry": ISICGroup.from_dict(obj["industry"]) if obj.get("industry") is not None else None,
             "sub_industry": ISICClass.from_dict(obj["sub_industry"]) if obj.get("sub_industry") is not None else None,
+            "oics": CompanyOics.from_dict(obj["oics"]) if obj.get("oics") is not None else None,
             "ir_link": obj.get("ir_link"),
             "homepage_link": obj.get("homepage_link"),
             "logo": obj.get("logo"),

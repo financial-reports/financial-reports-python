@@ -66,6 +66,23 @@ class TestCompany(unittest.TestCase):
                     code = '', 
                     name = '', 
                     industry = null, ),
+                oics = financial_reports_generated_client.models.company_oics.CompanyOics(
+                    code = '', 
+                    name = '', 
+                    sector = null, 
+                    group = null, 
+                    industry = null, 
+                    entity_type = '', 
+                    secondaries = [
+                        financial_reports_generated_client.models.oics_node_ref.OicsNodeRef(
+                            code = '', 
+                            name = '', )
+                        ], 
+                    basis = '', 
+                    taxonomy_version = '', 
+                    classified_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
+                    contested = True, 
+                    alternate = null, ),
                 ir_link = '',
                 homepage_link = '',
                 logo = '',
@@ -168,6 +185,23 @@ class TestCompany(unittest.TestCase):
                     code = '', 
                     name = '', 
                     industry = null, ),
+                oics = financial_reports_generated_client.models.company_oics.CompanyOics(
+                    code = '', 
+                    name = '', 
+                    sector = null, 
+                    group = null, 
+                    industry = null, 
+                    entity_type = '', 
+                    secondaries = [
+                        financial_reports_generated_client.models.oics_node_ref.OicsNodeRef(
+                            code = '', 
+                            name = '', )
+                        ], 
+                    basis = '', 
+                    taxonomy_version = '', 
+                    classified_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
+                    contested = True, 
+                    alternate = null, ),
                 ir_link = '',
                 homepage_link = '',
                 logo = '',

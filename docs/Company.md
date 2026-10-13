@@ -22,6 +22,7 @@ Name | Type | Description | Notes
 **industry_group** | [**ISICDivision**](ISICDivision.md) | Company&#39;s ISIC Division classification. | [readonly] 
 **industry** | [**ISICGroup**](ISICGroup.md) | Company&#39;s ISIC Group classification. | [readonly] 
 **sub_industry** | [**ISICClass**](ISICClass.md) | Company&#39;s ISIC Class classification. | [readonly] 
+**oics** | [**CompanyOics**](CompanyOics.md) | The company&#39;s label under the Open Industry Classification Standard (OICS), an investor-oriented taxonomy served alongside ISIC. Public preview, OICS v0.3: codes and names can still change before v1.0. Null when the company has no label under the current OICS version. | [readonly] 
 **ir_link** | **str** | Link to the company&#39;s Investor Relations page. | [readonly] 
 **homepage_link** | **str** | Link to the company&#39;s main homepage. | [readonly] 
 **logo** | **str** | URL of the company&#39;s logo file. | [readonly] 

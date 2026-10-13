@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "1.4.110"
+__version__ = "1.4.111"
 
 # Define package exports
 __all__ = [
@@ -61,6 +61,7 @@ __all__ = [
     "CompanyMerge",
     "CompanyMergedInto",
     "CompanyMinimal",
+    "CompanyOics",
     "CompanyResolveMatch",
     "CompanyResolveRequest",
     "CompanyResolveResponse",
@@ -93,6 +94,7 @@ __all__ = [
     "ListedStockExchange",
     "MarkdownNotFound",
     "NextAnnualReport",
+    "OicsNodeRef",
     "PaginatedCompanyMergeList",
     "PaginatedCompanyMinimalList",
     "PaginatedCountryList",
@@ -184,6 +186,7 @@ from financial_reports_generated_client.models.company_listing import CompanyLis
 from financial_reports_generated_client.models.company_merge import CompanyMerge as CompanyMerge
 from financial_reports_generated_client.models.company_merged_into import CompanyMergedInto as CompanyMergedInto
 from financial_reports_generated_client.models.company_minimal import CompanyMinimal as CompanyMinimal
+from financial_reports_generated_client.models.company_oics import CompanyOics as CompanyOics
 from financial_reports_generated_client.models.company_resolve_match import CompanyResolveMatch as CompanyResolveMatch
 from financial_reports_generated_client.models.company_resolve_request import CompanyResolveRequest as CompanyResolveRequest
 from financial_reports_generated_client.models.company_resolve_response import CompanyResolveResponse as CompanyResolveResponse
@@ -216,6 +219,7 @@ from financial_reports_generated_client.models.line_item_definition import LineI
 from financial_reports_generated_client.models.listed_stock_exchange import ListedStockExchange as ListedStockExchange
 from financial_reports_generated_client.models.markdown_not_found import MarkdownNotFound as MarkdownNotFound
 from financial_reports_generated_client.models.next_annual_report import NextAnnualReport as NextAnnualReport
+from financial_reports_generated_client.models.oics_node_ref import OicsNodeRef as OicsNodeRef
 from financial_reports_generated_client.models.paginated_company_merge_list import PaginatedCompanyMergeList as PaginatedCompanyMergeList
 from financial_reports_generated_client.models.paginated_company_minimal_list import PaginatedCompanyMinimalList as PaginatedCompanyMinimalList
 from financial_reports_generated_client.models.paginated_country_list import PaginatedCountryList as PaginatedCountryList

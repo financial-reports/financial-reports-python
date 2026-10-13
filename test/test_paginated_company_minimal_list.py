@@ -49,6 +49,7 @@ class TestPaginatedCompanyMinimalList(unittest.TestCase):
                             ], 
                         lei = '', 
                         sub_industry_code = '', 
+                        oics_code = '', 
                         country_code = '', )
                     ]
             )
@@ -65,6 +66,7 @@ class TestPaginatedCompanyMinimalList(unittest.TestCase):
                             ], 
                         lei = '', 
                         sub_industry_code = '', 
+                        oics_code = '', 
                         country_code = '', )
                     ],
         )

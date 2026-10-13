@@ -51,6 +51,7 @@ class TestFilingSummary(unittest.TestCase):
                         ], 
                     lei = '', 
                     sub_industry_code = '', 
+                    oics_code = '', 
                     country_code = '', ),
                 filing_type = financial_reports_generated_client.models.filing_type.FilingType(
                     id = 56, 
@@ -81,6 +82,7 @@ class TestFilingSummary(unittest.TestCase):
                         ], 
                     lei = '', 
                     sub_industry_code = '', 
+                    oics_code = '', 
                     country_code = '', ),
                 filing_type = financial_reports_generated_client.models.filing_type.FilingType(
                     id = 56, 

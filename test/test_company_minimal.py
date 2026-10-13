@@ -44,6 +44,7 @@ class TestCompanyMinimal(unittest.TestCase):
                     ],
                 lei = '',
                 sub_industry_code = '',
+                oics_code = '',
                 country_code = ''
             )
         else:
@@ -56,6 +57,7 @@ class TestCompanyMinimal(unittest.TestCase):
                     ],
                 lei = '',
                 sub_industry_code = '',
+                oics_code = '',
                 country_code = '',
         )
         """
