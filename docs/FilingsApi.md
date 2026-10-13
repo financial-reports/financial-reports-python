@@ -284,7 +284,7 @@ Retrieve Filing Markdown
 ---
 Retrieve the raw processed content of a single filing in Markdown format.
 
-**Large filings.** An annual report can run to several hundred thousand tokens. Every response carries `X-Total-Chars`, the full document's length in characters. Pass `offset` and/or `limit` (characters) to read one window instead of the whole document; while characters remain after the window, the response also carries `X-Next-Offset`. To find the part you need first, use `GET /filings/{id}/markdown/search/?q=`. Each call, whole or windowed, is billed as one Markdown request.
+**Large filings.** An annual report can run to several hundred thousand tokens. Every response carries `X-Total-Chars`, the full document's length in characters. Pass `offset` and/or `limit` (characters) to read one window instead of the whole document; while characters remain after the window, the response also carries `X-Next-Offset`. To find the part you need first, use `GET /filings/{id}/markdown/search/?q=`. Each call, whole or windowed, is billed as one Markdown request. Through the MCP server, which pages large filings in chunks, a filing's Markdown is billed once per day.
 
 ### Example
 

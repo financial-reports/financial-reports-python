@@ -15,10 +15,11 @@
 """  # noqa: E501
 
 
-__version__ = "1.4.108"
+__version__ = "1.4.109"
 
 # Define package exports
 __all__ = [
+    "AccountApi",
     "AgentAccountApi",
     "CompaniesApi",
     "CountriesApi",
@@ -137,6 +138,7 @@ __all__ = [
 ]
 
 # import apis into sdk package
+from financial_reports_generated_client.api.account_api import AccountApi as AccountApi
 from financial_reports_generated_client.api.agent_account_api import AgentAccountApi as AgentAccountApi
 from financial_reports_generated_client.api.companies_api import CompaniesApi as CompaniesApi
 from financial_reports_generated_client.api.countries_api import CountriesApi as CountriesApi
