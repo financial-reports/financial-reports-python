@@ -151,7 +151,21 @@ class TestCompany(unittest.TestCase):
                 is_merged = True,
                 merged_into = financial_reports_generated_client.models.company_merged_into.CompanyMergedInto(
                     id = 56, 
-                    name = '', )
+                    name = '', ),
+                predecessors = [
+                    financial_reports_generated_client.models.company_succession_link.CompanySuccessionLink(
+                        id = 56, 
+                        name = '', 
+                        kind = null, 
+                        effective_date = datetime.datetime.strptime('1975-12-30', '%Y-%m-%d').date(), )
+                    ],
+                successors = [
+                    financial_reports_generated_client.models.company_succession_link.CompanySuccessionLink(
+                        id = 56, 
+                        name = '', 
+                        kind = null, 
+                        effective_date = datetime.datetime.strptime('1975-12-30', '%Y-%m-%d').date(), )
+                    ]
             )
         else:
             return Company(
@@ -271,6 +285,20 @@ class TestCompany(unittest.TestCase):
                 merged_into = financial_reports_generated_client.models.company_merged_into.CompanyMergedInto(
                     id = 56, 
                     name = '', ),
+                predecessors = [
+                    financial_reports_generated_client.models.company_succession_link.CompanySuccessionLink(
+                        id = 56, 
+                        name = '', 
+                        kind = null, 
+                        effective_date = datetime.datetime.strptime('1975-12-30', '%Y-%m-%d').date(), )
+                    ],
+                successors = [
+                    financial_reports_generated_client.models.company_succession_link.CompanySuccessionLink(
+                        id = 56, 
+                        name = '', 
+                        kind = null, 
+                        effective_date = datetime.datetime.strptime('1975-12-30', '%Y-%m-%d').date(), )
+                    ],
         )
         """
 

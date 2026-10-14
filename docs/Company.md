@@ -62,6 +62,8 @@ Name | Type | Description | Notes
 **legal_zip_code** | **str** | The postal code of the registered legal address sourced from GLEIF. | [readonly] 
 **is_merged** | **bool** | True when this company record has been retired as a duplicate and replaced by the company in &#x60;merged_into&#x60;. Retired records are excluded from the company list but remain retrievable by id so an existing integration can discover the replacement rather than receiving a bare 404. See the merges feed at /companies/merges/. | [readonly] 
 **merged_into** | [**CompanyMergedInto**](CompanyMergedInto.md) | The canonical company that replaced this one, or null when this record is live. Repoint stored references to this id. | [readonly] 
+**predecessors** | [**List[CompanySuccessionLink]**](CompanySuccessionLink.md) | Earlier issuers this company succeeded, e.g. the old parent before a holding-company reorganization. Each keeps the filings it issued, so the history before the change is under the predecessor&#39;s id. Empty when none is recorded. | [readonly] 
+**successors** | [**List[CompanySuccessionLink]**](CompanySuccessionLink.md) | Issuers that took over from this company, e.g. a new holding company that now carries the ticker. Filings after the change are under the successor&#39;s id. Empty when none is recorded. | [readonly] 
 
 ## Example
 

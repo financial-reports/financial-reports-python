@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "1.4.113"
+__version__ = "1.4.114"
 
 # Define package exports
 __all__ = [
@@ -69,6 +69,7 @@ __all__ = [
     "CompanyResolveStatusEnum",
     "CompanyResolveSummary",
     "CompanyResolveViaEnum",
+    "CompanySuccessionLink",
     "Country",
     "DesignatedSponsor",
     "EntityLegalForm",
@@ -89,6 +90,7 @@ __all__ = [
     "ISIN",
     "IngestionModeEnum",
     "Jurisdiction",
+    "KindEnum",
     "Language",
     "LineItemDefinition",
     "ListedStockExchange",
@@ -194,6 +196,7 @@ from financial_reports_generated_client.models.company_resolve_result import Com
 from financial_reports_generated_client.models.company_resolve_status_enum import CompanyResolveStatusEnum as CompanyResolveStatusEnum
 from financial_reports_generated_client.models.company_resolve_summary import CompanyResolveSummary as CompanyResolveSummary
 from financial_reports_generated_client.models.company_resolve_via_enum import CompanyResolveViaEnum as CompanyResolveViaEnum
+from financial_reports_generated_client.models.company_succession_link import CompanySuccessionLink as CompanySuccessionLink
 from financial_reports_generated_client.models.country import Country as Country
 from financial_reports_generated_client.models.designated_sponsor import DesignatedSponsor as DesignatedSponsor
 from financial_reports_generated_client.models.entity_legal_form import EntityLegalForm as EntityLegalForm
@@ -214,6 +217,7 @@ from financial_reports_generated_client.models.isic_section import ISICSection a
 from financial_reports_generated_client.models.isin import ISIN as ISIN
 from financial_reports_generated_client.models.ingestion_mode_enum import IngestionModeEnum as IngestionModeEnum
 from financial_reports_generated_client.models.jurisdiction import Jurisdiction as Jurisdiction
+from financial_reports_generated_client.models.kind_enum import KindEnum as KindEnum
 from financial_reports_generated_client.models.language import Language as Language
 from financial_reports_generated_client.models.line_item_definition import LineItemDefinition as LineItemDefinition
 from financial_reports_generated_client.models.listed_stock_exchange import ListedStockExchange as ListedStockExchange
