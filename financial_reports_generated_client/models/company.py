@@ -65,7 +65,7 @@ class Company(BaseModel):
     logo: Optional[StrictStr] = Field(description="URL of the company's logo file.")
     date_public: Optional[date] = Field(description="Date this company record was last updated on the FinancialFilings platform. This is NOT the IPO date — see `date_ipo` instead.")
     date_ipo: Optional[date] = Field(description="Date of the company's Initial Public Offering (IPO). Returns null when the IPO date is unknown.")
-    main_stock_exchange: Optional[StrictStr] = Field(description="Primary stock exchange where the company is listed.")
+    main_stock_exchange: Optional[StrictStr] = Field(description="URL of the company's listing page on its main stock exchange, where known; empty for most companies. Not a MIC: exchange codes are in `listings`.")
     is_listed: Optional[StrictBool] = Field(description="Indicates if the company is currently publicly listed.")
     listing_status: StrictStr = Field(description="Canonical exchange-listing state. One of: LISTED, DELISTED, SUSPENDED, UNKNOWN. The boolean `is_listed` is derived from this (False only when DELISTED).")
     delisting_date: Optional[date] = Field(description="Date the company was delisted, if known. Null while listed.")

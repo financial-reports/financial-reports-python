@@ -28,7 +28,7 @@ Name | Type | Description | Notes
 **logo** | **str** | URL of the company&#39;s logo file. | [readonly] 
 **date_public** | **date** | Date this company record was last updated on the FinancialFilings platform. This is NOT the IPO date — see &#x60;date_ipo&#x60; instead. | [readonly] 
 **date_ipo** | **date** | Date of the company&#39;s Initial Public Offering (IPO). Returns null when the IPO date is unknown. | [readonly] 
-**main_stock_exchange** | **str** | Primary stock exchange where the company is listed. | [readonly] 
+**main_stock_exchange** | **str** | URL of the company&#39;s listing page on its main stock exchange, where known; empty for most companies. Not a MIC: exchange codes are in &#x60;listings&#x60;. | [readonly] 
 **is_listed** | **bool** | Indicates if the company is currently publicly listed. | [readonly] 
 **listing_status** | **str** | Canonical exchange-listing state. One of: LISTED, DELISTED, SUSPENDED, UNKNOWN. The boolean &#x60;is_listed&#x60; is derived from this (False only when DELISTED). | [readonly] 
 **delisting_date** | **date** | Date the company was delisted, if known. Null while listed. | [readonly] 
