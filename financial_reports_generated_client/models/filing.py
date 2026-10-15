@@ -37,23 +37,23 @@ class Filing(BaseModel):
     """
     Filing
     """ # noqa: E501
-    id: StrictInt
-    company: CompanyMinimal
-    filing_type: FilingType
-    language: Language
+    id: StrictInt = Field(description="Unique identifier for the filing.")
+    company: CompanyMinimal = Field(description="The company that filed it, in the company summary shape.")
+    filing_type: FilingType = Field(description="What kind of document it is, e.g. an annual report.")
+    language: Language = Field(description="The document's language.")
     filing_date: date = Field(description="The official date of the filing (soon to be deprecated).")
     title: Optional[Annotated[str, Field(strict=True, max_length=4000)]] = Field(default=None, description="Optional title for the filing")
     added_to_platform: datetime = Field(description="Date and time when the filing was added to our platform")
     updated_date: datetime = Field(description="The date and time this filing record was last modified.")
     dissemination_datetime: Optional[datetime] = Field(default=None, description="Time the document was released to the public and sent to the authority")
     release_datetime: Optional[datetime] = Field(default=None, description="Time the document was published on the authority page")
-    source: Optional[Source]
+    source: Optional[Source] = Field(description="The authority that published the filing, under a generic public label. Use its `id` to filter with `?source=`.")
     document: Optional[StrictStr] = Field(description="Direct link to our hosted copy of the original filing document or package (e.g. PDF/ZIP). Not signed and does not expire; anyone holding the link can download the file. Returns 404 if the filing is later removed or its document replaced.")
     proxy_url: Optional[StrictStr] = Field(description="Browser-renderable main document: for ZIP packages, a link that extracts and serves the main document; for every other format, the same link as the original document.")
     viewer_url: Optional[StrictStr] = Field(description="URL to view the filing in the interactive web platform.")
     file_extension: Optional[Annotated[str, Field(strict=True, max_length=10)]] = Field(default=None, description="File extension (e.g., PDF, HTML).")
-    file_size: Optional[Annotated[int, Field(le=2147483647, strict=True, ge=0)]] = Field(default=None, description="File size in bytes. Stores locally to avoid storage backend hits.")
-    markdown_url: Optional[StrictStr]
+    file_size: Optional[Annotated[int, Field(le=2147483647, strict=True, ge=0)]] = Field(default=None, description="File size in bytes.")
+    markdown_url: Optional[StrictStr] = Field(description="API link to the filing's full text as Markdown. Null until a Markdown version is available (see `processing_status`).")
     processing_status: Optional[ProcessingStatusEnum] = Field(default=None, description="The lifecycle status of the raw document to markdown conversion.  * `PENDING` - Pending * `QUEUED` - Queued * `PROCESSING` - Processing * `COMPLETED` - Completed * `FAILED` - Failed * `SKIPPED` - Skipped")
     filing_type_confidence: Optional[Union[StrictFloat, StrictInt]] = Field(description="Confidence score (0.0–1.0) assigned by the automated classification system for the filing type.")
     filing_type_reasoning: Optional[StrictStr] = Field(description="Step-by-step rationale produced by the automated classification system for the assigned filing type. Indicative only — not manually reviewed.")

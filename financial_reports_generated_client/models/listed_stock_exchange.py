@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
 from typing_extensions import Self
@@ -28,10 +28,10 @@ class ListedStockExchange(BaseModel):
     """
     ListedStockExchange
     """ # noqa: E501
-    id: StrictInt
-    name: StrictStr
-    ticker: StrictStr
-    website: StrictStr
+    id: StrictInt = Field(description="Unique identifier for the exchange.")
+    name: StrictStr = Field(description="Name of the exchange.")
+    ticker: StrictStr = Field(description="Short code of the exchange.")
+    website: StrictStr = Field(description="Website of the exchange.")
     __properties: ClassVar[List[str]] = ["id", "name", "ticker", "website"]
 
     model_config = ConfigDict(

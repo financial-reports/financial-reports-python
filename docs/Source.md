@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **int** |  | [readonly] 
+**id** | **int** | Unique identifier for the source. Filter filings with &#x60;?source&#x3D;&lt;id&gt;&#x60;. | [readonly] 
 **name** | **str** | Generic label identifying the regional authority for this data source. | [readonly] 
 **url** | **str** | Homepage URL for the data source, when available. | [readonly] 
 **description** | **str** | Description of the data source. | [readonly] 

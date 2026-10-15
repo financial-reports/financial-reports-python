@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
 from typing_extensions import Self
@@ -28,8 +28,8 @@ class DesignatedSponsor(BaseModel):
     """
     DesignatedSponsor
     """ # noqa: E501
-    id: StrictInt
-    name: StrictStr
+    id: StrictInt = Field(description="Unique identifier for the sponsor.")
+    name: StrictStr = Field(description="Name of the sponsoring institution.")
     __properties: ClassVar[List[str]] = ["id", "name"]
 
     model_config = ConfigDict(

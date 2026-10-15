@@ -28,7 +28,7 @@ class FilingCategory(BaseModel):
     """
     FilingCategory
     """ # noqa: E501
-    id: StrictInt
+    id: StrictInt = Field(description="Unique identifier for the disclosure category.")
     name: StrictStr = Field(description="Name of the disclosure category.")
     sort_order: StrictInt = Field(description="Order priority for display.")
     __properties: ClassVar[List[str]] = ["id", "name", "sort_order"]

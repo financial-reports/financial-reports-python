@@ -5,10 +5,10 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **int** |  | [readonly] 
-**name** | **str** |  | [readonly] 
-**ticker** | **str** |  | [readonly] 
-**isin** | **str** |  | [readonly] 
+**id** | **int** | Unique identifier for the index. | [readonly] 
+**name** | **str** | Name of the index. | [readonly] 
+**ticker** | **str** | Ticker of the index. | [readonly] 
+**isin** | **str** | ISIN of the index. | [readonly] 
 
 ## Example
 

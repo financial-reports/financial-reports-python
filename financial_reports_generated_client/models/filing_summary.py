@@ -34,17 +34,17 @@ class FilingSummary(BaseModel):
     """
     FilingSummary
     """ # noqa: E501
-    id: StrictInt
+    id: StrictInt = Field(description="Unique identifier for the filing.")
     title: Optional[Annotated[str, Field(strict=True, max_length=4000)]] = Field(default=None, description="Optional title for the filing")
     release_datetime: Optional[datetime] = Field(default=None, description="Time the document was published on the authority page")
     document_url: Optional[StrictStr] = Field(description="Direct link to our hosted copy of the original filing document or package (e.g. PDF/ZIP). Not signed and does not expire; anyone holding the link can download the file. Returns 404 if the filing is later removed or its document replaced.")
     proxy_url: Optional[StrictStr] = Field(description="Browser-renderable main document: for ZIP packages, a link that extracts and serves the main document; for every other format, the same link as the original document.")
     viewer_url: Optional[StrictStr] = Field(description="URL to view the filing in the interactive web platform.")
-    company: CompanyMinimal
-    filing_type: FilingType
+    company: CompanyMinimal = Field(description="The company that filed it, in the company summary shape.")
+    filing_type: FilingType = Field(description="What kind of document it is, e.g. an annual report.")
     processing_status: Optional[ProcessingStatusEnum] = Field(default=None, description="The lifecycle status of the raw document to markdown conversion.  * `PENDING` - Pending * `QUEUED` - Queued * `PROCESSING` - Processing * `COMPLETED` - Completed * `FAILED` - Failed * `SKIPPED` - Skipped")
     file_extension: Optional[Annotated[str, Field(strict=True, max_length=10)]] = Field(default=None, description="File extension (e.g., PDF, HTML).")
-    file_size: Optional[Annotated[int, Field(le=2147483647, strict=True, ge=0)]] = Field(default=None, description="File size in bytes. Stores locally to avoid storage backend hits.")
+    file_size: Optional[Annotated[int, Field(le=2147483647, strict=True, ge=0)]] = Field(default=None, description="File size in bytes.")
     ingestion_mode: IngestionModeEnum = Field(description="Whether the filing was added to the platform promptly after publication. `REALTIME`: added within the source's normal publication delay (5 to 48 hours after `release_datetime`, depending on the source). `BACKFILLED`: everything else, including historical imports and new filings that reached the platform late, for example after a source outage. Set once when the filing is added and not recalculated afterwards.  * `REALTIME` - Realtime * `BACKFILLED` - Backfilled")
     source_url: Optional[StrictStr] = Field(description="Original public link for this filing at the source authority. Null when unavailable, for anonymised sources, or when the account does not have source identities unlocked.")
     source_filing_type: Optional[StrictStr] = Field(description="The source authority's own classification label, verbatim. Null when the source publishes no label, it was not captured, or the source is anonymised. Not gated on source identities.")

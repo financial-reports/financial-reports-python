@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **int** |  | [readonly] 
+**id** | **int** | Unique identifier for the language. | [readonly] 
 **code** | **str** | ISO 639-1 language code (lowercase). | [readonly] 
 **name** | **str** | Name of the language. | [readonly] 
 

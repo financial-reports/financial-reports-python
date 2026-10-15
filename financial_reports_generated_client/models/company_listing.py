@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
@@ -28,12 +28,12 @@ class CompanyListing(BaseModel):
     """
     Inline schema type for the curated `listings[]` array on CompanySerializer.  These 6 fields are what ``CompanySerializer.get_listings`` returns — a de-duplicated, equity-only subset of ``SecurityListing`` rows.  Using an explicit serializer here (rather than ``SecurityListingSerializer``) keeps the OpenAPI contract tight and avoids advertising the 11-field full model shape that includes ``company``, ``market_sector``, etc.
     """ # noqa: E501
-    mic: Optional[StrictStr]
-    ticker: StrictStr
-    exchange_name: Optional[StrictStr]
-    exch_code: Optional[StrictStr]
-    security_type: Optional[StrictStr]
-    figi: Optional[StrictStr]
+    mic: Optional[StrictStr] = Field(description="ISO 10383 Market Identifier Code of the venue.")
+    ticker: StrictStr = Field(description="Ticker on that venue.")
+    exchange_name: Optional[StrictStr] = Field(description="Name of the venue.")
+    exch_code: Optional[StrictStr] = Field(description="Short exchange code, e.g. `GY` for Xetra.")
+    security_type: Optional[StrictStr] = Field(description="Security type, e.g. `Common Stock`.")
+    figi: Optional[StrictStr] = Field(description="Financial Instrument Global Identifier (FIGI) of this listing.")
     __properties: ClassVar[List[str]] = ["mic", "ticker", "exchange_name", "exch_code", "security_type", "figi"]
 
     model_config = ConfigDict(

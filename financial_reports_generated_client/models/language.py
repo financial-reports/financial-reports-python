@@ -28,7 +28,7 @@ class Language(BaseModel):
     """
     Language
     """ # noqa: E501
-    id: StrictInt
+    id: StrictInt = Field(description="Unique identifier for the language.")
     code: StrictStr = Field(description="ISO 639-1 language code (lowercase).")
     name: StrictStr = Field(description="Name of the language.")
     __properties: ClassVar[List[str]] = ["id", "code", "name"]

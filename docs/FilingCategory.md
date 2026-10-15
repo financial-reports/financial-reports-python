@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **int** |  | [readonly] 
+**id** | **int** | Unique identifier for the disclosure category. | [readonly] 
 **name** | **str** | Name of the disclosure category. | [readonly] 
 **sort_order** | **int** | Order priority for display. | [readonly] 
 

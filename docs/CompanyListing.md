@@ -6,12 +6,12 @@ Inline schema type for the curated `listings[]` array on CompanySerializer.  The
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**mic** | **str** |  | 
-**ticker** | **str** |  | 
-**exchange_name** | **str** |  | 
-**exch_code** | **str** |  | 
-**security_type** | **str** |  | 
-**figi** | **str** |  | 
+**mic** | **str** | ISO 10383 Market Identifier Code of the venue. | 
+**ticker** | **str** | Ticker on that venue. | 
+**exchange_name** | **str** | Name of the venue. | 
+**exch_code** | **str** | Short exchange code, e.g. &#x60;GY&#x60; for Xetra. | 
+**security_type** | **str** | Security type, e.g. &#x60;Common Stock&#x60;. | 
+**figi** | **str** | Financial Instrument Global Identifier (FIGI) of this listing. | 
 
 ## Example
 

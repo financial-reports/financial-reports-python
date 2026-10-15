@@ -5,8 +5,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **int** |  | [readonly] 
-**name** | **str** |  | [readonly] 
+**id** | **int** | Unique identifier for the sponsor. | [readonly] 
+**name** | **str** | Name of the sponsoring institution. | [readonly] 
 
 ## Example
 

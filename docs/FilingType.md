@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **int** |  | [readonly] 
+**id** | **int** | Unique identifier for the filing type. Filter filings with &#x60;?filing_type&#x3D;&lt;id&gt;&#x60;. | [readonly] 
 **code** | **str** | Unique code identifying the filing type. | [readonly] 
 **name** | **str** | Human-readable name of the filing type. | [readonly] 
 **description** | **str** | Detailed description of the filing type. | [readonly] 

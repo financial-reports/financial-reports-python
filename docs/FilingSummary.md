@@ -5,17 +5,17 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **int** |  | [readonly] 
+**id** | **int** | Unique identifier for the filing. | [readonly] 
 **title** | **str** | Optional title for the filing | [optional] 
 **release_datetime** | **datetime** | Time the document was published on the authority page | [optional] 
 **document_url** | **str** | Direct link to our hosted copy of the original filing document or package (e.g. PDF/ZIP). Not signed and does not expire; anyone holding the link can download the file. Returns 404 if the filing is later removed or its document replaced. | [readonly] 
 **proxy_url** | **str** | Browser-renderable main document: for ZIP packages, a link that extracts and serves the main document; for every other format, the same link as the original document. | [readonly] 
 **viewer_url** | **str** | URL to view the filing in the interactive web platform. | [readonly] 
-**company** | [**CompanyMinimal**](CompanyMinimal.md) |  | [readonly] 
-**filing_type** | [**FilingType**](FilingType.md) |  | [readonly] 
+**company** | [**CompanyMinimal**](CompanyMinimal.md) | The company that filed it, in the company summary shape. | [readonly] 
+**filing_type** | [**FilingType**](FilingType.md) | What kind of document it is, e.g. an annual report. | [readonly] 
 **processing_status** | [**ProcessingStatusEnum**](ProcessingStatusEnum.md) | The lifecycle status of the raw document to markdown conversion.  * &#x60;PENDING&#x60; - Pending * &#x60;QUEUED&#x60; - Queued * &#x60;PROCESSING&#x60; - Processing * &#x60;COMPLETED&#x60; - Completed * &#x60;FAILED&#x60; - Failed * &#x60;SKIPPED&#x60; - Skipped | [optional] 
 **file_extension** | **str** | File extension (e.g., PDF, HTML). | [optional] 
-**file_size** | **int** | File size in bytes. Stores locally to avoid storage backend hits. | [optional] 
+**file_size** | **int** | File size in bytes. | [optional] 
 **ingestion_mode** | [**IngestionModeEnum**](IngestionModeEnum.md) | Whether the filing was added to the platform promptly after publication. &#x60;REALTIME&#x60;: added within the source&#39;s normal publication delay (5 to 48 hours after &#x60;release_datetime&#x60;, depending on the source). &#x60;BACKFILLED&#x60;: everything else, including historical imports and new filings that reached the platform late, for example after a source outage. Set once when the filing is added and not recalculated afterwards.  * &#x60;REALTIME&#x60; - Realtime * &#x60;BACKFILLED&#x60; - Backfilled | [readonly] 
 **source_url** | **str** | Original public link for this filing at the source authority. Null when unavailable, for anonymised sources, or when the account does not have source identities unlocked. | [readonly] 
 **source_filing_type** | **str** | The source authority&#39;s own classification label, verbatim. Null when the source publishes no label, it was not captured, or the source is anonymised. Not gated on source identities. | [readonly] 

@@ -28,7 +28,7 @@ class Source(BaseModel):
     """
     Source
     """ # noqa: E501
-    id: StrictInt
+    id: StrictInt = Field(description="Unique identifier for the source. Filter filings with `?source=<id>`.")
     name: StrictStr = Field(description="Generic label identifying the regional authority for this data source.")
     url: Optional[StrictStr] = Field(description="Homepage URL for the data source, when available.")
     description: StrictStr = Field(description="Description of the data source.")

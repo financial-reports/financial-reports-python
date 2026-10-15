@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
 from typing_extensions import Self
@@ -28,10 +28,10 @@ class StockIndex(BaseModel):
     """
     StockIndex
     """ # noqa: E501
-    id: StrictInt
-    name: StrictStr
-    ticker: StrictStr
-    isin: StrictStr
+    id: StrictInt = Field(description="Unique identifier for the index.")
+    name: StrictStr = Field(description="Name of the index.")
+    ticker: StrictStr = Field(description="Ticker of the index.")
+    isin: StrictStr = Field(description="ISIN of the index.")
     __properties: ClassVar[List[str]] = ["id", "name", "ticker", "isin"]
 
     model_config = ConfigDict(

@@ -5,10 +5,10 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **int** |  | [readonly] 
-**name** | **str** |  | [readonly] 
-**ticker** | **str** |  | [readonly] 
-**website** | **str** |  | [readonly] 
+**id** | **int** | Unique identifier for the exchange. | [readonly] 
+**name** | **str** | Name of the exchange. | [readonly] 
+**ticker** | **str** | Short code of the exchange. | [readonly] 
+**website** | **str** | Website of the exchange. | [readonly] 
 
 ## Example
 

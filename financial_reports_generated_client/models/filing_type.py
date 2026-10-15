@@ -29,7 +29,7 @@ class FilingType(BaseModel):
     """
     FilingType
     """ # noqa: E501
-    id: StrictInt
+    id: StrictInt = Field(description="Unique identifier for the filing type. Filter filings with `?filing_type=<id>`.")
     code: StrictStr = Field(description="Unique code identifying the filing type.")
     name: StrictStr = Field(description="Human-readable name of the filing type.")
     description: StrictStr = Field(description="Detailed description of the filing type.")
