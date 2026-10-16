@@ -34,6 +34,13 @@ class TestAgentAccountApi(unittest.IsolatedAsyncioTestCase):
         """
         pass
 
+    async def test_agent_key_claim(self) -> None:
+        """Test case for agent_key_claim
+
+        Collect an existing account's key once its owner approves
+        """
+        pass
+
     async def test_agent_key_rotate(self) -> None:
         """Test case for agent_key_rotate
 

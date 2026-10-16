@@ -14,6 +14,7 @@
 """  # noqa: E501
 
 # import models into model package
+from financial_reports_generated_client.models.agent_key_claim_request import AgentKeyClaimRequest
 from financial_reports_generated_client.models.agent_signup_request import AgentSignupRequest
 from financial_reports_generated_client.models.bulk_watchlist import BulkWatchlist
 from financial_reports_generated_client.models.bulk_watchlist_response import BulkWatchlistResponse

@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "1.4.119"
+__version__ = "1.4.120"
 
 # Define package exports
 __all__ = [
@@ -43,6 +43,7 @@ __all__ = [
     "ApiKeyError",
     "ApiAttributeError",
     "ApiException",
+    "AgentKeyClaimRequest",
     "AgentSignupRequest",
     "BulkWatchlist",
     "BulkWatchlistResponse",
@@ -170,6 +171,7 @@ from financial_reports_generated_client.exceptions import ApiAttributeError as A
 from financial_reports_generated_client.exceptions import ApiException as ApiException
 
 # import models into sdk package
+from financial_reports_generated_client.models.agent_key_claim_request import AgentKeyClaimRequest as AgentKeyClaimRequest
 from financial_reports_generated_client.models.agent_signup_request import AgentSignupRequest as AgentSignupRequest
 from financial_reports_generated_client.models.bulk_watchlist import BulkWatchlist as BulkWatchlist
 from financial_reports_generated_client.models.bulk_watchlist_response import BulkWatchlistResponse as BulkWatchlistResponse

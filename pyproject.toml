@@ -1,6 +1,6 @@
 [project]
 name = "financial_reports_generated_client"
-version = "1.4.119"
+version = "1.4.120"
 description = "FinancialFilings API"
 authors = [
   {name = "API Support",email = "api@financialreports.eu"},
@@ -19,7 +19,9 @@ dependencies = [
 ]
 
 [project.urls]
-Repository = "https://github.com/GIT_USER_ID/GIT_REPO_ID"
+Homepage = "https://financialfilings.com"
+Documentation = "https://financialfilings.com/developers/"
+Repository = "https://github.com/financial-reports/financial-reports-python"
 
 [tool.poetry]
 requires-poetry = ">=2.0"

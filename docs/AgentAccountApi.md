@@ -5,6 +5,7 @@ All URIs are relative to *https://api.financialreports.eu*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**agent_checkout_link**](AgentAccountApi.md#agent_checkout_link) | **POST** /agent/checkout-link/ | Mint a Stripe link for the owner to add a card (pay-as-you-go)
+[**agent_key_claim**](AgentAccountApi.md#agent_key_claim) | **POST** /agent/key-claim/ | Collect an existing account&#39;s key once its owner approves
 [**agent_key_rotate**](AgentAccountApi.md#agent_key_rotate) | **POST** /agent/key/rotate/ | Rotate this agent key
 [**agent_owner_confirmation**](AgentAccountApi.md#agent_owner_confirmation) | **POST** /agent/owner-confirmation/ | Email the account owner a confirmation link
 [**agent_signup**](AgentAccountApi.md#agent_signup) | **POST** /agent/signup/ | Create an API key as an AI agent
@@ -87,6 +88,80 @@ This endpoint does not need any parameter.
 **409** |  |  -  |
 **429** |  |  -  |
 **502** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **agent_key_claim**
+> Dict[str, Optional[object]] agent_key_claim(agent_key_claim_request)
+
+Collect an existing account's key once its owner approves
+
+``POST /agent/key-claim``: collect the key an existing account's owner approved
+after a signup 409 (#5375). Unauthenticated: the signed claim token is the
+credential.
+
+### Example
+
+
+```python
+import financial_reports_generated_client
+from financial_reports_generated_client.models.agent_key_claim_request import AgentKeyClaimRequest
+from financial_reports_generated_client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.financialreports.eu
+# See configuration.py for a list of all supported configuration parameters.
+configuration = financial_reports_generated_client.Configuration(
+    host = "https://api.financialreports.eu"
+)
+
+
+# Enter a context with an instance of the API client
+async with financial_reports_generated_client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = financial_reports_generated_client.AgentAccountApi(api_client)
+    agent_key_claim_request = financial_reports_generated_client.AgentKeyClaimRequest() # AgentKeyClaimRequest | 
+
+    try:
+        # Collect an existing account's key once its owner approves
+        api_response = await api_instance.agent_key_claim(agent_key_claim_request)
+        print("The response of AgentAccountApi->agent_key_claim:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AgentAccountApi->agent_key_claim: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **agent_key_claim_request** | [**AgentKeyClaimRequest**](AgentKeyClaimRequest.md)|  | 
+
+### Return type
+
+**Dict[str, Optional[object]]**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Key (shown once). |  -  |
+**202** | pending: poll again after Retry-After. |  -  |
+**400** | invalid_request / invalid_claim_token. |  -  |
+**410** | claim_expired / claim_used / claim_refused. |  -  |
+**503** | claim_unavailable: nothing changed, poll again after Retry-After. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -248,7 +323,7 @@ This endpoint does not need any parameter.
 
 Create an API key as an AI agent
 
-Creates an account for the given email and returns an API key once. No email is sent. The key works for a small Level-1 read-only sandbox; beyond it data calls return 402 until the owner confirms (POST /agent/owner-confirmation) or a card is added (POST /agent/checkout-link).
+Creates an account for the given email and returns an API key once. No email is sent. The key works for a small Level-1 read-only sandbox; beyond it data calls return 402 until the owner confirms (POST /agent/owner-confirmation) or a card is added (POST /agent/checkout-link). If the address cannot be used, the 409 carries a claim_token and user_code: the owner of an existing account may be emailed to approve it, and POST /agent/key-claim then returns their key.
 
 ### Example
 
@@ -309,7 +384,7 @@ No authorization required
 |-------------|-------------|------------------|
 **201** | Key created (shown once). |  -  |
 **400** | invalid_email / email_not_allowed / invalid_agent_name. |  -  |
-**409** | account_exists. |  -  |
+**409** | account_exists, with claim_token / user_code / claim_endpoint. |  -  |
 **429** | rate_limited. |  -  |
 **503** | signup_paused / signup_unavailable. |  -  |
 

@@ -202,7 +202,7 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
     search = 'search_example' # str | Search across company name, LEI, ticker symbol, and associated ISIN codes. Case-insensitive, and accent-insensitive on the company name (`Hermes` matches the accented spelling). Multiple whitespace-separated terms are AND-combined (each term must match at least one of the searched fields). Results are relevance-ranked unless an explicit `ordering` is supplied. (optional)
     sector = 'sector_example' # str | Filter by ISIC Section code. (optional)
     sub_industry = 'sub_industry_example' # str | Filter by ISIC Class code. (optional)
-    ticker = 'ticker_example' # str | Filter by stock Ticker symbol. Case-insensitive and separator-insensitive (`BRK.B`, `BRK-B` and `BRK B` are equivalent). Matches the company's primary ticker; when no primary ticker matches, falls back to venue listings, so a secondary share class such as `GOOG` resolves to its issuer. (optional)
+    ticker = 'ticker_example' # str | Filter by stock Ticker symbol. Case-insensitive and separator-insensitive (`BRK.B`, `BRK-B` and `BRK B` are equivalent). Matches the company's primary ticker and its venue listings, so a secondary share class such as `GOOG` resolves to its issuer. A ticker held by several companies on different exchanges returns all of them (`count` above 1). To pin the exchange, append its ISO country code: `WDI.DE`, `1316.HK`. ISO codes, not Yahoo suffixes: `.PA`, `.SG`, `.L` and other Yahoo exchange codes are not read as a market. (optional)
     view = 'summary' # str | Controls the level of detail. Omit for a default 'summary' view, or use 'full' to include all details for each company. (optional) (default to 'summary')
 
     try:
@@ -243,7 +243,7 @@ Name | Type | Description  | Notes
  **search** | **str**| Search across company name, LEI, ticker symbol, and associated ISIN codes. Case-insensitive, and accent-insensitive on the company name (&#x60;Hermes&#x60; matches the accented spelling). Multiple whitespace-separated terms are AND-combined (each term must match at least one of the searched fields). Results are relevance-ranked unless an explicit &#x60;ordering&#x60; is supplied. | [optional] 
  **sector** | **str**| Filter by ISIC Section code. | [optional] 
  **sub_industry** | **str**| Filter by ISIC Class code. | [optional] 
- **ticker** | **str**| Filter by stock Ticker symbol. Case-insensitive and separator-insensitive (&#x60;BRK.B&#x60;, &#x60;BRK-B&#x60; and &#x60;BRK B&#x60; are equivalent). Matches the company&#39;s primary ticker; when no primary ticker matches, falls back to venue listings, so a secondary share class such as &#x60;GOOG&#x60; resolves to its issuer. | [optional] 
+ **ticker** | **str**| Filter by stock Ticker symbol. Case-insensitive and separator-insensitive (&#x60;BRK.B&#x60;, &#x60;BRK-B&#x60; and &#x60;BRK B&#x60; are equivalent). Matches the company&#39;s primary ticker and its venue listings, so a secondary share class such as &#x60;GOOG&#x60; resolves to its issuer. A ticker held by several companies on different exchanges returns all of them (&#x60;count&#x60; above 1). To pin the exchange, append its ISO country code: &#x60;WDI.DE&#x60;, &#x60;1316.HK&#x60;. ISO codes, not Yahoo suffixes: &#x60;.PA&#x60;, &#x60;.SG&#x60;, &#x60;.L&#x60; and other Yahoo exchange codes are not read as a market. | [optional] 
  **view** | **str**| Controls the level of detail. Omit for a default &#39;summary&#39; view, or use &#39;full&#39; to include all details for each company. | [optional] [default to &#39;summary&#39;]
 
 ### Return type
@@ -470,6 +470,8 @@ Each row may carry any mix of `isin`, `lei`, `cik`, `ticker` and `name`, plus an
 **A name alone never returns `matched`.** No matter how close the match, a name-only row caps at `ambiguous` and hands you candidates to choose from. Names are not identifiers, and asserting a match on one is how filings end up attached to the wrong issuer.
 
 **Venue-ticker matches are qualified, not asserted.** A ticker that only resolves through our security-listing data is cross-checked against the `name` you supplied. If they disagree you get `ambiguous` + `name_disagrees`; if you supplied no name we cannot corroborate at all, so you get `matched` carrying `security_listing_unverified` — trust that bucket accordingly.
+
+**A ticker is checked against your `name`, even on a single hit.** Tickers are reused across exchanges: if your name rules out the company holding the ticker as its primary one and backs a company holding it on another venue, that company is the match. When other companies hold the same ticker on other venues and nothing you sent rules them out, the row carries `multiple_tickers` and lists them in `candidates`, even on a `matched` row. Append an ISO country code (`WDI.DE`) to pin the exchange.
 
 **Billing** — one request is one call against your quota, whatever the row count. Rows we do not cover are not billed differently from rows we do.
 
