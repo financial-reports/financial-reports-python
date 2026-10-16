@@ -16,7 +16,7 @@ Name | Type | Description | Notes
 **basis** | **str** | What the label rests on: &#x60;revenue&#x60; (reported revenue by segment or product), &#x60;nav&#x60; (a holding&#39;s net asset value), &#x60;filings&#x60; (other figures from the company&#39;s filings) or &#x60;description&#x60; (the company&#39;s description). | 
 **taxonomy_version** | **str** | OICS version the label was decided under, e.g. &#x60;0.3&#x60;. | 
 **classified_at** | **datetime** | When the label was last written (ISO 8601, UTC). | 
-**contested** | **bool** | True when an independent second reading of the company&#39;s description disagreed with the label. The label stands; &#x60;alternate&#x60; is the other reading. Only a label with basis &#x60;description&#x60; can be contested. | 
+**contested** | **bool** | True when an independent second reading disagreed with the label: of the company&#39;s description, for a label with basis &#x60;description&#x60;, or a second mapping of its revenue lines, for a label decided on reported revenue. The label stands; &#x60;alternate&#x60; is the other reading. A label decided on other figures from the company&#39;s filings is never contested. | 
 **alternate** | [**OicsNodeRef**](OicsNodeRef.md) | The other reading of a contested label: a class, or an entity type (&#x60;code&#x60; is then e.g. &#x60;HOLDING&#x60;). Information only: it is not a second classification and no filter matches it. Null when the label is not contested. | 
 
 ## Example

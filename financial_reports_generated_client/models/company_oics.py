@@ -40,7 +40,7 @@ class CompanyOics(BaseModel):
     basis: StrictStr = Field(description="What the label rests on: `revenue` (reported revenue by segment or product), `nav` (a holding's net asset value), `filings` (other figures from the company's filings) or `description` (the company's description).")
     taxonomy_version: StrictStr = Field(description="OICS version the label was decided under, e.g. `0.3`.")
     classified_at: Optional[datetime] = Field(description="When the label was last written (ISO 8601, UTC).")
-    contested: StrictBool = Field(description="True when an independent second reading of the company's description disagreed with the label. The label stands; `alternate` is the other reading. Only a label with basis `description` can be contested.")
+    contested: StrictBool = Field(description="True when an independent second reading disagreed with the label: of the company's description, for a label with basis `description`, or a second mapping of its revenue lines, for a label decided on reported revenue. The label stands; `alternate` is the other reading. A label decided on other figures from the company's filings is never contested.")
     alternate: Optional[OicsNodeRef] = Field(description="The other reading of a contested label: a class, or an entity type (`code` is then e.g. `HOLDING`). Information only: it is not a second classification and no filter matches it. Null when the label is not contested.")
     __properties: ClassVar[List[str]] = ["code", "name", "sector", "group", "industry", "entity_type", "secondaries", "basis", "taxonomy_version", "classified_at", "contested", "alternate"]
 
