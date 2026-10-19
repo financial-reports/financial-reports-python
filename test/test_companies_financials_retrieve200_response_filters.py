@@ -44,7 +44,11 @@ class TestCompaniesFinancialsRetrieve200ResponseFilters(unittest.TestCase):
                 line_items = [
                     ''
                     ],
-                as_of = datetime.datetime.strptime('1975-12-30', '%Y-%m-%d').date()
+                as_of = datetime.datetime.strptime('1975-12-30', '%Y-%m-%d').date(),
+                as_known_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
+                include = [
+                    'revisions'
+                    ]
             )
         else:
             return CompaniesFinancialsRetrieve200ResponseFilters(

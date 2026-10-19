@@ -12,6 +12,8 @@ Name | Type | Description | Notes
 **fiscal_period** | **str** |  | [optional] 
 **line_items** | **List[str]** |  | [optional] 
 **as_of** | **date** |  | [optional] 
+**as_known_at** | **datetime** | The instant values were reconstructed at, in UTC: a bare date is echoed as the end of that day, a future time as now. | [optional] 
+**include** | **List[str]** |  | [optional] 
 
 ## Example
 

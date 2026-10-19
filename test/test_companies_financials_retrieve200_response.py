@@ -52,7 +52,11 @@ class TestCompaniesFinancialsRetrieve200Response(unittest.TestCase):
                     line_items = [
                         ''
                         ], 
-                    as_of = datetime.datetime.strptime('1975-12-30', '%Y-%m-%d').date(), ),
+                    as_of = datetime.datetime.strptime('1975-12-30', '%Y-%m-%d').date(), 
+                    as_known_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
+                    include = [
+                        'revisions'
+                        ], ),
                 period_count = 56,
                 periods = [
                     financial_reports_generated_client.models.companies_financials_retrieve_200_response_periods_inner.companies_financials_retrieve_200_response_periods_inner(
@@ -88,6 +92,14 @@ class TestCompaniesFinancialsRetrieve200Response(unittest.TestCase):
                                         currency = '', 
                                         confidence = 1.337, 
                                         source_page = 56, 
+                                        revisions = [
+                                            financial_reports_generated_client.models.companies_financials_retrieve_200_response_periods_inner_statements_inner_line_items_inner_revisions_inner.companies_financials_retrieve_200_response_periods_inner_statements_inner_line_items_inner_revisions_inner(
+                                                changed_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
+                                                op = 'insert', 
+                                                old_value = '', 
+                                                new_value = '', 
+                                                reason = 'extraction', )
+                                            ], 
                                         updated_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), )
                                     ], 
                                 is_comparative = True, 
@@ -126,7 +138,11 @@ class TestCompaniesFinancialsRetrieve200Response(unittest.TestCase):
                     line_items = [
                         ''
                         ], 
-                    as_of = datetime.datetime.strptime('1975-12-30', '%Y-%m-%d').date(), ),
+                    as_of = datetime.datetime.strptime('1975-12-30', '%Y-%m-%d').date(), 
+                    as_known_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
+                    include = [
+                        'revisions'
+                        ], ),
                 period_count = 56,
                 periods = [
                     financial_reports_generated_client.models.companies_financials_retrieve_200_response_periods_inner.companies_financials_retrieve_200_response_periods_inner(
@@ -162,6 +178,14 @@ class TestCompaniesFinancialsRetrieve200Response(unittest.TestCase):
                                         currency = '', 
                                         confidence = 1.337, 
                                         source_page = 56, 
+                                        revisions = [
+                                            financial_reports_generated_client.models.companies_financials_retrieve_200_response_periods_inner_statements_inner_line_items_inner_revisions_inner.companies_financials_retrieve_200_response_periods_inner_statements_inner_line_items_inner_revisions_inner(
+                                                changed_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
+                                                op = 'insert', 
+                                                old_value = '', 
+                                                new_value = '', 
+                                                reason = 'extraction', )
+                                            ], 
                                         updated_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), )
                                     ], 
                                 is_comparative = True, 

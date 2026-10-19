@@ -17,8 +17,8 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
 from datetime import datetime
-from pydantic import Field, StrictBool, StrictFloat, StrictInt, StrictStr, field_validator
-from typing import Optional, Union
+from pydantic import Field, StrictBool, StrictBytes, StrictFloat, StrictInt, StrictStr, field_validator
+from typing import Optional, Tuple, Union
 from typing_extensions import Annotated
 from financial_reports_generated_client.models.filing import Filing
 from financial_reports_generated_client.models.paginated_filing_history_list import PaginatedFilingHistoryList
@@ -40,6 +40,298 @@ class FilingsApi:
         if api_client is None:
             api_client = ApiClient.get_default()
         self.api_client = api_client
+
+
+    @validate_call
+    async def filings_document_retrieve(
+        self,
+        id: Annotated[StrictInt, Field(description="A unique integer value identifying this filing.")],
+        format: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> bytes:
+        """Retrieve Filing Document
+
+        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Download the filing's main document as a single readable file.  Many filings are stored as a ZIP package (`file_extension` is `ZIP`): an SEC submission with its exhibits and XBRL files, or an ESEF report package. For those, this returns the main document from inside the package: the SEC filer's primary document (the 10-K HTML, or the annual report PDF), or the ESEF report XHTML (also from a package nested inside the download). An HTML document comes as filed, with its images embedded so the saved file opens complete. `X-Package-Member` names the file inside the package.  For any other filing, and for a main document over 50 MB (HTML) or 100 MB (other files), the response is a redirect to the stored file (`document`). The full package is always at `document`. A 200 is billed as one raw request; a redirect is not billed.
+
+        :param id: A unique integer value identifying this filing. (required)
+        :type id: int
+        :param format:
+        :type format: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._filings_document_retrieve_serialize(
+            id=id,
+            format=format,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "bytes",
+            '302': None,
+            '404': "ErrorDetail",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    async def filings_document_retrieve_with_http_info(
+        self,
+        id: Annotated[StrictInt, Field(description="A unique integer value identifying this filing.")],
+        format: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[bytes]:
+        """Retrieve Filing Document
+
+        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Download the filing's main document as a single readable file.  Many filings are stored as a ZIP package (`file_extension` is `ZIP`): an SEC submission with its exhibits and XBRL files, or an ESEF report package. For those, this returns the main document from inside the package: the SEC filer's primary document (the 10-K HTML, or the annual report PDF), or the ESEF report XHTML (also from a package nested inside the download). An HTML document comes as filed, with its images embedded so the saved file opens complete. `X-Package-Member` names the file inside the package.  For any other filing, and for a main document over 50 MB (HTML) or 100 MB (other files), the response is a redirect to the stored file (`document`). The full package is always at `document`. A 200 is billed as one raw request; a redirect is not billed.
+
+        :param id: A unique integer value identifying this filing. (required)
+        :type id: int
+        :param format:
+        :type format: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._filings_document_retrieve_serialize(
+            id=id,
+            format=format,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "bytes",
+            '302': None,
+            '404': "ErrorDetail",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    async def filings_document_retrieve_without_preload_content(
+        self,
+        id: Annotated[StrictInt, Field(description="A unique integer value identifying this filing.")],
+        format: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Retrieve Filing Document
+
+        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Download the filing's main document as a single readable file.  Many filings are stored as a ZIP package (`file_extension` is `ZIP`): an SEC submission with its exhibits and XBRL files, or an ESEF report package. For those, this returns the main document from inside the package: the SEC filer's primary document (the 10-K HTML, or the annual report PDF), or the ESEF report XHTML (also from a package nested inside the download). An HTML document comes as filed, with its images embedded so the saved file opens complete. `X-Package-Member` names the file inside the package.  For any other filing, and for a main document over 50 MB (HTML) or 100 MB (other files), the response is a redirect to the stored file (`document`). The full package is always at `document`. A 200 is billed as one raw request; a redirect is not billed.
+
+        :param id: A unique integer value identifying this filing. (required)
+        :type id: int
+        :param format:
+        :type format: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._filings_document_retrieve_serialize(
+            id=id,
+            format=format,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "bytes",
+            '302': None,
+            '404': "ErrorDetail",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _filings_document_retrieve_serialize(
+        self,
+        id,
+        format,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if id is not None:
+            _path_params['id'] = id
+        # process the query parameters
+        if format is not None:
+            
+            _query_params.append(('format', format))
+            
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    '*/*', 
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'CognitoJWT', 
+            'ApiKeyAuth'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/filings/{id}/document/',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
 
 
     @validate_call
@@ -329,6 +621,7 @@ class FilingsApi:
         fiscal_period: Annotated[Optional[StrictStr], Field(description="Filter by fiscal period. Possible values: `FY` (Full Year), `Q1`, `Q2`, `Q3`, `Q4`, `H1` (First Half), `H2` (Second Half). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.")] = None,
         fiscal_year: Annotated[Optional[StrictInt], Field(description="Filter by fiscal year (e.g., `2024`). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.")] = None,
         include_companions: Annotated[Optional[StrictBool], Field(description="Include companion data files in type and category filters. Companions are small machine-readable XBRL/XML/JSON files stored beside a report for financial extraction, typed like that report. Most are not converted to markdown and show processing_status SKIPPED; the report beside them carries the text. Default false: type, types, category and categories return the reports only.")] = None,
+        include_predecessors: Annotated[Optional[StrictBool], Field(description="With `company`, also return the filings of the company's predecessors: the issuers it succeeded by reorganisation or redomicile (its `predecessors` of kind reorganization or other on GET /companies/{id}/, followed back through the chain; merged-in targets and spin-off parents are not included), each up to and including the link's effective date (UTC). Each filing's `company` is still the issuer that filed it. Default false. Requires `company`; `lei` and `company_isin` do not follow predecessors.")] = None,
         ingestion_mode: Annotated[Optional[StrictStr], Field(description="Filter by ingestion mode. Whether the filing was added to the platform promptly after publication. `REALTIME`: added within the source's normal publication delay (5 to 48 hours after `release_datetime`, depending on the source). `BACKFILLED`: everything else, including historical imports and new filings that reached the platform late, for example after a source outage. Set once when the filing is added and not recalculated afterwards.")] = None,
         language: Annotated[Optional[StrictStr], Field(description="Filter by a single filing language ISO 639-1 code (e.g., en).")] = None,
         languages: Annotated[Optional[StrictStr], Field(description="Filter by filing language ISO 639-1 code(s). Comma-separated for multiple values (e.g., en,de).")] = None,
@@ -400,6 +693,8 @@ class FilingsApi:
         :type fiscal_year: int
         :param include_companions: Include companion data files in type and category filters. Companions are small machine-readable XBRL/XML/JSON files stored beside a report for financial extraction, typed like that report. Most are not converted to markdown and show processing_status SKIPPED; the report beside them carries the text. Default false: type, types, category and categories return the reports only.
         :type include_companions: bool
+        :param include_predecessors: With `company`, also return the filings of the company's predecessors: the issuers it succeeded by reorganisation or redomicile (its `predecessors` of kind reorganization or other on GET /companies/{id}/, followed back through the chain; merged-in targets and spin-off parents are not included), each up to and including the link's effective date (UTC). Each filing's `company` is still the issuer that filed it. Default false. Requires `company`; `lei` and `company_isin` do not follow predecessors.
+        :type include_predecessors: bool
         :param ingestion_mode: Filter by ingestion mode. Whether the filing was added to the platform promptly after publication. `REALTIME`: added within the source's normal publication delay (5 to 48 hours after `release_datetime`, depending on the source). `BACKFILLED`: everything else, including historical imports and new filings that reached the platform late, for example after a source outage. Set once when the filing is added and not recalculated afterwards.
         :type ingestion_mode: str
         :param language: Filter by a single filing language ISO 639-1 code (e.g., en).
@@ -492,6 +787,7 @@ class FilingsApi:
             fiscal_period=fiscal_period,
             fiscal_year=fiscal_year,
             include_companions=include_companions,
+            include_predecessors=include_predecessors,
             ingestion_mode=ingestion_mode,
             language=language,
             languages=languages,
@@ -560,6 +856,7 @@ class FilingsApi:
         fiscal_period: Annotated[Optional[StrictStr], Field(description="Filter by fiscal period. Possible values: `FY` (Full Year), `Q1`, `Q2`, `Q3`, `Q4`, `H1` (First Half), `H2` (Second Half). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.")] = None,
         fiscal_year: Annotated[Optional[StrictInt], Field(description="Filter by fiscal year (e.g., `2024`). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.")] = None,
         include_companions: Annotated[Optional[StrictBool], Field(description="Include companion data files in type and category filters. Companions are small machine-readable XBRL/XML/JSON files stored beside a report for financial extraction, typed like that report. Most are not converted to markdown and show processing_status SKIPPED; the report beside them carries the text. Default false: type, types, category and categories return the reports only.")] = None,
+        include_predecessors: Annotated[Optional[StrictBool], Field(description="With `company`, also return the filings of the company's predecessors: the issuers it succeeded by reorganisation or redomicile (its `predecessors` of kind reorganization or other on GET /companies/{id}/, followed back through the chain; merged-in targets and spin-off parents are not included), each up to and including the link's effective date (UTC). Each filing's `company` is still the issuer that filed it. Default false. Requires `company`; `lei` and `company_isin` do not follow predecessors.")] = None,
         ingestion_mode: Annotated[Optional[StrictStr], Field(description="Filter by ingestion mode. Whether the filing was added to the platform promptly after publication. `REALTIME`: added within the source's normal publication delay (5 to 48 hours after `release_datetime`, depending on the source). `BACKFILLED`: everything else, including historical imports and new filings that reached the platform late, for example after a source outage. Set once when the filing is added and not recalculated afterwards.")] = None,
         language: Annotated[Optional[StrictStr], Field(description="Filter by a single filing language ISO 639-1 code (e.g., en).")] = None,
         languages: Annotated[Optional[StrictStr], Field(description="Filter by filing language ISO 639-1 code(s). Comma-separated for multiple values (e.g., en,de).")] = None,
@@ -631,6 +928,8 @@ class FilingsApi:
         :type fiscal_year: int
         :param include_companions: Include companion data files in type and category filters. Companions are small machine-readable XBRL/XML/JSON files stored beside a report for financial extraction, typed like that report. Most are not converted to markdown and show processing_status SKIPPED; the report beside them carries the text. Default false: type, types, category and categories return the reports only.
         :type include_companions: bool
+        :param include_predecessors: With `company`, also return the filings of the company's predecessors: the issuers it succeeded by reorganisation or redomicile (its `predecessors` of kind reorganization or other on GET /companies/{id}/, followed back through the chain; merged-in targets and spin-off parents are not included), each up to and including the link's effective date (UTC). Each filing's `company` is still the issuer that filed it. Default false. Requires `company`; `lei` and `company_isin` do not follow predecessors.
+        :type include_predecessors: bool
         :param ingestion_mode: Filter by ingestion mode. Whether the filing was added to the platform promptly after publication. `REALTIME`: added within the source's normal publication delay (5 to 48 hours after `release_datetime`, depending on the source). `BACKFILLED`: everything else, including historical imports and new filings that reached the platform late, for example after a source outage. Set once when the filing is added and not recalculated afterwards.
         :type ingestion_mode: str
         :param language: Filter by a single filing language ISO 639-1 code (e.g., en).
@@ -723,6 +1022,7 @@ class FilingsApi:
             fiscal_period=fiscal_period,
             fiscal_year=fiscal_year,
             include_companions=include_companions,
+            include_predecessors=include_predecessors,
             ingestion_mode=ingestion_mode,
             language=language,
             languages=languages,
@@ -791,6 +1091,7 @@ class FilingsApi:
         fiscal_period: Annotated[Optional[StrictStr], Field(description="Filter by fiscal period. Possible values: `FY` (Full Year), `Q1`, `Q2`, `Q3`, `Q4`, `H1` (First Half), `H2` (Second Half). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.")] = None,
         fiscal_year: Annotated[Optional[StrictInt], Field(description="Filter by fiscal year (e.g., `2024`). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.")] = None,
         include_companions: Annotated[Optional[StrictBool], Field(description="Include companion data files in type and category filters. Companions are small machine-readable XBRL/XML/JSON files stored beside a report for financial extraction, typed like that report. Most are not converted to markdown and show processing_status SKIPPED; the report beside them carries the text. Default false: type, types, category and categories return the reports only.")] = None,
+        include_predecessors: Annotated[Optional[StrictBool], Field(description="With `company`, also return the filings of the company's predecessors: the issuers it succeeded by reorganisation or redomicile (its `predecessors` of kind reorganization or other on GET /companies/{id}/, followed back through the chain; merged-in targets and spin-off parents are not included), each up to and including the link's effective date (UTC). Each filing's `company` is still the issuer that filed it. Default false. Requires `company`; `lei` and `company_isin` do not follow predecessors.")] = None,
         ingestion_mode: Annotated[Optional[StrictStr], Field(description="Filter by ingestion mode. Whether the filing was added to the platform promptly after publication. `REALTIME`: added within the source's normal publication delay (5 to 48 hours after `release_datetime`, depending on the source). `BACKFILLED`: everything else, including historical imports and new filings that reached the platform late, for example after a source outage. Set once when the filing is added and not recalculated afterwards.")] = None,
         language: Annotated[Optional[StrictStr], Field(description="Filter by a single filing language ISO 639-1 code (e.g., en).")] = None,
         languages: Annotated[Optional[StrictStr], Field(description="Filter by filing language ISO 639-1 code(s). Comma-separated for multiple values (e.g., en,de).")] = None,
@@ -862,6 +1163,8 @@ class FilingsApi:
         :type fiscal_year: int
         :param include_companions: Include companion data files in type and category filters. Companions are small machine-readable XBRL/XML/JSON files stored beside a report for financial extraction, typed like that report. Most are not converted to markdown and show processing_status SKIPPED; the report beside them carries the text. Default false: type, types, category and categories return the reports only.
         :type include_companions: bool
+        :param include_predecessors: With `company`, also return the filings of the company's predecessors: the issuers it succeeded by reorganisation or redomicile (its `predecessors` of kind reorganization or other on GET /companies/{id}/, followed back through the chain; merged-in targets and spin-off parents are not included), each up to and including the link's effective date (UTC). Each filing's `company` is still the issuer that filed it. Default false. Requires `company`; `lei` and `company_isin` do not follow predecessors.
+        :type include_predecessors: bool
         :param ingestion_mode: Filter by ingestion mode. Whether the filing was added to the platform promptly after publication. `REALTIME`: added within the source's normal publication delay (5 to 48 hours after `release_datetime`, depending on the source). `BACKFILLED`: everything else, including historical imports and new filings that reached the platform late, for example after a source outage. Set once when the filing is added and not recalculated afterwards.
         :type ingestion_mode: str
         :param language: Filter by a single filing language ISO 639-1 code (e.g., en).
@@ -954,6 +1257,7 @@ class FilingsApi:
             fiscal_period=fiscal_period,
             fiscal_year=fiscal_year,
             include_companions=include_companions,
+            include_predecessors=include_predecessors,
             ingestion_mode=ingestion_mode,
             language=language,
             languages=languages,
@@ -1017,6 +1321,7 @@ class FilingsApi:
         fiscal_period,
         fiscal_year,
         include_companions,
+        include_predecessors,
         ingestion_mode,
         language,
         languages,
@@ -1136,6 +1441,10 @@ class FilingsApi:
         if include_companions is not None:
             
             _query_params.append(('include_companions', include_companions))
+            
+        if include_predecessors is not None:
+            
+            _query_params.append(('include_predecessors', include_predecessors))
             
         if ingestion_mode is not None:
             

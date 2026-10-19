@@ -27,6 +27,13 @@ class TestFilingsApi(unittest.IsolatedAsyncioTestCase):
     async def asyncTearDown(self) -> None:
         await self.api.api_client.close()
 
+    async def test_filings_document_retrieve(self) -> None:
+        """Test case for filings_document_retrieve
+
+        Retrieve Filing Document
+        """
+        pass
+
     async def test_filings_history_retrieve(self) -> None:
         """Test case for filings_history_retrieve
 

@@ -21,6 +21,7 @@ import json
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional, Union
+from financial_reports_generated_client.models.companies_financials_retrieve200_response_periods_inner_statements_inner_line_items_inner_revisions_inner import CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItemsInnerRevisionsInner
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
@@ -41,8 +42,9 @@ class CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItems
     currency: Optional[StrictStr] = Field(description="The value's own currency code, which may differ from the statement's reporting currency for per-share figures. NULL for ratios.")
     confidence: Optional[Union[StrictFloat, StrictInt]] = Field(description="Confidence that this value is the figure the document states, or null where nothing has judged it. Non-null only on rows the KPI verifier SERVED: it runs a second, independent selection pass over the filing and agrees with the extracted value, and the number is that pass's probability for the row it picked. Null does NOT mean low confidence - it means unjudged, which is every row the verifier has not yet swept and every row it sent to review instead of serving. Treat it as a filter, not a score: branch on non-null, do not compare nulls.")
     source_page: Optional[StrictInt] = Field(description="RESERVED - currently null on every line item. Provenance is filing-level (`sources`), not page-level. Deliberately still reserved: the KPI verifier knows the line of the converted markdown it read a value from, which is not a page number, so it does not write one here.")
+    revisions: Optional[List[CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItemsInnerRevisionsInner]] = Field(default=None, description="Present only with `include=revisions`: every recorded change to this value, oldest first (with `as_known_at`, up to that time). Empty when none was recorded. Recording started 2026-10-19T17:05:18Z; `pre_recording` entries are older corrections whose `changed_at` is approximate (the change happened at or before it).")
     updated_at: datetime = Field(description="When this value was last written. Equal to the extraction time for an untouched value; moves when a later correction pass rewrites the value in place (a re-extraction replaces the whole statement and sets a new one). Compare it with the value from your previous poll to detect a changed figure without diffing. It does not move when a whole statement is withdrawn or when a different filing starts supplying the period - watch `source_filing` for that.")
-    __properties: ClassVar[List[str]] = ["code", "name", "statement_type", "depth", "parent_code", "sort_order", "value", "raw_value", "scale", "currency", "confidence", "source_page", "updated_at"]
+    __properties: ClassVar[List[str]] = ["code", "name", "statement_type", "depth", "parent_code", "sort_order", "value", "raw_value", "scale", "currency", "confidence", "source_page", "revisions", "updated_at"]
 
     @field_validator('statement_type')
     def statement_type_validate_enum(cls, value):
@@ -100,6 +102,12 @@ class CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItems
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of each item in revisions (list)
+        _items = []
+        if self.revisions:
+            for _item_revisions in self.revisions:
+                _items.append(_item_revisions.to_dict() if _item_revisions is not None else None)
+            _dict['revisions'] = _items
         # set to None if parent_code (nullable) is None
         # and model_fields_set contains the field
         if self.parent_code is None and "parent_code" in self.model_fields_set:
@@ -159,6 +167,7 @@ class CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItems
             "currency": obj.get("currency"),
             "confidence": obj.get("confidence"),
             "source_page": obj.get("source_page"),
+            "revisions": [CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItemsInnerRevisionsInner.from_dict(_item) for _item in obj["revisions"]] if obj.get("revisions") is not None else None,
             "updated_at": obj.get("updated_at")
         })
         return _obj

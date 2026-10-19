@@ -13,7 +13,7 @@ Method | HTTP request | Description
 
 
 # **companies_financials_retrieve**
-> CompaniesFinancialsRetrieve200Response companies_financials_retrieve(id, as_of=as_of, fiscal_period=fiscal_period, fiscal_year=fiscal_year, fiscal_year_from=fiscal_year_from, fiscal_year_to=fiscal_year_to, line_items=line_items, statement_type=statement_type)
+> CompaniesFinancialsRetrieve200Response companies_financials_retrieve(id, as_known_at=as_known_at, as_of=as_of, fiscal_period=fiscal_period, fiscal_year=fiscal_year, fiscal_year_from=fiscal_year_from, fiscal_year_to=fiscal_year_to, include=include, line_items=line_items, statement_type=statement_type)
 
 Retrieve Company Financials
 
@@ -25,7 +25,7 @@ When several filings report the same period, the candidates are ranked and one s
 
 **Currency is as presented, and is never converted.** `currency` is the currency the statement is denominated in as the filer presented it - the presentation currency, not the functional currency, which we do not capture. No figure in this payload is ever translated into another currency at any rate, and `value` being in absolute units makes values comparable across scales, not across currencies. A company that re-presents in a new currency therefore produces a series whose units change partway through, with no restatement of the earlier years: compare `currency.code` across periods before aggregating or charting. A line item may carry its own `currency` differing from the statement's - that is a dual-currency filing, not an error.
 
-Each statement carries `source_filing`: the filing the figures were read from, with `document_url` and `viewer_url` pointing at our hosted copy of that document. This is returned to every account. The publishing authority's identity and its own direct URL remain masked unless the account has source unmasking enabled. The full `sources` array — every contributing filing, including candidates that selection rejected — is returned only with source unmasking (`sources_masked` reports which applies). `as_of=YYYY-MM-DD` restricts selection to filings released on or before that date; it does not reproduce the values served on that date, because figures are corrected in place. Each line item's `updated_at` says when its value was last written.
+Each statement carries `source_filing`: the filing the figures were read from, with `document_url` and `viewer_url` pointing at our hosted copy of that document. This is returned to every account. The publishing authority's identity and its own direct URL remain masked unless the account has source unmasking enabled. The full `sources` array — every contributing filing, including candidates that selection rejected — is returned only with source unmasking (`sources_masked` reports which applies). `as_of=YYYY-MM-DD` restricts selection to filings released on or before that date; it does not reproduce the values served on that date, because figures are corrected in place. Each line item's `updated_at` says when its value was last written. `as_known_at` returns each value as we held it at a past time (recorded since 2026-10-19T17:05:18Z), selected under today's rules, and `include=revisions` lists each value's recorded changes.
 
 Use the `depth` and `parent_code` fields on each line item to render the Capital IQ-style statement hierarchy.
 
@@ -75,17 +75,19 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
     # Create an instance of the API class
     api_instance = financial_reports_generated_client.CompaniesApi(api_client)
     id = 56 # int | A unique integer value identifying this company.
-    as_of = 'as_of_example' # str | Filing-date cutoff (`YYYY-MM-DD`): only filings released on or before `as_of` are considered when picking the statement for each period. This is NOT a snapshot of the values we served on that date - figures are corrected in place, and a request with `as_of` returns today's version of each value from those filings. Use each line item's `updated_at` to see when a value last changed. (optional)
+    as_known_at = 'as_known_at_example' # str | Values as we held them at this time (ISO-8601 datetime, e.g. `2026-10-20T12:00:00Z`; a datetime without an offset is UTC; a bare date `YYYY-MM-DD` means the end of that day in UTC). Each value we corrected since is served as it was then, a value first written since is left out, and each period's statement is then selected from those values under today's selection rules. Filings not yet released at that time are left out. Combines with `as_of`. History starts at 2026-10-19T17:05:18Z: an earlier time returns `400`; a future time is read as now. Not reconstructed yet: values deleted since and not re-created, re-attributions, hidden filings and statement relabels (selection sees today's statements), and the `extraction` block, which is served as it is today. `updated_at` is capped at this time. (optional)
+    as_of = 'as_of_example' # str | Filing-date cutoff (`YYYY-MM-DD`): only filings released on or before `as_of` are considered when picking the statement for each period. This is NOT a snapshot of the values we served on that date - figures are corrected in place, and a request with `as_of` returns today's version of each value from those filings. Use each line item's `updated_at` to see when a value last changed, and `as_known_at` for the values as we held them at a past time. (optional)
     fiscal_period = 'fiscal_period_example' # str | Filter by fiscal period. (optional)
     fiscal_year = 56 # int | Filter by exact fiscal year (e.g. `2024`). (optional)
     fiscal_year_from = 56 # int | Fiscal year range start (inclusive). (optional)
     fiscal_year_to = 56 # int | Fiscal year range end (inclusive). (optional)
+    include = 'include_example' # str | `revisions` adds a `revisions` list to every line item: each recorded change to that value, oldest first, with `old_value` -> `new_value` and a reason category. With `as_known_at`, only the changes up to that time. (optional)
     line_items = 'line_items_example' # str | Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Statements with none of the requested codes are dropped. Unknown codes return `400` — see `/line-item-definitions/`. (optional)
     statement_type = 'statement_type_example' # str | Filter to a single statement type. (optional)
 
     try:
         # Retrieve Company Financials
-        api_response = await api_instance.companies_financials_retrieve(id, as_of=as_of, fiscal_period=fiscal_period, fiscal_year=fiscal_year, fiscal_year_from=fiscal_year_from, fiscal_year_to=fiscal_year_to, line_items=line_items, statement_type=statement_type)
+        api_response = await api_instance.companies_financials_retrieve(id, as_known_at=as_known_at, as_of=as_of, fiscal_period=fiscal_period, fiscal_year=fiscal_year, fiscal_year_from=fiscal_year_from, fiscal_year_to=fiscal_year_to, include=include, line_items=line_items, statement_type=statement_type)
         print("The response of CompaniesApi->companies_financials_retrieve:\n")
         pprint(api_response)
     except Exception as e:
@@ -100,11 +102,13 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer value identifying this company. | 
- **as_of** | **str**| Filing-date cutoff (&#x60;YYYY-MM-DD&#x60;): only filings released on or before &#x60;as_of&#x60; are considered when picking the statement for each period. This is NOT a snapshot of the values we served on that date - figures are corrected in place, and a request with &#x60;as_of&#x60; returns today&#39;s version of each value from those filings. Use each line item&#39;s &#x60;updated_at&#x60; to see when a value last changed. | [optional] 
+ **as_known_at** | **str**| Values as we held them at this time (ISO-8601 datetime, e.g. &#x60;2026-10-20T12:00:00Z&#x60;; a datetime without an offset is UTC; a bare date &#x60;YYYY-MM-DD&#x60; means the end of that day in UTC). Each value we corrected since is served as it was then, a value first written since is left out, and each period&#39;s statement is then selected from those values under today&#39;s selection rules. Filings not yet released at that time are left out. Combines with &#x60;as_of&#x60;. History starts at 2026-10-19T17:05:18Z: an earlier time returns &#x60;400&#x60;; a future time is read as now. Not reconstructed yet: values deleted since and not re-created, re-attributions, hidden filings and statement relabels (selection sees today&#39;s statements), and the &#x60;extraction&#x60; block, which is served as it is today. &#x60;updated_at&#x60; is capped at this time. | [optional] 
+ **as_of** | **str**| Filing-date cutoff (&#x60;YYYY-MM-DD&#x60;): only filings released on or before &#x60;as_of&#x60; are considered when picking the statement for each period. This is NOT a snapshot of the values we served on that date - figures are corrected in place, and a request with &#x60;as_of&#x60; returns today&#39;s version of each value from those filings. Use each line item&#39;s &#x60;updated_at&#x60; to see when a value last changed, and &#x60;as_known_at&#x60; for the values as we held them at a past time. | [optional] 
  **fiscal_period** | **str**| Filter by fiscal period. | [optional] 
  **fiscal_year** | **int**| Filter by exact fiscal year (e.g. &#x60;2024&#x60;). | [optional] 
  **fiscal_year_from** | **int**| Fiscal year range start (inclusive). | [optional] 
  **fiscal_year_to** | **int**| Fiscal year range end (inclusive). | [optional] 
+ **include** | **str**| &#x60;revisions&#x60; adds a &#x60;revisions&#x60; list to every line item: each recorded change to that value, oldest first, with &#x60;old_value&#x60; -&gt; &#x60;new_value&#x60; and a reason category. With &#x60;as_known_at&#x60;, only the changes up to that time. | [optional] 
  **line_items** | **str**| Comma-separated KPI codes to include (e.g. &#x60;revenue,ebitda,net_income_loss&#x60;). Omit to return all extracted line items. Statements with none of the requested codes are dropped. Unknown codes return &#x60;400&#x60; — see &#x60;/line-item-definitions/&#x60;. | [optional] 
  **statement_type** | **str**| Filter to a single statement type. | [optional] 
 

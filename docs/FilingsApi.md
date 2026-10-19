@@ -4,12 +4,110 @@ All URIs are relative to *https://api.financialreports.eu*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**filings_document_retrieve**](FilingsApi.md#filings_document_retrieve) | **GET** /filings/{id}/document/ | Retrieve Filing Document
 [**filings_history_retrieve**](FilingsApi.md#filings_history_retrieve) | **GET** /filings/{id}/history/ | Retrieve Filing History (Audit Trail)
 [**filings_list**](FilingsApi.md#filings_list) | **GET** /filings/ | List Filings
 [**filings_markdown_retrieve**](FilingsApi.md#filings_markdown_retrieve) | **GET** /filings/{id}/markdown/ | Retrieve Filing Markdown
 [**filings_markdown_search_retrieve**](FilingsApi.md#filings_markdown_search_retrieve) | **GET** /filings/{id}/markdown/search/ | Search Within a Filing&#39;s Markdown
 [**filings_retrieve**](FilingsApi.md#filings_retrieve) | **GET** /filings/{id}/ | Retrieve Filing Details
 
+
+# **filings_document_retrieve**
+> bytes filings_document_retrieve(id, format=format)
+
+Retrieve Filing Document
+
+**Access Level Required:** Requires **Standard Access (Level 1)**.
+
+---
+Download the filing's main document as a single readable file.
+
+Many filings are stored as a ZIP package (`file_extension` is `ZIP`): an SEC submission with its exhibits and XBRL files, or an ESEF report package. For those, this returns the main document from inside the package: the SEC filer's primary document (the 10-K HTML, or the annual report PDF), or the ESEF report XHTML (also from a package nested inside the download). An HTML document comes as filed, with its images embedded so the saved file opens complete. `X-Package-Member` names the file inside the package.
+
+For any other filing, and for a main document over 50 MB (HTML) or 100 MB (other files), the response is a redirect to the stored file (`document`). The full package is always at `document`. A 200 is billed as one raw request; a redirect is not billed.
+
+### Example
+
+* Bearer (JWT) Authentication (CognitoJWT):
+* Api Key Authentication (ApiKeyAuth):
+
+```python
+import financial_reports_generated_client
+from financial_reports_generated_client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.financialreports.eu
+# See configuration.py for a list of all supported configuration parameters.
+configuration = financial_reports_generated_client.Configuration(
+    host = "https://api.financialreports.eu"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization (JWT): CognitoJWT
+configuration = financial_reports_generated_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Configure API key authorization: ApiKeyAuth
+configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+async with financial_reports_generated_client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = financial_reports_generated_client.FilingsApi(api_client)
+    id = 56 # int | A unique integer value identifying this filing.
+    format = 'format_example' # str |  (optional)
+
+    try:
+        # Retrieve Filing Document
+        api_response = await api_instance.filings_document_retrieve(id, format=format)
+        print("The response of FilingsApi->filings_document_retrieve:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling FilingsApi->filings_document_retrieve: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **int**| A unique integer value identifying this filing. | 
+ **format** | **str**|  | [optional] 
+
+### Return type
+
+**bytes**
+
+### Authorization
+
+[CognitoJWT](../README.md#CognitoJWT), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*, application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | The main document, with its own Content-Type (e.g. text/html, application/xhtml+xml, application/pdf). |  -  |
+**302** | The filing is not a package, or its main document is over the size cap: redirect to the stored file. |  -  |
+**404** | Not Found. The filing has no document, or its package is unreadable or empty. |  -  |
+**403** | Missing or invalid API key, or the plan does not include this endpoint. |  -  |
+**429** | Rate limit, plan quota or spend cap reached. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **filings_history_retrieve**
 > PaginatedFilingHistoryList filings_history_retrieve(id)
@@ -103,7 +201,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **filings_list**
-> PaginatedFilingSummaryList filings_list(added_to_platform_from=added_to_platform_from, added_to_platform_to=added_to_platform_to, categories=categories, category=category, company=company, company_isin=company_isin, countries=countries, extensions=extensions, file_size_max=file_size_max, file_size_min=file_size_min, fiscal_period=fiscal_period, fiscal_year=fiscal_year, include_companions=include_companions, ingestion_mode=ingestion_mode, language=language, languages=languages, lei=lei, listing_status=listing_status, max_confidence=max_confidence, min_confidence=min_confidence, on_watchlist=on_watchlist, ordering=ordering, page=page, page_size=page_size, period_ending_date=period_ending_date, period_ending_date_from=period_ending_date_from, period_ending_date_to=period_ending_date_to, processing_status=processing_status, processing_statuses=processing_statuses, reasoning_contains=reasoning_contains, release_datetime_from=release_datetime_from, release_datetime_to=release_datetime_to, search=search, source=source, source_filing_type=source_filing_type, sources=sources, type=type, types=types, updated_date_from=updated_date_from, updated_date_to=updated_date_to, view=view)
+> PaginatedFilingSummaryList filings_list(added_to_platform_from=added_to_platform_from, added_to_platform_to=added_to_platform_to, categories=categories, category=category, company=company, company_isin=company_isin, countries=countries, extensions=extensions, file_size_max=file_size_max, file_size_min=file_size_min, fiscal_period=fiscal_period, fiscal_year=fiscal_year, include_companions=include_companions, include_predecessors=include_predecessors, ingestion_mode=ingestion_mode, language=language, languages=languages, lei=lei, listing_status=listing_status, max_confidence=max_confidence, min_confidence=min_confidence, on_watchlist=on_watchlist, ordering=ordering, page=page, page_size=page_size, period_ending_date=period_ending_date, period_ending_date_from=period_ending_date_from, period_ending_date_to=period_ending_date_to, processing_status=processing_status, processing_statuses=processing_statuses, reasoning_contains=reasoning_contains, release_datetime_from=release_datetime_from, release_datetime_to=release_datetime_to, search=search, source=source, source_filing_type=source_filing_type, sources=sources, type=type, types=types, updated_date_from=updated_date_from, updated_date_to=updated_date_to, view=view)
 
 List Filings
 
@@ -162,6 +260,7 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
     fiscal_period = 'fiscal_period_example' # str | Filter by fiscal period. Possible values: `FY` (Full Year), `Q1`, `Q2`, `Q3`, `Q4`, `H1` (First Half), `H2` (Second Half). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER. (optional)
     fiscal_year = 56 # int | Filter by fiscal year (e.g., `2024`). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER. (optional)
     include_companions = True # bool | Include companion data files in type and category filters. Companions are small machine-readable XBRL/XML/JSON files stored beside a report for financial extraction, typed like that report. Most are not converted to markdown and show processing_status SKIPPED; the report beside them carries the text. Default false: type, types, category and categories return the reports only. (optional)
+    include_predecessors = True # bool | With `company`, also return the filings of the company's predecessors: the issuers it succeeded by reorganisation or redomicile (its `predecessors` of kind reorganization or other on GET /companies/{id}/, followed back through the chain; merged-in targets and spin-off parents are not included), each up to and including the link's effective date (UTC). Each filing's `company` is still the issuer that filed it. Default false. Requires `company`; `lei` and `company_isin` do not follow predecessors. (optional)
     ingestion_mode = 'ingestion_mode_example' # str | Filter by ingestion mode. Whether the filing was added to the platform promptly after publication. `REALTIME`: added within the source's normal publication delay (5 to 48 hours after `release_datetime`, depending on the source). `BACKFILLED`: everything else, including historical imports and new filings that reached the platform late, for example after a source outage. Set once when the filing is added and not recalculated afterwards. (optional)
     language = 'language_example' # str | Filter by a single filing language ISO 639-1 code (e.g., en). (optional)
     languages = 'languages_example' # str | Filter by filing language ISO 639-1 code(s). Comma-separated for multiple values (e.g., en,de). (optional)
@@ -193,7 +292,7 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
 
     try:
         # List Filings
-        api_response = await api_instance.filings_list(added_to_platform_from=added_to_platform_from, added_to_platform_to=added_to_platform_to, categories=categories, category=category, company=company, company_isin=company_isin, countries=countries, extensions=extensions, file_size_max=file_size_max, file_size_min=file_size_min, fiscal_period=fiscal_period, fiscal_year=fiscal_year, include_companions=include_companions, ingestion_mode=ingestion_mode, language=language, languages=languages, lei=lei, listing_status=listing_status, max_confidence=max_confidence, min_confidence=min_confidence, on_watchlist=on_watchlist, ordering=ordering, page=page, page_size=page_size, period_ending_date=period_ending_date, period_ending_date_from=period_ending_date_from, period_ending_date_to=period_ending_date_to, processing_status=processing_status, processing_statuses=processing_statuses, reasoning_contains=reasoning_contains, release_datetime_from=release_datetime_from, release_datetime_to=release_datetime_to, search=search, source=source, source_filing_type=source_filing_type, sources=sources, type=type, types=types, updated_date_from=updated_date_from, updated_date_to=updated_date_to, view=view)
+        api_response = await api_instance.filings_list(added_to_platform_from=added_to_platform_from, added_to_platform_to=added_to_platform_to, categories=categories, category=category, company=company, company_isin=company_isin, countries=countries, extensions=extensions, file_size_max=file_size_max, file_size_min=file_size_min, fiscal_period=fiscal_period, fiscal_year=fiscal_year, include_companions=include_companions, include_predecessors=include_predecessors, ingestion_mode=ingestion_mode, language=language, languages=languages, lei=lei, listing_status=listing_status, max_confidence=max_confidence, min_confidence=min_confidence, on_watchlist=on_watchlist, ordering=ordering, page=page, page_size=page_size, period_ending_date=period_ending_date, period_ending_date_from=period_ending_date_from, period_ending_date_to=period_ending_date_to, processing_status=processing_status, processing_statuses=processing_statuses, reasoning_contains=reasoning_contains, release_datetime_from=release_datetime_from, release_datetime_to=release_datetime_to, search=search, source=source, source_filing_type=source_filing_type, sources=sources, type=type, types=types, updated_date_from=updated_date_from, updated_date_to=updated_date_to, view=view)
         print("The response of FilingsApi->filings_list:\n")
         pprint(api_response)
     except Exception as e:
@@ -220,6 +319,7 @@ Name | Type | Description  | Notes
  **fiscal_period** | **str**| Filter by fiscal period. Possible values: &#x60;FY&#x60; (Full Year), &#x60;Q1&#x60;, &#x60;Q2&#x60;, &#x60;Q3&#x60;, &#x60;Q4&#x60;, &#x60;H1&#x60; (First Half), &#x60;H2&#x60; (Second Half). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER. | [optional] 
  **fiscal_year** | **int**| Filter by fiscal year (e.g., &#x60;2024&#x60;). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER. | [optional] 
  **include_companions** | **bool**| Include companion data files in type and category filters. Companions are small machine-readable XBRL/XML/JSON files stored beside a report for financial extraction, typed like that report. Most are not converted to markdown and show processing_status SKIPPED; the report beside them carries the text. Default false: type, types, category and categories return the reports only. | [optional] 
+ **include_predecessors** | **bool**| With &#x60;company&#x60;, also return the filings of the company&#39;s predecessors: the issuers it succeeded by reorganisation or redomicile (its &#x60;predecessors&#x60; of kind reorganization or other on GET /companies/{id}/, followed back through the chain; merged-in targets and spin-off parents are not included), each up to and including the link&#39;s effective date (UTC). Each filing&#39;s &#x60;company&#x60; is still the issuer that filed it. Default false. Requires &#x60;company&#x60;; &#x60;lei&#x60; and &#x60;company_isin&#x60; do not follow predecessors. | [optional] 
  **ingestion_mode** | **str**| Filter by ingestion mode. Whether the filing was added to the platform promptly after publication. &#x60;REALTIME&#x60;: added within the source&#39;s normal publication delay (5 to 48 hours after &#x60;release_datetime&#x60;, depending on the source). &#x60;BACKFILLED&#x60;: everything else, including historical imports and new filings that reached the platform late, for example after a source outage. Set once when the filing is added and not recalculated afterwards. | [optional] 
  **language** | **str**| Filter by a single filing language ISO 639-1 code (e.g., en). | [optional] 
  **languages** | **str**| Filter by filing language ISO 639-1 code(s). Comma-separated for multiple values (e.g., en,de). | [optional] 
