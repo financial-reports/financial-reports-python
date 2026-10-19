@@ -475,7 +475,7 @@ Each row may carry any mix of `isin`, `lei`, `cik`, `ticker` and `name`, plus an
 
 **Billing** — one request is one call against your quota, whatever the row count. Rows we do not cover are not billed differently from rows we do.
 
-Maximum 500 rows per request. Up to 50 rows per request reach the name lookup; beyond that a row carrying only a name returns `not_covered` with `name_tier_skipped`, so split large name-heavy batches.
+Maximum 500 rows per request. Up to 50 rows per request reach the name lookup, within 25 seconds; beyond either a row carrying only a name returns `not_covered` with `name_tier_skipped`, so split large name-heavy batches.
 
 ### Example
 
