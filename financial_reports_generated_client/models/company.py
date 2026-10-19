@@ -59,7 +59,7 @@ class Company(BaseModel):
     industry_group: Optional[ISICDivision] = Field(description="Company's ISIC Division classification.")
     industry: Optional[ISICGroup] = Field(description="Company's ISIC Group classification.")
     sub_industry: Optional[ISICClass] = Field(description="Company's ISIC Class classification.")
-    oics: Optional[CompanyOics] = Field(description="The company's label under the Open Industry Classification Standard (OICS), an investor-oriented taxonomy served alongside ISIC. Public preview, OICS v0.3: codes and names can still change before v1.0. Null when the company has no label under the current OICS version.")
+    oics: Optional[CompanyOics] = Field(description="The company's label under the Open Industry Classification Standard (OICS), an investor-oriented taxonomy served alongside ISIC. Public preview, OICS v0.3: codes and names can still change before v1.0. Null when the company has no label under the current OICS version. A change to the label (class, entity type, secondaries, basis, contested or alternate) moves the company's `date_public`, so incremental syncs by date see it; `classified_at` changing alone does not, and neither does a new OICS release renaming a node.")
     ir_link: Optional[StrictStr] = Field(description="Link to the company's Investor Relations page.")
     homepage_link: Optional[StrictStr] = Field(description="Link to the company's main homepage.")
     logo: Optional[StrictStr] = Field(description="URL of the company's logo file.")

@@ -22,7 +22,7 @@ Name | Type | Description | Notes
 **industry_group** | [**ISICDivision**](ISICDivision.md) | Company&#39;s ISIC Division classification. | [readonly] 
 **industry** | [**ISICGroup**](ISICGroup.md) | Company&#39;s ISIC Group classification. | [readonly] 
 **sub_industry** | [**ISICClass**](ISICClass.md) | Company&#39;s ISIC Class classification. | [readonly] 
-**oics** | [**CompanyOics**](CompanyOics.md) | The company&#39;s label under the Open Industry Classification Standard (OICS), an investor-oriented taxonomy served alongside ISIC. Public preview, OICS v0.3: codes and names can still change before v1.0. Null when the company has no label under the current OICS version. | [readonly] 
+**oics** | [**CompanyOics**](CompanyOics.md) | The company&#39;s label under the Open Industry Classification Standard (OICS), an investor-oriented taxonomy served alongside ISIC. Public preview, OICS v0.3: codes and names can still change before v1.0. Null when the company has no label under the current OICS version. A change to the label (class, entity type, secondaries, basis, contested or alternate) moves the company&#39;s &#x60;date_public&#x60;, so incremental syncs by date see it; &#x60;classified_at&#x60; changing alone does not, and neither does a new OICS release renaming a node. | [readonly] 
 **ir_link** | **str** | Link to the company&#39;s Investor Relations page. | [readonly] 
 **homepage_link** | **str** | Link to the company&#39;s main homepage. | [readonly] 
 **logo** | **str** | URL of the company&#39;s logo file. | [readonly] 
