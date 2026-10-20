@@ -19,7 +19,7 @@ Each definition describes one line item that may appear in extracted financial s
 
 `templates` lists the KPI templates a line item is meaningful for (`industrial`, `bank`, `insurer`); filter with `?template=bank`. Industrial-only items are still served for banks and insurers, but do not mean the same thing there.
 
-**Access Level Required:** Requires **Standard Access (Level 1)**.
+**Cost:** 1 credit per request.
 
 ### Example
 
@@ -120,7 +120,7 @@ Retrieve Line Item Definition
 
 Retrieve a single line item definition by its code.
 
-**Access Level Required:** Requires **Standard Access (Level 1)**.
+**Cost:** 1 credit per request.
 
 ### Example
 

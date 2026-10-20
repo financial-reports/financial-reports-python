@@ -1,7 +1,7 @@
 """
     FinancialFilings API
 
-    Public-company filings across G20 markets and Europe. Authenticate every request with the `X-API-Key` header. Rate-limit headers on authenticated API responses: `X-RateLimit-Burst-Limit` (a rate expression such as `50/second`, not an integer), `X-RateLimit-Monthly-Limit` (an integer or the literal `Unlimited`), `X-RateLimit-Monthly-Remaining` (an integer, or `Unlimited` / `MCP (unlimited)`; omitted when not applicable), and `X-RateLimit-Monthly-Unit` (`requests` or `credits` — pay-as-you-go free-tier accounts are metered in credits, not request counts; omitted whenever Monthly-Remaining is). Parse defensively — these are strings, not numbers.  **Tiered access.** **L1** — metadata, company profiles, ISIC classifications, reference data, point-in-time audit trails. **L2** — Markdown / JSON content, full-text search. **L3** — standardized financial line items (income statement, balance sheet, cash-flow statement) per fiscal period, mapped to a single reusable taxonomy.
+    Public-company filings across G20 markets and Europe. Authenticate every request with the `X-API-Key` header. Rate-limit headers on authenticated API responses: `X-RateLimit-Burst-Limit` (a rate expression such as `50/second`, not an integer), `X-RateLimit-Monthly-Limit` (an integer or the literal `Unlimited`), `X-RateLimit-Monthly-Remaining` (an integer, or `Unlimited` / `MCP (unlimited)`; omitted when not applicable), and `X-RateLimit-Monthly-Unit` (`requests` or `credits` — pay-as-you-go free-tier accounts are metered in credits, not request counts; omitted whenever Monthly-Remaining is). Parse defensively — these are strings, not numbers.  **Credits.** One key reaches every endpoint, and each call is priced in credits: metadata and search, filing Markdown, and standardized financial line items each have their own cost, stated at the top of every endpoint below. A free account gets a monthly credit allowance; `X-Credits-Charged` on each response says what the call cost, and `GET /usage/` shows the month so far. Webhook push is an Enterprise capability, outside credit pricing. Costs and the allowance: https://financialfilings.com/developers/
 
     The version of the OpenAPI document: 1.4.0
     Contact: api@financialfilings.com
@@ -73,7 +73,7 @@ class ISICClassificationsApi:
     ) -> PaginatedISICClassList:
         """List ISIC Classes
 
-        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve a paginated list of ISIC Classes.
+        **Cost:** 1 credit per request.  --- Retrieve a paginated list of ISIC Classes.
 
         :param code:
         :type code: str
@@ -174,7 +174,7 @@ class ISICClassificationsApi:
     ) -> ApiResponse[PaginatedISICClassList]:
         """List ISIC Classes
 
-        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve a paginated list of ISIC Classes.
+        **Cost:** 1 credit per request.  --- Retrieve a paginated list of ISIC Classes.
 
         :param code:
         :type code: str
@@ -275,7 +275,7 @@ class ISICClassificationsApi:
     ) -> RESTResponseType:
         """List ISIC Classes
 
-        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve a paginated list of ISIC Classes.
+        **Cost:** 1 credit per request.  --- Retrieve a paginated list of ISIC Classes.
 
         :param code:
         :type code: str
@@ -472,7 +472,7 @@ class ISICClassificationsApi:
     ) -> ISICClass:
         """Retrieve ISIC Class
 
-        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve details for a specific ISIC Class by its ID.
+        **Cost:** 1 credit per request.  --- Retrieve details for a specific ISIC Class by its ID.
 
         :param id: A unique integer value identifying this sub industry. (required)
         :type id: int
@@ -541,7 +541,7 @@ class ISICClassificationsApi:
     ) -> ApiResponse[ISICClass]:
         """Retrieve ISIC Class
 
-        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve details for a specific ISIC Class by its ID.
+        **Cost:** 1 credit per request.  --- Retrieve details for a specific ISIC Class by its ID.
 
         :param id: A unique integer value identifying this sub industry. (required)
         :type id: int
@@ -610,7 +610,7 @@ class ISICClassificationsApi:
     ) -> RESTResponseType:
         """Retrieve ISIC Class
 
-        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve details for a specific ISIC Class by its ID.
+        **Cost:** 1 credit per request.  --- Retrieve details for a specific ISIC Class by its ID.
 
         :param id: A unique integer value identifying this sub industry. (required)
         :type id: int
@@ -746,7 +746,7 @@ class ISICClassificationsApi:
     ) -> PaginatedISICDivisionList:
         """List ISIC Divisions
 
-        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve a paginated list of ISIC Divisions.
+        **Cost:** 1 credit per request.  --- Retrieve a paginated list of ISIC Divisions.
 
         :param code:
         :type code: str
@@ -839,7 +839,7 @@ class ISICClassificationsApi:
     ) -> ApiResponse[PaginatedISICDivisionList]:
         """List ISIC Divisions
 
-        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve a paginated list of ISIC Divisions.
+        **Cost:** 1 credit per request.  --- Retrieve a paginated list of ISIC Divisions.
 
         :param code:
         :type code: str
@@ -932,7 +932,7 @@ class ISICClassificationsApi:
     ) -> RESTResponseType:
         """List ISIC Divisions
 
-        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve a paginated list of ISIC Divisions.
+        **Cost:** 1 credit per request.  --- Retrieve a paginated list of ISIC Divisions.
 
         :param code:
         :type code: str
@@ -1113,7 +1113,7 @@ class ISICClassificationsApi:
     ) -> ISICDivision:
         """Retrieve ISIC Division
 
-        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve details for a specific ISIC Division by its ID.
+        **Cost:** 1 credit per request.  --- Retrieve details for a specific ISIC Division by its ID.
 
         :param id: A unique integer value identifying this industry group. (required)
         :type id: int
@@ -1182,7 +1182,7 @@ class ISICClassificationsApi:
     ) -> ApiResponse[ISICDivision]:
         """Retrieve ISIC Division
 
-        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve details for a specific ISIC Division by its ID.
+        **Cost:** 1 credit per request.  --- Retrieve details for a specific ISIC Division by its ID.
 
         :param id: A unique integer value identifying this industry group. (required)
         :type id: int
@@ -1251,7 +1251,7 @@ class ISICClassificationsApi:
     ) -> RESTResponseType:
         """Retrieve ISIC Division
 
-        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve details for a specific ISIC Division by its ID.
+        **Cost:** 1 credit per request.  --- Retrieve details for a specific ISIC Division by its ID.
 
         :param id: A unique integer value identifying this industry group. (required)
         :type id: int
@@ -1388,7 +1388,7 @@ class ISICClassificationsApi:
     ) -> PaginatedISICGroupList:
         """List ISIC Groups
 
-        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve a paginated list of ISIC Groups.
+        **Cost:** 1 credit per request.  --- Retrieve a paginated list of ISIC Groups.
 
         :param code:
         :type code: str
@@ -1485,7 +1485,7 @@ class ISICClassificationsApi:
     ) -> ApiResponse[PaginatedISICGroupList]:
         """List ISIC Groups
 
-        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve a paginated list of ISIC Groups.
+        **Cost:** 1 credit per request.  --- Retrieve a paginated list of ISIC Groups.
 
         :param code:
         :type code: str
@@ -1582,7 +1582,7 @@ class ISICClassificationsApi:
     ) -> RESTResponseType:
         """List ISIC Groups
 
-        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve a paginated list of ISIC Groups.
+        **Cost:** 1 credit per request.  --- Retrieve a paginated list of ISIC Groups.
 
         :param code:
         :type code: str
@@ -1771,7 +1771,7 @@ class ISICClassificationsApi:
     ) -> ISICGroup:
         """Retrieve ISIC Group
 
-        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve details for a specific ISIC Group by its ID.
+        **Cost:** 1 credit per request.  --- Retrieve details for a specific ISIC Group by its ID.
 
         :param id: A unique integer value identifying this industry. (required)
         :type id: int
@@ -1840,7 +1840,7 @@ class ISICClassificationsApi:
     ) -> ApiResponse[ISICGroup]:
         """Retrieve ISIC Group
 
-        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve details for a specific ISIC Group by its ID.
+        **Cost:** 1 credit per request.  --- Retrieve details for a specific ISIC Group by its ID.
 
         :param id: A unique integer value identifying this industry. (required)
         :type id: int
@@ -1909,7 +1909,7 @@ class ISICClassificationsApi:
     ) -> RESTResponseType:
         """Retrieve ISIC Group
 
-        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve details for a specific ISIC Group by its ID.
+        **Cost:** 1 credit per request.  --- Retrieve details for a specific ISIC Group by its ID.
 
         :param id: A unique integer value identifying this industry. (required)
         :type id: int
@@ -2044,7 +2044,7 @@ class ISICClassificationsApi:
     ) -> PaginatedISICSectionList:
         """List ISIC Sections
 
-        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve a paginated list of ISIC Sections.
+        **Cost:** 1 credit per request.  --- Retrieve a paginated list of ISIC Sections.
 
         :param code:
         :type code: str
@@ -2133,7 +2133,7 @@ class ISICClassificationsApi:
     ) -> ApiResponse[PaginatedISICSectionList]:
         """List ISIC Sections
 
-        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve a paginated list of ISIC Sections.
+        **Cost:** 1 credit per request.  --- Retrieve a paginated list of ISIC Sections.
 
         :param code:
         :type code: str
@@ -2222,7 +2222,7 @@ class ISICClassificationsApi:
     ) -> RESTResponseType:
         """List ISIC Sections
 
-        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve a paginated list of ISIC Sections.
+        **Cost:** 1 credit per request.  --- Retrieve a paginated list of ISIC Sections.
 
         :param code:
         :type code: str
@@ -2395,7 +2395,7 @@ class ISICClassificationsApi:
     ) -> ISICSection:
         """Retrieve ISIC Section
 
-        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve details for a specific ISIC Section by its ID.
+        **Cost:** 1 credit per request.  --- Retrieve details for a specific ISIC Section by its ID.
 
         :param id: A unique integer value identifying this sector. (required)
         :type id: int
@@ -2464,7 +2464,7 @@ class ISICClassificationsApi:
     ) -> ApiResponse[ISICSection]:
         """Retrieve ISIC Section
 
-        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve details for a specific ISIC Section by its ID.
+        **Cost:** 1 credit per request.  --- Retrieve details for a specific ISIC Section by its ID.
 
         :param id: A unique integer value identifying this sector. (required)
         :type id: int
@@ -2533,7 +2533,7 @@ class ISICClassificationsApi:
     ) -> RESTResponseType:
         """Retrieve ISIC Section
 
-        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve details for a specific ISIC Section by its ID.
+        **Cost:** 1 credit per request.  --- Retrieve details for a specific ISIC Section by its ID.
 
         :param id: A unique integer value identifying this sector. (required)
         :type id: int

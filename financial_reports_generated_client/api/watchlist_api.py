@@ -1,7 +1,7 @@
 """
     FinancialFilings API
 
-    Public-company filings across G20 markets and Europe. Authenticate every request with the `X-API-Key` header. Rate-limit headers on authenticated API responses: `X-RateLimit-Burst-Limit` (a rate expression such as `50/second`, not an integer), `X-RateLimit-Monthly-Limit` (an integer or the literal `Unlimited`), `X-RateLimit-Monthly-Remaining` (an integer, or `Unlimited` / `MCP (unlimited)`; omitted when not applicable), and `X-RateLimit-Monthly-Unit` (`requests` or `credits` — pay-as-you-go free-tier accounts are metered in credits, not request counts; omitted whenever Monthly-Remaining is). Parse defensively — these are strings, not numbers.  **Tiered access.** **L1** — metadata, company profiles, ISIC classifications, reference data, point-in-time audit trails. **L2** — Markdown / JSON content, full-text search. **L3** — standardized financial line items (income statement, balance sheet, cash-flow statement) per fiscal period, mapped to a single reusable taxonomy.
+    Public-company filings across G20 markets and Europe. Authenticate every request with the `X-API-Key` header. Rate-limit headers on authenticated API responses: `X-RateLimit-Burst-Limit` (a rate expression such as `50/second`, not an integer), `X-RateLimit-Monthly-Limit` (an integer or the literal `Unlimited`), `X-RateLimit-Monthly-Remaining` (an integer, or `Unlimited` / `MCP (unlimited)`; omitted when not applicable), and `X-RateLimit-Monthly-Unit` (`requests` or `credits` — pay-as-you-go free-tier accounts are metered in credits, not request counts; omitted whenever Monthly-Remaining is). Parse defensively — these are strings, not numbers.  **Credits.** One key reaches every endpoint, and each call is priced in credits: metadata and search, filing Markdown, and standardized financial line items each have their own cost, stated at the top of every endpoint below. A free account gets a monthly credit allowance; `X-Credits-Charged` on each response says what the call cost, and `GET /usage/` shows the month so far. Webhook push is an Enterprise capability, outside credit pricing. Costs and the allowance: https://financialfilings.com/developers/
 
     The version of the OpenAPI document: 1.4.0
     Contact: api@financialfilings.com
@@ -60,7 +60,7 @@ class WatchlistApi:
     ) -> BulkWatchlistResponse:
         """Bulk Add Companies to Watchlist
 
-        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Adds up to 100 companies to the authenticated user's watchlist in a single request. Companies already in the watchlist are silently skipped.
+        **Cost:** 1 credit per request.  --- Adds up to 100 companies to the authenticated user's watchlist in a single request. Companies already in the watchlist are silently skipped.
 
         :param bulk_watchlist: (required)
         :type bulk_watchlist: BulkWatchlist
@@ -131,7 +131,7 @@ class WatchlistApi:
     ) -> ApiResponse[BulkWatchlistResponse]:
         """Bulk Add Companies to Watchlist
 
-        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Adds up to 100 companies to the authenticated user's watchlist in a single request. Companies already in the watchlist are silently skipped.
+        **Cost:** 1 credit per request.  --- Adds up to 100 companies to the authenticated user's watchlist in a single request. Companies already in the watchlist are silently skipped.
 
         :param bulk_watchlist: (required)
         :type bulk_watchlist: BulkWatchlist
@@ -202,7 +202,7 @@ class WatchlistApi:
     ) -> RESTResponseType:
         """Bulk Add Companies to Watchlist
 
-        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Adds up to 100 companies to the authenticated user's watchlist in a single request. Companies already in the watchlist are silently skipped.
+        **Cost:** 1 credit per request.  --- Adds up to 100 companies to the authenticated user's watchlist in a single request. Companies already in the watchlist are silently skipped.
 
         :param bulk_watchlist: (required)
         :type bulk_watchlist: BulkWatchlist
@@ -347,7 +347,7 @@ class WatchlistApi:
     ) -> BulkWatchlistResponse:
         """Bulk Remove Companies from Watchlist
 
-        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Removes up to 100 companies from the authenticated user's watchlist in a single request. Companies not in the watchlist are silently skipped.
+        **Cost:** 1 credit per request.  --- Removes up to 100 companies from the authenticated user's watchlist in a single request. Companies not in the watchlist are silently skipped.
 
         :param bulk_watchlist: (required)
         :type bulk_watchlist: BulkWatchlist
@@ -418,7 +418,7 @@ class WatchlistApi:
     ) -> ApiResponse[BulkWatchlistResponse]:
         """Bulk Remove Companies from Watchlist
 
-        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Removes up to 100 companies from the authenticated user's watchlist in a single request. Companies not in the watchlist are silently skipped.
+        **Cost:** 1 credit per request.  --- Removes up to 100 companies from the authenticated user's watchlist in a single request. Companies not in the watchlist are silently skipped.
 
         :param bulk_watchlist: (required)
         :type bulk_watchlist: BulkWatchlist
@@ -489,7 +489,7 @@ class WatchlistApi:
     ) -> RESTResponseType:
         """Bulk Remove Companies from Watchlist
 
-        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Removes up to 100 companies from the authenticated user's watchlist in a single request. Companies not in the watchlist are silently skipped.
+        **Cost:** 1 credit per request.  --- Removes up to 100 companies from the authenticated user's watchlist in a single request. Companies not in the watchlist are silently skipped.
 
         :param bulk_watchlist: (required)
         :type bulk_watchlist: BulkWatchlist
@@ -634,7 +634,7 @@ class WatchlistApi:
     ) -> WatchlistResponse:
         """Add Company to Watchlist
 
-        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Adds a specified company to the authenticated user's watchlist.
+        **Cost:** 1 credit per request.  --- Adds a specified company to the authenticated user's watchlist.
 
         :param watchlist_action: (required)
         :type watchlist_action: WatchlistAction
@@ -705,7 +705,7 @@ class WatchlistApi:
     ) -> ApiResponse[WatchlistResponse]:
         """Add Company to Watchlist
 
-        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Adds a specified company to the authenticated user's watchlist.
+        **Cost:** 1 credit per request.  --- Adds a specified company to the authenticated user's watchlist.
 
         :param watchlist_action: (required)
         :type watchlist_action: WatchlistAction
@@ -776,7 +776,7 @@ class WatchlistApi:
     ) -> RESTResponseType:
         """Add Company to Watchlist
 
-        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Adds a specified company to the authenticated user's watchlist.
+        **Cost:** 1 credit per request.  --- Adds a specified company to the authenticated user's watchlist.
 
         :param watchlist_action: (required)
         :type watchlist_action: WatchlistAction
@@ -921,7 +921,7 @@ class WatchlistApi:
     ) -> WatchlistResponse:
         """Remove Company from Watchlist
 
-        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Removes a specified company from the authenticated user's watchlist using the `company_id` from the URL path.
+        **Cost:** 1 credit per request.  --- Removes a specified company from the authenticated user's watchlist using the `company_id` from the URL path.
 
         :param company_id: (required)
         :type company_id: int
@@ -992,7 +992,7 @@ class WatchlistApi:
     ) -> ApiResponse[WatchlistResponse]:
         """Remove Company from Watchlist
 
-        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Removes a specified company from the authenticated user's watchlist using the `company_id` from the URL path.
+        **Cost:** 1 credit per request.  --- Removes a specified company from the authenticated user's watchlist using the `company_id` from the URL path.
 
         :param company_id: (required)
         :type company_id: int
@@ -1063,7 +1063,7 @@ class WatchlistApi:
     ) -> RESTResponseType:
         """Remove Company from Watchlist
 
-        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Removes a specified company from the authenticated user's watchlist using the `company_id` from the URL path.
+        **Cost:** 1 credit per request.  --- Removes a specified company from the authenticated user's watchlist using the `company_id` from the URL path.
 
         :param company_id: (required)
         :type company_id: int
@@ -1194,7 +1194,7 @@ class WatchlistApi:
     ) -> WatchlistPage:
         """Get User's Watchlist
 
-        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Fetches all companies currently in the authenticated user's watchlist. Results are paginated.
+        **Cost:** 1 credit per request.  --- Fetches all companies currently in the authenticated user's watchlist. Results are paginated.
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1260,7 +1260,7 @@ class WatchlistApi:
     ) -> ApiResponse[WatchlistPage]:
         """Get User's Watchlist
 
-        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Fetches all companies currently in the authenticated user's watchlist. Results are paginated.
+        **Cost:** 1 credit per request.  --- Fetches all companies currently in the authenticated user's watchlist. Results are paginated.
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1326,7 +1326,7 @@ class WatchlistApi:
     ) -> RESTResponseType:
         """Get User's Watchlist
 
-        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Fetches all companies currently in the authenticated user's watchlist. Results are paginated.
+        **Cost:** 1 credit per request.  --- Fetches all companies currently in the authenticated user's watchlist. Results are paginated.
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request

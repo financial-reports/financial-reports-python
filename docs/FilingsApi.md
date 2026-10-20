@@ -17,7 +17,7 @@ Method | HTTP request | Description
 
 Retrieve Filing Document
 
-**Access Level Required:** Requires **Standard Access (Level 1)**.
+**Cost:** 1 credit per request.
 
 ---
 Download the filing's main document as a single readable file.
@@ -114,7 +114,7 @@ Name | Type | Description  | Notes
 
 Retrieve Filing History (Audit Trail)
 
-**Access Level Required:** Requires **Standard Access (Level 1)**.
+**Cost:** 1 credit per request.
 
 ---
 Retrieve a point-in-time audit trail of material changes made to this filing (e.g., classification or status updates).
@@ -205,7 +205,7 @@ Name | Type | Description  | Notes
 
 List Filings
 
-**Access Level Required:** Requires **Standard Access (Level 1)**.
+**Cost:** 1 credit per request.
 
 ---
 Retrieve a paginated list of regulatory filings.
@@ -379,7 +379,7 @@ Name | Type | Description  | Notes
 
 Retrieve Filing Markdown
 
-**Access Level Required:** Requires **Processed Filings (Level 2)** access to view full converted content.
+**Cost:** 6 credits per request (12 for premium filing types).
 
 ---
 Retrieve the raw processed content of a single filing in Markdown format.
@@ -477,7 +477,7 @@ Name | Type | Description  | Notes
 
 Search Within a Filing's Markdown
 
-**Access Level Required:** Requires **Processed Filings (Level 2)** access to search converted content.
+**Cost:** 6 credits per request (12 for premium filing types).
 
 ---
 Find text inside one filing's processed Markdown without downloading all of it. Case-insensitive substring match; hits come back in document order, each with ~440 characters of context and its character `offset`. Pass that offset (minus a margin) to `GET /filings/{id}/markdown/?offset=&limit=` to read the surrounding section. `total_hits` counts every match, so you can tell when `max_hits` was spent on the table of contents. Billed as one Markdown request.
@@ -568,7 +568,7 @@ void (empty response body)
 
 Retrieve Filing Details
 
-**Access Level Required:** Requires **Standard Access (Level 1)**.
+**Cost:** 1 credit per request.
 
 ---
 Retrieve detailed information for a single filing by its ID.

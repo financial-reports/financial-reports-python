@@ -1,7 +1,7 @@
 """
     FinancialFilings API
 
-    Public-company filings across G20 markets and Europe. Authenticate every request with the `X-API-Key` header. Rate-limit headers on authenticated API responses: `X-RateLimit-Burst-Limit` (a rate expression such as `50/second`, not an integer), `X-RateLimit-Monthly-Limit` (an integer or the literal `Unlimited`), `X-RateLimit-Monthly-Remaining` (an integer, or `Unlimited` / `MCP (unlimited)`; omitted when not applicable), and `X-RateLimit-Monthly-Unit` (`requests` or `credits` — pay-as-you-go free-tier accounts are metered in credits, not request counts; omitted whenever Monthly-Remaining is). Parse defensively — these are strings, not numbers.  **Tiered access.** **L1** — metadata, company profiles, ISIC classifications, reference data, point-in-time audit trails. **L2** — Markdown / JSON content, full-text search. **L3** — standardized financial line items (income statement, balance sheet, cash-flow statement) per fiscal period, mapped to a single reusable taxonomy.
+    Public-company filings across G20 markets and Europe. Authenticate every request with the `X-API-Key` header. Rate-limit headers on authenticated API responses: `X-RateLimit-Burst-Limit` (a rate expression such as `50/second`, not an integer), `X-RateLimit-Monthly-Limit` (an integer or the literal `Unlimited`), `X-RateLimit-Monthly-Remaining` (an integer, or `Unlimited` / `MCP (unlimited)`; omitted when not applicable), and `X-RateLimit-Monthly-Unit` (`requests` or `credits` — pay-as-you-go free-tier accounts are metered in credits, not request counts; omitted whenever Monthly-Remaining is). Parse defensively — these are strings, not numbers.  **Credits.** One key reaches every endpoint, and each call is priced in credits: metadata and search, filing Markdown, and standardized financial line items each have their own cost, stated at the top of every endpoint below. A free account gets a monthly credit allowance; `X-Credits-Charged` on each response says what the call cost, and `GET /usage/` shows the month so far. Webhook push is an Enterprise capability, outside credit pricing. Costs and the allowance: https://financialfilings.com/developers/
 
     The version of the OpenAPI document: 1.4.0
     Contact: api@financialfilings.com
@@ -62,7 +62,7 @@ class FilingTypesApi:
     ) -> PaginatedFilingTypeList:
         """List Filing Types
 
-        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve a paginated list of all available filing types.
+        **Cost:** 1 credit per request.  --- Retrieve a paginated list of all available filing types.
 
         :param category:
         :type category: int
@@ -143,7 +143,7 @@ class FilingTypesApi:
     ) -> ApiResponse[PaginatedFilingTypeList]:
         """List Filing Types
 
-        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve a paginated list of all available filing types.
+        **Cost:** 1 credit per request.  --- Retrieve a paginated list of all available filing types.
 
         :param category:
         :type category: int
@@ -224,7 +224,7 @@ class FilingTypesApi:
     ) -> RESTResponseType:
         """List Filing Types
 
-        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve a paginated list of all available filing types.
+        **Cost:** 1 credit per request.  --- Retrieve a paginated list of all available filing types.
 
         :param category:
         :type category: int
@@ -380,7 +380,7 @@ class FilingTypesApi:
     ) -> FilingType:
         """Retrieve Filing Type
 
-        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve details for a specific filing type by its ID.
+        **Cost:** 1 credit per request.  --- Retrieve details for a specific filing type by its ID.
 
         :param id: A unique integer value identifying this filing type. (required)
         :type id: int
@@ -449,7 +449,7 @@ class FilingTypesApi:
     ) -> ApiResponse[FilingType]:
         """Retrieve Filing Type
 
-        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve details for a specific filing type by its ID.
+        **Cost:** 1 credit per request.  --- Retrieve details for a specific filing type by its ID.
 
         :param id: A unique integer value identifying this filing type. (required)
         :type id: int
@@ -518,7 +518,7 @@ class FilingTypesApi:
     ) -> RESTResponseType:
         """Retrieve Filing Type
 
-        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve details for a specific filing type by its ID.
+        **Cost:** 1 credit per request.  --- Retrieve details for a specific filing type by its ID.
 
         :param id: A unique integer value identifying this filing type. (required)
         :type id: int

@@ -16,7 +16,7 @@ Method | HTTP request | Description
 
 Bulk Add Companies to Watchlist
 
-**Access Level Required:** Requires **Standard Access (Level 1)**.
+**Cost:** 1 credit per request.
 
 ---
 Adds up to 100 companies to the authenticated user's watchlist in a single request. Companies already in the watchlist are silently skipped.
@@ -109,7 +109,7 @@ Name | Type | Description  | Notes
 
 Bulk Remove Companies from Watchlist
 
-**Access Level Required:** Requires **Standard Access (Level 1)**.
+**Cost:** 1 credit per request.
 
 ---
 Removes up to 100 companies from the authenticated user's watchlist in a single request. Companies not in the watchlist are silently skipped.
@@ -202,7 +202,7 @@ Name | Type | Description  | Notes
 
 Add Company to Watchlist
 
-**Access Level Required:** Requires **Standard Access (Level 1)**.
+**Cost:** 1 credit per request.
 
 ---
 Adds a specified company to the authenticated user's watchlist.
@@ -295,7 +295,7 @@ Name | Type | Description  | Notes
 
 Remove Company from Watchlist
 
-**Access Level Required:** Requires **Standard Access (Level 1)**.
+**Cost:** 1 credit per request.
 
 ---
 Removes a specified company from the authenticated user's watchlist using the `company_id` from the URL path.
@@ -387,7 +387,7 @@ Name | Type | Description  | Notes
 
 Get User's Watchlist
 
-**Access Level Required:** Requires **Standard Access (Level 1)**.
+**Cost:** 1 credit per request.
 
 ---
 Fetches all companies currently in the authenticated user's watchlist. Results are paginated.

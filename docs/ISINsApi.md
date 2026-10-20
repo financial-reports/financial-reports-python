@@ -13,7 +13,7 @@ Method | HTTP request | Description
 
 List ISINs
 
-**Access Level Required:** Requires **Standard Access (Level 1)**.
+**Cost:** 1 credit per request.
 
 ---
 Search and resolve ISINs (International Securities Identification Numbers) to companies.
@@ -115,7 +115,7 @@ Name | Type | Description  | Notes
 
 Retrieve ISIN
 
-**Access Level Required:** Requires **Standard Access (Level 1)**.
+**Cost:** 1 credit per request.
 
 ---
 Retrieve details for a specific ISIN.

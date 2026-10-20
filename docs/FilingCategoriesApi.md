@@ -13,7 +13,7 @@ Method | HTTP request | Description
 
 List Filing Categories
 
-**Access Level Required:** Requires **Standard Access (Level 1)**.
+**Cost:** 1 credit per request.
 
 ---
 Retrieve the 11 standardized disclosure types (categories) defined by the FRCF.
@@ -105,7 +105,7 @@ Name | Type | Description  | Notes
 
 Retrieve Filing Category
 
-**Access Level Required:** Requires **Standard Access (Level 1)**.
+**Cost:** 1 credit per request.
 
 ---
 Retrieve details for a specific filing category by its ID.

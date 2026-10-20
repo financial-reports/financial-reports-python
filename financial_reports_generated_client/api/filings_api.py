@@ -1,7 +1,7 @@
 """
     FinancialFilings API
 
-    Public-company filings across G20 markets and Europe. Authenticate every request with the `X-API-Key` header. Rate-limit headers on authenticated API responses: `X-RateLimit-Burst-Limit` (a rate expression such as `50/second`, not an integer), `X-RateLimit-Monthly-Limit` (an integer or the literal `Unlimited`), `X-RateLimit-Monthly-Remaining` (an integer, or `Unlimited` / `MCP (unlimited)`; omitted when not applicable), and `X-RateLimit-Monthly-Unit` (`requests` or `credits` — pay-as-you-go free-tier accounts are metered in credits, not request counts; omitted whenever Monthly-Remaining is). Parse defensively — these are strings, not numbers.  **Tiered access.** **L1** — metadata, company profiles, ISIC classifications, reference data, point-in-time audit trails. **L2** — Markdown / JSON content, full-text search. **L3** — standardized financial line items (income statement, balance sheet, cash-flow statement) per fiscal period, mapped to a single reusable taxonomy.
+    Public-company filings across G20 markets and Europe. Authenticate every request with the `X-API-Key` header. Rate-limit headers on authenticated API responses: `X-RateLimit-Burst-Limit` (a rate expression such as `50/second`, not an integer), `X-RateLimit-Monthly-Limit` (an integer or the literal `Unlimited`), `X-RateLimit-Monthly-Remaining` (an integer, or `Unlimited` / `MCP (unlimited)`; omitted when not applicable), and `X-RateLimit-Monthly-Unit` (`requests` or `credits` — pay-as-you-go free-tier accounts are metered in credits, not request counts; omitted whenever Monthly-Remaining is). Parse defensively — these are strings, not numbers.  **Credits.** One key reaches every endpoint, and each call is priced in credits: metadata and search, filing Markdown, and standardized financial line items each have their own cost, stated at the top of every endpoint below. A free account gets a monthly credit allowance; `X-Credits-Charged` on each response says what the call cost, and `GET /usage/` shows the month so far. Webhook push is an Enterprise capability, outside credit pricing. Costs and the allowance: https://financialfilings.com/developers/
 
     The version of the OpenAPI document: 1.4.0
     Contact: api@financialfilings.com
@@ -62,7 +62,7 @@ class FilingsApi:
     ) -> bytes:
         """Retrieve Filing Document
 
-        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Download the filing's main document as a single readable file.  Many filings are stored as a ZIP package (`file_extension` is `ZIP`): an SEC submission with its exhibits and XBRL files, or an ESEF report package. For those, this returns the main document from inside the package: the SEC filer's primary document (the 10-K HTML, or the annual report PDF), or the ESEF report XHTML (also from a package nested inside the download). An HTML document comes as filed, with its images embedded so the saved file opens complete. `X-Package-Member` names the file inside the package.  For any other filing, and for a main document over 50 MB (HTML) or 100 MB (other files), the response is a redirect to the stored file (`document`). The full package is always at `document`. A 200 is billed as one raw request; a redirect is not billed.
+        **Cost:** 1 credit per request.  --- Download the filing's main document as a single readable file.  Many filings are stored as a ZIP package (`file_extension` is `ZIP`): an SEC submission with its exhibits and XBRL files, or an ESEF report package. For those, this returns the main document from inside the package: the SEC filer's primary document (the 10-K HTML, or the annual report PDF), or the ESEF report XHTML (also from a package nested inside the download). An HTML document comes as filed, with its images embedded so the saved file opens complete. `X-Package-Member` names the file inside the package.  For any other filing, and for a main document over 50 MB (HTML) or 100 MB (other files), the response is a redirect to the stored file (`document`). The full package is always at `document`. A 200 is billed as one raw request; a redirect is not billed.
 
         :param id: A unique integer value identifying this filing. (required)
         :type id: int
@@ -137,7 +137,7 @@ class FilingsApi:
     ) -> ApiResponse[bytes]:
         """Retrieve Filing Document
 
-        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Download the filing's main document as a single readable file.  Many filings are stored as a ZIP package (`file_extension` is `ZIP`): an SEC submission with its exhibits and XBRL files, or an ESEF report package. For those, this returns the main document from inside the package: the SEC filer's primary document (the 10-K HTML, or the annual report PDF), or the ESEF report XHTML (also from a package nested inside the download). An HTML document comes as filed, with its images embedded so the saved file opens complete. `X-Package-Member` names the file inside the package.  For any other filing, and for a main document over 50 MB (HTML) or 100 MB (other files), the response is a redirect to the stored file (`document`). The full package is always at `document`. A 200 is billed as one raw request; a redirect is not billed.
+        **Cost:** 1 credit per request.  --- Download the filing's main document as a single readable file.  Many filings are stored as a ZIP package (`file_extension` is `ZIP`): an SEC submission with its exhibits and XBRL files, or an ESEF report package. For those, this returns the main document from inside the package: the SEC filer's primary document (the 10-K HTML, or the annual report PDF), or the ESEF report XHTML (also from a package nested inside the download). An HTML document comes as filed, with its images embedded so the saved file opens complete. `X-Package-Member` names the file inside the package.  For any other filing, and for a main document over 50 MB (HTML) or 100 MB (other files), the response is a redirect to the stored file (`document`). The full package is always at `document`. A 200 is billed as one raw request; a redirect is not billed.
 
         :param id: A unique integer value identifying this filing. (required)
         :type id: int
@@ -212,7 +212,7 @@ class FilingsApi:
     ) -> RESTResponseType:
         """Retrieve Filing Document
 
-        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Download the filing's main document as a single readable file.  Many filings are stored as a ZIP package (`file_extension` is `ZIP`): an SEC submission with its exhibits and XBRL files, or an ESEF report package. For those, this returns the main document from inside the package: the SEC filer's primary document (the 10-K HTML, or the annual report PDF), or the ESEF report XHTML (also from a package nested inside the download). An HTML document comes as filed, with its images embedded so the saved file opens complete. `X-Package-Member` names the file inside the package.  For any other filing, and for a main document over 50 MB (HTML) or 100 MB (other files), the response is a redirect to the stored file (`document`). The full package is always at `document`. A 200 is billed as one raw request; a redirect is not billed.
+        **Cost:** 1 credit per request.  --- Download the filing's main document as a single readable file.  Many filings are stored as a ZIP package (`file_extension` is `ZIP`): an SEC submission with its exhibits and XBRL files, or an ESEF report package. For those, this returns the main document from inside the package: the SEC filer's primary document (the 10-K HTML, or the annual report PDF), or the ESEF report XHTML (also from a package nested inside the download). An HTML document comes as filed, with its images embedded so the saved file opens complete. `X-Package-Member` names the file inside the package.  For any other filing, and for a main document over 50 MB (HTML) or 100 MB (other files), the response is a redirect to the stored file (`document`). The full package is always at `document`. A 200 is billed as one raw request; a redirect is not billed.
 
         :param id: A unique integer value identifying this filing. (required)
         :type id: int
@@ -353,7 +353,7 @@ class FilingsApi:
     ) -> PaginatedFilingHistoryList:
         """Retrieve Filing History (Audit Trail)
 
-        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve a point-in-time audit trail of material changes made to this filing (e.g., classification or status updates).
+        **Cost:** 1 credit per request.  --- Retrieve a point-in-time audit trail of material changes made to this filing (e.g., classification or status updates).
 
         :param id: A unique integer value identifying this filing. (required)
         :type id: int
@@ -423,7 +423,7 @@ class FilingsApi:
     ) -> ApiResponse[PaginatedFilingHistoryList]:
         """Retrieve Filing History (Audit Trail)
 
-        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve a point-in-time audit trail of material changes made to this filing (e.g., classification or status updates).
+        **Cost:** 1 credit per request.  --- Retrieve a point-in-time audit trail of material changes made to this filing (e.g., classification or status updates).
 
         :param id: A unique integer value identifying this filing. (required)
         :type id: int
@@ -493,7 +493,7 @@ class FilingsApi:
     ) -> RESTResponseType:
         """Retrieve Filing History (Audit Trail)
 
-        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve a point-in-time audit trail of material changes made to this filing (e.g., classification or status updates).
+        **Cost:** 1 credit per request.  --- Retrieve a point-in-time audit trail of material changes made to this filing (e.g., classification or status updates).
 
         :param id: A unique integer value identifying this filing. (required)
         :type id: int
@@ -665,7 +665,7 @@ class FilingsApi:
     ) -> PaginatedFilingSummaryList:
         """List Filings
 
-        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve a paginated list of regulatory filings.
+        **Cost:** 1 credit per request.  --- Retrieve a paginated list of regulatory filings.
 
         :param added_to_platform_from: Filter by date added to platform (inclusive start date, YYYY-MM-DDTHH:MM:SSZ format).
         :type added_to_platform_from: datetime
@@ -900,7 +900,7 @@ class FilingsApi:
     ) -> ApiResponse[PaginatedFilingSummaryList]:
         """List Filings
 
-        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve a paginated list of regulatory filings.
+        **Cost:** 1 credit per request.  --- Retrieve a paginated list of regulatory filings.
 
         :param added_to_platform_from: Filter by date added to platform (inclusive start date, YYYY-MM-DDTHH:MM:SSZ format).
         :type added_to_platform_from: datetime
@@ -1135,7 +1135,7 @@ class FilingsApi:
     ) -> RESTResponseType:
         """List Filings
 
-        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve a paginated list of regulatory filings.
+        **Cost:** 1 credit per request.  --- Retrieve a paginated list of regulatory filings.
 
         :param added_to_platform_from: Filter by date added to platform (inclusive start date, YYYY-MM-DDTHH:MM:SSZ format).
         :type added_to_platform_from: datetime
@@ -1654,7 +1654,7 @@ class FilingsApi:
     ) -> str:
         """Retrieve Filing Markdown
 
-        **Access Level Required:** Requires **Processed Filings (Level 2)** access to view full converted content.  --- Retrieve the raw processed content of a single filing in Markdown format.  **Large filings.** An annual report can run to several hundred thousand tokens. Every response carries `X-Total-Chars`, the full document's length in characters. Pass `offset` and/or `limit` (characters) to read one window instead of the whole document; while characters remain after the window, the response also carries `X-Next-Offset`. To find the part you need first, use `GET /filings/{id}/markdown/search/?q=`. Each call, whole or windowed, is billed as one Markdown request. Through the MCP server, which pages large filings in chunks, a filing's Markdown is billed once per day.
+        **Cost:** 6 credits per request (12 for premium filing types).  --- Retrieve the raw processed content of a single filing in Markdown format.  **Large filings.** An annual report can run to several hundred thousand tokens. Every response carries `X-Total-Chars`, the full document's length in characters. Pass `offset` and/or `limit` (characters) to read one window instead of the whole document; while characters remain after the window, the response also carries `X-Next-Offset`. To find the part you need first, use `GET /filings/{id}/markdown/search/?q=`. Each call, whole or windowed, is billed as one Markdown request. Through the MCP server, which pages large filings in chunks, a filing's Markdown is billed once per day.
 
         :param id: A unique integer value identifying this filing. (required)
         :type id: int
@@ -1736,7 +1736,7 @@ class FilingsApi:
     ) -> ApiResponse[str]:
         """Retrieve Filing Markdown
 
-        **Access Level Required:** Requires **Processed Filings (Level 2)** access to view full converted content.  --- Retrieve the raw processed content of a single filing in Markdown format.  **Large filings.** An annual report can run to several hundred thousand tokens. Every response carries `X-Total-Chars`, the full document's length in characters. Pass `offset` and/or `limit` (characters) to read one window instead of the whole document; while characters remain after the window, the response also carries `X-Next-Offset`. To find the part you need first, use `GET /filings/{id}/markdown/search/?q=`. Each call, whole or windowed, is billed as one Markdown request. Through the MCP server, which pages large filings in chunks, a filing's Markdown is billed once per day.
+        **Cost:** 6 credits per request (12 for premium filing types).  --- Retrieve the raw processed content of a single filing in Markdown format.  **Large filings.** An annual report can run to several hundred thousand tokens. Every response carries `X-Total-Chars`, the full document's length in characters. Pass `offset` and/or `limit` (characters) to read one window instead of the whole document; while characters remain after the window, the response also carries `X-Next-Offset`. To find the part you need first, use `GET /filings/{id}/markdown/search/?q=`. Each call, whole or windowed, is billed as one Markdown request. Through the MCP server, which pages large filings in chunks, a filing's Markdown is billed once per day.
 
         :param id: A unique integer value identifying this filing. (required)
         :type id: int
@@ -1818,7 +1818,7 @@ class FilingsApi:
     ) -> RESTResponseType:
         """Retrieve Filing Markdown
 
-        **Access Level Required:** Requires **Processed Filings (Level 2)** access to view full converted content.  --- Retrieve the raw processed content of a single filing in Markdown format.  **Large filings.** An annual report can run to several hundred thousand tokens. Every response carries `X-Total-Chars`, the full document's length in characters. Pass `offset` and/or `limit` (characters) to read one window instead of the whole document; while characters remain after the window, the response also carries `X-Next-Offset`. To find the part you need first, use `GET /filings/{id}/markdown/search/?q=`. Each call, whole or windowed, is billed as one Markdown request. Through the MCP server, which pages large filings in chunks, a filing's Markdown is billed once per day.
+        **Cost:** 6 credits per request (12 for premium filing types).  --- Retrieve the raw processed content of a single filing in Markdown format.  **Large filings.** An annual report can run to several hundred thousand tokens. Every response carries `X-Total-Chars`, the full document's length in characters. Pass `offset` and/or `limit` (characters) to read one window instead of the whole document; while characters remain after the window, the response also carries `X-Next-Offset`. To find the part you need first, use `GET /filings/{id}/markdown/search/?q=`. Each call, whole or windowed, is billed as one Markdown request. Through the MCP server, which pages large filings in chunks, a filing's Markdown is billed once per day.
 
         :param id: A unique integer value identifying this filing. (required)
         :type id: int
@@ -1976,7 +1976,7 @@ class FilingsApi:
     ) -> None:
         """Search Within a Filing's Markdown
 
-        **Access Level Required:** Requires **Processed Filings (Level 2)** access to search converted content.  --- Find text inside one filing's processed Markdown without downloading all of it. Case-insensitive substring match; hits come back in document order, each with ~440 characters of context and its character `offset`. Pass that offset (minus a margin) to `GET /filings/{id}/markdown/?offset=&limit=` to read the surrounding section. `total_hits` counts every match, so you can tell when `max_hits` was spent on the table of contents. Billed as one Markdown request.
+        **Cost:** 6 credits per request (12 for premium filing types).  --- Find text inside one filing's processed Markdown without downloading all of it. Case-insensitive substring match; hits come back in document order, each with ~440 characters of context and its character `offset`. Pass that offset (minus a margin) to `GET /filings/{id}/markdown/?offset=&limit=` to read the surrounding section. `total_hits` counts every match, so you can tell when `max_hits` was spent on the table of contents. Billed as one Markdown request.
 
         :param id: A unique integer value identifying this filing. (required)
         :type id: int
@@ -2053,7 +2053,7 @@ class FilingsApi:
     ) -> ApiResponse[None]:
         """Search Within a Filing's Markdown
 
-        **Access Level Required:** Requires **Processed Filings (Level 2)** access to search converted content.  --- Find text inside one filing's processed Markdown without downloading all of it. Case-insensitive substring match; hits come back in document order, each with ~440 characters of context and its character `offset`. Pass that offset (minus a margin) to `GET /filings/{id}/markdown/?offset=&limit=` to read the surrounding section. `total_hits` counts every match, so you can tell when `max_hits` was spent on the table of contents. Billed as one Markdown request.
+        **Cost:** 6 credits per request (12 for premium filing types).  --- Find text inside one filing's processed Markdown without downloading all of it. Case-insensitive substring match; hits come back in document order, each with ~440 characters of context and its character `offset`. Pass that offset (minus a margin) to `GET /filings/{id}/markdown/?offset=&limit=` to read the surrounding section. `total_hits` counts every match, so you can tell when `max_hits` was spent on the table of contents. Billed as one Markdown request.
 
         :param id: A unique integer value identifying this filing. (required)
         :type id: int
@@ -2130,7 +2130,7 @@ class FilingsApi:
     ) -> RESTResponseType:
         """Search Within a Filing's Markdown
 
-        **Access Level Required:** Requires **Processed Filings (Level 2)** access to search converted content.  --- Find text inside one filing's processed Markdown without downloading all of it. Case-insensitive substring match; hits come back in document order, each with ~440 characters of context and its character `offset`. Pass that offset (minus a margin) to `GET /filings/{id}/markdown/?offset=&limit=` to read the surrounding section. `total_hits` counts every match, so you can tell when `max_hits` was spent on the table of contents. Billed as one Markdown request.
+        **Cost:** 6 credits per request (12 for premium filing types).  --- Find text inside one filing's processed Markdown without downloading all of it. Case-insensitive substring match; hits come back in document order, each with ~440 characters of context and its character `offset`. Pass that offset (minus a margin) to `GET /filings/{id}/markdown/?offset=&limit=` to read the surrounding section. `total_hits` counts every match, so you can tell when `max_hits` was spent on the table of contents. Billed as one Markdown request.
 
         :param id: A unique integer value identifying this filing. (required)
         :type id: int
@@ -2276,7 +2276,7 @@ class FilingsApi:
     ) -> Filing:
         """Retrieve Filing Details
 
-        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve detailed information for a single filing by its ID.
+        **Cost:** 1 credit per request.  --- Retrieve detailed information for a single filing by its ID.
 
         :param id: A unique integer value identifying this filing. (required)
         :type id: int
@@ -2347,7 +2347,7 @@ class FilingsApi:
     ) -> ApiResponse[Filing]:
         """Retrieve Filing Details
 
-        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve detailed information for a single filing by its ID.
+        **Cost:** 1 credit per request.  --- Retrieve detailed information for a single filing by its ID.
 
         :param id: A unique integer value identifying this filing. (required)
         :type id: int
@@ -2418,7 +2418,7 @@ class FilingsApi:
     ) -> RESTResponseType:
         """Retrieve Filing Details
 
-        **Access Level Required:** Requires **Standard Access (Level 1)**.  --- Retrieve detailed information for a single filing by its ID.
+        **Cost:** 1 credit per request.  --- Retrieve detailed information for a single filing by its ID.
 
         :param id: A unique integer value identifying this filing. (required)
         :type id: int

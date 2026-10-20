@@ -13,7 +13,7 @@ Method | HTTP request | Description
 
 List Countries
 
-**Access Level Required:** Requires **Standard Access (Level 1)**.
+**Cost:** 1 credit per request.
 
 ---
 Retrieve a list of all supported countries.
@@ -105,7 +105,7 @@ Name | Type | Description  | Notes
 
 Retrieve Country
 
-**Access Level Required:** Requires **Standard Access (Level 1)**.
+**Cost:** 1 credit per request.
 
 ---
 Retrieve details for a specific country by its ID.

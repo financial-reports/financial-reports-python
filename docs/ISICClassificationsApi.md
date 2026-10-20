@@ -19,7 +19,7 @@ Method | HTTP request | Description
 
 List ISIC Classes
 
-**Access Level Required:** Requires **Standard Access (Level 1)**.
+**Cost:** 1 credit per request.
 
 ---
 Retrieve a paginated list of ISIC Classes.
@@ -125,7 +125,7 @@ Name | Type | Description  | Notes
 
 Retrieve ISIC Class
 
-**Access Level Required:** Requires **Standard Access (Level 1)**.
+**Cost:** 1 credit per request.
 
 ---
 Retrieve details for a specific ISIC Class by its ID.
@@ -215,7 +215,7 @@ Name | Type | Description  | Notes
 
 List ISIC Divisions
 
-**Access Level Required:** Requires **Standard Access (Level 1)**.
+**Cost:** 1 credit per request.
 
 ---
 Retrieve a paginated list of ISIC Divisions.
@@ -317,7 +317,7 @@ Name | Type | Description  | Notes
 
 Retrieve ISIC Division
 
-**Access Level Required:** Requires **Standard Access (Level 1)**.
+**Cost:** 1 credit per request.
 
 ---
 Retrieve details for a specific ISIC Division by its ID.
@@ -407,7 +407,7 @@ Name | Type | Description  | Notes
 
 List ISIC Groups
 
-**Access Level Required:** Requires **Standard Access (Level 1)**.
+**Cost:** 1 credit per request.
 
 ---
 Retrieve a paginated list of ISIC Groups.
@@ -511,7 +511,7 @@ Name | Type | Description  | Notes
 
 Retrieve ISIC Group
 
-**Access Level Required:** Requires **Standard Access (Level 1)**.
+**Cost:** 1 credit per request.
 
 ---
 Retrieve details for a specific ISIC Group by its ID.
@@ -601,7 +601,7 @@ Name | Type | Description  | Notes
 
 List ISIC Sections
 
-**Access Level Required:** Requires **Standard Access (Level 1)**.
+**Cost:** 1 credit per request.
 
 ---
 Retrieve a paginated list of ISIC Sections.
@@ -701,7 +701,7 @@ Name | Type | Description  | Notes
 
 Retrieve ISIC Section
 
-**Access Level Required:** Requires **Standard Access (Level 1)**.
+**Cost:** 1 credit per request.
 
 ---
 Retrieve details for a specific ISIC Section by its ID.

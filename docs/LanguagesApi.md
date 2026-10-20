@@ -13,7 +13,7 @@ Method | HTTP request | Description
 
 List Languages
 
-**Access Level Required:** Requires **Standard Access (Level 1)**.
+**Cost:** 1 credit per request.
 
 ---
 Retrieve a list of all supported languages for filings.
@@ -105,7 +105,7 @@ Name | Type | Description  | Notes
 
 Retrieve Language
 
-**Access Level Required:** Requires **Standard Access (Level 1)**.
+**Cost:** 1 credit per request.
 
 ---
 Retrieve details for a specific language by its ID.

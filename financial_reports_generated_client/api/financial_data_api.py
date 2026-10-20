@@ -1,7 +1,7 @@
 """
     FinancialFilings API
 
-    Public-company filings across G20 markets and Europe. Authenticate every request with the `X-API-Key` header. Rate-limit headers on authenticated API responses: `X-RateLimit-Burst-Limit` (a rate expression such as `50/second`, not an integer), `X-RateLimit-Monthly-Limit` (an integer or the literal `Unlimited`), `X-RateLimit-Monthly-Remaining` (an integer, or `Unlimited` / `MCP (unlimited)`; omitted when not applicable), and `X-RateLimit-Monthly-Unit` (`requests` or `credits` — pay-as-you-go free-tier accounts are metered in credits, not request counts; omitted whenever Monthly-Remaining is). Parse defensively — these are strings, not numbers.  **Tiered access.** **L1** — metadata, company profiles, ISIC classifications, reference data, point-in-time audit trails. **L2** — Markdown / JSON content, full-text search. **L3** — standardized financial line items (income statement, balance sheet, cash-flow statement) per fiscal period, mapped to a single reusable taxonomy.
+    Public-company filings across G20 markets and Europe. Authenticate every request with the `X-API-Key` header. Rate-limit headers on authenticated API responses: `X-RateLimit-Burst-Limit` (a rate expression such as `50/second`, not an integer), `X-RateLimit-Monthly-Limit` (an integer or the literal `Unlimited`), `X-RateLimit-Monthly-Remaining` (an integer, or `Unlimited` / `MCP (unlimited)`; omitted when not applicable), and `X-RateLimit-Monthly-Unit` (`requests` or `credits` — pay-as-you-go free-tier accounts are metered in credits, not request counts; omitted whenever Monthly-Remaining is). Parse defensively — these are strings, not numbers.  **Credits.** One key reaches every endpoint, and each call is priced in credits: metadata and search, filing Markdown, and standardized financial line items each have their own cost, stated at the top of every endpoint below. A free account gets a monthly credit allowance; `X-Credits-Charged` on each response says what the call cost, and `GET /usage/` shows the month so far. Webhook push is an Enterprise capability, outside credit pricing. Costs and the allowance: https://financialfilings.com/developers/
 
     The version of the OpenAPI document: 1.4.0
     Contact: api@financialfilings.com
@@ -65,7 +65,7 @@ class FinancialDataApi:
     ) -> PaginatedLineItemDefinitionList:
         """List Line Item Definitions
 
-        Retrieve the full dictionary of standardized financial KPIs.  Each definition describes one line item that may appear in extracted financial statements (Income Statement, Balance Sheet, Cash Flow Statement). Use the `depth` and `parent_code` fields to reconstruct the Capital IQ-style hierarchy.  `templates` lists the KPI templates a line item is meaningful for (`industrial`, `bank`, `insurer`); filter with `?template=bank`. Industrial-only items are still served for banks and insurers, but do not mean the same thing there.  **Access Level Required:** Requires **Standard Access (Level 1)**.
+        Retrieve the full dictionary of standardized financial KPIs.  Each definition describes one line item that may appear in extracted financial statements (Income Statement, Balance Sheet, Cash Flow Statement). Use the `depth` and `parent_code` fields to reconstruct the Capital IQ-style hierarchy.  `templates` lists the KPI templates a line item is meaningful for (`industrial`, `bank`, `insurer`); filter with `?template=bank`. Industrial-only items are still served for banks and insurers, but do not mean the same thing there.  **Cost:** 1 credit per request.
 
         :param depth: Filter by hierarchy depth (0 = top-level, 1 = component, 2 = sub-component).
         :type depth: int
@@ -158,7 +158,7 @@ class FinancialDataApi:
     ) -> ApiResponse[PaginatedLineItemDefinitionList]:
         """List Line Item Definitions
 
-        Retrieve the full dictionary of standardized financial KPIs.  Each definition describes one line item that may appear in extracted financial statements (Income Statement, Balance Sheet, Cash Flow Statement). Use the `depth` and `parent_code` fields to reconstruct the Capital IQ-style hierarchy.  `templates` lists the KPI templates a line item is meaningful for (`industrial`, `bank`, `insurer`); filter with `?template=bank`. Industrial-only items are still served for banks and insurers, but do not mean the same thing there.  **Access Level Required:** Requires **Standard Access (Level 1)**.
+        Retrieve the full dictionary of standardized financial KPIs.  Each definition describes one line item that may appear in extracted financial statements (Income Statement, Balance Sheet, Cash Flow Statement). Use the `depth` and `parent_code` fields to reconstruct the Capital IQ-style hierarchy.  `templates` lists the KPI templates a line item is meaningful for (`industrial`, `bank`, `insurer`); filter with `?template=bank`. Industrial-only items are still served for banks and insurers, but do not mean the same thing there.  **Cost:** 1 credit per request.
 
         :param depth: Filter by hierarchy depth (0 = top-level, 1 = component, 2 = sub-component).
         :type depth: int
@@ -251,7 +251,7 @@ class FinancialDataApi:
     ) -> RESTResponseType:
         """List Line Item Definitions
 
-        Retrieve the full dictionary of standardized financial KPIs.  Each definition describes one line item that may appear in extracted financial statements (Income Statement, Balance Sheet, Cash Flow Statement). Use the `depth` and `parent_code` fields to reconstruct the Capital IQ-style hierarchy.  `templates` lists the KPI templates a line item is meaningful for (`industrial`, `bank`, `insurer`); filter with `?template=bank`. Industrial-only items are still served for banks and insurers, but do not mean the same thing there.  **Access Level Required:** Requires **Standard Access (Level 1)**.
+        Retrieve the full dictionary of standardized financial KPIs.  Each definition describes one line item that may appear in extracted financial statements (Income Statement, Balance Sheet, Cash Flow Statement). Use the `depth` and `parent_code` fields to reconstruct the Capital IQ-style hierarchy.  `templates` lists the KPI templates a line item is meaningful for (`industrial`, `bank`, `insurer`); filter with `?template=bank`. Industrial-only items are still served for banks and insurers, but do not mean the same thing there.  **Cost:** 1 credit per request.
 
         :param depth: Filter by hierarchy depth (0 = top-level, 1 = component, 2 = sub-component).
         :type depth: int
@@ -431,7 +431,7 @@ class FinancialDataApi:
     ) -> LineItemDefinition:
         """Retrieve Line Item Definition
 
-        Retrieve a single line item definition by its code.  **Access Level Required:** Requires **Standard Access (Level 1)**.
+        Retrieve a single line item definition by its code.  **Cost:** 1 credit per request.
 
         :param code: (required)
         :type code: str
@@ -500,7 +500,7 @@ class FinancialDataApi:
     ) -> ApiResponse[LineItemDefinition]:
         """Retrieve Line Item Definition
 
-        Retrieve a single line item definition by its code.  **Access Level Required:** Requires **Standard Access (Level 1)**.
+        Retrieve a single line item definition by its code.  **Cost:** 1 credit per request.
 
         :param code: (required)
         :type code: str
@@ -569,7 +569,7 @@ class FinancialDataApi:
     ) -> RESTResponseType:
         """Retrieve Line Item Definition
 
-        Retrieve a single line item definition by its code.  **Access Level Required:** Requires **Standard Access (Level 1)**.
+        Retrieve a single line item definition by its code.  **Cost:** 1 credit per request.
 
         :param code: (required)
         :type code: str

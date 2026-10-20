@@ -46,19 +46,14 @@ if __name__ == "__main__":
     asyncio.run(main())
 ```
 
-## Access Levels
+## Credits
 
-The API response data depends on your subscription tier.
-
-| Level | Name | Description |
-| :--- | :--- | :--- |
-| **Level 1** | **Standard Access** | Access to raw PDF/XBRL metadata, company profiles, ISIC classifications, and reference data. |
-| **Level 2** | **Processed Filings** | Access to converted content (Markdown/JSON) and full-text search capabilities. |
-| **Level 3** | **Extracted Financials** | Access to specific extracted financial line items (Revenue, EBITDA, etc.). |
+One key reaches every endpoint, and each call is priced in credits: metadata and search, filing Markdown and standardized financials each have their own cost, with free credits every month. Per-endpoint costs: [https://financialfilings.com/developers/](https://financialfilings.com/developers/)
 
 ## Documentation
 
-* **Full API Reference:** [https://financialfilings.com/docs](https://financialfilings.com/docs)
+* **Developer docs:** [https://financialfilings.com/developers/](https://financialfilings.com/developers/)
+* **Full API Reference:** [https://financialfilings.com/developers/reference/](https://financialfilings.com/developers/reference/)
 * **Support:** [support@financialfilings.com](mailto:support@financialfilings.com)
 
 ---
