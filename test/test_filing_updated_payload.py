@@ -69,6 +69,7 @@ class TestFilingUpdatedPayload(unittest.TestCase):
                     document_url = '', 
                     source_url = '', 
                     source_filing_type = '', 
+                    source = null, 
                     markdown_content = '', ),
                 triggered_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
                 changes = None
@@ -108,6 +109,7 @@ class TestFilingUpdatedPayload(unittest.TestCase):
                     document_url = '', 
                     source_url = '', 
                     source_filing_type = '', 
+                    source = null, 
                     markdown_content = '', ),
                 triggered_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
                 changes = None,

@@ -51,6 +51,12 @@ class TestWebhookFilingPayload(unittest.TestCase):
                 document_url = '',
                 source_url = '',
                 source_filing_type = '',
+                source = financial_reports_generated_client.models.source.Source(
+                    id = 56, 
+                    name = '', 
+                    url = '', 
+                    description = '', 
+                    has_named_speakers = True, ),
                 markdown_content = ''
             )
         else:
@@ -70,6 +76,12 @@ class TestWebhookFilingPayload(unittest.TestCase):
                 document_url = '',
                 source_url = '',
                 source_filing_type = '',
+                source = financial_reports_generated_client.models.source.Source(
+                    id = 56, 
+                    name = '', 
+                    url = '', 
+                    description = '', 
+                    has_named_speakers = True, ),
                 markdown_content = '',
         )
         """
