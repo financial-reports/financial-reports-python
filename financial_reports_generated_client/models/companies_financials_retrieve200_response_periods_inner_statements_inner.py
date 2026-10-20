@@ -39,16 +39,27 @@ class CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInner(BaseMode
     currency_mismatch: StrictBool = Field(description="True when this statement's currency differs from the company's modal reporting currency - the code held by more than 60% of the statements we serve for that company. When no code clears 60% (a genuinely dual-currency issuer, or one mid-transition) there is no modal currency and this is `false` on every statement, including the off-currency ones. A data-quality signal, not provenance, so it is returned even to masked accounts. It compares a statement against its company's history; it does not mean the statement itself mixes currencies.")
     extraction: CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerExtraction
     line_items: List[CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItemsInner]
+    withdrawn_reason: Optional[StrictStr] = Field(default=None, description="Present only with `as_known_at`, and only on a statement (and on its values) that was served for this company at that time and is not served for it today because it was withdrawn: `reattributed` - the statement now belongs to another company record, where it may be served; `purged` - reserved: its filing was removed altogether (not served yet; the filing's type, release time and links would be null unless recorded). Absent everywhere else.")
     is_comparative: StrictBool = Field(description="True when this period was read from the comparative (prior-year) column of a later report, because no report presented it as its own period. A data-quality signal, not provenance, so it is returned even to masked accounts.")
     source_filing: Optional[CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerSourceFiling] = None
     sources: Optional[List[CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerSourcesInner]] = Field(default=None, description="Every filing that reported this (period, statement_type), including the candidates selection rejected. Omitted unless the account has source unmasking. The selected filing is always available as `source_filing`.")
-    __properties: ClassVar[List[str]] = ["statement_type", "statement_type_display", "currency", "currency_mismatch", "extraction", "line_items", "is_comparative", "source_filing", "sources"]
+    __properties: ClassVar[List[str]] = ["statement_type", "statement_type_display", "currency", "currency_mismatch", "extraction", "line_items", "withdrawn_reason", "is_comparative", "source_filing", "sources"]
 
     @field_validator('statement_type')
     def statement_type_validate_enum(cls, value):
         """Validates the enum"""
         if value not in set(['IS', 'BS', 'CFS']):
             raise ValueError("must be one of enum values ('IS', 'BS', 'CFS')")
+        return value
+
+    @field_validator('withdrawn_reason')
+    def withdrawn_reason_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['reattributed', 'purged']):
+            raise ValueError("must be one of enum values ('reattributed', 'purged')")
         return value
 
     model_config = ConfigDict(
@@ -139,6 +150,7 @@ class CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInner(BaseMode
             "currency_mismatch": obj.get("currency_mismatch"),
             "extraction": CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerExtraction.from_dict(obj["extraction"]) if obj.get("extraction") is not None else None,
             "line_items": [CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItemsInner.from_dict(_item) for _item in obj["line_items"]] if obj.get("line_items") is not None else None,
+            "withdrawn_reason": obj.get("withdrawn_reason"),
             "is_comparative": obj.get("is_comparative"),
             "source_filing": CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerSourceFiling.from_dict(obj["source_filing"]) if obj.get("source_filing") is not None else None,
             "sources": [CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerSourcesInner.from_dict(_item) for _item in obj["sources"]] if obj.get("sources") is not None else None

@@ -56,6 +56,7 @@ class TestCompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineI
                         new_value = '', 
                         reason = 'extraction', )
                     ],
+                withdrawn_reason = 'reattributed',
                 updated_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f')
             )
         else:

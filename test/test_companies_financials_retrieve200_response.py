@@ -100,8 +100,10 @@ class TestCompaniesFinancialsRetrieve200Response(unittest.TestCase):
                                                 new_value = '', 
                                                 reason = 'extraction', )
                                             ], 
+                                        withdrawn_reason = 'reattributed', 
                                         updated_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), )
                                     ], 
+                                withdrawn_reason = 'reattributed', 
                                 is_comparative = True, 
                                 source_filing = financial_reports_generated_client.models.companies_financials_retrieve_200_response_periods_inner_statements_inner_source_filing.companies_financials_retrieve_200_response_periods_inner_statements_inner_source_filing(
                                     id = 56, 
@@ -186,8 +188,10 @@ class TestCompaniesFinancialsRetrieve200Response(unittest.TestCase):
                                                 new_value = '', 
                                                 reason = 'extraction', )
                                             ], 
+                                        withdrawn_reason = 'reattributed', 
                                         updated_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), )
                                     ], 
+                                withdrawn_reason = 'reattributed', 
                                 is_comparative = True, 
                                 source_filing = financial_reports_generated_client.models.companies_financials_retrieve_200_response_periods_inner_statements_inner_source_filing.companies_financials_retrieve_200_response_periods_inner_statements_inner_source_filing(
                                     id = 56, 

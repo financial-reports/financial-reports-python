@@ -43,8 +43,9 @@ class CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItems
     confidence: Optional[Union[StrictFloat, StrictInt]] = Field(description="Confidence that this value is the figure the document states, or null where nothing has judged it. Non-null only on rows the KPI verifier SERVED: it runs a second, independent selection pass over the filing and agrees with the extracted value, and the number is that pass's probability for the row it picked. Null does NOT mean low confidence - it means unjudged, which is every row the verifier has not yet swept and every row it sent to review instead of serving. Treat it as a filter, not a score: branch on non-null, do not compare nulls.")
     source_page: Optional[StrictInt] = Field(description="RESERVED - currently null on every line item. Provenance is filing-level (`sources`), not page-level. Deliberately still reserved: the KPI verifier knows the line of the converted markdown it read a value from, which is not a page number, so it does not write one here.")
     revisions: Optional[List[CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItemsInnerRevisionsInner]] = Field(default=None, description="Present only with `include=revisions`: every recorded change to this value, oldest first (with `as_known_at`, up to that time). Empty when none was recorded. Recording started 2026-10-19T17:05:18Z; `pre_recording` entries are older corrections whose `changed_at` is approximate (the change happened at or before it).")
+    withdrawn_reason: Optional[StrictStr] = Field(default=None, description="Present only with `as_known_at`, and only on a statement (and on its values) that was served for this company at that time and is not served for it today because it was withdrawn: `reattributed` - the statement now belongs to another company record, where it may be served; `purged` - reserved: its filing was removed altogether (not served yet; the filing's type, release time and links would be null unless recorded). Absent everywhere else.")
     updated_at: datetime = Field(description="When this value was last written. Equal to the extraction time for an untouched value; moves when a later correction pass rewrites the value in place (a re-extraction replaces the whole statement and sets a new one). Compare it with the value from your previous poll to detect a changed figure without diffing. It does not move when a whole statement is withdrawn or when a different filing starts supplying the period - watch `source_filing` for that.")
-    __properties: ClassVar[List[str]] = ["code", "name", "statement_type", "depth", "parent_code", "sort_order", "value", "raw_value", "scale", "currency", "confidence", "source_page", "revisions", "updated_at"]
+    __properties: ClassVar[List[str]] = ["code", "name", "statement_type", "depth", "parent_code", "sort_order", "value", "raw_value", "scale", "currency", "confidence", "source_page", "revisions", "withdrawn_reason", "updated_at"]
 
     @field_validator('statement_type')
     def statement_type_validate_enum(cls, value):
@@ -61,6 +62,16 @@ class CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItems
 
         if value not in set(['units', 'thousands', 'lakhs', 'millions', 'crores', 'billions']):
             raise ValueError("must be one of enum values ('units', 'thousands', 'lakhs', 'millions', 'crores', 'billions')")
+        return value
+
+    @field_validator('withdrawn_reason')
+    def withdrawn_reason_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['reattributed', 'purged']):
+            raise ValueError("must be one of enum values ('reattributed', 'purged')")
         return value
 
     model_config = ConfigDict(
@@ -168,6 +179,7 @@ class CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItems
             "confidence": obj.get("confidence"),
             "source_page": obj.get("source_page"),
             "revisions": [CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItemsInnerRevisionsInner.from_dict(_item) for _item in obj["revisions"]] if obj.get("revisions") is not None else None,
+            "withdrawn_reason": obj.get("withdrawn_reason"),
             "updated_at": obj.get("updated_at")
         })
         return _obj
