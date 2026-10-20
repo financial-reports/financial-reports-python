@@ -18,6 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
+from datetime import date
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
@@ -35,13 +36,15 @@ class RateLimitError(BaseModel):
     type: Optional[StrictStr] = Field(default=None, description="Machine-readable error code, e.g. `burst_limit_exceeded`, `quota_limit_exceeded`, `daily_spend_cap_reached` or `monthly_spend_ceiling_reached`.")
     message: Optional[StrictStr] = Field(default=None, description="A human-readable explanation of the limit.")
     resolution: Optional[StrictStr] = Field(default=None, description="A human-readable hint on what to do next.")
-    upgrade_url: Optional[StrictStr] = Field(default=None, description="Where to upgrade the plan (quota errors).")
+    upgrade_url: Optional[StrictStr] = Field(default=None, description="Where to upgrade: the pay-as-you-go card page for free accounts, else the plans page (quota errors).")
     limit: Optional[StrictInt] = Field(default=None, description="The plan allowance that was used up (quota errors).")
     interval: Optional[StrictStr] = Field(default=None, description="`monthly` or `annual` (quota errors).")
-    payg_url: Optional[StrictStr] = Field(default=None, description="Where to enable pay-as-you-go (some quota errors).")
+    resets_on: Optional[date] = Field(default=None, description="UTC date the allowance resets (quota errors).")
+    rate_limit: Optional[StrictStr] = Field(default=None, description="The per-minute limit that refused the request, e.g. `120/minute` (burst errors).")
+    payg_url: Optional[StrictStr] = Field(default=None, description="Where to enable pay-as-you-go (quota and burst errors, when it applies).")
     dashboard_url: Optional[StrictStr] = Field(default=None, description="Where to see current spend (spend-cap and spend-ceiling errors).")
     contact_url: Optional[StrictStr] = Field(default=None, description="Where to ask for a higher limit (spend-cap and spend-ceiling errors).")
-    __properties: ClassVar[List[str]] = ["detail", "error", "retry_after_seconds", "scope", "type", "message", "resolution", "upgrade_url", "limit", "interval", "payg_url", "dashboard_url", "contact_url"]
+    __properties: ClassVar[List[str]] = ["detail", "error", "retry_after_seconds", "scope", "type", "message", "resolution", "upgrade_url", "limit", "interval", "resets_on", "rate_limit", "payg_url", "dashboard_url", "contact_url"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -114,6 +117,8 @@ class RateLimitError(BaseModel):
             "upgrade_url": obj.get("upgrade_url"),
             "limit": obj.get("limit"),
             "interval": obj.get("interval"),
+            "resets_on": obj.get("resets_on"),
+            "rate_limit": obj.get("rate_limit"),
             "payg_url": obj.get("payg_url"),
             "dashboard_url": obj.get("dashboard_url"),
             "contact_url": obj.get("contact_url")

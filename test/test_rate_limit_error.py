@@ -46,6 +46,8 @@ class TestRateLimitError(unittest.TestCase):
                 upgrade_url = '',
                 limit = 56,
                 interval = '',
+                resets_on = datetime.datetime.strptime('1975-12-30', '%Y-%m-%d').date(),
+                rate_limit = '',
                 payg_url = '',
                 dashboard_url = '',
                 contact_url = ''
