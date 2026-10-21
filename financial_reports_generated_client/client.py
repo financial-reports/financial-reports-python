@@ -58,9 +58,11 @@ class FinancialReports:
         # This prevents SSL errors on macOS and bare-bones containers
         self.config.ssl_ca_cert = certifi.where()
 
-        # The API's Content-Security-Policy header is ~12 KB, over aiohttp's
+        # The API's Content-Security-Policy header was ~12 KB, over aiohttp's
         # default 8190-byte max_field_size: without this every call raised
-        # "400, Got more than 8190 bytes when reading" (#4141).
+        # "400, Got more than 8190 bytes when reading" (#4141). JSON answers
+        # carry a short policy since #7221, but the API's HTML 404/500 pages
+        # still carry the full one.
         self.config.client_session_kwargs = {"max_field_size": 65536}
         
         self.api_client = ApiClient(self.config)
