@@ -650,6 +650,7 @@ class FilingsApi:
         updated_date_from: Annotated[Optional[datetime], Field(description="Filter by the date a filing was last updated on the platform (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         updated_date_to: Annotated[Optional[datetime], Field(description="Filter by the date a filing was last updated on the platform (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         view: Annotated[Optional[StrictStr], Field(description="Controls the level of detail. Omit for a default 'summary' view, or use 'full' to include all details for each filing.")] = None,
+        cursor: Annotated[Optional[StrictStr], Field(description="Keyset pagination, an alternative to `page` for walking a large result set. Send an empty `cursor=` for the first page, then follow `next`, which carries the cursor of the following page, until it is null. No offset limit applies, and `previous` is always null. Works with every filter, and with an `ordering` of `release_datetime`, `added_to_platform` and `id` in one direction (default: newest `release_datetime` first). Rows that tie are ordered by `id`, so a walk does not repeat or skip a filing as long as the matching filings do not change while you page. Sending `page` or a second `cursor` with it, or changing `ordering` during a walk, returns 400 `invalid_cursor`. A walk with a narrow filter over a long history can time out (503) near its end: bound it with `release_datetime_from` or `added_to_platform_from`.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -751,6 +752,8 @@ class FilingsApi:
         :type updated_date_to: datetime
         :param view: Controls the level of detail. Omit for a default 'summary' view, or use 'full' to include all details for each filing.
         :type view: str
+        :param cursor: Keyset pagination, an alternative to `page` for walking a large result set. Send an empty `cursor=` for the first page, then follow `next`, which carries the cursor of the following page, until it is null. No offset limit applies, and `previous` is always null. Works with every filter, and with an `ordering` of `release_datetime`, `added_to_platform` and `id` in one direction (default: newest `release_datetime` first). Rows that tie are ordered by `id`, so a walk does not repeat or skip a filing as long as the matching filings do not change while you page. Sending `page` or a second `cursor` with it, or changing `ordering` during a walk, returns 400 `invalid_cursor`. A walk with a narrow filter over a long history can time out (503) near its end: bound it with `release_datetime_from` or `added_to_platform_from`.
+        :type cursor: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -816,6 +819,7 @@ class FilingsApi:
             updated_date_from=updated_date_from,
             updated_date_to=updated_date_to,
             view=view,
+            cursor=cursor,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -885,6 +889,7 @@ class FilingsApi:
         updated_date_from: Annotated[Optional[datetime], Field(description="Filter by the date a filing was last updated on the platform (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         updated_date_to: Annotated[Optional[datetime], Field(description="Filter by the date a filing was last updated on the platform (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         view: Annotated[Optional[StrictStr], Field(description="Controls the level of detail. Omit for a default 'summary' view, or use 'full' to include all details for each filing.")] = None,
+        cursor: Annotated[Optional[StrictStr], Field(description="Keyset pagination, an alternative to `page` for walking a large result set. Send an empty `cursor=` for the first page, then follow `next`, which carries the cursor of the following page, until it is null. No offset limit applies, and `previous` is always null. Works with every filter, and with an `ordering` of `release_datetime`, `added_to_platform` and `id` in one direction (default: newest `release_datetime` first). Rows that tie are ordered by `id`, so a walk does not repeat or skip a filing as long as the matching filings do not change while you page. Sending `page` or a second `cursor` with it, or changing `ordering` during a walk, returns 400 `invalid_cursor`. A walk with a narrow filter over a long history can time out (503) near its end: bound it with `release_datetime_from` or `added_to_platform_from`.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -986,6 +991,8 @@ class FilingsApi:
         :type updated_date_to: datetime
         :param view: Controls the level of detail. Omit for a default 'summary' view, or use 'full' to include all details for each filing.
         :type view: str
+        :param cursor: Keyset pagination, an alternative to `page` for walking a large result set. Send an empty `cursor=` for the first page, then follow `next`, which carries the cursor of the following page, until it is null. No offset limit applies, and `previous` is always null. Works with every filter, and with an `ordering` of `release_datetime`, `added_to_platform` and `id` in one direction (default: newest `release_datetime` first). Rows that tie are ordered by `id`, so a walk does not repeat or skip a filing as long as the matching filings do not change while you page. Sending `page` or a second `cursor` with it, or changing `ordering` during a walk, returns 400 `invalid_cursor`. A walk with a narrow filter over a long history can time out (503) near its end: bound it with `release_datetime_from` or `added_to_platform_from`.
+        :type cursor: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1051,6 +1058,7 @@ class FilingsApi:
             updated_date_from=updated_date_from,
             updated_date_to=updated_date_to,
             view=view,
+            cursor=cursor,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1120,6 +1128,7 @@ class FilingsApi:
         updated_date_from: Annotated[Optional[datetime], Field(description="Filter by the date a filing was last updated on the platform (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         updated_date_to: Annotated[Optional[datetime], Field(description="Filter by the date a filing was last updated on the platform (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         view: Annotated[Optional[StrictStr], Field(description="Controls the level of detail. Omit for a default 'summary' view, or use 'full' to include all details for each filing.")] = None,
+        cursor: Annotated[Optional[StrictStr], Field(description="Keyset pagination, an alternative to `page` for walking a large result set. Send an empty `cursor=` for the first page, then follow `next`, which carries the cursor of the following page, until it is null. No offset limit applies, and `previous` is always null. Works with every filter, and with an `ordering` of `release_datetime`, `added_to_platform` and `id` in one direction (default: newest `release_datetime` first). Rows that tie are ordered by `id`, so a walk does not repeat or skip a filing as long as the matching filings do not change while you page. Sending `page` or a second `cursor` with it, or changing `ordering` during a walk, returns 400 `invalid_cursor`. A walk with a narrow filter over a long history can time out (503) near its end: bound it with `release_datetime_from` or `added_to_platform_from`.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1221,6 +1230,8 @@ class FilingsApi:
         :type updated_date_to: datetime
         :param view: Controls the level of detail. Omit for a default 'summary' view, or use 'full' to include all details for each filing.
         :type view: str
+        :param cursor: Keyset pagination, an alternative to `page` for walking a large result set. Send an empty `cursor=` for the first page, then follow `next`, which carries the cursor of the following page, until it is null. No offset limit applies, and `previous` is always null. Works with every filter, and with an `ordering` of `release_datetime`, `added_to_platform` and `id` in one direction (default: newest `release_datetime` first). Rows that tie are ordered by `id`, so a walk does not repeat or skip a filing as long as the matching filings do not change while you page. Sending `page` or a second `cursor` with it, or changing `ordering` during a walk, returns 400 `invalid_cursor`. A walk with a narrow filter over a long history can time out (503) near its end: bound it with `release_datetime_from` or `added_to_platform_from`.
+        :type cursor: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1286,6 +1297,7 @@ class FilingsApi:
             updated_date_from=updated_date_from,
             updated_date_to=updated_date_to,
             view=view,
+            cursor=cursor,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1350,6 +1362,7 @@ class FilingsApi:
         updated_date_from,
         updated_date_to,
         view,
+        cursor,
         _request_auth,
         _content_type,
         _headers,
@@ -1593,6 +1606,10 @@ class FilingsApi:
         if view is not None:
             
             _query_params.append(('view', view))
+            
+        if cursor is not None:
+            
+            _query_params.append(('cursor', cursor))
             
         # process the header parameters
         # process the form parameters
