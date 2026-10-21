@@ -19,6 +19,8 @@ Each definition describes one line item that may appear in extracted financial s
 
 `templates` lists the KPI templates a line item is meaningful for (`industrial`, `bank`, `insurer`); filter with `?template=bank`. Industrial-only items are still served for banks and insurers, but do not mean the same thing there.
 
+Some codes are read from a filer's XBRL only (`goodwill`, `consolidated_net_income`, `total_comprehensive_income` and five others): a statement extracted from document text carries them only where they were filled in from the same filing's XBRL, and a filing without XBRL never carries them.
+
 **Cost:** 1 credit per request.
 
 ### Example

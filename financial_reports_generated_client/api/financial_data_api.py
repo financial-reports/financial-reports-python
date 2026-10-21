@@ -65,7 +65,7 @@ class FinancialDataApi:
     ) -> PaginatedLineItemDefinitionList:
         """List Line Item Definitions
 
-        Retrieve the full dictionary of standardized financial KPIs.  Each definition describes one line item that may appear in extracted financial statements (Income Statement, Balance Sheet, Cash Flow Statement). Use the `depth` and `parent_code` fields to reconstruct the Capital IQ-style hierarchy.  `templates` lists the KPI templates a line item is meaningful for (`industrial`, `bank`, `insurer`); filter with `?template=bank`. Industrial-only items are still served for banks and insurers, but do not mean the same thing there.  **Cost:** 1 credit per request.
+        Retrieve the full dictionary of standardized financial KPIs.  Each definition describes one line item that may appear in extracted financial statements (Income Statement, Balance Sheet, Cash Flow Statement). Use the `depth` and `parent_code` fields to reconstruct the Capital IQ-style hierarchy.  `templates` lists the KPI templates a line item is meaningful for (`industrial`, `bank`, `insurer`); filter with `?template=bank`. Industrial-only items are still served for banks and insurers, but do not mean the same thing there.  Some codes are read from a filer's XBRL only (`goodwill`, `consolidated_net_income`, `total_comprehensive_income` and five others): a statement extracted from document text carries them only where they were filled in from the same filing's XBRL, and a filing without XBRL never carries them.  **Cost:** 1 credit per request.
 
         :param depth: Filter by hierarchy depth (0 = top-level, 1 = component, 2 = sub-component).
         :type depth: int
@@ -158,7 +158,7 @@ class FinancialDataApi:
     ) -> ApiResponse[PaginatedLineItemDefinitionList]:
         """List Line Item Definitions
 
-        Retrieve the full dictionary of standardized financial KPIs.  Each definition describes one line item that may appear in extracted financial statements (Income Statement, Balance Sheet, Cash Flow Statement). Use the `depth` and `parent_code` fields to reconstruct the Capital IQ-style hierarchy.  `templates` lists the KPI templates a line item is meaningful for (`industrial`, `bank`, `insurer`); filter with `?template=bank`. Industrial-only items are still served for banks and insurers, but do not mean the same thing there.  **Cost:** 1 credit per request.
+        Retrieve the full dictionary of standardized financial KPIs.  Each definition describes one line item that may appear in extracted financial statements (Income Statement, Balance Sheet, Cash Flow Statement). Use the `depth` and `parent_code` fields to reconstruct the Capital IQ-style hierarchy.  `templates` lists the KPI templates a line item is meaningful for (`industrial`, `bank`, `insurer`); filter with `?template=bank`. Industrial-only items are still served for banks and insurers, but do not mean the same thing there.  Some codes are read from a filer's XBRL only (`goodwill`, `consolidated_net_income`, `total_comprehensive_income` and five others): a statement extracted from document text carries them only where they were filled in from the same filing's XBRL, and a filing without XBRL never carries them.  **Cost:** 1 credit per request.
 
         :param depth: Filter by hierarchy depth (0 = top-level, 1 = component, 2 = sub-component).
         :type depth: int
@@ -251,7 +251,7 @@ class FinancialDataApi:
     ) -> RESTResponseType:
         """List Line Item Definitions
 
-        Retrieve the full dictionary of standardized financial KPIs.  Each definition describes one line item that may appear in extracted financial statements (Income Statement, Balance Sheet, Cash Flow Statement). Use the `depth` and `parent_code` fields to reconstruct the Capital IQ-style hierarchy.  `templates` lists the KPI templates a line item is meaningful for (`industrial`, `bank`, `insurer`); filter with `?template=bank`. Industrial-only items are still served for banks and insurers, but do not mean the same thing there.  **Cost:** 1 credit per request.
+        Retrieve the full dictionary of standardized financial KPIs.  Each definition describes one line item that may appear in extracted financial statements (Income Statement, Balance Sheet, Cash Flow Statement). Use the `depth` and `parent_code` fields to reconstruct the Capital IQ-style hierarchy.  `templates` lists the KPI templates a line item is meaningful for (`industrial`, `bank`, `insurer`); filter with `?template=bank`. Industrial-only items are still served for banks and insurers, but do not mean the same thing there.  Some codes are read from a filer's XBRL only (`goodwill`, `consolidated_net_income`, `total_comprehensive_income` and five others): a statement extracted from document text carries them only where they were filled in from the same filing's XBRL, and a filing without XBRL never carries them.  **Cost:** 1 credit per request.
 
         :param depth: Filter by hierarchy depth (0 = top-level, 1 = component, 2 = sub-component).
         :type depth: int
