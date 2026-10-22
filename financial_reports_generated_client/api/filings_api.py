@@ -636,6 +636,7 @@ class FilingsApi:
         period_ending_date: Annotated[Optional[StrictStr], Field(description="Filter by the exact period ending date (YYYY-MM-DD, e.g., `2024-12-31`). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.")] = None,
         period_ending_date_from: Annotated[Optional[StrictStr], Field(description="Filter by period ending date — inclusive start (YYYY-MM-DD).")] = None,
         period_ending_date_to: Annotated[Optional[StrictStr], Field(description="Filter by period ending date — inclusive end (YYYY-MM-DD).")] = None,
+        primary_annual_report: Annotated[Optional[StrictBool], Field(description="With `true`, return only annual reports (10-K, 10-K-ESEF) with a fiscal year, one per company and fiscal year, picked from the filings your other filters match: the group (consolidated) report over the parent's separate accounts, a report over an AGM notice or an amendment, English over other languages, PDF over HTML over an ESEF package, then the latest release. Combine with `languages` to pick within a language. Requires at least one of: company, company_isin, lei, countries, source, sources, fiscal_year, or a date or period range; otherwise returns 400.")] = None,
         processing_status: Annotated[Optional[StrictStr], Field(description="Filter by processing status. `COMPLETED` means the document has been processed and is ready to download; the other values are still in, or dropped out of, the processing pipeline. Exact, case-sensitive match; an unknown value returns `400`.")] = None,
         processing_statuses: Annotated[Optional[StrictStr], Field(description="Comma-separated processing statuses (e.g. `COMPLETED,FAILED`). Case-insensitive. An unknown value returns `400` naming it.")] = None,
         reasoning_contains: Annotated[Optional[StrictStr], Field(description="Case-insensitive substring match on `filing_type_reasoning`, minimum 3 characters. Requires at least one other filter that actually constrains the query (a date range, company/ISIN/LEI, type, category or source), otherwise returns 400 — the field is unindexed. NOTE the guard checks that a companion filter constrains the query, not HOW MUCH: a deliberately wide date range is accepted and the request is then bounded by the API statement timeout rather than rejected. Narrow the companion filter for a fast answer. CAVEAT: this text is evidence of what the model looked at, NOT a statement of our classification policy; it can cite rules that do not exist.")] = None,
@@ -724,6 +725,8 @@ class FilingsApi:
         :type period_ending_date_from: str
         :param period_ending_date_to: Filter by period ending date — inclusive end (YYYY-MM-DD).
         :type period_ending_date_to: str
+        :param primary_annual_report: With `true`, return only annual reports (10-K, 10-K-ESEF) with a fiscal year, one per company and fiscal year, picked from the filings your other filters match: the group (consolidated) report over the parent's separate accounts, a report over an AGM notice or an amendment, English over other languages, PDF over HTML over an ESEF package, then the latest release. Combine with `languages` to pick within a language. Requires at least one of: company, company_isin, lei, countries, source, sources, fiscal_year, or a date or period range; otherwise returns 400.
+        :type primary_annual_report: bool
         :param processing_status: Filter by processing status. `COMPLETED` means the document has been processed and is ready to download; the other values are still in, or dropped out of, the processing pipeline. Exact, case-sensitive match; an unknown value returns `400`.
         :type processing_status: str
         :param processing_statuses: Comma-separated processing statuses (e.g. `COMPLETED,FAILED`). Case-insensitive. An unknown value returns `400` naming it.
@@ -805,6 +808,7 @@ class FilingsApi:
             period_ending_date=period_ending_date,
             period_ending_date_from=period_ending_date_from,
             period_ending_date_to=period_ending_date_to,
+            primary_annual_report=primary_annual_report,
             processing_status=processing_status,
             processing_statuses=processing_statuses,
             reasoning_contains=reasoning_contains,
@@ -875,6 +879,7 @@ class FilingsApi:
         period_ending_date: Annotated[Optional[StrictStr], Field(description="Filter by the exact period ending date (YYYY-MM-DD, e.g., `2024-12-31`). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.")] = None,
         period_ending_date_from: Annotated[Optional[StrictStr], Field(description="Filter by period ending date — inclusive start (YYYY-MM-DD).")] = None,
         period_ending_date_to: Annotated[Optional[StrictStr], Field(description="Filter by period ending date — inclusive end (YYYY-MM-DD).")] = None,
+        primary_annual_report: Annotated[Optional[StrictBool], Field(description="With `true`, return only annual reports (10-K, 10-K-ESEF) with a fiscal year, one per company and fiscal year, picked from the filings your other filters match: the group (consolidated) report over the parent's separate accounts, a report over an AGM notice or an amendment, English over other languages, PDF over HTML over an ESEF package, then the latest release. Combine with `languages` to pick within a language. Requires at least one of: company, company_isin, lei, countries, source, sources, fiscal_year, or a date or period range; otherwise returns 400.")] = None,
         processing_status: Annotated[Optional[StrictStr], Field(description="Filter by processing status. `COMPLETED` means the document has been processed and is ready to download; the other values are still in, or dropped out of, the processing pipeline. Exact, case-sensitive match; an unknown value returns `400`.")] = None,
         processing_statuses: Annotated[Optional[StrictStr], Field(description="Comma-separated processing statuses (e.g. `COMPLETED,FAILED`). Case-insensitive. An unknown value returns `400` naming it.")] = None,
         reasoning_contains: Annotated[Optional[StrictStr], Field(description="Case-insensitive substring match on `filing_type_reasoning`, minimum 3 characters. Requires at least one other filter that actually constrains the query (a date range, company/ISIN/LEI, type, category or source), otherwise returns 400 — the field is unindexed. NOTE the guard checks that a companion filter constrains the query, not HOW MUCH: a deliberately wide date range is accepted and the request is then bounded by the API statement timeout rather than rejected. Narrow the companion filter for a fast answer. CAVEAT: this text is evidence of what the model looked at, NOT a statement of our classification policy; it can cite rules that do not exist.")] = None,
@@ -963,6 +968,8 @@ class FilingsApi:
         :type period_ending_date_from: str
         :param period_ending_date_to: Filter by period ending date — inclusive end (YYYY-MM-DD).
         :type period_ending_date_to: str
+        :param primary_annual_report: With `true`, return only annual reports (10-K, 10-K-ESEF) with a fiscal year, one per company and fiscal year, picked from the filings your other filters match: the group (consolidated) report over the parent's separate accounts, a report over an AGM notice or an amendment, English over other languages, PDF over HTML over an ESEF package, then the latest release. Combine with `languages` to pick within a language. Requires at least one of: company, company_isin, lei, countries, source, sources, fiscal_year, or a date or period range; otherwise returns 400.
+        :type primary_annual_report: bool
         :param processing_status: Filter by processing status. `COMPLETED` means the document has been processed and is ready to download; the other values are still in, or dropped out of, the processing pipeline. Exact, case-sensitive match; an unknown value returns `400`.
         :type processing_status: str
         :param processing_statuses: Comma-separated processing statuses (e.g. `COMPLETED,FAILED`). Case-insensitive. An unknown value returns `400` naming it.
@@ -1044,6 +1051,7 @@ class FilingsApi:
             period_ending_date=period_ending_date,
             period_ending_date_from=period_ending_date_from,
             period_ending_date_to=period_ending_date_to,
+            primary_annual_report=primary_annual_report,
             processing_status=processing_status,
             processing_statuses=processing_statuses,
             reasoning_contains=reasoning_contains,
@@ -1114,6 +1122,7 @@ class FilingsApi:
         period_ending_date: Annotated[Optional[StrictStr], Field(description="Filter by the exact period ending date (YYYY-MM-DD, e.g., `2024-12-31`). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.")] = None,
         period_ending_date_from: Annotated[Optional[StrictStr], Field(description="Filter by period ending date — inclusive start (YYYY-MM-DD).")] = None,
         period_ending_date_to: Annotated[Optional[StrictStr], Field(description="Filter by period ending date — inclusive end (YYYY-MM-DD).")] = None,
+        primary_annual_report: Annotated[Optional[StrictBool], Field(description="With `true`, return only annual reports (10-K, 10-K-ESEF) with a fiscal year, one per company and fiscal year, picked from the filings your other filters match: the group (consolidated) report over the parent's separate accounts, a report over an AGM notice or an amendment, English over other languages, PDF over HTML over an ESEF package, then the latest release. Combine with `languages` to pick within a language. Requires at least one of: company, company_isin, lei, countries, source, sources, fiscal_year, or a date or period range; otherwise returns 400.")] = None,
         processing_status: Annotated[Optional[StrictStr], Field(description="Filter by processing status. `COMPLETED` means the document has been processed and is ready to download; the other values are still in, or dropped out of, the processing pipeline. Exact, case-sensitive match; an unknown value returns `400`.")] = None,
         processing_statuses: Annotated[Optional[StrictStr], Field(description="Comma-separated processing statuses (e.g. `COMPLETED,FAILED`). Case-insensitive. An unknown value returns `400` naming it.")] = None,
         reasoning_contains: Annotated[Optional[StrictStr], Field(description="Case-insensitive substring match on `filing_type_reasoning`, minimum 3 characters. Requires at least one other filter that actually constrains the query (a date range, company/ISIN/LEI, type, category or source), otherwise returns 400 — the field is unindexed. NOTE the guard checks that a companion filter constrains the query, not HOW MUCH: a deliberately wide date range is accepted and the request is then bounded by the API statement timeout rather than rejected. Narrow the companion filter for a fast answer. CAVEAT: this text is evidence of what the model looked at, NOT a statement of our classification policy; it can cite rules that do not exist.")] = None,
@@ -1202,6 +1211,8 @@ class FilingsApi:
         :type period_ending_date_from: str
         :param period_ending_date_to: Filter by period ending date — inclusive end (YYYY-MM-DD).
         :type period_ending_date_to: str
+        :param primary_annual_report: With `true`, return only annual reports (10-K, 10-K-ESEF) with a fiscal year, one per company and fiscal year, picked from the filings your other filters match: the group (consolidated) report over the parent's separate accounts, a report over an AGM notice or an amendment, English over other languages, PDF over HTML over an ESEF package, then the latest release. Combine with `languages` to pick within a language. Requires at least one of: company, company_isin, lei, countries, source, sources, fiscal_year, or a date or period range; otherwise returns 400.
+        :type primary_annual_report: bool
         :param processing_status: Filter by processing status. `COMPLETED` means the document has been processed and is ready to download; the other values are still in, or dropped out of, the processing pipeline. Exact, case-sensitive match; an unknown value returns `400`.
         :type processing_status: str
         :param processing_statuses: Comma-separated processing statuses (e.g. `COMPLETED,FAILED`). Case-insensitive. An unknown value returns `400` naming it.
@@ -1283,6 +1294,7 @@ class FilingsApi:
             period_ending_date=period_ending_date,
             period_ending_date_from=period_ending_date_from,
             period_ending_date_to=period_ending_date_to,
+            primary_annual_report=primary_annual_report,
             processing_status=processing_status,
             processing_statuses=processing_statuses,
             reasoning_contains=reasoning_contains,
@@ -1348,6 +1360,7 @@ class FilingsApi:
         period_ending_date,
         period_ending_date_from,
         period_ending_date_to,
+        primary_annual_report,
         processing_status,
         processing_statuses,
         reasoning_contains,
@@ -1514,6 +1527,10 @@ class FilingsApi:
         if period_ending_date_to is not None:
             
             _query_params.append(('period_ending_date_to', period_ending_date_to))
+            
+        if primary_annual_report is not None:
+            
+            _query_params.append(('primary_annual_report', primary_annual_report))
             
         if processing_status is not None:
             

@@ -1,5 +1,3 @@
-English | [简体中文](README.zh-CN.md)
-
 # FinancialFilings Python SDK
 
 The official Python client for the [FinancialFilings API](https://financialfilings.com). 
