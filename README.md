@@ -1,3 +1,5 @@
+English | [简体中文](https://github.com/financial-reports/financial-reports-python/blob/main/README.zh-CN.md)
+
 # FinancialFilings Python SDK
 
 The official Python client for the [FinancialFilings API](https://financialfilings.com). 
