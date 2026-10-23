@@ -19,7 +19,7 @@ import re  # noqa: F401
 import json
 
 from datetime import date, datetime
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr, field_validator
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
@@ -39,17 +39,6 @@ class CompaniesFinancialsRetrieve200ResponseFilters(BaseModel):
     as_known_at: Optional[datetime] = Field(default=None, description="The instant values were reconstructed at, in UTC: a bare date is echoed as the end of that day, a future time as now.")
     include: Optional[List[StrictStr]] = None
     __properties: ClassVar[List[str]] = ["statement_type", "fiscal_year", "fiscal_year_from", "fiscal_year_to", "fiscal_period", "line_items", "as_of", "as_known_at", "include"]
-
-    @field_validator('include')
-    def include_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        for i in value:
-            if i not in set(['revisions']):
-                raise ValueError("each list item must be one of ('revisions')")
-        return value
 
     model_config = ConfigDict(
         validate_by_name=True,

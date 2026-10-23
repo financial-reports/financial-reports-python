@@ -24,6 +24,7 @@ from financial_reports_generated_client.models.companies_financials_retrieve200_
 from financial_reports_generated_client.models.companies_financials_retrieve200_response_filters import CompaniesFinancialsRetrieve200ResponseFilters
 from financial_reports_generated_client.models.companies_financials_retrieve200_response_history_window import CompaniesFinancialsRetrieve200ResponseHistoryWindow
 from financial_reports_generated_client.models.companies_financials_retrieve200_response_periods_inner import CompaniesFinancialsRetrieve200ResponsePeriodsInner
+from financial_reports_generated_client.models.companies_financials_retrieve200_response_preliminary_results_inner import CompaniesFinancialsRetrieve200ResponsePreliminaryResultsInner
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
@@ -41,7 +42,8 @@ class CompaniesFinancialsRetrieve200Response(BaseModel):
     periods: List[CompaniesFinancialsRetrieve200ResponsePeriodsInner]
     notice: Optional[StrictStr] = None
     history_window: Optional[CompaniesFinancialsRetrieve200ResponseHistoryWindow] = None
-    __properties: ClassVar[List[str]] = ["company_id", "template", "currency", "sources_masked", "filters", "period_count", "periods", "notice", "history_window"]
+    preliminary_results: Optional[List[CompaniesFinancialsRetrieve200ResponsePreliminaryResultsInner]] = Field(default=None, description="Present only with `include=preliminary`. The company's own preliminary results figures, published before the report for the period and expected to differ from it (today: Korean 잠정실적 notices). Never merged into `periods`. One entry per notice and period, corrections included, so the history is point in time: `is_latest` marks the newest notice for its period and basis among those returned.")
+    __properties: ClassVar[List[str]] = ["company_id", "template", "currency", "sources_masked", "filters", "period_count", "periods", "notice", "history_window", "preliminary_results"]
 
     @field_validator('template')
     def template_validate_enum(cls, value):
@@ -107,6 +109,12 @@ class CompaniesFinancialsRetrieve200Response(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of history_window
         if self.history_window:
             _dict['history_window'] = self.history_window.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of each item in preliminary_results (list)
+        _items = []
+        if self.preliminary_results:
+            for _item_preliminary_results in self.preliminary_results:
+                _items.append(_item_preliminary_results.to_dict() if _item_preliminary_results is not None else None)
+            _dict['preliminary_results'] = _items
         # set to None if currency (nullable) is None
         # and model_fields_set contains the field
         if self.currency is None and "currency" in self.model_fields_set:
@@ -132,7 +140,8 @@ class CompaniesFinancialsRetrieve200Response(BaseModel):
             "period_count": obj.get("period_count"),
             "periods": [CompaniesFinancialsRetrieve200ResponsePeriodsInner.from_dict(_item) for _item in obj["periods"]] if obj.get("periods") is not None else None,
             "notice": obj.get("notice"),
-            "history_window": CompaniesFinancialsRetrieve200ResponseHistoryWindow.from_dict(obj["history_window"]) if obj.get("history_window") is not None else None
+            "history_window": CompaniesFinancialsRetrieve200ResponseHistoryWindow.from_dict(obj["history_window"]) if obj.get("history_window") is not None else None,
+            "preliminary_results": [CompaniesFinancialsRetrieve200ResponsePreliminaryResultsInner.from_dict(_item) for _item in obj["preliminary_results"]] if obj.get("preliminary_results") is not None else None
         })
         return _obj
 

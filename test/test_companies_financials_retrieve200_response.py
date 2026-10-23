@@ -55,7 +55,7 @@ class TestCompaniesFinancialsRetrieve200Response(unittest.TestCase):
                     as_of = datetime.datetime.strptime('1975-12-30', '%Y-%m-%d').date(), 
                     as_known_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
                     include = [
-                        'revisions'
+                        ''
                         ], ),
                 period_count = 56,
                 periods = [
@@ -126,7 +126,32 @@ class TestCompaniesFinancialsRetrieve200Response(unittest.TestCase):
                     limited = True, 
                     max_history_days = 56, 
                     cutoff = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
-                    detail = '', )
+                    detail = '', ),
+                preliminary_results = [
+                    financial_reports_generated_client.models.companies_financials_retrieve_200_response_preliminary_results_inner.companies_financials_retrieve_200_response_preliminary_results_inner(
+                        status = 'preliminary', 
+                        fiscal_year = 56, 
+                        fiscal_period = '', 
+                        period_start_date = datetime.datetime.strptime('1975-12-30', '%Y-%m-%d').date(), 
+                        period_end_date = datetime.datetime.strptime('1975-12-30', '%Y-%m-%d').date(), 
+                        basis = 'consolidated', 
+                        is_correction = True, 
+                        is_latest = True, 
+                        source_filing = financial_reports_generated_client.models.companies_financials_retrieve_200_response_preliminary_results_inner_source_filing.companies_financials_retrieve_200_response_preliminary_results_inner_source_filing(
+                            id = 56, 
+                            filing_type = '', 
+                            release_datetime = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
+                            document_url = '', 
+                            viewer_url = '', ), 
+                        line_items = [
+                            financial_reports_generated_client.models.companies_financials_retrieve_200_response_preliminary_results_inner_line_items_inner.companies_financials_retrieve_200_response_preliminary_results_inner_line_items_inner(
+                                code = '', 
+                                value = '', 
+                                raw_value = '', 
+                                unit = '', 
+                                currency = '', )
+                            ], )
+                    ]
             )
         else:
             return CompaniesFinancialsRetrieve200Response(
@@ -144,7 +169,7 @@ class TestCompaniesFinancialsRetrieve200Response(unittest.TestCase):
                     as_of = datetime.datetime.strptime('1975-12-30', '%Y-%m-%d').date(), 
                     as_known_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
                     include = [
-                        'revisions'
+                        ''
                         ], ),
                 period_count = 56,
                 periods = [

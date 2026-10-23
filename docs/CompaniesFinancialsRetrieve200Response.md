@@ -14,6 +14,7 @@ Name | Type | Description | Notes
 **periods** | [**List[CompaniesFinancialsRetrieve200ResponsePeriodsInner]**](CompaniesFinancialsRetrieve200ResponsePeriodsInner.md) |  | 
 **notice** | **str** |  | [optional] 
 **history_window** | [**CompaniesFinancialsRetrieve200ResponseHistoryWindow**](CompaniesFinancialsRetrieve200ResponseHistoryWindow.md) |  | [optional] 
+**preliminary_results** | [**List[CompaniesFinancialsRetrieve200ResponsePreliminaryResultsInner]**](CompaniesFinancialsRetrieve200ResponsePreliminaryResultsInner.md) | Present only with &#x60;include&#x3D;preliminary&#x60;. The company&#39;s own preliminary results figures, published before the report for the period and expected to differ from it (today: Korean 잠정실적 notices). Never merged into &#x60;periods&#x60;. One entry per notice and period, corrections included, so the history is point in time: &#x60;is_latest&#x60; marks the newest notice for its period and basis among those returned. | [optional] 
 
 ## Example
 
