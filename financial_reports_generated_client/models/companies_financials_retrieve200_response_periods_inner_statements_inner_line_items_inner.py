@@ -45,7 +45,8 @@ class CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItems
     revisions: Optional[List[CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItemsInnerRevisionsInner]] = Field(default=None, description="Present only with `include=revisions`: every recorded change to this value, oldest first (with `as_known_at`, up to that time). Empty when none was recorded. Recording started 2026-10-19T17:05:18Z; `pre_recording` entries are older corrections whose `changed_at` is approximate (the change happened at or before it).")
     withdrawn_reason: Optional[StrictStr] = Field(default=None, description="Present only with `as_known_at`, and only on a statement (and on its values) that was served for this company at that time and is not served for it today because it was withdrawn: `reattributed` - the statement now belongs to another company record, where it may be served; `purged` - reserved: its filing was removed altogether (not served yet; the filing's type, release time and links would be null unless recorded). Absent everywhere else.")
     updated_at: datetime = Field(description="When this value was last written. Equal to the extraction time for an untouched value; moves when a later correction pass rewrites the value in place (a re-extraction replaces the whole statement and sets a new one). Compare it with the value from your previous poll to detect a changed figure without diffing. It does not move when a whole statement is withdrawn or when a different filing starts supplying the period - watch `source_filing` for that.")
-    __properties: ClassVar[List[str]] = ["code", "name", "statement_type", "depth", "parent_code", "sort_order", "value", "raw_value", "scale", "currency", "confidence", "source_page", "revisions", "withdrawn_reason", "updated_at"]
+    available_at: Optional[datetime] = Field(description="When the filing this value was read from was released. Usually the statement's own `source_filing.release_datetime`. Later where the value was filled in from another filing because the selected statement lacks it (named in `extraction.notes`): for example a prior-year figure taken from the next annual report. For a point-in-time series, drop values whose `available_at` is after your cutoff, or pass `as_of`, which never serves a value from a filing released after it.")
+    __properties: ClassVar[List[str]] = ["code", "name", "statement_type", "depth", "parent_code", "sort_order", "value", "raw_value", "scale", "currency", "confidence", "source_page", "revisions", "withdrawn_reason", "updated_at", "available_at"]
 
     @field_validator('statement_type')
     def statement_type_validate_enum(cls, value):
@@ -154,6 +155,11 @@ class CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItems
         if self.source_page is None and "source_page" in self.model_fields_set:
             _dict['source_page'] = None
 
+        # set to None if available_at (nullable) is None
+        # and model_fields_set contains the field
+        if self.available_at is None and "available_at" in self.model_fields_set:
+            _dict['available_at'] = None
+
         return _dict
 
     @classmethod
@@ -180,7 +186,8 @@ class CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItems
             "source_page": obj.get("source_page"),
             "revisions": [CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItemsInnerRevisionsInner.from_dict(_item) for _item in obj["revisions"]] if obj.get("revisions") is not None else None,
             "withdrawn_reason": obj.get("withdrawn_reason"),
-            "updated_at": obj.get("updated_at")
+            "updated_at": obj.get("updated_at"),
+            "available_at": obj.get("available_at")
         })
         return _obj
 

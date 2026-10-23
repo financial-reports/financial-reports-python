@@ -71,7 +71,8 @@ class TestCompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInner(unit
                                 reason = 'extraction', )
                             ], 
                         withdrawn_reason = 'reattributed', 
-                        updated_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), )
+                        updated_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
+                        available_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), )
                     ],
                 withdrawn_reason = 'reattributed',
                 is_comparative = True,
@@ -126,7 +127,8 @@ class TestCompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInner(unit
                                 reason = 'extraction', )
                             ], 
                         withdrawn_reason = 'reattributed', 
-                        updated_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), )
+                        updated_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
+                        available_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), )
                     ],
                 is_comparative = True,
         )

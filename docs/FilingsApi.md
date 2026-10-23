@@ -469,7 +469,7 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Markdown content of the filing. |  -  |
+**200** | Markdown content of the filing. Filings converted from PDF since 2026-10-22 carry &#x60;&lt;!-- page N --&gt;&#x60; on its own line before each page (N is the PDF page number), and HTML filings that mark their page breaks carry one per marked page, so a quote sits on the page of the last marker above it. Older conversions have none. |  -  |
 **403** | Forbidden. Your plan does not include access to this endpoint. |  -  |
 **404** | Not Found. The filing has no markdown to serve. &#x60;reason&#x60; says why: &#x60;not_processed&#x60; (no processed record yet), &#x60;no_narrative_content&#x60; (the source genuinely carries no narrative text), or &#x60;content_missing&#x60; (the record exists but its content is unavailable). &#x60;retryable&#x60; is &#x60;true&#x60; only while a conversion is scheduled or running; the response then also carries a &#x60;Retry-After&#x60; header (seconds). When &#x60;retryable&#x60; is &#x60;false&#x60;, do not poll: wait for the filing&#39;s &#x60;markdown_url&#x60; to become non-null. |  -  |
 **429** | Rate limit, plan quota or spend cap reached. |  -  |
