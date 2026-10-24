@@ -4,20 +4,20 @@ All URIs are relative to *https://api.financialreports.eu*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**agent_checkout_link**](AgentAccountApi.md#agent_checkout_link) | **POST** /agent/checkout-link/ | Mint a Stripe link for the owner to add a card (pay-as-you-go)
-[**agent_key_claim**](AgentAccountApi.md#agent_key_claim) | **POST** /agent/key-claim/ | Collect an existing account&#39;s key once its owner approves
-[**agent_key_rotate**](AgentAccountApi.md#agent_key_rotate) | **POST** /agent/key/rotate/ | Rotate this agent key
-[**agent_owner_confirmation**](AgentAccountApi.md#agent_owner_confirmation) | **POST** /agent/owner-confirmation/ | Email the account owner a confirmation link
-[**agent_signup**](AgentAccountApi.md#agent_signup) | **POST** /agent/signup/ | Create an API key as an AI agent
-[**agent_status**](AgentAccountApi.md#agent_status) | **GET** /agent/status/ | Agent account status
+[**agent_checkout_link**](AgentAccountApi.md#agent_checkout_link) | **POST** /agent/checkout-link/ | Create Checkout Link
+[**agent_key_claim**](AgentAccountApi.md#agent_key_claim) | **POST** /agent/key-claim/ | Claim an Existing Account&#39;s Key
+[**agent_key_rotate**](AgentAccountApi.md#agent_key_rotate) | **POST** /agent/key/rotate/ | Rotate Agent Key
+[**agent_owner_confirmation**](AgentAccountApi.md#agent_owner_confirmation) | **POST** /agent/owner-confirmation/ | Request Owner Confirmation
+[**agent_signup**](AgentAccountApi.md#agent_signup) | **POST** /agent/signup/ | Create an API Key as an AI Agent
+[**agent_status**](AgentAccountApi.md#agent_status) | **GET** /agent/status/ | Get Agent Status
 
 
 # **agent_checkout_link**
 > Dict[str, Optional[object]] agent_checkout_link()
 
-Mint a Stripe link for the owner to add a card (pay-as-you-go)
+Create Checkout Link
 
-E5 ``POST /agent/checkout-link``.
+Returns a Stripe link where the owner adds a card for pay-as-you-go. An unexpired link is reused (200).
 
 ### Example
 
@@ -51,7 +51,7 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
     api_instance = financial_reports_generated_client.AgentAccountApi(api_client)
 
     try:
-        # Mint a Stripe link for the owner to add a card (pay-as-you-go)
+        # Create Checkout Link
         api_response = await api_instance.agent_checkout_link()
         print("The response of AgentAccountApi->agent_checkout_link:\n")
         pprint(api_response)
@@ -94,11 +94,9 @@ This endpoint does not need any parameter.
 # **agent_key_claim**
 > Dict[str, Optional[object]] agent_key_claim(agent_key_claim_request)
 
-Collect an existing account's key once its owner approves
+Claim an Existing Account's Key
 
-``POST /agent/key-claim``: collect the key an existing account's owner approved
-after a signup 409 (#5375). Unauthenticated: the signed claim token is the
-credential.
+After a 409 from signup, poll with its `claim_token`. Returns 202 until the owner approves, then the key (shown once). No API key needed.
 
 ### Example
 
@@ -123,7 +121,7 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
     agent_key_claim_request = financial_reports_generated_client.AgentKeyClaimRequest() # AgentKeyClaimRequest | 
 
     try:
-        # Collect an existing account's key once its owner approves
+        # Claim an Existing Account's Key
         api_response = await api_instance.agent_key_claim(agent_key_claim_request)
         print("The response of AgentAccountApi->agent_key_claim:\n")
         pprint(api_response)
@@ -168,9 +166,9 @@ No authorization required
 # **agent_key_rotate**
 > Dict[str, Optional[object]] agent_key_rotate()
 
-Rotate this agent key
+Rotate Agent Key
 
-E6 ``POST /agent/key/rotate``: requires the CURRENT key (never by email).
+Replaces the key that made the call with a new one (shown once). Authenticate with the current key. Not available once the owner has logged in: they manage the key from the dashboard.
 
 ### Example
 
@@ -204,7 +202,7 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
     api_instance = financial_reports_generated_client.AgentAccountApi(api_client)
 
     try:
-        # Rotate this agent key
+        # Rotate Agent Key
         api_response = await api_instance.agent_key_rotate()
         print("The response of AgentAccountApi->agent_key_rotate:\n")
         pprint(api_response)
@@ -244,9 +242,9 @@ This endpoint does not need any parameter.
 # **agent_owner_confirmation**
 > Dict[str, Optional[object]] agent_owner_confirmation()
 
-Email the account owner a confirmation link
+Request Owner Confirmation
 
-E4 ``POST /agent/owner-confirmation``.
+Emails the account owner a confirmation link. Poll `GET /agent/status` to see when they confirm.
 
 ### Example
 
@@ -280,7 +278,7 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
     api_instance = financial_reports_generated_client.AgentAccountApi(api_client)
 
     try:
-        # Email the account owner a confirmation link
+        # Request Owner Confirmation
         api_response = await api_instance.agent_owner_confirmation()
         print("The response of AgentAccountApi->agent_owner_confirmation:\n")
         pprint(api_response)
@@ -321,9 +319,9 @@ This endpoint does not need any parameter.
 # **agent_signup**
 > Dict[str, Optional[object]] agent_signup(agent_signup_request)
 
-Create an API key as an AI agent
+Create an API Key as an AI Agent
 
-Creates an account for the given email and returns an API key once. No email is sent. The key works for a small Level-1 read-only sandbox; beyond it data calls return 402 until the owner confirms (POST /agent/owner-confirmation) or a card is added (POST /agent/checkout-link). If the address cannot be used, the 409 carries a claim_token and user_code: the owner of an existing account may be emailed to approve it, and POST /agent/key-claim then returns their key.
+Creates an account for the given email and returns its API key (shown once). No email is sent. The key starts in a small read-only sandbox; after that, data calls return 402 until the owner confirms (`POST /agent/owner-confirmation`) or adds a card (`POST /agent/checkout-link`). If the email already has an account, the 409 carries a `claim_token`: the owner can approve by email, and `POST /agent/key-claim` then returns their key.
 
 ### Example
 
@@ -348,7 +346,7 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
     agent_signup_request = {"email":"dana@acme-quant.com","agent_name":"acme-research-bot"} # AgentSignupRequest | 
 
     try:
-        # Create an API key as an AI agent
+        # Create an API Key as an AI Agent
         api_response = await api_instance.agent_signup(agent_signup_request)
         print("The response of AgentAccountApi->agent_signup:\n")
         pprint(api_response)
@@ -393,9 +391,9 @@ No authorization required
 # **agent_status**
 > Dict[str, Optional[object]] agent_status()
 
-Agent account status
+Get Agent Status
 
-E3 ``GET /agent/status``.
+The account's state (`sandbox`, `unfunded`, `funded`, `active` or `blocked`), remaining sandbox calls, spend caps and any open checkout link.
 
 ### Example
 
@@ -429,7 +427,7 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
     api_instance = financial_reports_generated_client.AgentAccountApi(api_client)
 
     try:
-        # Agent account status
+        # Get Agent Status
         api_response = await api_instance.agent_status()
         print("The response of AgentAccountApi->agent_status:\n")
         pprint(api_response)

@@ -1,7 +1,7 @@
 """
     FinancialFilings API
 
-    Public-company filings across G20 markets and Europe. Authenticate every request with the `X-API-Key` header. Rate-limit headers on authenticated API responses: `X-RateLimit-Burst-Limit` (a rate expression such as `50/second`, not an integer), `X-RateLimit-Monthly-Limit` (an integer or the literal `Unlimited`), `X-RateLimit-Monthly-Remaining` (an integer, or `Unlimited` / `MCP (unlimited)`; omitted when not applicable), and `X-RateLimit-Monthly-Unit` (`requests` or `credits` — pay-as-you-go free-tier accounts are metered in credits, not request counts; omitted whenever Monthly-Remaining is). Parse defensively — these are strings, not numbers.  **Credits.** One key reaches every endpoint, and each call is priced in credits: metadata and search, filing Markdown, and standardized financial line items each have their own cost, stated at the top of every endpoint below. A free account gets a monthly credit allowance; `X-Credits-Charged` on each response says what the call cost, and `GET /usage/` shows the month so far. Webhook push is an Enterprise capability, outside credit pricing. Costs and the allowance: https://financialfilings.com/developers/
+    Filings and company data for listed companies across the G20 and Europe. Send your API key in the `X-API-Key` header on every request. New here? Start with the [quickstart](https://financialfilings.com/developers/#quickstart).  **Credits.** Every call costs credits, and each endpoint below shows its price. `X-Credits-Charged` on the response says what a call cost, and `GET /usage/` shows the month so far. A free account gets a monthly allowance. Webhooks are an Enterprise feature. Pricing: https://financialfilings.com/developers/  **Rate limits.** Responses carry `X-RateLimit-Burst-Limit` (a rate such as `50/second`), `X-RateLimit-Monthly-Limit`, `X-RateLimit-Monthly-Remaining` and `X-RateLimit-Monthly-Unit` (`requests` or `credits`). All four are strings and can be non-numeric (for example `Unlimited`); the last two are left out when they don't apply.
 
     The version of the OpenAPI document: 1.4.0
     Contact: api@financialfilings.com
@@ -66,7 +66,7 @@ class WebhooksManagementApi:
     ) -> WebhookCreateResponse:
         """Create Webhook
 
-        Create a new webhook subscription. The `secret_key` is returned in the response **only once**.
+        Creates a webhook. The `secret_key` is in this response **only**, so store it.
 
         :param webhook: (required)
         :type webhook: Webhook
@@ -135,7 +135,7 @@ class WebhooksManagementApi:
     ) -> ApiResponse[WebhookCreateResponse]:
         """Create Webhook
 
-        Create a new webhook subscription. The `secret_key` is returned in the response **only once**.
+        Creates a webhook. The `secret_key` is in this response **only**, so store it.
 
         :param webhook: (required)
         :type webhook: Webhook
@@ -204,7 +204,7 @@ class WebhooksManagementApi:
     ) -> RESTResponseType:
         """Create Webhook
 
-        Create a new webhook subscription. The `secret_key` is returned in the response **only once**.
+        Creates a webhook. The `secret_key` is in this response **only**, so store it.
 
         :param webhook: (required)
         :type webhook: Webhook
@@ -349,7 +349,7 @@ class WebhooksManagementApi:
     ) -> WebhookReplayResponse:
         """Replay Delivery
 
-        Re-sends the webhook event for a specific delivery. A new delivery record is created with the result of the replay attempt.
+        Queues the delivery's event to be sent again (202). The new attempt appears in the delivery logs. `filing.removed` events can't be replayed.
 
         :param delivery_uuid: (required)
         :type delivery_uuid: str
@@ -427,7 +427,7 @@ class WebhooksManagementApi:
     ) -> ApiResponse[WebhookReplayResponse]:
         """Replay Delivery
 
-        Re-sends the webhook event for a specific delivery. A new delivery record is created with the result of the replay attempt.
+        Queues the delivery's event to be sent again (202). The new attempt appears in the delivery logs. `filing.removed` events can't be replayed.
 
         :param delivery_uuid: (required)
         :type delivery_uuid: str
@@ -505,7 +505,7 @@ class WebhooksManagementApi:
     ) -> RESTResponseType:
         """Replay Delivery
 
-        Re-sends the webhook event for a specific delivery. A new delivery record is created with the result of the replay attempt.
+        Queues the delivery's event to be sent again (202). The new attempt appears in the delivery logs. `filing.removed` events can't be replayed.
 
         :param delivery_uuid: (required)
         :type delivery_uuid: str
@@ -661,7 +661,7 @@ class WebhooksManagementApi:
     ) -> PaginatedWebhookDeliveryList:
         """List Delivery Logs
 
-        Retrieve a paginated list of delivery attempts (logs) for a specific webhook.
+        The webhook's delivery attempts, paginated.
 
         :param id: A unique integer value identifying this webhook. (required)
         :type id: int
@@ -730,7 +730,7 @@ class WebhooksManagementApi:
     ) -> ApiResponse[PaginatedWebhookDeliveryList]:
         """List Delivery Logs
 
-        Retrieve a paginated list of delivery attempts (logs) for a specific webhook.
+        The webhook's delivery attempts, paginated.
 
         :param id: A unique integer value identifying this webhook. (required)
         :type id: int
@@ -799,7 +799,7 @@ class WebhooksManagementApi:
     ) -> RESTResponseType:
         """List Delivery Logs
 
-        Retrieve a paginated list of delivery attempts (logs) for a specific webhook.
+        The webhook's delivery attempts, paginated.
 
         :param id: A unique integer value identifying this webhook. (required)
         :type id: int
@@ -930,7 +930,7 @@ class WebhooksManagementApi:
     ) -> WebhookDeliveryDetail:
         """Retrieve Delivery Detail
 
-        Retrieve full details for a single delivery, including the reconstructed request payload and headers. The payload is rebuilt dynamically from the referenced filing record.
+        One delivery attempt, with the request payload and headers. The payload is rebuilt from the filing as it is now.
 
         :param delivery_uuid: (required)
         :type delivery_uuid: str
@@ -1004,7 +1004,7 @@ class WebhooksManagementApi:
     ) -> ApiResponse[WebhookDeliveryDetail]:
         """Retrieve Delivery Detail
 
-        Retrieve full details for a single delivery, including the reconstructed request payload and headers. The payload is rebuilt dynamically from the referenced filing record.
+        One delivery attempt, with the request payload and headers. The payload is rebuilt from the filing as it is now.
 
         :param delivery_uuid: (required)
         :type delivery_uuid: str
@@ -1078,7 +1078,7 @@ class WebhooksManagementApi:
     ) -> RESTResponseType:
         """Retrieve Delivery Detail
 
-        Retrieve full details for a single delivery, including the reconstructed request payload and headers. The payload is rebuilt dynamically from the referenced filing record.
+        One delivery attempt, with the request payload and headers. The payload is rebuilt from the filing as it is now.
 
         :param delivery_uuid: (required)
         :type delivery_uuid: str
@@ -1215,7 +1215,7 @@ class WebhooksManagementApi:
     ) -> None:
         """Delete Webhook
 
-        Permanently delete a webhook subscription by its ID.
+        Deletes a webhook permanently.
 
         :param id: A unique integer value identifying this webhook. (required)
         :type id: int
@@ -1284,7 +1284,7 @@ class WebhooksManagementApi:
     ) -> ApiResponse[None]:
         """Delete Webhook
 
-        Permanently delete a webhook subscription by its ID.
+        Deletes a webhook permanently.
 
         :param id: A unique integer value identifying this webhook. (required)
         :type id: int
@@ -1353,7 +1353,7 @@ class WebhooksManagementApi:
     ) -> RESTResponseType:
         """Delete Webhook
 
-        Permanently delete a webhook subscription by its ID.
+        Deletes a webhook permanently.
 
         :param id: A unique integer value identifying this webhook. (required)
         :type id: int
@@ -1484,7 +1484,7 @@ class WebhooksManagementApi:
     ) -> PaginatedWebhookList:
         """List Webhooks
 
-        Retrieve a list of all webhooks configured for your account. Note: Secret keys are not returned in this list.
+        All webhooks on your account. Secret keys are not included.
 
         :param page: A page number within the paginated result set.
         :type page: int
@@ -1557,7 +1557,7 @@ class WebhooksManagementApi:
     ) -> ApiResponse[PaginatedWebhookList]:
         """List Webhooks
 
-        Retrieve a list of all webhooks configured for your account. Note: Secret keys are not returned in this list.
+        All webhooks on your account. Secret keys are not included.
 
         :param page: A page number within the paginated result set.
         :type page: int
@@ -1630,7 +1630,7 @@ class WebhooksManagementApi:
     ) -> RESTResponseType:
         """List Webhooks
 
-        Retrieve a list of all webhooks configured for your account. Note: Secret keys are not returned in this list.
+        All webhooks on your account. Secret keys are not included.
 
         :param page: A page number within the paginated result set.
         :type page: int
@@ -1771,7 +1771,7 @@ class WebhooksManagementApi:
     ) -> Webhook:
         """Partial Update Webhook
 
-        Partially update the details of a specific webhook.
+        Changes only the fields you send.
 
         :param id: A unique integer value identifying this webhook. (required)
         :type id: int
@@ -1844,7 +1844,7 @@ class WebhooksManagementApi:
     ) -> ApiResponse[Webhook]:
         """Partial Update Webhook
 
-        Partially update the details of a specific webhook.
+        Changes only the fields you send.
 
         :param id: A unique integer value identifying this webhook. (required)
         :type id: int
@@ -1917,7 +1917,7 @@ class WebhooksManagementApi:
     ) -> RESTResponseType:
         """Partial Update Webhook
 
-        Partially update the details of a specific webhook.
+        Changes only the fields you send.
 
         :param id: A unique integer value identifying this webhook. (required)
         :type id: int
@@ -2067,7 +2067,7 @@ class WebhooksManagementApi:
     ) -> WebhookSecret:
         """Regenerate Secret Key
 
-        Generates a new, unique `secret_key` for this webhook. The old key will be invalidated immediately. This action is irreversible.
+        Issues a new `secret_key` for this webhook. The old key stops working immediately.
 
         :param id: A unique integer value identifying this webhook. (required)
         :type id: int
@@ -2140,7 +2140,7 @@ class WebhooksManagementApi:
     ) -> ApiResponse[WebhookSecret]:
         """Regenerate Secret Key
 
-        Generates a new, unique `secret_key` for this webhook. The old key will be invalidated immediately. This action is irreversible.
+        Issues a new `secret_key` for this webhook. The old key stops working immediately.
 
         :param id: A unique integer value identifying this webhook. (required)
         :type id: int
@@ -2213,7 +2213,7 @@ class WebhooksManagementApi:
     ) -> RESTResponseType:
         """Regenerate Secret Key
 
-        Generates a new, unique `secret_key` for this webhook. The old key will be invalidated immediately. This action is irreversible.
+        Issues a new `secret_key` for this webhook. The old key stops working immediately.
 
         :param id: A unique integer value identifying this webhook. (required)
         :type id: int
@@ -2362,7 +2362,7 @@ class WebhooksManagementApi:
     ) -> Webhook:
         """Retrieve Webhook
 
-        Retrieve the details of a specific webhook by its ID. Note: Secret keys are not visible here.
+        One webhook by its ID. The secret key is not included.
 
         :param id: A unique integer value identifying this webhook. (required)
         :type id: int
@@ -2431,7 +2431,7 @@ class WebhooksManagementApi:
     ) -> ApiResponse[Webhook]:
         """Retrieve Webhook
 
-        Retrieve the details of a specific webhook by its ID. Note: Secret keys are not visible here.
+        One webhook by its ID. The secret key is not included.
 
         :param id: A unique integer value identifying this webhook. (required)
         :type id: int
@@ -2500,7 +2500,7 @@ class WebhooksManagementApi:
     ) -> RESTResponseType:
         """Retrieve Webhook
 
-        Retrieve the details of a specific webhook by its ID. Note: Secret keys are not visible here.
+        One webhook by its ID. The secret key is not included.
 
         :param id: A unique integer value identifying this webhook. (required)
         :type id: int
@@ -2631,7 +2631,7 @@ class WebhooksManagementApi:
     ) -> WebhookTestResponse:
         """Test Webhook
 
-        Sends a pre-defined 'filing.processed.test' event to the configured webhook URL to verify its functionality. This creates a delivery record.
+        Sends a `filing.processed.test` event to the webhook's URL and reports how it answered. The attempt appears in the delivery logs.
 
         :param id: A unique integer value identifying this webhook. (required)
         :type id: int
@@ -2705,7 +2705,7 @@ class WebhooksManagementApi:
     ) -> ApiResponse[WebhookTestResponse]:
         """Test Webhook
 
-        Sends a pre-defined 'filing.processed.test' event to the configured webhook URL to verify its functionality. This creates a delivery record.
+        Sends a `filing.processed.test` event to the webhook's URL and reports how it answered. The attempt appears in the delivery logs.
 
         :param id: A unique integer value identifying this webhook. (required)
         :type id: int
@@ -2779,7 +2779,7 @@ class WebhooksManagementApi:
     ) -> RESTResponseType:
         """Test Webhook
 
-        Sends a pre-defined 'filing.processed.test' event to the configured webhook URL to verify its functionality. This creates a delivery record.
+        Sends a `filing.processed.test` event to the webhook's URL and reports how it answered. The attempt appears in the delivery logs.
 
         :param id: A unique integer value identifying this webhook. (required)
         :type id: int
@@ -2930,7 +2930,7 @@ class WebhooksManagementApi:
     ) -> Webhook:
         """Update Webhook
 
-        Update the details of a specific webhook.
+        Replaces a webhook's settings.
 
         :param id: A unique integer value identifying this webhook. (required)
         :type id: int
@@ -3003,7 +3003,7 @@ class WebhooksManagementApi:
     ) -> ApiResponse[Webhook]:
         """Update Webhook
 
-        Update the details of a specific webhook.
+        Replaces a webhook's settings.
 
         :param id: A unique integer value identifying this webhook. (required)
         :type id: int
@@ -3076,7 +3076,7 @@ class WebhooksManagementApi:
     ) -> RESTResponseType:
         """Update Webhook
 
-        Update the details of a specific webhook.
+        Replaces a webhook's settings.
 
         :param id: A unique integer value identifying this webhook. (required)
         :type id: int

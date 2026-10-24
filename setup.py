@@ -1,7 +1,7 @@
 """
     FinancialFilings API
 
-    Public-company filings across G20 markets and Europe. Authenticate every request with the `X-API-Key` header. Rate-limit headers on authenticated API responses: `X-RateLimit-Burst-Limit` (a rate expression such as `50/second`, not an integer), `X-RateLimit-Monthly-Limit` (an integer or the literal `Unlimited`), `X-RateLimit-Monthly-Remaining` (an integer, or `Unlimited` / `MCP (unlimited)`; omitted when not applicable), and `X-RateLimit-Monthly-Unit` (`requests` or `credits` — pay-as-you-go free-tier accounts are metered in credits, not request counts; omitted whenever Monthly-Remaining is). Parse defensively — these are strings, not numbers.  **Credits.** One key reaches every endpoint, and each call is priced in credits: metadata and search, filing Markdown, and standardized financial line items each have their own cost, stated at the top of every endpoint below. A free account gets a monthly credit allowance; `X-Credits-Charged` on each response says what the call cost, and `GET /usage/` shows the month so far. Webhook push is an Enterprise capability, outside credit pricing. Costs and the allowance: https://financialfilings.com/developers/
+    Filings and company data for listed companies across the G20 and Europe. Send your API key in the `X-API-Key` header on every request. New here? Start with the [quickstart](https://financialfilings.com/developers/#quickstart).  **Credits.** Every call costs credits, and each endpoint below shows its price. `X-Credits-Charged` on the response says what a call cost, and `GET /usage/` shows the month so far. A free account gets a monthly allowance. Webhooks are an Enterprise feature. Pricing: https://financialfilings.com/developers/  **Rate limits.** Responses carry `X-RateLimit-Burst-Limit` (a rate such as `50/second`), `X-RateLimit-Monthly-Limit`, `X-RateLimit-Monthly-Remaining` and `X-RateLimit-Monthly-Unit` (`requests` or `credits`). All four are strings and can be non-numeric (for example `Unlimited`); the last two are left out when they don't apply.
 
     The version of the OpenAPI document: 1.4.0
     Contact: api@financialfilings.com
@@ -20,7 +20,7 @@ from setuptools import setup, find_packages  # noqa: H301
 # prerequisite: setuptools
 # http://pypi.python.org/pypi/setuptools
 NAME = "financial-reports-generated-client"
-VERSION = "1.4.139"
+VERSION = "1.4.140"
 PYTHON_REQUIRES = ">= 3.10"
 REQUIRES = [
     "python-dateutil >= 2.8.2",
@@ -44,7 +44,7 @@ setup(
     include_package_data=True,
     long_description_content_type='text/markdown',
     long_description="""\
-    Public-company filings across G20 markets and Europe. Authenticate every request with the &#x60;X-API-Key&#x60; header. Rate-limit headers on authenticated API responses: &#x60;X-RateLimit-Burst-Limit&#x60; (a rate expression such as &#x60;50/second&#x60;, not an integer), &#x60;X-RateLimit-Monthly-Limit&#x60; (an integer or the literal &#x60;Unlimited&#x60;), &#x60;X-RateLimit-Monthly-Remaining&#x60; (an integer, or &#x60;Unlimited&#x60; / &#x60;MCP (unlimited)&#x60;; omitted when not applicable), and &#x60;X-RateLimit-Monthly-Unit&#x60; (&#x60;requests&#x60; or &#x60;credits&#x60; — pay-as-you-go free-tier accounts are metered in credits, not request counts; omitted whenever Monthly-Remaining is). Parse defensively — these are strings, not numbers.  **Credits.** One key reaches every endpoint, and each call is priced in credits: metadata and search, filing Markdown, and standardized financial line items each have their own cost, stated at the top of every endpoint below. A free account gets a monthly credit allowance; &#x60;X-Credits-Charged&#x60; on each response says what the call cost, and &#x60;GET /usage/&#x60; shows the month so far. Webhook push is an Enterprise capability, outside credit pricing. Costs and the allowance: https://financialfilings.com/developers/
+    Filings and company data for listed companies across the G20 and Europe. Send your API key in the &#x60;X-API-Key&#x60; header on every request. New here? Start with the [quickstart](https://financialfilings.com/developers/#quickstart).  **Credits.** Every call costs credits, and each endpoint below shows its price. &#x60;X-Credits-Charged&#x60; on the response says what a call cost, and &#x60;GET /usage/&#x60; shows the month so far. A free account gets a monthly allowance. Webhooks are an Enterprise feature. Pricing: https://financialfilings.com/developers/  **Rate limits.** Responses carry &#x60;X-RateLimit-Burst-Limit&#x60; (a rate such as &#x60;50/second&#x60;), &#x60;X-RateLimit-Monthly-Limit&#x60;, &#x60;X-RateLimit-Monthly-Remaining&#x60; and &#x60;X-RateLimit-Monthly-Unit&#x60; (&#x60;requests&#x60; or &#x60;credits&#x60;). All four are strings and can be non-numeric (for example &#x60;Unlimited&#x60;); the last two are left out when they don&#39;t apply.
     """,  # noqa: E501
     package_data={"financial_reports_generated_client": ["py.typed"]},
 )

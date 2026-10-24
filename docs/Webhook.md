@@ -6,16 +6,16 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **int** | The unique identifier for the webhook. | [readonly] 
-**url** | **str** | The endpoint URL (HTTPS required) to which the webhook payloads will be sent. | 
-**is_active** | **bool** | Set to &#39;false&#39; to temporarily disable this webhook without deleting it. | [optional] [default to True]
-**include_markdown** | **bool** | Set to &#39;true&#39; to include the full &#39;markdown_content&#39; in the webhook payload. Set to &#39;false&#39; to receive a payload without the markdown body. | [optional] [default to True]
-**include_isins** | **bool** | Set to &#39;true&#39; to include the list of ISINs in the company object. Warning: Large companies may have thousands of ISINs, increasing payload size. | [optional] [default to False]
-**track_all_companies** | **bool** | Set to &#39;true&#39; to subscribe to the Global Firehose. You will receive notifications for filings from ALL companies in the database, regardless of your Watchlist. | [optional] [default to False]
-**trigger_on_filing_received** | **bool** | If true, triggers immediately when a filing is detected (Fastest). Note: Metadata like filing type may be null, and no markdown is included. | [optional] [default to False]
-**trigger_on_filing_processed** | **bool** | If true, triggers when the filing has been fully analyzed and converted (Complete). Includes verified metadata and markdown content. | [optional] [default to True]
-**trigger_on_filing_updated** | **bool** | If true, also sends &#39;filing.updated&#39; when a filing you received is later re-typed or moved to another company, and &#39;filing.removed&#39; when it is deleted, hidden or falls out of this webhook&#39;s scope, within 30 days of delivery. Not billed. | [optional] [default to False]
-**deliver_late_filings** | **bool** | If true, also deliver filings that reached the platform more than 48 hours after publication, as long as they are at most 30 days late. These deliveries carry &#39;late&#39;: true. Off by default, because late arrivals are mostly backfills. | [optional] [default to False]
-**subscribed_filing_types** | **List[str]** | A list of filing type codes (e.g., [&#39;10-K&#39;, &#39;IR&#39;]) to subscribe to. If this list is empty or omitted, you will be subscribed to all filing types. | [optional] 
+**url** | **str** | Your HTTPS endpoint that receives the payloads. | 
+**is_active** | **bool** | &#x60;false&#x60; pauses the webhook without deleting it. Default &#x60;true&#x60;. | [optional] [default to True]
+**include_markdown** | **bool** | Include the filing&#39;s &#x60;markdown_content&#x60; in the payload. Default &#x60;true&#x60;. | [optional] [default to True]
+**include_isins** | **bool** | Include the company&#39;s ISINs in the payload. Large companies can have thousands. Default &#x60;false&#x60;. | [optional] [default to False]
+**track_all_companies** | **bool** | &#x60;true&#x60;: filings from every company. &#x60;false&#x60; (default): only companies on your watchlist. | [optional] [default to False]
+**trigger_on_filing_received** | **bool** | Send &#x60;filing.received&#x60; as soon as a filing arrives (fastest). Filing type and other metadata may still be null, and there is no Markdown. Default &#x60;false&#x60;. | [optional] [default to False]
+**trigger_on_filing_processed** | **bool** | Send &#x60;filing.processed&#x60; once a filing is classified and converted, with full metadata (and Markdown if &#x60;include_markdown&#x60; is on). Default &#x60;true&#x60;. | [optional] [default to True]
+**trigger_on_filing_updated** | **bool** | Also send &#x60;filing.updated&#x60; when a filing you received is re-typed or moved to another company, and &#x60;filing.removed&#x60; when it is deleted, hidden or leaves this webhook&#39;s scope, within 30 days of delivery. Not billed. Default &#x60;false&#x60;. | [optional] [default to False]
+**deliver_late_filings** | **bool** | Also deliver filings that reached us more than 48 hours (and at most 30 days) after publication, marked &#x60;late: true&#x60;. Default &#x60;false&#x60;: late arrivals are mostly backfills. | [optional] [default to False]
+**subscribed_filing_types** | **List[str]** | Filing type codes to subscribe to (e.g. &#x60;[&#39;10-K&#39;, &#39;IR&#39;]&#x60;). Empty or omitted: all types. | [optional] 
 **created_at** | **datetime** | Timestamp when the webhook was created. | [readonly] 
 **updated_at** | **datetime** | Timestamp when the webhook was last updated. | [readonly] 
 

@@ -4,16 +4,16 @@ All URIs are relative to *https://api.financialreports.eu*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**security_listings_list**](SecurityListingsApi.md#security_listings_list) | **GET** /security-listings/ | List security listings (exchange + ticker per company)
-[**security_listings_retrieve**](SecurityListingsApi.md#security_listings_retrieve) | **GET** /security-listings/{id}/ | Retrieve a single security listing
+[**security_listings_list**](SecurityListingsApi.md#security_listings_list) | **GET** /security-listings/ | List Security Listings
+[**security_listings_retrieve**](SecurityListingsApi.md#security_listings_retrieve) | **GET** /security-listings/{id}/ | Retrieve Security Listing
 
 
 # **security_listings_list**
 > PaginatedSecurityListingList security_listings_list(company=company, exch_code=exch_code, figi=figi, mic=mic, ordering=ordering, page=page, page_size=page_size, ticker=ticker)
 
-List security listings (exchange + ticker per company)
+List Security Listings
 
-Per-venue equity listings resolved from per-instrument identifier data. Filter by ticker/mic/exch_code/figi for reverse lookup, or by company id. Coverage expands over time.
+Where each company's shares trade: one row per exchange, with its ticker and FIGI. Filter by `ticker`, `mic`, `exch_code` or `figi` to find the company behind a listing, or by `company` to list its venues.
 
 ### Example
 
@@ -52,17 +52,17 @@ configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
 async with financial_reports_generated_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = financial_reports_generated_client.SecurityListingsApi(api_client)
-    company = 3.4 # float |  (optional)
-    exch_code = 'exch_code_example' # str |  (optional)
-    figi = 'figi_example' # str |  (optional)
-    mic = 'mic_example' # str |  (optional)
+    company = 3.4 # float | Company ID. (optional)
+    exch_code = 'exch_code_example' # str | OpenFIGI exchange code, e.g. `US`. Case-insensitive. (optional)
+    figi = 'figi_example' # str | FIGI of the listing. Case-insensitive. (optional)
+    mic = 'mic_example' # str | ISO 10383 market identifier code, e.g. `XNAS`. Case-insensitive. (optional)
     ordering = 'ordering_example' # str | Which field to use when ordering the results. (optional)
     page = 56 # int | A page number within the paginated result set. (optional)
     page_size = 56 # int | Number of results to return per page. (optional)
-    ticker = 'ticker_example' # str |  (optional)
+    ticker = 'ticker_example' # str | Ticker on that venue. Case-insensitive. (optional)
 
     try:
-        # List security listings (exchange + ticker per company)
+        # List Security Listings
         api_response = await api_instance.security_listings_list(company=company, exch_code=exch_code, figi=figi, mic=mic, ordering=ordering, page=page, page_size=page_size, ticker=ticker)
         print("The response of SecurityListingsApi->security_listings_list:\n")
         pprint(api_response)
@@ -77,14 +77,14 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **company** | **float**|  | [optional] 
- **exch_code** | **str**|  | [optional] 
- **figi** | **str**|  | [optional] 
- **mic** | **str**|  | [optional] 
+ **company** | **float**| Company ID. | [optional] 
+ **exch_code** | **str**| OpenFIGI exchange code, e.g. &#x60;US&#x60;. Case-insensitive. | [optional] 
+ **figi** | **str**| FIGI of the listing. Case-insensitive. | [optional] 
+ **mic** | **str**| ISO 10383 market identifier code, e.g. &#x60;XNAS&#x60;. Case-insensitive. | [optional] 
  **ordering** | **str**| Which field to use when ordering the results. | [optional] 
  **page** | **int**| A page number within the paginated result set. | [optional] 
  **page_size** | **int**| Number of results to return per page. | [optional] 
- **ticker** | **str**|  | [optional] 
+ **ticker** | **str**| Ticker on that venue. Case-insensitive. | [optional] 
 
 ### Return type
 
@@ -112,7 +112,9 @@ Name | Type | Description  | Notes
 # **security_listings_retrieve**
 > SecurityListing security_listings_retrieve(id)
 
-Retrieve a single security listing
+Retrieve Security Listing
+
+One exchange listing by its ID.
 
 ### Example
 
@@ -154,7 +156,7 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
     id = 56 # int | A unique integer value identifying this security listing.
 
     try:
-        # Retrieve a single security listing
+        # Retrieve Security Listing
         api_response = await api_instance.security_listings_retrieve(id)
         print("The response of SecurityListingsApi->security_listings_retrieve:\n")
         pprint(api_response)

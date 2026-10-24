@@ -55,10 +55,10 @@ configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
 async with financial_reports_generated_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = financial_reports_generated_client.ISINsApi(api_client)
-    code = 'code_example' # str |  (optional)
+    code = 'code_example' # str | One ISIN, exact match. (optional)
     codes = 'codes_example' # str | Filter by multiple ISIN codes. Comma-separated (e.g., US1234567890,DE1234567890). (optional)
     company = 56 # int | Filter by internal Company ID. (optional)
-    is_primary = True # bool |  (optional)
+    is_primary = True # bool | `true`: only each company's primary ISIN. (optional)
     page = 56 # int | A page number within the paginated result set. (optional)
     page_size = 56 # int | Number of results to return per page. (optional)
     search = 'search_example' # str | Fuzzy search by ISIN code (e.g., 'US03'). (optional)
@@ -79,10 +79,10 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **code** | **str**|  | [optional] 
+ **code** | **str**| One ISIN, exact match. | [optional] 
  **codes** | **str**| Filter by multiple ISIN codes. Comma-separated (e.g., US1234567890,DE1234567890). | [optional] 
  **company** | **int**| Filter by internal Company ID. | [optional] 
- **is_primary** | **bool**|  | [optional] 
+ **is_primary** | **bool**| &#x60;true&#x60;: only each company&#39;s primary ISIN. | [optional] 
  **page** | **int**| A page number within the paginated result set. | [optional] 
  **page_size** | **int**| Number of results to return per page. | [optional] 
  **search** | **str**| Fuzzy search by ISIN code (e.g., &#39;US03&#39;). | [optional] 

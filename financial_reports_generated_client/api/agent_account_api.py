@@ -1,7 +1,7 @@
 """
     FinancialFilings API
 
-    Public-company filings across G20 markets and Europe. Authenticate every request with the `X-API-Key` header. Rate-limit headers on authenticated API responses: `X-RateLimit-Burst-Limit` (a rate expression such as `50/second`, not an integer), `X-RateLimit-Monthly-Limit` (an integer or the literal `Unlimited`), `X-RateLimit-Monthly-Remaining` (an integer, or `Unlimited` / `MCP (unlimited)`; omitted when not applicable), and `X-RateLimit-Monthly-Unit` (`requests` or `credits` — pay-as-you-go free-tier accounts are metered in credits, not request counts; omitted whenever Monthly-Remaining is). Parse defensively — these are strings, not numbers.  **Credits.** One key reaches every endpoint, and each call is priced in credits: metadata and search, filing Markdown, and standardized financial line items each have their own cost, stated at the top of every endpoint below. A free account gets a monthly credit allowance; `X-Credits-Charged` on each response says what the call cost, and `GET /usage/` shows the month so far. Webhook push is an Enterprise capability, outside credit pricing. Costs and the allowance: https://financialfilings.com/developers/
+    Filings and company data for listed companies across the G20 and Europe. Send your API key in the `X-API-Key` header on every request. New here? Start with the [quickstart](https://financialfilings.com/developers/#quickstart).  **Credits.** Every call costs credits, and each endpoint below shows its price. `X-Credits-Charged` on the response says what a call cost, and `GET /usage/` shows the month so far. A free account gets a monthly allowance. Webhooks are an Enterprise feature. Pricing: https://financialfilings.com/developers/  **Rate limits.** Responses carry `X-RateLimit-Burst-Limit` (a rate such as `50/second`), `X-RateLimit-Monthly-Limit`, `X-RateLimit-Monthly-Remaining` and `X-RateLimit-Monthly-Unit` (`requests` or `credits`). All four are strings and can be non-numeric (for example `Unlimited`); the last two are left out when they don't apply.
 
     The version of the OpenAPI document: 1.4.0
     Contact: api@financialfilings.com
@@ -54,9 +54,9 @@ class AgentAccountApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> Dict[str, Optional[object]]:
-        """Mint a Stripe link for the owner to add a card (pay-as-you-go)
+        """Create Checkout Link
 
-        E5 ``POST /agent/checkout-link``.
+        Returns a Stripe link where the owner adds a card for pay-as-you-go. An unexpired link is reused (200).
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -122,9 +122,9 @@ class AgentAccountApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[Dict[str, Optional[object]]]:
-        """Mint a Stripe link for the owner to add a card (pay-as-you-go)
+        """Create Checkout Link
 
-        E5 ``POST /agent/checkout-link``.
+        Returns a Stripe link where the owner adds a card for pay-as-you-go. An unexpired link is reused (200).
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -190,9 +190,9 @@ class AgentAccountApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Mint a Stripe link for the owner to add a card (pay-as-you-go)
+        """Create Checkout Link
 
-        E5 ``POST /agent/checkout-link``.
+        Returns a Stripe link where the owner adds a card for pay-as-you-go. An unexpired link is reused (200).
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -316,9 +316,9 @@ class AgentAccountApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> Dict[str, Optional[object]]:
-        """Collect an existing account's key once its owner approves
+        """Claim an Existing Account's Key
 
-        ``POST /agent/key-claim``: collect the key an existing account's owner approved after a signup 409 (#5375). Unauthenticated: the signed claim token is the credential.
+        After a 409 from signup, poll with its `claim_token`. Returns 202 until the owner approves, then the key (shown once). No API key needed.
 
         :param agent_key_claim_request: (required)
         :type agent_key_claim_request: AgentKeyClaimRequest
@@ -387,9 +387,9 @@ class AgentAccountApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[Dict[str, Optional[object]]]:
-        """Collect an existing account's key once its owner approves
+        """Claim an Existing Account's Key
 
-        ``POST /agent/key-claim``: collect the key an existing account's owner approved after a signup 409 (#5375). Unauthenticated: the signed claim token is the credential.
+        After a 409 from signup, poll with its `claim_token`. Returns 202 until the owner approves, then the key (shown once). No API key needed.
 
         :param agent_key_claim_request: (required)
         :type agent_key_claim_request: AgentKeyClaimRequest
@@ -458,9 +458,9 @@ class AgentAccountApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Collect an existing account's key once its owner approves
+        """Claim an Existing Account's Key
 
-        ``POST /agent/key-claim``: collect the key an existing account's owner approved after a signup 409 (#5375). Unauthenticated: the signed claim token is the credential.
+        After a 409 from signup, poll with its `claim_token`. Returns 202 until the owner approves, then the key (shown once). No API key needed.
 
         :param agent_key_claim_request: (required)
         :type agent_key_claim_request: AgentKeyClaimRequest
@@ -600,9 +600,9 @@ class AgentAccountApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> Dict[str, Optional[object]]:
-        """Rotate this agent key
+        """Rotate Agent Key
 
-        E6 ``POST /agent/key/rotate``: requires the CURRENT key (never by email).
+        Replaces the key that made the call with a new one (shown once). Authenticate with the current key. Not available once the owner has logged in: they manage the key from the dashboard.
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -665,9 +665,9 @@ class AgentAccountApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[Dict[str, Optional[object]]]:
-        """Rotate this agent key
+        """Rotate Agent Key
 
-        E6 ``POST /agent/key/rotate``: requires the CURRENT key (never by email).
+        Replaces the key that made the call with a new one (shown once). Authenticate with the current key. Not available once the owner has logged in: they manage the key from the dashboard.
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -730,9 +730,9 @@ class AgentAccountApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Rotate this agent key
+        """Rotate Agent Key
 
-        E6 ``POST /agent/key/rotate``: requires the CURRENT key (never by email).
+        Replaces the key that made the call with a new one (shown once). Authenticate with the current key. Not available once the owner has logged in: they manage the key from the dashboard.
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -852,9 +852,9 @@ class AgentAccountApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> Dict[str, Optional[object]]:
-        """Email the account owner a confirmation link
+        """Request Owner Confirmation
 
-        E4 ``POST /agent/owner-confirmation``.
+        Emails the account owner a confirmation link. Poll `GET /agent/status` to see when they confirm.
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -918,9 +918,9 @@ class AgentAccountApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[Dict[str, Optional[object]]]:
-        """Email the account owner a confirmation link
+        """Request Owner Confirmation
 
-        E4 ``POST /agent/owner-confirmation``.
+        Emails the account owner a confirmation link. Poll `GET /agent/status` to see when they confirm.
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -984,9 +984,9 @@ class AgentAccountApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Email the account owner a confirmation link
+        """Request Owner Confirmation
 
-        E4 ``POST /agent/owner-confirmation``.
+        Emails the account owner a confirmation link. Poll `GET /agent/status` to see when they confirm.
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1108,9 +1108,9 @@ class AgentAccountApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> Dict[str, Optional[object]]:
-        """Create an API key as an AI agent
+        """Create an API Key as an AI Agent
 
-        Creates an account for the given email and returns an API key once. No email is sent. The key works for a small Level-1 read-only sandbox; beyond it data calls return 402 until the owner confirms (POST /agent/owner-confirmation) or a card is added (POST /agent/checkout-link). If the address cannot be used, the 409 carries a claim_token and user_code: the owner of an existing account may be emailed to approve it, and POST /agent/key-claim then returns their key.
+        Creates an account for the given email and returns its API key (shown once). No email is sent. The key starts in a small read-only sandbox; after that, data calls return 402 until the owner confirms (`POST /agent/owner-confirmation`) or adds a card (`POST /agent/checkout-link`). If the email already has an account, the 409 carries a `claim_token`: the owner can approve by email, and `POST /agent/key-claim` then returns their key.
 
         :param agent_signup_request: (required)
         :type agent_signup_request: AgentSignupRequest
@@ -1179,9 +1179,9 @@ class AgentAccountApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[Dict[str, Optional[object]]]:
-        """Create an API key as an AI agent
+        """Create an API Key as an AI Agent
 
-        Creates an account for the given email and returns an API key once. No email is sent. The key works for a small Level-1 read-only sandbox; beyond it data calls return 402 until the owner confirms (POST /agent/owner-confirmation) or a card is added (POST /agent/checkout-link). If the address cannot be used, the 409 carries a claim_token and user_code: the owner of an existing account may be emailed to approve it, and POST /agent/key-claim then returns their key.
+        Creates an account for the given email and returns its API key (shown once). No email is sent. The key starts in a small read-only sandbox; after that, data calls return 402 until the owner confirms (`POST /agent/owner-confirmation`) or adds a card (`POST /agent/checkout-link`). If the email already has an account, the 409 carries a `claim_token`: the owner can approve by email, and `POST /agent/key-claim` then returns their key.
 
         :param agent_signup_request: (required)
         :type agent_signup_request: AgentSignupRequest
@@ -1250,9 +1250,9 @@ class AgentAccountApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Create an API key as an AI agent
+        """Create an API Key as an AI Agent
 
-        Creates an account for the given email and returns an API key once. No email is sent. The key works for a small Level-1 read-only sandbox; beyond it data calls return 402 until the owner confirms (POST /agent/owner-confirmation) or a card is added (POST /agent/checkout-link). If the address cannot be used, the 409 carries a claim_token and user_code: the owner of an existing account may be emailed to approve it, and POST /agent/key-claim then returns their key.
+        Creates an account for the given email and returns its API key (shown once). No email is sent. The key starts in a small read-only sandbox; after that, data calls return 402 until the owner confirms (`POST /agent/owner-confirmation`) or adds a card (`POST /agent/checkout-link`). If the email already has an account, the 409 carries a `claim_token`: the owner can approve by email, and `POST /agent/key-claim` then returns their key.
 
         :param agent_signup_request: (required)
         :type agent_signup_request: AgentSignupRequest
@@ -1392,9 +1392,9 @@ class AgentAccountApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> Dict[str, Optional[object]]:
-        """Agent account status
+        """Get Agent Status
 
-        E3 ``GET /agent/status``.
+        The account's state (`sandbox`, `unfunded`, `funded`, `active` or `blocked`), remaining sandbox calls, spend caps and any open checkout link.
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1457,9 +1457,9 @@ class AgentAccountApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[Dict[str, Optional[object]]]:
-        """Agent account status
+        """Get Agent Status
 
-        E3 ``GET /agent/status``.
+        The account's state (`sandbox`, `unfunded`, `funded`, `active` or `blocked`), remaining sandbox calls, spend caps and any open checkout link.
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1522,9 +1522,9 @@ class AgentAccountApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Agent account status
+        """Get Agent Status
 
-        E3 ``GET /agent/status``.
+        The account's state (`sandbox`, `unfunded`, `funded`, `active` or `blocked`), remaining sandbox calls, spend caps and any open checkout link.
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request

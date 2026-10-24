@@ -1,7 +1,7 @@
 """
     FinancialFilings API
 
-    Public-company filings across G20 markets and Europe. Authenticate every request with the `X-API-Key` header. Rate-limit headers on authenticated API responses: `X-RateLimit-Burst-Limit` (a rate expression such as `50/second`, not an integer), `X-RateLimit-Monthly-Limit` (an integer or the literal `Unlimited`), `X-RateLimit-Monthly-Remaining` (an integer, or `Unlimited` / `MCP (unlimited)`; omitted when not applicable), and `X-RateLimit-Monthly-Unit` (`requests` or `credits` — pay-as-you-go free-tier accounts are metered in credits, not request counts; omitted whenever Monthly-Remaining is). Parse defensively — these are strings, not numbers.  **Credits.** One key reaches every endpoint, and each call is priced in credits: metadata and search, filing Markdown, and standardized financial line items each have their own cost, stated at the top of every endpoint below. A free account gets a monthly credit allowance; `X-Credits-Charged` on each response says what the call cost, and `GET /usage/` shows the month so far. Webhook push is an Enterprise capability, outside credit pricing. Costs and the allowance: https://financialfilings.com/developers/
+    Filings and company data for listed companies across the G20 and Europe. Send your API key in the `X-API-Key` header on every request. New here? Start with the [quickstart](https://financialfilings.com/developers/#quickstart).  **Credits.** Every call costs credits, and each endpoint below shows its price. `X-Credits-Charged` on the response says what a call cost, and `GET /usage/` shows the month so far. A free account gets a monthly allowance. Webhooks are an Enterprise feature. Pricing: https://financialfilings.com/developers/  **Rate limits.** Responses carry `X-RateLimit-Burst-Limit` (a rate such as `50/second`), `X-RateLimit-Monthly-Limit`, `X-RateLimit-Monthly-Remaining` and `X-RateLimit-Monthly-Unit` (`requests` or `credits`). All four are strings and can be non-numeric (for example `Unlimited`); the last two are left out when they don't apply.
 
     The version of the OpenAPI document: 1.4.0
     Contact: api@financialfilings.com
@@ -62,7 +62,7 @@ class FilingsApi:
     ) -> bytes:
         """Retrieve Filing Document
 
-        **Cost:** 1 credit per request.  --- Download the filing's main document as a single readable file.  Many filings are stored as a ZIP package (`file_extension` is `ZIP`): an SEC submission with its exhibits and XBRL files, or an ESEF report package. For those, this returns the main document from inside the package: the SEC filer's primary document (the 10-K HTML, or the annual report PDF), or the ESEF report XHTML (also from a package nested inside the download). An HTML document comes as filed, with its images embedded so the saved file opens complete. `X-Package-Member` names the file inside the package.  For any other filing, and for a main document over 50 MB (HTML) or 100 MB (other files), the response is a redirect to the stored file (`document`). The full package is always at `document`. A 200 is billed as one raw request; a redirect is not billed.
+        **Cost:** 1 credit per request.  --- Download the filing's main document as one readable file.  If the filing is a ZIP package (`file_extension` is `ZIP`), for example a submission with exhibits and XBRL files or an ESEF report package, this returns the main document from inside it: the HTML or PDF report, or the ESEF XHTML. HTML comes with its images embedded, so the saved file opens complete. `X-Package-Member` names the file it came from.  Any other filing, and a main document over 50 MB (HTML) or 100 MB (other files), redirects to the stored file (`document`), which always holds the full package. A 200 is charged at the price shown; a redirect is free.
 
         :param id: A unique integer value identifying this filing. (required)
         :type id: int
@@ -137,7 +137,7 @@ class FilingsApi:
     ) -> ApiResponse[bytes]:
         """Retrieve Filing Document
 
-        **Cost:** 1 credit per request.  --- Download the filing's main document as a single readable file.  Many filings are stored as a ZIP package (`file_extension` is `ZIP`): an SEC submission with its exhibits and XBRL files, or an ESEF report package. For those, this returns the main document from inside the package: the SEC filer's primary document (the 10-K HTML, or the annual report PDF), or the ESEF report XHTML (also from a package nested inside the download). An HTML document comes as filed, with its images embedded so the saved file opens complete. `X-Package-Member` names the file inside the package.  For any other filing, and for a main document over 50 MB (HTML) or 100 MB (other files), the response is a redirect to the stored file (`document`). The full package is always at `document`. A 200 is billed as one raw request; a redirect is not billed.
+        **Cost:** 1 credit per request.  --- Download the filing's main document as one readable file.  If the filing is a ZIP package (`file_extension` is `ZIP`), for example a submission with exhibits and XBRL files or an ESEF report package, this returns the main document from inside it: the HTML or PDF report, or the ESEF XHTML. HTML comes with its images embedded, so the saved file opens complete. `X-Package-Member` names the file it came from.  Any other filing, and a main document over 50 MB (HTML) or 100 MB (other files), redirects to the stored file (`document`), which always holds the full package. A 200 is charged at the price shown; a redirect is free.
 
         :param id: A unique integer value identifying this filing. (required)
         :type id: int
@@ -212,7 +212,7 @@ class FilingsApi:
     ) -> RESTResponseType:
         """Retrieve Filing Document
 
-        **Cost:** 1 credit per request.  --- Download the filing's main document as a single readable file.  Many filings are stored as a ZIP package (`file_extension` is `ZIP`): an SEC submission with its exhibits and XBRL files, or an ESEF report package. For those, this returns the main document from inside the package: the SEC filer's primary document (the 10-K HTML, or the annual report PDF), or the ESEF report XHTML (also from a package nested inside the download). An HTML document comes as filed, with its images embedded so the saved file opens complete. `X-Package-Member` names the file inside the package.  For any other filing, and for a main document over 50 MB (HTML) or 100 MB (other files), the response is a redirect to the stored file (`document`). The full package is always at `document`. A 200 is billed as one raw request; a redirect is not billed.
+        **Cost:** 1 credit per request.  --- Download the filing's main document as one readable file.  If the filing is a ZIP package (`file_extension` is `ZIP`), for example a submission with exhibits and XBRL files or an ESEF report package, this returns the main document from inside it: the HTML or PDF report, or the ESEF XHTML. HTML comes with its images embedded, so the saved file opens complete. `X-Package-Member` names the file it came from.  Any other filing, and a main document over 50 MB (HTML) or 100 MB (other files), redirects to the stored file (`document`), which always holds the full package. A 200 is charged at the price shown; a redirect is free.
 
         :param id: A unique integer value identifying this filing. (required)
         :type id: int
@@ -618,8 +618,8 @@ class FilingsApi:
         extensions: Annotated[Optional[StrictStr], Field(description="Filter by file extension(s). Single (e.g., PDF) or comma-separated (e.g., PDF,XBRL). Case-insensitive.")] = None,
         file_size_max: Annotated[Optional[StrictInt], Field(description="Filter by maximum file size in bytes.")] = None,
         file_size_min: Annotated[Optional[StrictInt], Field(description="Filter by minimum file size in bytes.")] = None,
-        fiscal_period: Annotated[Optional[StrictStr], Field(description="Filter by fiscal period. Possible values: `FY` (Full Year), `Q1`, `Q2`, `Q3`, `Q4`, `H1` (First Half), `H2` (Second Half). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.")] = None,
-        fiscal_year: Annotated[Optional[StrictInt], Field(description="Filter by fiscal year (e.g., `2024`). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.")] = None,
+        fiscal_period: Annotated[Optional[StrictStr], Field(description="Fiscal period of the report (`FY` full year, `H1` first half, and so on). Set only on 10-K, 10-K-ESEF, IR and ER filings.")] = None,
+        fiscal_year: Annotated[Optional[StrictInt], Field(description="Fiscal year of the report (e.g. `2024`). Set only on annual reports, interim reports and earnings releases (10-K, 10-K-ESEF, IR, ER).")] = None,
         include_companions: Annotated[Optional[StrictBool], Field(description="Include companion data files in type and category filters. Companions are small machine-readable XBRL/XML/JSON files stored beside a report for financial extraction, typed like that report. Most are not converted to markdown and show processing_status SKIPPED; the report beside them carries the text. Default false: type, types, category and categories return the reports only.")] = None,
         include_predecessors: Annotated[Optional[StrictBool], Field(description="With `company`, also return the filings of the company's predecessors: the issuers it succeeded by reorganisation or redomicile (its `predecessors` of kind reorganization or other on GET /companies/{id}/, followed back through the chain; merged-in targets and spin-off parents are not included), each up to and including the link's effective date (UTC). Each filing's `company` is still the issuer that filed it. Default false. Requires `company`; `lei` and `company_isin` do not follow predecessors.")] = None,
         ingestion_mode: Annotated[Optional[StrictStr], Field(description="Filter by ingestion mode. Whether the filing was added to the platform promptly after publication. `REALTIME`: added within the source's normal publication delay (5 to 48 hours after `release_datetime`, depending on the source). `BACKFILLED`: everything else, including historical imports and new filings that reached the platform late, for example after a source outage. Set once when the filing is added and not recalculated afterwards.")] = None,
@@ -629,29 +629,29 @@ class FilingsApi:
         listing_status: Annotated[Optional[StrictStr], Field(description="Filter by the issuing company's listing status, e.g. `LISTED` for listed firms only. This is the company's status **today**, not at the time of the filing. Exact, case-sensitive match; an unknown value returns `400`.")] = None,
         max_confidence: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Maximum classifier confidence for the assigned filing type (0.0-1.0).")] = None,
         min_confidence: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Minimum classifier confidence for the assigned filing type (0.0-1.0).")] = None,
-        on_watchlist: Annotated[Optional[StrictBool], Field(description="Filter by companies on the user's watchlist. Use 'true' to see only watchlist companies, 'false' to exclude them. Omitting the parameter returns all companies.")] = None,
-        ordering: Annotated[Optional[StrictStr], Field(description="Which field to use when ordering the results. Available fields: `id`, `release_datetime`, `added_to_platform`, `filing_type_confidence`. Prefix with '-' for descending order (e.g., `-release_datetime`). Rows that tie on the chosen field are ordered by `id` in the same direction, so paging through results with `next` does not repeat or skip a filing as long as the matching filings do not change while you page. NOTE: `-filing_type_confidence` lists filings with NO confidence score (NULL, over a quarter of the corpus) FIRST, because descending sorts place NULLs first. To rank scored filings most-confident-first, combine it with `min_confidence=0`, which excludes unscored ones.")] = None,
+        on_watchlist: Annotated[Optional[StrictBool], Field(description="`true`: only companies on your watchlist. `false`: exclude them. Omit for all.")] = None,
+        ordering: Annotated[Optional[StrictStr], Field(description="Which field to use when ordering the results. Available fields: `id`, `release_datetime`, `added_to_platform`, `filing_type_confidence`. Prefix with '-' for descending order (e.g., `-release_datetime`). Rows that tie on the chosen field are ordered by `id` in the same direction, so paging through results with `next` does not repeat or skip a filing as long as the matching filings do not change while you page. `-filing_type_confidence` lists filings without a score first; add `min_confidence=0` to leave those out.")] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
-        period_ending_date: Annotated[Optional[StrictStr], Field(description="Filter by the exact period ending date (YYYY-MM-DD, e.g., `2024-12-31`). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.")] = None,
-        period_ending_date_from: Annotated[Optional[StrictStr], Field(description="Filter by period ending date — inclusive start (YYYY-MM-DD).")] = None,
-        period_ending_date_to: Annotated[Optional[StrictStr], Field(description="Filter by period ending date — inclusive end (YYYY-MM-DD).")] = None,
+        period_ending_date: Annotated[Optional[StrictStr], Field(description="Exact period end date (YYYY-MM-DD, e.g. `2024-12-31`). Set only on 10-K, 10-K-ESEF, IR and ER filings.")] = None,
+        period_ending_date_from: Annotated[Optional[StrictStr], Field(description="Period end date on or after (YYYY-MM-DD).")] = None,
+        period_ending_date_to: Annotated[Optional[StrictStr], Field(description="Period end date on or before (YYYY-MM-DD).")] = None,
         primary_annual_report: Annotated[Optional[StrictBool], Field(description="With `true`, return only annual reports (10-K, 10-K-ESEF) with a fiscal year, one per company and fiscal year, picked from the filings your other filters match: the group (consolidated) report over the parent's separate accounts, a report over an AGM notice or an amendment, English over other languages, PDF over HTML over an ESEF package, then the latest release. Combine with `languages` to pick within a language. Requires at least one of: company, company_isin, lei, countries, source, sources, fiscal_year, or a date or period range; otherwise returns 400.")] = None,
         processing_status: Annotated[Optional[StrictStr], Field(description="Filter by processing status. `COMPLETED` means the document has been processed and is ready to download; the other values are still in, or dropped out of, the processing pipeline. Exact, case-sensitive match; an unknown value returns `400`.")] = None,
         processing_statuses: Annotated[Optional[StrictStr], Field(description="Comma-separated processing statuses (e.g. `COMPLETED,FAILED`). Case-insensitive. An unknown value returns `400` naming it.")] = None,
-        reasoning_contains: Annotated[Optional[StrictStr], Field(description="Case-insensitive substring match on `filing_type_reasoning`, minimum 3 characters. Requires at least one other filter that actually constrains the query (a date range, company/ISIN/LEI, type, category or source), otherwise returns 400 — the field is unindexed. NOTE the guard checks that a companion filter constrains the query, not HOW MUCH: a deliberately wide date range is accepted and the request is then bounded by the API statement timeout rather than rejected. Narrow the companion filter for a fast answer. CAVEAT: this text is evidence of what the model looked at, NOT a statement of our classification policy; it can cite rules that do not exist.")] = None,
+        reasoning_contains: Annotated[Optional[StrictStr], Field(description="Case-insensitive match inside `filing_type_reasoning` (3+ characters). Needs at least one other filter (a date range, company, ISIN, LEI, type, category or source), otherwise 400. That filter is not checked for how much it narrows: a very wide one is accepted, and the request may then hit the statement timeout. The reasoning shows what the model looked at; it is not our classification policy and can cite rules that do not exist.")] = None,
         release_datetime_from: Annotated[Optional[datetime], Field(description="Filter by release datetime (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         release_datetime_to: Annotated[Optional[datetime], Field(description="Filter by release datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         search: Annotated[Optional[StrictStr], Field(description="Search across filing title and associated company name. Case-insensitive. Multiple whitespace-separated terms are AND-combined (each term must match either the title or the company name).")] = None,
         source: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Filter by a single data source ID.")] = None,
-        source_filing_type: Annotated[Optional[StrictStr], Field(description="Filter by the regulator's own form name, exactly as the source publishes it (e.g., 10-Q, 8-K, 6-K for SEC). Case-sensitive exact match; this is open free text that varies by regulator, not a controlled vocabulary.")] = None,
+        source_filing_type: Annotated[Optional[StrictStr], Field(description="The form name exactly as the source publishes it (e.g. `10-Q`, `8-K`). Case-sensitive exact match on free text that varies by source.")] = None,
         sources: Annotated[Optional[StrictStr], Field(description="Filter by data source ID(s). Comma-separated for multiple values (e.g., 38,40,51).")] = None,
-        type: Annotated[Optional[StrictStr], Field(description="Filter by a single FinancialFilings Filing Type code (e.g., 10-K). An unrecognised code is rejected with a 400. These are FinancialFilings taxonomy codes, not regulator form names -- see GET /filing-types/.")] = None,
-        types: Annotated[Optional[StrictStr], Field(description="Filter by multiple FinancialFilings Filing Type codes. Comma-separated (e.g., 10-K,IR). An unrecognised code is rejected with a 400. These are FinancialFilings taxonomy codes, not regulator form names -- a regulator's own form name belongs on the source_filing_type filter. See GET /filing-types/.")] = None,
+        type: Annotated[Optional[StrictStr], Field(description="One FinancialFilings filing type code (e.g. `10-K`). Unknown codes return 400. Codes are listed at GET /filing-types/; for the source's own form name, use `source_filing_type`.")] = None,
+        types: Annotated[Optional[StrictStr], Field(description="Several filing type codes, comma-separated (e.g. `10-K,IR`). Unknown codes return 400. Codes are listed at GET /filing-types/; for the source's own form names, use `source_filing_type`.")] = None,
         updated_date_from: Annotated[Optional[datetime], Field(description="Filter by the date a filing was last updated on the platform (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         updated_date_to: Annotated[Optional[datetime], Field(description="Filter by the date a filing was last updated on the platform (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
-        view: Annotated[Optional[StrictStr], Field(description="Controls the level of detail. Omit for a default 'summary' view, or use 'full' to include all details for each filing.")] = None,
-        cursor: Annotated[Optional[StrictStr], Field(description="Keyset pagination, an alternative to `page` for walking a large result set. Send an empty `cursor=` for the first page, then follow `next`, which carries the cursor of the following page, until it is null. No offset limit applies, and `previous` is always null. Works with every filter, and with an `ordering` of `release_datetime`, `added_to_platform` and `id` in one direction (default: newest `release_datetime` first). Rows that tie are ordered by `id`, so a walk does not repeat or skip a filing as long as the matching filings do not change while you page. Sending `page` or a second `cursor` with it, or changing `ordering` during a walk, returns 400 `invalid_cursor`. A walk with a narrow filter over a long history can time out (503) near its end: bound it with `release_datetime_from` or `added_to_platform_from`.")] = None,
+        view: Annotated[Optional[StrictStr], Field(description="`summary` (default) or `full`, which returns every field of each filing.")] = None,
+        cursor: Annotated[Optional[StrictStr], Field(description="Cursor pagination for walking large result sets, with no offset limit. Send an empty `cursor=` for the first page, then follow `next` until it is null (`previous` is always null). Works with every filter. `ordering` can be `release_datetime`, `added_to_platform` or `id`, in one direction (default: newest `release_datetime` first); ties are ordered by `id`, so nothing repeats or is skipped while the data holds still. Adding `page`, or changing `ordering` mid-walk, returns 400 `invalid_cursor`. On a long history a narrow filter can time out (503) near the end: bound the walk with `release_datetime_from` or `added_to_platform_from`.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -667,7 +667,7 @@ class FilingsApi:
     ) -> PaginatedFilingSummaryList:
         """List Filings
 
-        **Cost:** 1 credit per request.  --- Retrieve a paginated list of regulatory filings.
+        **Cost:** 1 credit per request.  --- List filings. All the filters below can be combined.
 
         :param added_to_platform_from: Filter by date added to platform (inclusive start date, YYYY-MM-DDTHH:MM:SSZ format).
         :type added_to_platform_from: datetime
@@ -689,9 +689,9 @@ class FilingsApi:
         :type file_size_max: int
         :param file_size_min: Filter by minimum file size in bytes.
         :type file_size_min: int
-        :param fiscal_period: Filter by fiscal period. Possible values: `FY` (Full Year), `Q1`, `Q2`, `Q3`, `Q4`, `H1` (First Half), `H2` (Second Half). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.
+        :param fiscal_period: Fiscal period of the report (`FY` full year, `H1` first half, and so on). Set only on 10-K, 10-K-ESEF, IR and ER filings.
         :type fiscal_period: str
-        :param fiscal_year: Filter by fiscal year (e.g., `2024`). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.
+        :param fiscal_year: Fiscal year of the report (e.g. `2024`). Set only on annual reports, interim reports and earnings releases (10-K, 10-K-ESEF, IR, ER).
         :type fiscal_year: int
         :param include_companions: Include companion data files in type and category filters. Companions are small machine-readable XBRL/XML/JSON files stored beside a report for financial extraction, typed like that report. Most are not converted to markdown and show processing_status SKIPPED; the report beside them carries the text. Default false: type, types, category and categories return the reports only.
         :type include_companions: bool
@@ -711,19 +711,19 @@ class FilingsApi:
         :type max_confidence: float
         :param min_confidence: Minimum classifier confidence for the assigned filing type (0.0-1.0).
         :type min_confidence: float
-        :param on_watchlist: Filter by companies on the user's watchlist. Use 'true' to see only watchlist companies, 'false' to exclude them. Omitting the parameter returns all companies.
+        :param on_watchlist: `true`: only companies on your watchlist. `false`: exclude them. Omit for all.
         :type on_watchlist: bool
-        :param ordering: Which field to use when ordering the results. Available fields: `id`, `release_datetime`, `added_to_platform`, `filing_type_confidence`. Prefix with '-' for descending order (e.g., `-release_datetime`). Rows that tie on the chosen field are ordered by `id` in the same direction, so paging through results with `next` does not repeat or skip a filing as long as the matching filings do not change while you page. NOTE: `-filing_type_confidence` lists filings with NO confidence score (NULL, over a quarter of the corpus) FIRST, because descending sorts place NULLs first. To rank scored filings most-confident-first, combine it with `min_confidence=0`, which excludes unscored ones.
+        :param ordering: Which field to use when ordering the results. Available fields: `id`, `release_datetime`, `added_to_platform`, `filing_type_confidence`. Prefix with '-' for descending order (e.g., `-release_datetime`). Rows that tie on the chosen field are ordered by `id` in the same direction, so paging through results with `next` does not repeat or skip a filing as long as the matching filings do not change while you page. `-filing_type_confidence` lists filings without a score first; add `min_confidence=0` to leave those out.
         :type ordering: str
         :param page: A page number within the paginated result set.
         :type page: int
         :param page_size: Number of results to return per page.
         :type page_size: int
-        :param period_ending_date: Filter by the exact period ending date (YYYY-MM-DD, e.g., `2024-12-31`). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.
+        :param period_ending_date: Exact period end date (YYYY-MM-DD, e.g. `2024-12-31`). Set only on 10-K, 10-K-ESEF, IR and ER filings.
         :type period_ending_date: str
-        :param period_ending_date_from: Filter by period ending date — inclusive start (YYYY-MM-DD).
+        :param period_ending_date_from: Period end date on or after (YYYY-MM-DD).
         :type period_ending_date_from: str
-        :param period_ending_date_to: Filter by period ending date — inclusive end (YYYY-MM-DD).
+        :param period_ending_date_to: Period end date on or before (YYYY-MM-DD).
         :type period_ending_date_to: str
         :param primary_annual_report: With `true`, return only annual reports (10-K, 10-K-ESEF) with a fiscal year, one per company and fiscal year, picked from the filings your other filters match: the group (consolidated) report over the parent's separate accounts, a report over an AGM notice or an amendment, English over other languages, PDF over HTML over an ESEF package, then the latest release. Combine with `languages` to pick within a language. Requires at least one of: company, company_isin, lei, countries, source, sources, fiscal_year, or a date or period range; otherwise returns 400.
         :type primary_annual_report: bool
@@ -731,7 +731,7 @@ class FilingsApi:
         :type processing_status: str
         :param processing_statuses: Comma-separated processing statuses (e.g. `COMPLETED,FAILED`). Case-insensitive. An unknown value returns `400` naming it.
         :type processing_statuses: str
-        :param reasoning_contains: Case-insensitive substring match on `filing_type_reasoning`, minimum 3 characters. Requires at least one other filter that actually constrains the query (a date range, company/ISIN/LEI, type, category or source), otherwise returns 400 — the field is unindexed. NOTE the guard checks that a companion filter constrains the query, not HOW MUCH: a deliberately wide date range is accepted and the request is then bounded by the API statement timeout rather than rejected. Narrow the companion filter for a fast answer. CAVEAT: this text is evidence of what the model looked at, NOT a statement of our classification policy; it can cite rules that do not exist.
+        :param reasoning_contains: Case-insensitive match inside `filing_type_reasoning` (3+ characters). Needs at least one other filter (a date range, company, ISIN, LEI, type, category or source), otherwise 400. That filter is not checked for how much it narrows: a very wide one is accepted, and the request may then hit the statement timeout. The reasoning shows what the model looked at; it is not our classification policy and can cite rules that do not exist.
         :type reasoning_contains: str
         :param release_datetime_from: Filter by release datetime (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).
         :type release_datetime_from: datetime
@@ -741,21 +741,21 @@ class FilingsApi:
         :type search: str
         :param source: Filter by a single data source ID.
         :type source: float
-        :param source_filing_type: Filter by the regulator's own form name, exactly as the source publishes it (e.g., 10-Q, 8-K, 6-K for SEC). Case-sensitive exact match; this is open free text that varies by regulator, not a controlled vocabulary.
+        :param source_filing_type: The form name exactly as the source publishes it (e.g. `10-Q`, `8-K`). Case-sensitive exact match on free text that varies by source.
         :type source_filing_type: str
         :param sources: Filter by data source ID(s). Comma-separated for multiple values (e.g., 38,40,51).
         :type sources: str
-        :param type: Filter by a single FinancialFilings Filing Type code (e.g., 10-K). An unrecognised code is rejected with a 400. These are FinancialFilings taxonomy codes, not regulator form names -- see GET /filing-types/.
+        :param type: One FinancialFilings filing type code (e.g. `10-K`). Unknown codes return 400. Codes are listed at GET /filing-types/; for the source's own form name, use `source_filing_type`.
         :type type: str
-        :param types: Filter by multiple FinancialFilings Filing Type codes. Comma-separated (e.g., 10-K,IR). An unrecognised code is rejected with a 400. These are FinancialFilings taxonomy codes, not regulator form names -- a regulator's own form name belongs on the source_filing_type filter. See GET /filing-types/.
+        :param types: Several filing type codes, comma-separated (e.g. `10-K,IR`). Unknown codes return 400. Codes are listed at GET /filing-types/; for the source's own form names, use `source_filing_type`.
         :type types: str
         :param updated_date_from: Filter by the date a filing was last updated on the platform (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).
         :type updated_date_from: datetime
         :param updated_date_to: Filter by the date a filing was last updated on the platform (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).
         :type updated_date_to: datetime
-        :param view: Controls the level of detail. Omit for a default 'summary' view, or use 'full' to include all details for each filing.
+        :param view: `summary` (default) or `full`, which returns every field of each filing.
         :type view: str
-        :param cursor: Keyset pagination, an alternative to `page` for walking a large result set. Send an empty `cursor=` for the first page, then follow `next`, which carries the cursor of the following page, until it is null. No offset limit applies, and `previous` is always null. Works with every filter, and with an `ordering` of `release_datetime`, `added_to_platform` and `id` in one direction (default: newest `release_datetime` first). Rows that tie are ordered by `id`, so a walk does not repeat or skip a filing as long as the matching filings do not change while you page. Sending `page` or a second `cursor` with it, or changing `ordering` during a walk, returns 400 `invalid_cursor`. A walk with a narrow filter over a long history can time out (503) near its end: bound it with `release_datetime_from` or `added_to_platform_from`.
+        :param cursor: Cursor pagination for walking large result sets, with no offset limit. Send an empty `cursor=` for the first page, then follow `next` until it is null (`previous` is always null). Works with every filter. `ordering` can be `release_datetime`, `added_to_platform` or `id`, in one direction (default: newest `release_datetime` first); ties are ordered by `id`, so nothing repeats or is skipped while the data holds still. Adding `page`, or changing `ordering` mid-walk, returns 400 `invalid_cursor`. On a long history a narrow filter can time out (503) near the end: bound the walk with `release_datetime_from` or `added_to_platform_from`.
         :type cursor: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -861,8 +861,8 @@ class FilingsApi:
         extensions: Annotated[Optional[StrictStr], Field(description="Filter by file extension(s). Single (e.g., PDF) or comma-separated (e.g., PDF,XBRL). Case-insensitive.")] = None,
         file_size_max: Annotated[Optional[StrictInt], Field(description="Filter by maximum file size in bytes.")] = None,
         file_size_min: Annotated[Optional[StrictInt], Field(description="Filter by minimum file size in bytes.")] = None,
-        fiscal_period: Annotated[Optional[StrictStr], Field(description="Filter by fiscal period. Possible values: `FY` (Full Year), `Q1`, `Q2`, `Q3`, `Q4`, `H1` (First Half), `H2` (Second Half). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.")] = None,
-        fiscal_year: Annotated[Optional[StrictInt], Field(description="Filter by fiscal year (e.g., `2024`). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.")] = None,
+        fiscal_period: Annotated[Optional[StrictStr], Field(description="Fiscal period of the report (`FY` full year, `H1` first half, and so on). Set only on 10-K, 10-K-ESEF, IR and ER filings.")] = None,
+        fiscal_year: Annotated[Optional[StrictInt], Field(description="Fiscal year of the report (e.g. `2024`). Set only on annual reports, interim reports and earnings releases (10-K, 10-K-ESEF, IR, ER).")] = None,
         include_companions: Annotated[Optional[StrictBool], Field(description="Include companion data files in type and category filters. Companions are small machine-readable XBRL/XML/JSON files stored beside a report for financial extraction, typed like that report. Most are not converted to markdown and show processing_status SKIPPED; the report beside them carries the text. Default false: type, types, category and categories return the reports only.")] = None,
         include_predecessors: Annotated[Optional[StrictBool], Field(description="With `company`, also return the filings of the company's predecessors: the issuers it succeeded by reorganisation or redomicile (its `predecessors` of kind reorganization or other on GET /companies/{id}/, followed back through the chain; merged-in targets and spin-off parents are not included), each up to and including the link's effective date (UTC). Each filing's `company` is still the issuer that filed it. Default false. Requires `company`; `lei` and `company_isin` do not follow predecessors.")] = None,
         ingestion_mode: Annotated[Optional[StrictStr], Field(description="Filter by ingestion mode. Whether the filing was added to the platform promptly after publication. `REALTIME`: added within the source's normal publication delay (5 to 48 hours after `release_datetime`, depending on the source). `BACKFILLED`: everything else, including historical imports and new filings that reached the platform late, for example after a source outage. Set once when the filing is added and not recalculated afterwards.")] = None,
@@ -872,29 +872,29 @@ class FilingsApi:
         listing_status: Annotated[Optional[StrictStr], Field(description="Filter by the issuing company's listing status, e.g. `LISTED` for listed firms only. This is the company's status **today**, not at the time of the filing. Exact, case-sensitive match; an unknown value returns `400`.")] = None,
         max_confidence: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Maximum classifier confidence for the assigned filing type (0.0-1.0).")] = None,
         min_confidence: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Minimum classifier confidence for the assigned filing type (0.0-1.0).")] = None,
-        on_watchlist: Annotated[Optional[StrictBool], Field(description="Filter by companies on the user's watchlist. Use 'true' to see only watchlist companies, 'false' to exclude them. Omitting the parameter returns all companies.")] = None,
-        ordering: Annotated[Optional[StrictStr], Field(description="Which field to use when ordering the results. Available fields: `id`, `release_datetime`, `added_to_platform`, `filing_type_confidence`. Prefix with '-' for descending order (e.g., `-release_datetime`). Rows that tie on the chosen field are ordered by `id` in the same direction, so paging through results with `next` does not repeat or skip a filing as long as the matching filings do not change while you page. NOTE: `-filing_type_confidence` lists filings with NO confidence score (NULL, over a quarter of the corpus) FIRST, because descending sorts place NULLs first. To rank scored filings most-confident-first, combine it with `min_confidence=0`, which excludes unscored ones.")] = None,
+        on_watchlist: Annotated[Optional[StrictBool], Field(description="`true`: only companies on your watchlist. `false`: exclude them. Omit for all.")] = None,
+        ordering: Annotated[Optional[StrictStr], Field(description="Which field to use when ordering the results. Available fields: `id`, `release_datetime`, `added_to_platform`, `filing_type_confidence`. Prefix with '-' for descending order (e.g., `-release_datetime`). Rows that tie on the chosen field are ordered by `id` in the same direction, so paging through results with `next` does not repeat or skip a filing as long as the matching filings do not change while you page. `-filing_type_confidence` lists filings without a score first; add `min_confidence=0` to leave those out.")] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
-        period_ending_date: Annotated[Optional[StrictStr], Field(description="Filter by the exact period ending date (YYYY-MM-DD, e.g., `2024-12-31`). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.")] = None,
-        period_ending_date_from: Annotated[Optional[StrictStr], Field(description="Filter by period ending date — inclusive start (YYYY-MM-DD).")] = None,
-        period_ending_date_to: Annotated[Optional[StrictStr], Field(description="Filter by period ending date — inclusive end (YYYY-MM-DD).")] = None,
+        period_ending_date: Annotated[Optional[StrictStr], Field(description="Exact period end date (YYYY-MM-DD, e.g. `2024-12-31`). Set only on 10-K, 10-K-ESEF, IR and ER filings.")] = None,
+        period_ending_date_from: Annotated[Optional[StrictStr], Field(description="Period end date on or after (YYYY-MM-DD).")] = None,
+        period_ending_date_to: Annotated[Optional[StrictStr], Field(description="Period end date on or before (YYYY-MM-DD).")] = None,
         primary_annual_report: Annotated[Optional[StrictBool], Field(description="With `true`, return only annual reports (10-K, 10-K-ESEF) with a fiscal year, one per company and fiscal year, picked from the filings your other filters match: the group (consolidated) report over the parent's separate accounts, a report over an AGM notice or an amendment, English over other languages, PDF over HTML over an ESEF package, then the latest release. Combine with `languages` to pick within a language. Requires at least one of: company, company_isin, lei, countries, source, sources, fiscal_year, or a date or period range; otherwise returns 400.")] = None,
         processing_status: Annotated[Optional[StrictStr], Field(description="Filter by processing status. `COMPLETED` means the document has been processed and is ready to download; the other values are still in, or dropped out of, the processing pipeline. Exact, case-sensitive match; an unknown value returns `400`.")] = None,
         processing_statuses: Annotated[Optional[StrictStr], Field(description="Comma-separated processing statuses (e.g. `COMPLETED,FAILED`). Case-insensitive. An unknown value returns `400` naming it.")] = None,
-        reasoning_contains: Annotated[Optional[StrictStr], Field(description="Case-insensitive substring match on `filing_type_reasoning`, minimum 3 characters. Requires at least one other filter that actually constrains the query (a date range, company/ISIN/LEI, type, category or source), otherwise returns 400 — the field is unindexed. NOTE the guard checks that a companion filter constrains the query, not HOW MUCH: a deliberately wide date range is accepted and the request is then bounded by the API statement timeout rather than rejected. Narrow the companion filter for a fast answer. CAVEAT: this text is evidence of what the model looked at, NOT a statement of our classification policy; it can cite rules that do not exist.")] = None,
+        reasoning_contains: Annotated[Optional[StrictStr], Field(description="Case-insensitive match inside `filing_type_reasoning` (3+ characters). Needs at least one other filter (a date range, company, ISIN, LEI, type, category or source), otherwise 400. That filter is not checked for how much it narrows: a very wide one is accepted, and the request may then hit the statement timeout. The reasoning shows what the model looked at; it is not our classification policy and can cite rules that do not exist.")] = None,
         release_datetime_from: Annotated[Optional[datetime], Field(description="Filter by release datetime (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         release_datetime_to: Annotated[Optional[datetime], Field(description="Filter by release datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         search: Annotated[Optional[StrictStr], Field(description="Search across filing title and associated company name. Case-insensitive. Multiple whitespace-separated terms are AND-combined (each term must match either the title or the company name).")] = None,
         source: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Filter by a single data source ID.")] = None,
-        source_filing_type: Annotated[Optional[StrictStr], Field(description="Filter by the regulator's own form name, exactly as the source publishes it (e.g., 10-Q, 8-K, 6-K for SEC). Case-sensitive exact match; this is open free text that varies by regulator, not a controlled vocabulary.")] = None,
+        source_filing_type: Annotated[Optional[StrictStr], Field(description="The form name exactly as the source publishes it (e.g. `10-Q`, `8-K`). Case-sensitive exact match on free text that varies by source.")] = None,
         sources: Annotated[Optional[StrictStr], Field(description="Filter by data source ID(s). Comma-separated for multiple values (e.g., 38,40,51).")] = None,
-        type: Annotated[Optional[StrictStr], Field(description="Filter by a single FinancialFilings Filing Type code (e.g., 10-K). An unrecognised code is rejected with a 400. These are FinancialFilings taxonomy codes, not regulator form names -- see GET /filing-types/.")] = None,
-        types: Annotated[Optional[StrictStr], Field(description="Filter by multiple FinancialFilings Filing Type codes. Comma-separated (e.g., 10-K,IR). An unrecognised code is rejected with a 400. These are FinancialFilings taxonomy codes, not regulator form names -- a regulator's own form name belongs on the source_filing_type filter. See GET /filing-types/.")] = None,
+        type: Annotated[Optional[StrictStr], Field(description="One FinancialFilings filing type code (e.g. `10-K`). Unknown codes return 400. Codes are listed at GET /filing-types/; for the source's own form name, use `source_filing_type`.")] = None,
+        types: Annotated[Optional[StrictStr], Field(description="Several filing type codes, comma-separated (e.g. `10-K,IR`). Unknown codes return 400. Codes are listed at GET /filing-types/; for the source's own form names, use `source_filing_type`.")] = None,
         updated_date_from: Annotated[Optional[datetime], Field(description="Filter by the date a filing was last updated on the platform (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         updated_date_to: Annotated[Optional[datetime], Field(description="Filter by the date a filing was last updated on the platform (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
-        view: Annotated[Optional[StrictStr], Field(description="Controls the level of detail. Omit for a default 'summary' view, or use 'full' to include all details for each filing.")] = None,
-        cursor: Annotated[Optional[StrictStr], Field(description="Keyset pagination, an alternative to `page` for walking a large result set. Send an empty `cursor=` for the first page, then follow `next`, which carries the cursor of the following page, until it is null. No offset limit applies, and `previous` is always null. Works with every filter, and with an `ordering` of `release_datetime`, `added_to_platform` and `id` in one direction (default: newest `release_datetime` first). Rows that tie are ordered by `id`, so a walk does not repeat or skip a filing as long as the matching filings do not change while you page. Sending `page` or a second `cursor` with it, or changing `ordering` during a walk, returns 400 `invalid_cursor`. A walk with a narrow filter over a long history can time out (503) near its end: bound it with `release_datetime_from` or `added_to_platform_from`.")] = None,
+        view: Annotated[Optional[StrictStr], Field(description="`summary` (default) or `full`, which returns every field of each filing.")] = None,
+        cursor: Annotated[Optional[StrictStr], Field(description="Cursor pagination for walking large result sets, with no offset limit. Send an empty `cursor=` for the first page, then follow `next` until it is null (`previous` is always null). Works with every filter. `ordering` can be `release_datetime`, `added_to_platform` or `id`, in one direction (default: newest `release_datetime` first); ties are ordered by `id`, so nothing repeats or is skipped while the data holds still. Adding `page`, or changing `ordering` mid-walk, returns 400 `invalid_cursor`. On a long history a narrow filter can time out (503) near the end: bound the walk with `release_datetime_from` or `added_to_platform_from`.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -910,7 +910,7 @@ class FilingsApi:
     ) -> ApiResponse[PaginatedFilingSummaryList]:
         """List Filings
 
-        **Cost:** 1 credit per request.  --- Retrieve a paginated list of regulatory filings.
+        **Cost:** 1 credit per request.  --- List filings. All the filters below can be combined.
 
         :param added_to_platform_from: Filter by date added to platform (inclusive start date, YYYY-MM-DDTHH:MM:SSZ format).
         :type added_to_platform_from: datetime
@@ -932,9 +932,9 @@ class FilingsApi:
         :type file_size_max: int
         :param file_size_min: Filter by minimum file size in bytes.
         :type file_size_min: int
-        :param fiscal_period: Filter by fiscal period. Possible values: `FY` (Full Year), `Q1`, `Q2`, `Q3`, `Q4`, `H1` (First Half), `H2` (Second Half). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.
+        :param fiscal_period: Fiscal period of the report (`FY` full year, `H1` first half, and so on). Set only on 10-K, 10-K-ESEF, IR and ER filings.
         :type fiscal_period: str
-        :param fiscal_year: Filter by fiscal year (e.g., `2024`). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.
+        :param fiscal_year: Fiscal year of the report (e.g. `2024`). Set only on annual reports, interim reports and earnings releases (10-K, 10-K-ESEF, IR, ER).
         :type fiscal_year: int
         :param include_companions: Include companion data files in type and category filters. Companions are small machine-readable XBRL/XML/JSON files stored beside a report for financial extraction, typed like that report. Most are not converted to markdown and show processing_status SKIPPED; the report beside them carries the text. Default false: type, types, category and categories return the reports only.
         :type include_companions: bool
@@ -954,19 +954,19 @@ class FilingsApi:
         :type max_confidence: float
         :param min_confidence: Minimum classifier confidence for the assigned filing type (0.0-1.0).
         :type min_confidence: float
-        :param on_watchlist: Filter by companies on the user's watchlist. Use 'true' to see only watchlist companies, 'false' to exclude them. Omitting the parameter returns all companies.
+        :param on_watchlist: `true`: only companies on your watchlist. `false`: exclude them. Omit for all.
         :type on_watchlist: bool
-        :param ordering: Which field to use when ordering the results. Available fields: `id`, `release_datetime`, `added_to_platform`, `filing_type_confidence`. Prefix with '-' for descending order (e.g., `-release_datetime`). Rows that tie on the chosen field are ordered by `id` in the same direction, so paging through results with `next` does not repeat or skip a filing as long as the matching filings do not change while you page. NOTE: `-filing_type_confidence` lists filings with NO confidence score (NULL, over a quarter of the corpus) FIRST, because descending sorts place NULLs first. To rank scored filings most-confident-first, combine it with `min_confidence=0`, which excludes unscored ones.
+        :param ordering: Which field to use when ordering the results. Available fields: `id`, `release_datetime`, `added_to_platform`, `filing_type_confidence`. Prefix with '-' for descending order (e.g., `-release_datetime`). Rows that tie on the chosen field are ordered by `id` in the same direction, so paging through results with `next` does not repeat or skip a filing as long as the matching filings do not change while you page. `-filing_type_confidence` lists filings without a score first; add `min_confidence=0` to leave those out.
         :type ordering: str
         :param page: A page number within the paginated result set.
         :type page: int
         :param page_size: Number of results to return per page.
         :type page_size: int
-        :param period_ending_date: Filter by the exact period ending date (YYYY-MM-DD, e.g., `2024-12-31`). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.
+        :param period_ending_date: Exact period end date (YYYY-MM-DD, e.g. `2024-12-31`). Set only on 10-K, 10-K-ESEF, IR and ER filings.
         :type period_ending_date: str
-        :param period_ending_date_from: Filter by period ending date — inclusive start (YYYY-MM-DD).
+        :param period_ending_date_from: Period end date on or after (YYYY-MM-DD).
         :type period_ending_date_from: str
-        :param period_ending_date_to: Filter by period ending date — inclusive end (YYYY-MM-DD).
+        :param period_ending_date_to: Period end date on or before (YYYY-MM-DD).
         :type period_ending_date_to: str
         :param primary_annual_report: With `true`, return only annual reports (10-K, 10-K-ESEF) with a fiscal year, one per company and fiscal year, picked from the filings your other filters match: the group (consolidated) report over the parent's separate accounts, a report over an AGM notice or an amendment, English over other languages, PDF over HTML over an ESEF package, then the latest release. Combine with `languages` to pick within a language. Requires at least one of: company, company_isin, lei, countries, source, sources, fiscal_year, or a date or period range; otherwise returns 400.
         :type primary_annual_report: bool
@@ -974,7 +974,7 @@ class FilingsApi:
         :type processing_status: str
         :param processing_statuses: Comma-separated processing statuses (e.g. `COMPLETED,FAILED`). Case-insensitive. An unknown value returns `400` naming it.
         :type processing_statuses: str
-        :param reasoning_contains: Case-insensitive substring match on `filing_type_reasoning`, minimum 3 characters. Requires at least one other filter that actually constrains the query (a date range, company/ISIN/LEI, type, category or source), otherwise returns 400 — the field is unindexed. NOTE the guard checks that a companion filter constrains the query, not HOW MUCH: a deliberately wide date range is accepted and the request is then bounded by the API statement timeout rather than rejected. Narrow the companion filter for a fast answer. CAVEAT: this text is evidence of what the model looked at, NOT a statement of our classification policy; it can cite rules that do not exist.
+        :param reasoning_contains: Case-insensitive match inside `filing_type_reasoning` (3+ characters). Needs at least one other filter (a date range, company, ISIN, LEI, type, category or source), otherwise 400. That filter is not checked for how much it narrows: a very wide one is accepted, and the request may then hit the statement timeout. The reasoning shows what the model looked at; it is not our classification policy and can cite rules that do not exist.
         :type reasoning_contains: str
         :param release_datetime_from: Filter by release datetime (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).
         :type release_datetime_from: datetime
@@ -984,21 +984,21 @@ class FilingsApi:
         :type search: str
         :param source: Filter by a single data source ID.
         :type source: float
-        :param source_filing_type: Filter by the regulator's own form name, exactly as the source publishes it (e.g., 10-Q, 8-K, 6-K for SEC). Case-sensitive exact match; this is open free text that varies by regulator, not a controlled vocabulary.
+        :param source_filing_type: The form name exactly as the source publishes it (e.g. `10-Q`, `8-K`). Case-sensitive exact match on free text that varies by source.
         :type source_filing_type: str
         :param sources: Filter by data source ID(s). Comma-separated for multiple values (e.g., 38,40,51).
         :type sources: str
-        :param type: Filter by a single FinancialFilings Filing Type code (e.g., 10-K). An unrecognised code is rejected with a 400. These are FinancialFilings taxonomy codes, not regulator form names -- see GET /filing-types/.
+        :param type: One FinancialFilings filing type code (e.g. `10-K`). Unknown codes return 400. Codes are listed at GET /filing-types/; for the source's own form name, use `source_filing_type`.
         :type type: str
-        :param types: Filter by multiple FinancialFilings Filing Type codes. Comma-separated (e.g., 10-K,IR). An unrecognised code is rejected with a 400. These are FinancialFilings taxonomy codes, not regulator form names -- a regulator's own form name belongs on the source_filing_type filter. See GET /filing-types/.
+        :param types: Several filing type codes, comma-separated (e.g. `10-K,IR`). Unknown codes return 400. Codes are listed at GET /filing-types/; for the source's own form names, use `source_filing_type`.
         :type types: str
         :param updated_date_from: Filter by the date a filing was last updated on the platform (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).
         :type updated_date_from: datetime
         :param updated_date_to: Filter by the date a filing was last updated on the platform (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).
         :type updated_date_to: datetime
-        :param view: Controls the level of detail. Omit for a default 'summary' view, or use 'full' to include all details for each filing.
+        :param view: `summary` (default) or `full`, which returns every field of each filing.
         :type view: str
-        :param cursor: Keyset pagination, an alternative to `page` for walking a large result set. Send an empty `cursor=` for the first page, then follow `next`, which carries the cursor of the following page, until it is null. No offset limit applies, and `previous` is always null. Works with every filter, and with an `ordering` of `release_datetime`, `added_to_platform` and `id` in one direction (default: newest `release_datetime` first). Rows that tie are ordered by `id`, so a walk does not repeat or skip a filing as long as the matching filings do not change while you page. Sending `page` or a second `cursor` with it, or changing `ordering` during a walk, returns 400 `invalid_cursor`. A walk with a narrow filter over a long history can time out (503) near its end: bound it with `release_datetime_from` or `added_to_platform_from`.
+        :param cursor: Cursor pagination for walking large result sets, with no offset limit. Send an empty `cursor=` for the first page, then follow `next` until it is null (`previous` is always null). Works with every filter. `ordering` can be `release_datetime`, `added_to_platform` or `id`, in one direction (default: newest `release_datetime` first); ties are ordered by `id`, so nothing repeats or is skipped while the data holds still. Adding `page`, or changing `ordering` mid-walk, returns 400 `invalid_cursor`. On a long history a narrow filter can time out (503) near the end: bound the walk with `release_datetime_from` or `added_to_platform_from`.
         :type cursor: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1104,8 +1104,8 @@ class FilingsApi:
         extensions: Annotated[Optional[StrictStr], Field(description="Filter by file extension(s). Single (e.g., PDF) or comma-separated (e.g., PDF,XBRL). Case-insensitive.")] = None,
         file_size_max: Annotated[Optional[StrictInt], Field(description="Filter by maximum file size in bytes.")] = None,
         file_size_min: Annotated[Optional[StrictInt], Field(description="Filter by minimum file size in bytes.")] = None,
-        fiscal_period: Annotated[Optional[StrictStr], Field(description="Filter by fiscal period. Possible values: `FY` (Full Year), `Q1`, `Q2`, `Q3`, `Q4`, `H1` (First Half), `H2` (Second Half). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.")] = None,
-        fiscal_year: Annotated[Optional[StrictInt], Field(description="Filter by fiscal year (e.g., `2024`). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.")] = None,
+        fiscal_period: Annotated[Optional[StrictStr], Field(description="Fiscal period of the report (`FY` full year, `H1` first half, and so on). Set only on 10-K, 10-K-ESEF, IR and ER filings.")] = None,
+        fiscal_year: Annotated[Optional[StrictInt], Field(description="Fiscal year of the report (e.g. `2024`). Set only on annual reports, interim reports and earnings releases (10-K, 10-K-ESEF, IR, ER).")] = None,
         include_companions: Annotated[Optional[StrictBool], Field(description="Include companion data files in type and category filters. Companions are small machine-readable XBRL/XML/JSON files stored beside a report for financial extraction, typed like that report. Most are not converted to markdown and show processing_status SKIPPED; the report beside them carries the text. Default false: type, types, category and categories return the reports only.")] = None,
         include_predecessors: Annotated[Optional[StrictBool], Field(description="With `company`, also return the filings of the company's predecessors: the issuers it succeeded by reorganisation or redomicile (its `predecessors` of kind reorganization or other on GET /companies/{id}/, followed back through the chain; merged-in targets and spin-off parents are not included), each up to and including the link's effective date (UTC). Each filing's `company` is still the issuer that filed it. Default false. Requires `company`; `lei` and `company_isin` do not follow predecessors.")] = None,
         ingestion_mode: Annotated[Optional[StrictStr], Field(description="Filter by ingestion mode. Whether the filing was added to the platform promptly after publication. `REALTIME`: added within the source's normal publication delay (5 to 48 hours after `release_datetime`, depending on the source). `BACKFILLED`: everything else, including historical imports and new filings that reached the platform late, for example after a source outage. Set once when the filing is added and not recalculated afterwards.")] = None,
@@ -1115,29 +1115,29 @@ class FilingsApi:
         listing_status: Annotated[Optional[StrictStr], Field(description="Filter by the issuing company's listing status, e.g. `LISTED` for listed firms only. This is the company's status **today**, not at the time of the filing. Exact, case-sensitive match; an unknown value returns `400`.")] = None,
         max_confidence: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Maximum classifier confidence for the assigned filing type (0.0-1.0).")] = None,
         min_confidence: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Minimum classifier confidence for the assigned filing type (0.0-1.0).")] = None,
-        on_watchlist: Annotated[Optional[StrictBool], Field(description="Filter by companies on the user's watchlist. Use 'true' to see only watchlist companies, 'false' to exclude them. Omitting the parameter returns all companies.")] = None,
-        ordering: Annotated[Optional[StrictStr], Field(description="Which field to use when ordering the results. Available fields: `id`, `release_datetime`, `added_to_platform`, `filing_type_confidence`. Prefix with '-' for descending order (e.g., `-release_datetime`). Rows that tie on the chosen field are ordered by `id` in the same direction, so paging through results with `next` does not repeat or skip a filing as long as the matching filings do not change while you page. NOTE: `-filing_type_confidence` lists filings with NO confidence score (NULL, over a quarter of the corpus) FIRST, because descending sorts place NULLs first. To rank scored filings most-confident-first, combine it with `min_confidence=0`, which excludes unscored ones.")] = None,
+        on_watchlist: Annotated[Optional[StrictBool], Field(description="`true`: only companies on your watchlist. `false`: exclude them. Omit for all.")] = None,
+        ordering: Annotated[Optional[StrictStr], Field(description="Which field to use when ordering the results. Available fields: `id`, `release_datetime`, `added_to_platform`, `filing_type_confidence`. Prefix with '-' for descending order (e.g., `-release_datetime`). Rows that tie on the chosen field are ordered by `id` in the same direction, so paging through results with `next` does not repeat or skip a filing as long as the matching filings do not change while you page. `-filing_type_confidence` lists filings without a score first; add `min_confidence=0` to leave those out.")] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
-        period_ending_date: Annotated[Optional[StrictStr], Field(description="Filter by the exact period ending date (YYYY-MM-DD, e.g., `2024-12-31`). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.")] = None,
-        period_ending_date_from: Annotated[Optional[StrictStr], Field(description="Filter by period ending date — inclusive start (YYYY-MM-DD).")] = None,
-        period_ending_date_to: Annotated[Optional[StrictStr], Field(description="Filter by period ending date — inclusive end (YYYY-MM-DD).")] = None,
+        period_ending_date: Annotated[Optional[StrictStr], Field(description="Exact period end date (YYYY-MM-DD, e.g. `2024-12-31`). Set only on 10-K, 10-K-ESEF, IR and ER filings.")] = None,
+        period_ending_date_from: Annotated[Optional[StrictStr], Field(description="Period end date on or after (YYYY-MM-DD).")] = None,
+        period_ending_date_to: Annotated[Optional[StrictStr], Field(description="Period end date on or before (YYYY-MM-DD).")] = None,
         primary_annual_report: Annotated[Optional[StrictBool], Field(description="With `true`, return only annual reports (10-K, 10-K-ESEF) with a fiscal year, one per company and fiscal year, picked from the filings your other filters match: the group (consolidated) report over the parent's separate accounts, a report over an AGM notice or an amendment, English over other languages, PDF over HTML over an ESEF package, then the latest release. Combine with `languages` to pick within a language. Requires at least one of: company, company_isin, lei, countries, source, sources, fiscal_year, or a date or period range; otherwise returns 400.")] = None,
         processing_status: Annotated[Optional[StrictStr], Field(description="Filter by processing status. `COMPLETED` means the document has been processed and is ready to download; the other values are still in, or dropped out of, the processing pipeline. Exact, case-sensitive match; an unknown value returns `400`.")] = None,
         processing_statuses: Annotated[Optional[StrictStr], Field(description="Comma-separated processing statuses (e.g. `COMPLETED,FAILED`). Case-insensitive. An unknown value returns `400` naming it.")] = None,
-        reasoning_contains: Annotated[Optional[StrictStr], Field(description="Case-insensitive substring match on `filing_type_reasoning`, minimum 3 characters. Requires at least one other filter that actually constrains the query (a date range, company/ISIN/LEI, type, category or source), otherwise returns 400 — the field is unindexed. NOTE the guard checks that a companion filter constrains the query, not HOW MUCH: a deliberately wide date range is accepted and the request is then bounded by the API statement timeout rather than rejected. Narrow the companion filter for a fast answer. CAVEAT: this text is evidence of what the model looked at, NOT a statement of our classification policy; it can cite rules that do not exist.")] = None,
+        reasoning_contains: Annotated[Optional[StrictStr], Field(description="Case-insensitive match inside `filing_type_reasoning` (3+ characters). Needs at least one other filter (a date range, company, ISIN, LEI, type, category or source), otherwise 400. That filter is not checked for how much it narrows: a very wide one is accepted, and the request may then hit the statement timeout. The reasoning shows what the model looked at; it is not our classification policy and can cite rules that do not exist.")] = None,
         release_datetime_from: Annotated[Optional[datetime], Field(description="Filter by release datetime (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         release_datetime_to: Annotated[Optional[datetime], Field(description="Filter by release datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         search: Annotated[Optional[StrictStr], Field(description="Search across filing title and associated company name. Case-insensitive. Multiple whitespace-separated terms are AND-combined (each term must match either the title or the company name).")] = None,
         source: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Filter by a single data source ID.")] = None,
-        source_filing_type: Annotated[Optional[StrictStr], Field(description="Filter by the regulator's own form name, exactly as the source publishes it (e.g., 10-Q, 8-K, 6-K for SEC). Case-sensitive exact match; this is open free text that varies by regulator, not a controlled vocabulary.")] = None,
+        source_filing_type: Annotated[Optional[StrictStr], Field(description="The form name exactly as the source publishes it (e.g. `10-Q`, `8-K`). Case-sensitive exact match on free text that varies by source.")] = None,
         sources: Annotated[Optional[StrictStr], Field(description="Filter by data source ID(s). Comma-separated for multiple values (e.g., 38,40,51).")] = None,
-        type: Annotated[Optional[StrictStr], Field(description="Filter by a single FinancialFilings Filing Type code (e.g., 10-K). An unrecognised code is rejected with a 400. These are FinancialFilings taxonomy codes, not regulator form names -- see GET /filing-types/.")] = None,
-        types: Annotated[Optional[StrictStr], Field(description="Filter by multiple FinancialFilings Filing Type codes. Comma-separated (e.g., 10-K,IR). An unrecognised code is rejected with a 400. These are FinancialFilings taxonomy codes, not regulator form names -- a regulator's own form name belongs on the source_filing_type filter. See GET /filing-types/.")] = None,
+        type: Annotated[Optional[StrictStr], Field(description="One FinancialFilings filing type code (e.g. `10-K`). Unknown codes return 400. Codes are listed at GET /filing-types/; for the source's own form name, use `source_filing_type`.")] = None,
+        types: Annotated[Optional[StrictStr], Field(description="Several filing type codes, comma-separated (e.g. `10-K,IR`). Unknown codes return 400. Codes are listed at GET /filing-types/; for the source's own form names, use `source_filing_type`.")] = None,
         updated_date_from: Annotated[Optional[datetime], Field(description="Filter by the date a filing was last updated on the platform (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         updated_date_to: Annotated[Optional[datetime], Field(description="Filter by the date a filing was last updated on the platform (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
-        view: Annotated[Optional[StrictStr], Field(description="Controls the level of detail. Omit for a default 'summary' view, or use 'full' to include all details for each filing.")] = None,
-        cursor: Annotated[Optional[StrictStr], Field(description="Keyset pagination, an alternative to `page` for walking a large result set. Send an empty `cursor=` for the first page, then follow `next`, which carries the cursor of the following page, until it is null. No offset limit applies, and `previous` is always null. Works with every filter, and with an `ordering` of `release_datetime`, `added_to_platform` and `id` in one direction (default: newest `release_datetime` first). Rows that tie are ordered by `id`, so a walk does not repeat or skip a filing as long as the matching filings do not change while you page. Sending `page` or a second `cursor` with it, or changing `ordering` during a walk, returns 400 `invalid_cursor`. A walk with a narrow filter over a long history can time out (503) near its end: bound it with `release_datetime_from` or `added_to_platform_from`.")] = None,
+        view: Annotated[Optional[StrictStr], Field(description="`summary` (default) or `full`, which returns every field of each filing.")] = None,
+        cursor: Annotated[Optional[StrictStr], Field(description="Cursor pagination for walking large result sets, with no offset limit. Send an empty `cursor=` for the first page, then follow `next` until it is null (`previous` is always null). Works with every filter. `ordering` can be `release_datetime`, `added_to_platform` or `id`, in one direction (default: newest `release_datetime` first); ties are ordered by `id`, so nothing repeats or is skipped while the data holds still. Adding `page`, or changing `ordering` mid-walk, returns 400 `invalid_cursor`. On a long history a narrow filter can time out (503) near the end: bound the walk with `release_datetime_from` or `added_to_platform_from`.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1153,7 +1153,7 @@ class FilingsApi:
     ) -> RESTResponseType:
         """List Filings
 
-        **Cost:** 1 credit per request.  --- Retrieve a paginated list of regulatory filings.
+        **Cost:** 1 credit per request.  --- List filings. All the filters below can be combined.
 
         :param added_to_platform_from: Filter by date added to platform (inclusive start date, YYYY-MM-DDTHH:MM:SSZ format).
         :type added_to_platform_from: datetime
@@ -1175,9 +1175,9 @@ class FilingsApi:
         :type file_size_max: int
         :param file_size_min: Filter by minimum file size in bytes.
         :type file_size_min: int
-        :param fiscal_period: Filter by fiscal period. Possible values: `FY` (Full Year), `Q1`, `Q2`, `Q3`, `Q4`, `H1` (First Half), `H2` (Second Half). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.
+        :param fiscal_period: Fiscal period of the report (`FY` full year, `H1` first half, and so on). Set only on 10-K, 10-K-ESEF, IR and ER filings.
         :type fiscal_period: str
-        :param fiscal_year: Filter by fiscal year (e.g., `2024`). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.
+        :param fiscal_year: Fiscal year of the report (e.g. `2024`). Set only on annual reports, interim reports and earnings releases (10-K, 10-K-ESEF, IR, ER).
         :type fiscal_year: int
         :param include_companions: Include companion data files in type and category filters. Companions are small machine-readable XBRL/XML/JSON files stored beside a report for financial extraction, typed like that report. Most are not converted to markdown and show processing_status SKIPPED; the report beside them carries the text. Default false: type, types, category and categories return the reports only.
         :type include_companions: bool
@@ -1197,19 +1197,19 @@ class FilingsApi:
         :type max_confidence: float
         :param min_confidence: Minimum classifier confidence for the assigned filing type (0.0-1.0).
         :type min_confidence: float
-        :param on_watchlist: Filter by companies on the user's watchlist. Use 'true' to see only watchlist companies, 'false' to exclude them. Omitting the parameter returns all companies.
+        :param on_watchlist: `true`: only companies on your watchlist. `false`: exclude them. Omit for all.
         :type on_watchlist: bool
-        :param ordering: Which field to use when ordering the results. Available fields: `id`, `release_datetime`, `added_to_platform`, `filing_type_confidence`. Prefix with '-' for descending order (e.g., `-release_datetime`). Rows that tie on the chosen field are ordered by `id` in the same direction, so paging through results with `next` does not repeat or skip a filing as long as the matching filings do not change while you page. NOTE: `-filing_type_confidence` lists filings with NO confidence score (NULL, over a quarter of the corpus) FIRST, because descending sorts place NULLs first. To rank scored filings most-confident-first, combine it with `min_confidence=0`, which excludes unscored ones.
+        :param ordering: Which field to use when ordering the results. Available fields: `id`, `release_datetime`, `added_to_platform`, `filing_type_confidence`. Prefix with '-' for descending order (e.g., `-release_datetime`). Rows that tie on the chosen field are ordered by `id` in the same direction, so paging through results with `next` does not repeat or skip a filing as long as the matching filings do not change while you page. `-filing_type_confidence` lists filings without a score first; add `min_confidence=0` to leave those out.
         :type ordering: str
         :param page: A page number within the paginated result set.
         :type page: int
         :param page_size: Number of results to return per page.
         :type page_size: int
-        :param period_ending_date: Filter by the exact period ending date (YYYY-MM-DD, e.g., `2024-12-31`). Only populated for filing types: 10-K, 10-K-ESEF, IR, ER.
+        :param period_ending_date: Exact period end date (YYYY-MM-DD, e.g. `2024-12-31`). Set only on 10-K, 10-K-ESEF, IR and ER filings.
         :type period_ending_date: str
-        :param period_ending_date_from: Filter by period ending date — inclusive start (YYYY-MM-DD).
+        :param period_ending_date_from: Period end date on or after (YYYY-MM-DD).
         :type period_ending_date_from: str
-        :param period_ending_date_to: Filter by period ending date — inclusive end (YYYY-MM-DD).
+        :param period_ending_date_to: Period end date on or before (YYYY-MM-DD).
         :type period_ending_date_to: str
         :param primary_annual_report: With `true`, return only annual reports (10-K, 10-K-ESEF) with a fiscal year, one per company and fiscal year, picked from the filings your other filters match: the group (consolidated) report over the parent's separate accounts, a report over an AGM notice or an amendment, English over other languages, PDF over HTML over an ESEF package, then the latest release. Combine with `languages` to pick within a language. Requires at least one of: company, company_isin, lei, countries, source, sources, fiscal_year, or a date or period range; otherwise returns 400.
         :type primary_annual_report: bool
@@ -1217,7 +1217,7 @@ class FilingsApi:
         :type processing_status: str
         :param processing_statuses: Comma-separated processing statuses (e.g. `COMPLETED,FAILED`). Case-insensitive. An unknown value returns `400` naming it.
         :type processing_statuses: str
-        :param reasoning_contains: Case-insensitive substring match on `filing_type_reasoning`, minimum 3 characters. Requires at least one other filter that actually constrains the query (a date range, company/ISIN/LEI, type, category or source), otherwise returns 400 — the field is unindexed. NOTE the guard checks that a companion filter constrains the query, not HOW MUCH: a deliberately wide date range is accepted and the request is then bounded by the API statement timeout rather than rejected. Narrow the companion filter for a fast answer. CAVEAT: this text is evidence of what the model looked at, NOT a statement of our classification policy; it can cite rules that do not exist.
+        :param reasoning_contains: Case-insensitive match inside `filing_type_reasoning` (3+ characters). Needs at least one other filter (a date range, company, ISIN, LEI, type, category or source), otherwise 400. That filter is not checked for how much it narrows: a very wide one is accepted, and the request may then hit the statement timeout. The reasoning shows what the model looked at; it is not our classification policy and can cite rules that do not exist.
         :type reasoning_contains: str
         :param release_datetime_from: Filter by release datetime (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).
         :type release_datetime_from: datetime
@@ -1227,21 +1227,21 @@ class FilingsApi:
         :type search: str
         :param source: Filter by a single data source ID.
         :type source: float
-        :param source_filing_type: Filter by the regulator's own form name, exactly as the source publishes it (e.g., 10-Q, 8-K, 6-K for SEC). Case-sensitive exact match; this is open free text that varies by regulator, not a controlled vocabulary.
+        :param source_filing_type: The form name exactly as the source publishes it (e.g. `10-Q`, `8-K`). Case-sensitive exact match on free text that varies by source.
         :type source_filing_type: str
         :param sources: Filter by data source ID(s). Comma-separated for multiple values (e.g., 38,40,51).
         :type sources: str
-        :param type: Filter by a single FinancialFilings Filing Type code (e.g., 10-K). An unrecognised code is rejected with a 400. These are FinancialFilings taxonomy codes, not regulator form names -- see GET /filing-types/.
+        :param type: One FinancialFilings filing type code (e.g. `10-K`). Unknown codes return 400. Codes are listed at GET /filing-types/; for the source's own form name, use `source_filing_type`.
         :type type: str
-        :param types: Filter by multiple FinancialFilings Filing Type codes. Comma-separated (e.g., 10-K,IR). An unrecognised code is rejected with a 400. These are FinancialFilings taxonomy codes, not regulator form names -- a regulator's own form name belongs on the source_filing_type filter. See GET /filing-types/.
+        :param types: Several filing type codes, comma-separated (e.g. `10-K,IR`). Unknown codes return 400. Codes are listed at GET /filing-types/; for the source's own form names, use `source_filing_type`.
         :type types: str
         :param updated_date_from: Filter by the date a filing was last updated on the platform (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).
         :type updated_date_from: datetime
         :param updated_date_to: Filter by the date a filing was last updated on the platform (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).
         :type updated_date_to: datetime
-        :param view: Controls the level of detail. Omit for a default 'summary' view, or use 'full' to include all details for each filing.
+        :param view: `summary` (default) or `full`, which returns every field of each filing.
         :type view: str
-        :param cursor: Keyset pagination, an alternative to `page` for walking a large result set. Send an empty `cursor=` for the first page, then follow `next`, which carries the cursor of the following page, until it is null. No offset limit applies, and `previous` is always null. Works with every filter, and with an `ordering` of `release_datetime`, `added_to_platform` and `id` in one direction (default: newest `release_datetime` first). Rows that tie are ordered by `id`, so a walk does not repeat or skip a filing as long as the matching filings do not change while you page. Sending `page` or a second `cursor` with it, or changing `ordering` during a walk, returns 400 `invalid_cursor`. A walk with a narrow filter over a long history can time out (503) near its end: bound it with `release_datetime_from` or `added_to_platform_from`.
+        :param cursor: Cursor pagination for walking large result sets, with no offset limit. Send an empty `cursor=` for the first page, then follow `next` until it is null (`previous` is always null). Works with every filter. `ordering` can be `release_datetime`, `added_to_platform` or `id`, in one direction (default: newest `release_datetime` first); ties are ordered by `id`, so nothing repeats or is skipped while the data holds still. Adding `page`, or changing `ordering` mid-walk, returns 400 `invalid_cursor`. On a long history a narrow filter can time out (503) near the end: bound the walk with `release_datetime_from` or `added_to_platform_from`.
         :type cursor: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request

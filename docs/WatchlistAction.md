@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**company_id** | **int** | The unique identifier of the company to add or remove from the watchlist. | 
+**company_id** | **int** | ID of the company. | 
 
 ## Example
 

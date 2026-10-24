@@ -22,7 +22,7 @@ Method | HTTP request | Description
 
 Create Webhook
 
-Create a new webhook subscription. The `secret_key` is returned in the response **only once**.
+Creates a webhook. The `secret_key` is in this response **only**, so store it.
 
 ### Example
 
@@ -110,7 +110,7 @@ Name | Type | Description  | Notes
 
 Replay Delivery
 
-Re-sends the webhook event for a specific delivery. A new delivery record is created with the result of the replay attempt.
+Queues the delivery's event to be sent again (202). The new attempt appears in the delivery logs. `filing.removed` events can't be replayed.
 
 ### Example
 
@@ -203,7 +203,7 @@ Name | Type | Description  | Notes
 
 List Delivery Logs
 
-Retrieve a paginated list of delivery attempts (logs) for a specific webhook.
+The webhook's delivery attempts, paginated.
 
 ### Example
 
@@ -290,7 +290,7 @@ Name | Type | Description  | Notes
 
 Retrieve Delivery Detail
 
-Retrieve full details for a single delivery, including the reconstructed request payload and headers. The payload is rebuilt dynamically from the referenced filing record.
+One delivery attempt, with the request payload and headers. The payload is rebuilt from the filing as it is now.
 
 ### Example
 
@@ -380,7 +380,7 @@ Name | Type | Description  | Notes
 
 Delete Webhook
 
-Permanently delete a webhook subscription by its ID.
+Deletes a webhook permanently.
 
 ### Example
 
@@ -464,7 +464,7 @@ void (empty response body)
 
 List Webhooks
 
-Retrieve a list of all webhooks configured for your account. Note: Secret keys are not returned in this list.
+All webhooks on your account. Secret keys are not included.
 
 ### Example
 
@@ -553,7 +553,7 @@ Name | Type | Description  | Notes
 
 Partial Update Webhook
 
-Partially update the details of a specific webhook.
+Changes only the fields you send.
 
 ### Example
 
@@ -643,7 +643,7 @@ Name | Type | Description  | Notes
 
 Regenerate Secret Key
 
-Generates a new, unique `secret_key` for this webhook. The old key will be invalidated immediately. This action is irreversible.
+Issues a new `secret_key` for this webhook. The old key stops working immediately.
 
 ### Example
 
@@ -733,7 +733,7 @@ Name | Type | Description  | Notes
 
 Retrieve Webhook
 
-Retrieve the details of a specific webhook by its ID. Note: Secret keys are not visible here.
+One webhook by its ID. The secret key is not included.
 
 ### Example
 
@@ -820,7 +820,7 @@ Name | Type | Description  | Notes
 
 Test Webhook
 
-Sends a pre-defined 'filing.processed.test' event to the configured webhook URL to verify its functionality. This creates a delivery record.
+Sends a `filing.processed.test` event to the webhook's URL and reports how it answered. The attempt appears in the delivery logs.
 
 ### Example
 
@@ -911,7 +911,7 @@ Name | Type | Description  | Notes
 
 Update Webhook
 
-Update the details of a specific webhook.
+Replaces a webhook's settings.
 
 ### Example
 

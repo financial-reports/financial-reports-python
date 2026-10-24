@@ -8,7 +8,7 @@ Method | HTTP request | Description
 [**watchlist_companies_bulk_remove_create**](WatchlistApi.md#watchlist_companies_bulk_remove_create) | **POST** /watchlist/companies/bulk-remove/ | Bulk Remove Companies from Watchlist
 [**watchlist_companies_create**](WatchlistApi.md#watchlist_companies_create) | **POST** /watchlist/companies/ | Add Company to Watchlist
 [**watchlist_companies_destroy**](WatchlistApi.md#watchlist_companies_destroy) | **DELETE** /watchlist/companies/{company_id}/ | Remove Company from Watchlist
-[**watchlist_retrieve**](WatchlistApi.md#watchlist_retrieve) | **GET** /watchlist/ | Get User&#39;s Watchlist
+[**watchlist_retrieve**](WatchlistApi.md#watchlist_retrieve) | **GET** /watchlist/ | Get Watchlist
 
 
 # **watchlist_companies_bulk_add_create**
@@ -19,7 +19,7 @@ Bulk Add Companies to Watchlist
 **Cost:** 1 credit per request.
 
 ---
-Adds up to 100 companies to the authenticated user's watchlist in a single request. Companies already in the watchlist are silently skipped.
+Adds up to 100 companies to your watchlist. Companies already on it are skipped.
 
 ### Example
 
@@ -112,7 +112,7 @@ Bulk Remove Companies from Watchlist
 **Cost:** 1 credit per request.
 
 ---
-Removes up to 100 companies from the authenticated user's watchlist in a single request. Companies not in the watchlist are silently skipped.
+Removes up to 100 companies from your watchlist. Companies not on it are skipped.
 
 ### Example
 
@@ -205,7 +205,7 @@ Add Company to Watchlist
 **Cost:** 1 credit per request.
 
 ---
-Adds a specified company to the authenticated user's watchlist.
+Adds a company to your watchlist.
 
 ### Example
 
@@ -298,7 +298,7 @@ Remove Company from Watchlist
 **Cost:** 1 credit per request.
 
 ---
-Removes a specified company from the authenticated user's watchlist using the `company_id` from the URL path.
+Removes the company in the path from your watchlist.
 
 ### Example
 
@@ -385,12 +385,12 @@ Name | Type | Description  | Notes
 # **watchlist_retrieve**
 > WatchlistPage watchlist_retrieve()
 
-Get User's Watchlist
+Get Watchlist
 
 **Cost:** 1 credit per request.
 
 ---
-Fetches all companies currently in the authenticated user's watchlist. Results are paginated.
+The companies on your watchlist, paginated.
 
 ### Example
 
@@ -431,7 +431,7 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
     api_instance = financial_reports_generated_client.WatchlistApi(api_client)
 
     try:
-        # Get User's Watchlist
+        # Get Watchlist
         api_response = await api_instance.watchlist_retrieve()
         print("The response of WatchlistApi->watchlist_retrieve:\n")
         pprint(api_response)

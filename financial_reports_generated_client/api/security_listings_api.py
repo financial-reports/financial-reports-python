@@ -1,7 +1,7 @@
 """
     FinancialFilings API
 
-    Public-company filings across G20 markets and Europe. Authenticate every request with the `X-API-Key` header. Rate-limit headers on authenticated API responses: `X-RateLimit-Burst-Limit` (a rate expression such as `50/second`, not an integer), `X-RateLimit-Monthly-Limit` (an integer or the literal `Unlimited`), `X-RateLimit-Monthly-Remaining` (an integer, or `Unlimited` / `MCP (unlimited)`; omitted when not applicable), and `X-RateLimit-Monthly-Unit` (`requests` or `credits` — pay-as-you-go free-tier accounts are metered in credits, not request counts; omitted whenever Monthly-Remaining is). Parse defensively — these are strings, not numbers.  **Credits.** One key reaches every endpoint, and each call is priced in credits: metadata and search, filing Markdown, and standardized financial line items each have their own cost, stated at the top of every endpoint below. A free account gets a monthly credit allowance; `X-Credits-Charged` on each response says what the call cost, and `GET /usage/` shows the month so far. Webhook push is an Enterprise capability, outside credit pricing. Costs and the allowance: https://financialfilings.com/developers/
+    Filings and company data for listed companies across the G20 and Europe. Send your API key in the `X-API-Key` header on every request. New here? Start with the [quickstart](https://financialfilings.com/developers/#quickstart).  **Credits.** Every call costs credits, and each endpoint below shows its price. `X-Credits-Charged` on the response says what a call cost, and `GET /usage/` shows the month so far. A free account gets a monthly allowance. Webhooks are an Enterprise feature. Pricing: https://financialfilings.com/developers/  **Rate limits.** Responses carry `X-RateLimit-Burst-Limit` (a rate such as `50/second`), `X-RateLimit-Monthly-Limit`, `X-RateLimit-Monthly-Remaining` and `X-RateLimit-Monthly-Unit` (`requests` or `credits`). All four are strings and can be non-numeric (for example `Unlimited`); the last two are left out when they don't apply.
 
     The version of the OpenAPI document: 1.4.0
     Contact: api@financialfilings.com
@@ -43,14 +43,14 @@ class SecurityListingsApi:
     @validate_call
     async def security_listings_list(
         self,
-        company: Optional[Union[StrictFloat, StrictInt]] = None,
-        exch_code: Optional[StrictStr] = None,
-        figi: Optional[StrictStr] = None,
-        mic: Optional[StrictStr] = None,
+        company: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Company ID.")] = None,
+        exch_code: Annotated[Optional[StrictStr], Field(description="OpenFIGI exchange code, e.g. `US`. Case-insensitive.")] = None,
+        figi: Annotated[Optional[StrictStr], Field(description="FIGI of the listing. Case-insensitive.")] = None,
+        mic: Annotated[Optional[StrictStr], Field(description="ISO 10383 market identifier code, e.g. `XNAS`. Case-insensitive.")] = None,
         ordering: Annotated[Optional[StrictStr], Field(description="Which field to use when ordering the results.")] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
-        ticker: Optional[StrictStr] = None,
+        ticker: Annotated[Optional[StrictStr], Field(description="Ticker on that venue. Case-insensitive.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -64,17 +64,17 @@ class SecurityListingsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> PaginatedSecurityListingList:
-        """List security listings (exchange + ticker per company)
+        """List Security Listings
 
-        Per-venue equity listings resolved from per-instrument identifier data. Filter by ticker/mic/exch_code/figi for reverse lookup, or by company id. Coverage expands over time.
+        Where each company's shares trade: one row per exchange, with its ticker and FIGI. Filter by `ticker`, `mic`, `exch_code` or `figi` to find the company behind a listing, or by `company` to list its venues.
 
-        :param company:
+        :param company: Company ID.
         :type company: float
-        :param exch_code:
+        :param exch_code: OpenFIGI exchange code, e.g. `US`. Case-insensitive.
         :type exch_code: str
-        :param figi:
+        :param figi: FIGI of the listing. Case-insensitive.
         :type figi: str
-        :param mic:
+        :param mic: ISO 10383 market identifier code, e.g. `XNAS`. Case-insensitive.
         :type mic: str
         :param ordering: Which field to use when ordering the results.
         :type ordering: str
@@ -82,7 +82,7 @@ class SecurityListingsApi:
         :type page: int
         :param page_size: Number of results to return per page.
         :type page_size: int
-        :param ticker:
+        :param ticker: Ticker on that venue. Case-insensitive.
         :type ticker: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -140,14 +140,14 @@ class SecurityListingsApi:
     @validate_call
     async def security_listings_list_with_http_info(
         self,
-        company: Optional[Union[StrictFloat, StrictInt]] = None,
-        exch_code: Optional[StrictStr] = None,
-        figi: Optional[StrictStr] = None,
-        mic: Optional[StrictStr] = None,
+        company: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Company ID.")] = None,
+        exch_code: Annotated[Optional[StrictStr], Field(description="OpenFIGI exchange code, e.g. `US`. Case-insensitive.")] = None,
+        figi: Annotated[Optional[StrictStr], Field(description="FIGI of the listing. Case-insensitive.")] = None,
+        mic: Annotated[Optional[StrictStr], Field(description="ISO 10383 market identifier code, e.g. `XNAS`. Case-insensitive.")] = None,
         ordering: Annotated[Optional[StrictStr], Field(description="Which field to use when ordering the results.")] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
-        ticker: Optional[StrictStr] = None,
+        ticker: Annotated[Optional[StrictStr], Field(description="Ticker on that venue. Case-insensitive.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -161,17 +161,17 @@ class SecurityListingsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[PaginatedSecurityListingList]:
-        """List security listings (exchange + ticker per company)
+        """List Security Listings
 
-        Per-venue equity listings resolved from per-instrument identifier data. Filter by ticker/mic/exch_code/figi for reverse lookup, or by company id. Coverage expands over time.
+        Where each company's shares trade: one row per exchange, with its ticker and FIGI. Filter by `ticker`, `mic`, `exch_code` or `figi` to find the company behind a listing, or by `company` to list its venues.
 
-        :param company:
+        :param company: Company ID.
         :type company: float
-        :param exch_code:
+        :param exch_code: OpenFIGI exchange code, e.g. `US`. Case-insensitive.
         :type exch_code: str
-        :param figi:
+        :param figi: FIGI of the listing. Case-insensitive.
         :type figi: str
-        :param mic:
+        :param mic: ISO 10383 market identifier code, e.g. `XNAS`. Case-insensitive.
         :type mic: str
         :param ordering: Which field to use when ordering the results.
         :type ordering: str
@@ -179,7 +179,7 @@ class SecurityListingsApi:
         :type page: int
         :param page_size: Number of results to return per page.
         :type page_size: int
-        :param ticker:
+        :param ticker: Ticker on that venue. Case-insensitive.
         :type ticker: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -237,14 +237,14 @@ class SecurityListingsApi:
     @validate_call
     async def security_listings_list_without_preload_content(
         self,
-        company: Optional[Union[StrictFloat, StrictInt]] = None,
-        exch_code: Optional[StrictStr] = None,
-        figi: Optional[StrictStr] = None,
-        mic: Optional[StrictStr] = None,
+        company: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Company ID.")] = None,
+        exch_code: Annotated[Optional[StrictStr], Field(description="OpenFIGI exchange code, e.g. `US`. Case-insensitive.")] = None,
+        figi: Annotated[Optional[StrictStr], Field(description="FIGI of the listing. Case-insensitive.")] = None,
+        mic: Annotated[Optional[StrictStr], Field(description="ISO 10383 market identifier code, e.g. `XNAS`. Case-insensitive.")] = None,
         ordering: Annotated[Optional[StrictStr], Field(description="Which field to use when ordering the results.")] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
-        ticker: Optional[StrictStr] = None,
+        ticker: Annotated[Optional[StrictStr], Field(description="Ticker on that venue. Case-insensitive.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -258,17 +258,17 @@ class SecurityListingsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """List security listings (exchange + ticker per company)
+        """List Security Listings
 
-        Per-venue equity listings resolved from per-instrument identifier data. Filter by ticker/mic/exch_code/figi for reverse lookup, or by company id. Coverage expands over time.
+        Where each company's shares trade: one row per exchange, with its ticker and FIGI. Filter by `ticker`, `mic`, `exch_code` or `figi` to find the company behind a listing, or by `company` to list its venues.
 
-        :param company:
+        :param company: Company ID.
         :type company: float
-        :param exch_code:
+        :param exch_code: OpenFIGI exchange code, e.g. `US`. Case-insensitive.
         :type exch_code: str
-        :param figi:
+        :param figi: FIGI of the listing. Case-insensitive.
         :type figi: str
-        :param mic:
+        :param mic: ISO 10383 market identifier code, e.g. `XNAS`. Case-insensitive.
         :type mic: str
         :param ordering: Which field to use when ordering the results.
         :type ordering: str
@@ -276,7 +276,7 @@ class SecurityListingsApi:
         :type page: int
         :param page_size: Number of results to return per page.
         :type page_size: int
-        :param ticker:
+        :param ticker: Ticker on that venue. Case-insensitive.
         :type ticker: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -446,8 +446,9 @@ class SecurityListingsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> SecurityListing:
-        """Retrieve a single security listing
+        """Retrieve Security Listing
 
+        One exchange listing by its ID.
 
         :param id: A unique integer value identifying this security listing. (required)
         :type id: int
@@ -514,8 +515,9 @@ class SecurityListingsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[SecurityListing]:
-        """Retrieve a single security listing
+        """Retrieve Security Listing
 
+        One exchange listing by its ID.
 
         :param id: A unique integer value identifying this security listing. (required)
         :type id: int
@@ -582,8 +584,9 @@ class SecurityListingsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Retrieve a single security listing
+        """Retrieve Security Listing
 
+        One exchange listing by its ID.
 
         :param id: A unique integer value identifying this security listing. (required)
         :type id: int

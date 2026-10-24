@@ -1,7 +1,7 @@
 """
     FinancialFilings API
 
-    Public-company filings across G20 markets and Europe. Authenticate every request with the `X-API-Key` header. Rate-limit headers on authenticated API responses: `X-RateLimit-Burst-Limit` (a rate expression such as `50/second`, not an integer), `X-RateLimit-Monthly-Limit` (an integer or the literal `Unlimited`), `X-RateLimit-Monthly-Remaining` (an integer, or `Unlimited` / `MCP (unlimited)`; omitted when not applicable), and `X-RateLimit-Monthly-Unit` (`requests` or `credits` — pay-as-you-go free-tier accounts are metered in credits, not request counts; omitted whenever Monthly-Remaining is). Parse defensively — these are strings, not numbers.  **Credits.** One key reaches every endpoint, and each call is priced in credits: metadata and search, filing Markdown, and standardized financial line items each have their own cost, stated at the top of every endpoint below. A free account gets a monthly credit allowance; `X-Credits-Charged` on each response says what the call cost, and `GET /usage/` shows the month so far. Webhook push is an Enterprise capability, outside credit pricing. Costs and the allowance: https://financialfilings.com/developers/
+    Filings and company data for listed companies across the G20 and Europe. Send your API key in the `X-API-Key` header on every request. New here? Start with the [quickstart](https://financialfilings.com/developers/#quickstart).  **Credits.** Every call costs credits, and each endpoint below shows its price. `X-Credits-Charged` on the response says what a call cost, and `GET /usage/` shows the month so far. A free account gets a monthly allowance. Webhooks are an Enterprise feature. Pricing: https://financialfilings.com/developers/  **Rate limits.** Responses carry `X-RateLimit-Burst-Limit` (a rate such as `50/second`), `X-RateLimit-Monthly-Limit`, `X-RateLimit-Monthly-Remaining` and `X-RateLimit-Monthly-Unit` (`requests` or `credits`). All four are strings and can be non-numeric (for example `Unlimited`); the last two are left out when they don't apply.
 
     The version of the OpenAPI document: 1.4.0
     Contact: api@financialfilings.com
@@ -43,10 +43,10 @@ class ISINsApi:
     @validate_call
     async def isins_list(
         self,
-        code: Optional[StrictStr] = None,
+        code: Annotated[Optional[StrictStr], Field(description="One ISIN, exact match.")] = None,
         codes: Annotated[Optional[StrictStr], Field(description="Filter by multiple ISIN codes. Comma-separated (e.g., US1234567890,DE1234567890).")] = None,
         company: Annotated[Optional[StrictInt], Field(description="Filter by internal Company ID.")] = None,
-        is_primary: Optional[StrictBool] = None,
+        is_primary: Annotated[Optional[StrictBool], Field(description="`true`: only each company's primary ISIN.")] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
         search: Annotated[Optional[StrictStr], Field(description="Fuzzy search by ISIN code (e.g., 'US03').")] = None,
@@ -67,13 +67,13 @@ class ISINsApi:
 
         **Cost:** 1 credit per request.  --- Search and resolve ISINs (International Securities Identification Numbers) to companies.
 
-        :param code:
+        :param code: One ISIN, exact match.
         :type code: str
         :param codes: Filter by multiple ISIN codes. Comma-separated (e.g., US1234567890,DE1234567890).
         :type codes: str
         :param company: Filter by internal Company ID.
         :type company: int
-        :param is_primary:
+        :param is_primary: `true`: only each company's primary ISIN.
         :type is_primary: bool
         :param page: A page number within the paginated result set.
         :type page: int
@@ -136,10 +136,10 @@ class ISINsApi:
     @validate_call
     async def isins_list_with_http_info(
         self,
-        code: Optional[StrictStr] = None,
+        code: Annotated[Optional[StrictStr], Field(description="One ISIN, exact match.")] = None,
         codes: Annotated[Optional[StrictStr], Field(description="Filter by multiple ISIN codes. Comma-separated (e.g., US1234567890,DE1234567890).")] = None,
         company: Annotated[Optional[StrictInt], Field(description="Filter by internal Company ID.")] = None,
-        is_primary: Optional[StrictBool] = None,
+        is_primary: Annotated[Optional[StrictBool], Field(description="`true`: only each company's primary ISIN.")] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
         search: Annotated[Optional[StrictStr], Field(description="Fuzzy search by ISIN code (e.g., 'US03').")] = None,
@@ -160,13 +160,13 @@ class ISINsApi:
 
         **Cost:** 1 credit per request.  --- Search and resolve ISINs (International Securities Identification Numbers) to companies.
 
-        :param code:
+        :param code: One ISIN, exact match.
         :type code: str
         :param codes: Filter by multiple ISIN codes. Comma-separated (e.g., US1234567890,DE1234567890).
         :type codes: str
         :param company: Filter by internal Company ID.
         :type company: int
-        :param is_primary:
+        :param is_primary: `true`: only each company's primary ISIN.
         :type is_primary: bool
         :param page: A page number within the paginated result set.
         :type page: int
@@ -229,10 +229,10 @@ class ISINsApi:
     @validate_call
     async def isins_list_without_preload_content(
         self,
-        code: Optional[StrictStr] = None,
+        code: Annotated[Optional[StrictStr], Field(description="One ISIN, exact match.")] = None,
         codes: Annotated[Optional[StrictStr], Field(description="Filter by multiple ISIN codes. Comma-separated (e.g., US1234567890,DE1234567890).")] = None,
         company: Annotated[Optional[StrictInt], Field(description="Filter by internal Company ID.")] = None,
-        is_primary: Optional[StrictBool] = None,
+        is_primary: Annotated[Optional[StrictBool], Field(description="`true`: only each company's primary ISIN.")] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
         search: Annotated[Optional[StrictStr], Field(description="Fuzzy search by ISIN code (e.g., 'US03').")] = None,
@@ -253,13 +253,13 @@ class ISINsApi:
 
         **Cost:** 1 credit per request.  --- Search and resolve ISINs (International Securities Identification Numbers) to companies.
 
-        :param code:
+        :param code: One ISIN, exact match.
         :type code: str
         :param codes: Filter by multiple ISIN codes. Comma-separated (e.g., US1234567890,DE1234567890).
         :type codes: str
         :param company: Filter by internal Company ID.
         :type company: int
-        :param is_primary:
+        :param is_primary: `true`: only each company's primary ISIN.
         :type is_primary: bool
         :param page: A page number within the paginated result set.
         :type page: int

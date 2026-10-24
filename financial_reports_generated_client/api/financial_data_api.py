@@ -1,7 +1,7 @@
 """
     FinancialFilings API
 
-    Public-company filings across G20 markets and Europe. Authenticate every request with the `X-API-Key` header. Rate-limit headers on authenticated API responses: `X-RateLimit-Burst-Limit` (a rate expression such as `50/second`, not an integer), `X-RateLimit-Monthly-Limit` (an integer or the literal `Unlimited`), `X-RateLimit-Monthly-Remaining` (an integer, or `Unlimited` / `MCP (unlimited)`; omitted when not applicable), and `X-RateLimit-Monthly-Unit` (`requests` or `credits` — pay-as-you-go free-tier accounts are metered in credits, not request counts; omitted whenever Monthly-Remaining is). Parse defensively — these are strings, not numbers.  **Credits.** One key reaches every endpoint, and each call is priced in credits: metadata and search, filing Markdown, and standardized financial line items each have their own cost, stated at the top of every endpoint below. A free account gets a monthly credit allowance; `X-Credits-Charged` on each response says what the call cost, and `GET /usage/` shows the month so far. Webhook push is an Enterprise capability, outside credit pricing. Costs and the allowance: https://financialfilings.com/developers/
+    Filings and company data for listed companies across the G20 and Europe. Send your API key in the `X-API-Key` header on every request. New here? Start with the [quickstart](https://financialfilings.com/developers/#quickstart).  **Credits.** Every call costs credits, and each endpoint below shows its price. `X-Credits-Charged` on the response says what a call cost, and `GET /usage/` shows the month so far. A free account gets a monthly allowance. Webhooks are an Enterprise feature. Pricing: https://financialfilings.com/developers/  **Rate limits.** Responses carry `X-RateLimit-Burst-Limit` (a rate such as `50/second`), `X-RateLimit-Monthly-Limit`, `X-RateLimit-Monthly-Remaining` and `X-RateLimit-Monthly-Unit` (`requests` or `credits`). All four are strings and can be non-numeric (for example `Unlimited`); the last two are left out when they don't apply.
 
     The version of the OpenAPI document: 1.4.0
     Contact: api@financialfilings.com
@@ -65,7 +65,7 @@ class FinancialDataApi:
     ) -> PaginatedLineItemDefinitionList:
         """List Line Item Definitions
 
-        Retrieve the full dictionary of standardized financial KPIs.  Each definition describes one line item that may appear in extracted financial statements (Income Statement, Balance Sheet, Cash Flow Statement). Use the `depth` and `parent_code` fields to reconstruct the Capital IQ-style hierarchy.  `templates` lists the KPI templates a line item is meaningful for (`industrial`, `bank`, `insurer`); filter with `?template=bank`. Industrial-only items are still served for banks and insurers, but do not mean the same thing there.  Some codes are read from a filer's XBRL only (`goodwill`, `consolidated_net_income`, `total_comprehensive_income` and five others): a statement extracted from document text carries them only where they were filled in from the same filing's XBRL, and a filing without XBRL never carries them.  **Cost:** 1 credit per request.
+        **Cost:** 1 credit per request.  --- Every line item a financial statement can contain. `depth` and `parent_code` give the statement hierarchy.  `templates` lists the company types a line item fits (`industrial`, `bank`, `insurer`); filter with `?template=bank`. Industrial-only items still appear for banks and insurers, but mean something different there.  Some codes come only from a filing's XBRL (`goodwill`, `consolidated_net_income`, `total_comprehensive_income` and five others), so a filing without XBRL never has them.
 
         :param depth: Filter by hierarchy depth (0 = top-level, 1 = component, 2 = sub-component).
         :type depth: int
@@ -158,7 +158,7 @@ class FinancialDataApi:
     ) -> ApiResponse[PaginatedLineItemDefinitionList]:
         """List Line Item Definitions
 
-        Retrieve the full dictionary of standardized financial KPIs.  Each definition describes one line item that may appear in extracted financial statements (Income Statement, Balance Sheet, Cash Flow Statement). Use the `depth` and `parent_code` fields to reconstruct the Capital IQ-style hierarchy.  `templates` lists the KPI templates a line item is meaningful for (`industrial`, `bank`, `insurer`); filter with `?template=bank`. Industrial-only items are still served for banks and insurers, but do not mean the same thing there.  Some codes are read from a filer's XBRL only (`goodwill`, `consolidated_net_income`, `total_comprehensive_income` and five others): a statement extracted from document text carries them only where they were filled in from the same filing's XBRL, and a filing without XBRL never carries them.  **Cost:** 1 credit per request.
+        **Cost:** 1 credit per request.  --- Every line item a financial statement can contain. `depth` and `parent_code` give the statement hierarchy.  `templates` lists the company types a line item fits (`industrial`, `bank`, `insurer`); filter with `?template=bank`. Industrial-only items still appear for banks and insurers, but mean something different there.  Some codes come only from a filing's XBRL (`goodwill`, `consolidated_net_income`, `total_comprehensive_income` and five others), so a filing without XBRL never has them.
 
         :param depth: Filter by hierarchy depth (0 = top-level, 1 = component, 2 = sub-component).
         :type depth: int
@@ -251,7 +251,7 @@ class FinancialDataApi:
     ) -> RESTResponseType:
         """List Line Item Definitions
 
-        Retrieve the full dictionary of standardized financial KPIs.  Each definition describes one line item that may appear in extracted financial statements (Income Statement, Balance Sheet, Cash Flow Statement). Use the `depth` and `parent_code` fields to reconstruct the Capital IQ-style hierarchy.  `templates` lists the KPI templates a line item is meaningful for (`industrial`, `bank`, `insurer`); filter with `?template=bank`. Industrial-only items are still served for banks and insurers, but do not mean the same thing there.  Some codes are read from a filer's XBRL only (`goodwill`, `consolidated_net_income`, `total_comprehensive_income` and five others): a statement extracted from document text carries them only where they were filled in from the same filing's XBRL, and a filing without XBRL never carries them.  **Cost:** 1 credit per request.
+        **Cost:** 1 credit per request.  --- Every line item a financial statement can contain. `depth` and `parent_code` give the statement hierarchy.  `templates` lists the company types a line item fits (`industrial`, `bank`, `insurer`); filter with `?template=bank`. Industrial-only items still appear for banks and insurers, but mean something different there.  Some codes come only from a filing's XBRL (`goodwill`, `consolidated_net_income`, `total_comprehensive_income` and five others), so a filing without XBRL never has them.
 
         :param depth: Filter by hierarchy depth (0 = top-level, 1 = component, 2 = sub-component).
         :type depth: int
@@ -431,7 +431,7 @@ class FinancialDataApi:
     ) -> LineItemDefinition:
         """Retrieve Line Item Definition
 
-        Retrieve a single line item definition by its code.  **Cost:** 1 credit per request.
+        **Cost:** 1 credit per request.  --- One line item definition by its code.
 
         :param code: (required)
         :type code: str
@@ -500,7 +500,7 @@ class FinancialDataApi:
     ) -> ApiResponse[LineItemDefinition]:
         """Retrieve Line Item Definition
 
-        Retrieve a single line item definition by its code.  **Cost:** 1 credit per request.
+        **Cost:** 1 credit per request.  --- One line item definition by its code.
 
         :param code: (required)
         :type code: str
@@ -569,7 +569,7 @@ class FinancialDataApi:
     ) -> RESTResponseType:
         """Retrieve Line Item Definition
 
-        Retrieve a single line item definition by its code.  **Cost:** 1 credit per request.
+        **Cost:** 1 credit per request.  --- One line item definition by its code.
 
         :param code: (required)
         :type code: str

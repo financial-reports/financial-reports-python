@@ -13,15 +13,14 @@ Method | HTTP request | Description
 
 List Line Item Definitions
 
-Retrieve the full dictionary of standardized financial KPIs.
-
-Each definition describes one line item that may appear in extracted financial statements (Income Statement, Balance Sheet, Cash Flow Statement). Use the `depth` and `parent_code` fields to reconstruct the Capital IQ-style hierarchy.
-
-`templates` lists the KPI templates a line item is meaningful for (`industrial`, `bank`, `insurer`); filter with `?template=bank`. Industrial-only items are still served for banks and insurers, but do not mean the same thing there.
-
-Some codes are read from a filer's XBRL only (`goodwill`, `consolidated_net_income`, `total_comprehensive_income` and five others): a statement extracted from document text carries them only where they were filled in from the same filing's XBRL, and a filing without XBRL never carries them.
-
 **Cost:** 1 credit per request.
+
+---
+Every line item a financial statement can contain. `depth` and `parent_code` give the statement hierarchy.
+
+`templates` lists the company types a line item fits (`industrial`, `bank`, `insurer`); filter with `?template=bank`. Industrial-only items still appear for banks and insurers, but mean something different there.
+
+Some codes come only from a filing's XBRL (`goodwill`, `consolidated_net_income`, `total_comprehensive_income` and five others), so a filing without XBRL never has them.
 
 ### Example
 
@@ -120,9 +119,10 @@ Name | Type | Description  | Notes
 
 Retrieve Line Item Definition
 
-Retrieve a single line item definition by its code.
-
 **Cost:** 1 credit per request.
+
+---
+One line item definition by its code.
 
 ### Example
 

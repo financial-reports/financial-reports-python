@@ -55,7 +55,7 @@ configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
 async with financial_reports_generated_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = financial_reports_generated_client.FilingTypesApi(api_client)
-    category = 56 # int |  (optional)
+    category = 56 # int | Filing category ID (see `GET /filing-categories/`). (optional)
     page = 56 # int | A page number within the paginated result set. (optional)
     page_size = 56 # int | Number of results to return per page. (optional)
     search = 'search_example' # str | A search term. (optional)
@@ -76,7 +76,7 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **category** | **int**|  | [optional] 
+ **category** | **int**| Filing category ID (see &#x60;GET /filing-categories/&#x60;). | [optional] 
  **page** | **int**| A page number within the paginated result set. | [optional] 
  **page_size** | **int**| Number of results to return per page. | [optional] 
  **search** | **str**| A search term. | [optional] 

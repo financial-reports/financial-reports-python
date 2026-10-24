@@ -3,7 +3,7 @@
 """
     FinancialFilings API
 
-    Public-company filings across G20 markets and Europe. Authenticate every request with the `X-API-Key` header. Rate-limit headers on authenticated API responses: `X-RateLimit-Burst-Limit` (a rate expression such as `50/second`, not an integer), `X-RateLimit-Monthly-Limit` (an integer or the literal `Unlimited`), `X-RateLimit-Monthly-Remaining` (an integer, or `Unlimited` / `MCP (unlimited)`; omitted when not applicable), and `X-RateLimit-Monthly-Unit` (`requests` or `credits` — pay-as-you-go free-tier accounts are metered in credits, not request counts; omitted whenever Monthly-Remaining is). Parse defensively — these are strings, not numbers.  **Credits.** One key reaches every endpoint, and each call is priced in credits: metadata and search, filing Markdown, and standardized financial line items each have their own cost, stated at the top of every endpoint below. A free account gets a monthly credit allowance; `X-Credits-Charged` on each response says what the call cost, and `GET /usage/` shows the month so far. Webhook push is an Enterprise capability, outside credit pricing. Costs and the allowance: https://financialfilings.com/developers/
+    Filings and company data for listed companies across the G20 and Europe. Send your API key in the `X-API-Key` header on every request. New here? Start with the [quickstart](https://financialfilings.com/developers/#quickstart).  **Credits.** Every call costs credits, and each endpoint below shows its price. `X-Credits-Charged` on the response says what a call cost, and `GET /usage/` shows the month so far. A free account gets a monthly allowance. Webhooks are an Enterprise feature. Pricing: https://financialfilings.com/developers/  **Rate limits.** Responses carry `X-RateLimit-Burst-Limit` (a rate such as `50/second`), `X-RateLimit-Monthly-Limit`, `X-RateLimit-Monthly-Remaining` and `X-RateLimit-Monthly-Unit` (`requests` or `credits`). All four are strings and can be non-numeric (for example `Unlimited`); the last two are left out when they don't apply.
 
     The version of the OpenAPI document: 1.4.0
     Contact: api@financialfilings.com
@@ -31,16 +31,16 @@ class WebhookCreateResponse(BaseModel):
     Response body for `create()` — identical to WebhookSerializer plus the one-time `secret_key`, which the view injects into the create response.
     """ # noqa: E501
     id: StrictInt = Field(description="The unique identifier for the webhook.")
-    url: Annotated[str, Field(strict=True, max_length=500)] = Field(description="The endpoint URL (HTTPS required) to which the webhook payloads will be sent.")
-    is_active: Optional[StrictBool] = Field(default=True, description="Set to 'false' to temporarily disable this webhook without deleting it.")
-    include_markdown: Optional[StrictBool] = Field(default=True, description="Set to 'true' to include the full 'markdown_content' in the webhook payload. Set to 'false' to receive a payload without the markdown body.")
-    include_isins: Optional[StrictBool] = Field(default=False, description="Set to 'true' to include the list of ISINs in the company object. Warning: Large companies may have thousands of ISINs, increasing payload size.")
-    track_all_companies: Optional[StrictBool] = Field(default=False, description="Set to 'true' to subscribe to the Global Firehose. You will receive notifications for filings from ALL companies in the database, regardless of your Watchlist.")
-    trigger_on_filing_received: Optional[StrictBool] = Field(default=False, description="If true, triggers immediately when a filing is detected (Fastest). Note: Metadata like filing type may be null, and no markdown is included.")
-    trigger_on_filing_processed: Optional[StrictBool] = Field(default=True, description="If true, triggers when the filing has been fully analyzed and converted (Complete). Includes verified metadata and markdown content.")
-    trigger_on_filing_updated: Optional[StrictBool] = Field(default=False, description="If true, also sends 'filing.updated' when a filing you received is later re-typed or moved to another company, and 'filing.removed' when it is deleted, hidden or falls out of this webhook's scope, within 30 days of delivery. Not billed.")
-    deliver_late_filings: Optional[StrictBool] = Field(default=False, description="If true, also deliver filings that reached the platform more than 48 hours after publication, as long as they are at most 30 days late. These deliveries carry 'late': true. Off by default, because late arrivals are mostly backfills.")
-    subscribed_filing_types: Optional[List[StrictStr]] = Field(default=None, description="A list of filing type codes (e.g., ['10-K', 'IR']) to subscribe to. If this list is empty or omitted, you will be subscribed to all filing types.")
+    url: Annotated[str, Field(strict=True, max_length=500)] = Field(description="Your HTTPS endpoint that receives the payloads.")
+    is_active: Optional[StrictBool] = Field(default=True, description="`false` pauses the webhook without deleting it. Default `true`.")
+    include_markdown: Optional[StrictBool] = Field(default=True, description="Include the filing's `markdown_content` in the payload. Default `true`.")
+    include_isins: Optional[StrictBool] = Field(default=False, description="Include the company's ISINs in the payload. Large companies can have thousands. Default `false`.")
+    track_all_companies: Optional[StrictBool] = Field(default=False, description="`true`: filings from every company. `false` (default): only companies on your watchlist.")
+    trigger_on_filing_received: Optional[StrictBool] = Field(default=False, description="Send `filing.received` as soon as a filing arrives (fastest). Filing type and other metadata may still be null, and there is no Markdown. Default `false`.")
+    trigger_on_filing_processed: Optional[StrictBool] = Field(default=True, description="Send `filing.processed` once a filing is classified and converted, with full metadata (and Markdown if `include_markdown` is on). Default `true`.")
+    trigger_on_filing_updated: Optional[StrictBool] = Field(default=False, description="Also send `filing.updated` when a filing you received is re-typed or moved to another company, and `filing.removed` when it is deleted, hidden or leaves this webhook's scope, within 30 days of delivery. Not billed. Default `false`.")
+    deliver_late_filings: Optional[StrictBool] = Field(default=False, description="Also deliver filings that reached us more than 48 hours (and at most 30 days) after publication, marked `late: true`. Default `false`: late arrivals are mostly backfills.")
+    subscribed_filing_types: Optional[List[StrictStr]] = Field(default=None, description="Filing type codes to subscribe to (e.g. `['10-K', 'IR']`). Empty or omitted: all types.")
     created_at: datetime = Field(description="Timestamp when the webhook was created.")
     updated_at: datetime = Field(description="Timestamp when the webhook was last updated.")
     secret_key: StrictStr = Field(description="The webhook signing secret. Returned only once, in the create response.")

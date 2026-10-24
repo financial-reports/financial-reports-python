@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**company_ids** | **List[int]** | A list of company IDs (1–100) to add or remove from the watchlist. | 
+**company_ids** | **List[int]** | Company IDs, 1 to 100. | 
 
 ## Example
 

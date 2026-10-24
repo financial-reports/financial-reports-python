@@ -1,7 +1,7 @@
 """
     FinancialFilings API
 
-    Public-company filings across G20 markets and Europe. Authenticate every request with the `X-API-Key` header. Rate-limit headers on authenticated API responses: `X-RateLimit-Burst-Limit` (a rate expression such as `50/second`, not an integer), `X-RateLimit-Monthly-Limit` (an integer or the literal `Unlimited`), `X-RateLimit-Monthly-Remaining` (an integer, or `Unlimited` / `MCP (unlimited)`; omitted when not applicable), and `X-RateLimit-Monthly-Unit` (`requests` or `credits` — pay-as-you-go free-tier accounts are metered in credits, not request counts; omitted whenever Monthly-Remaining is). Parse defensively — these are strings, not numbers.  **Credits.** One key reaches every endpoint, and each call is priced in credits: metadata and search, filing Markdown, and standardized financial line items each have their own cost, stated at the top of every endpoint below. A free account gets a monthly credit allowance; `X-Credits-Charged` on each response says what the call cost, and `GET /usage/` shows the month so far. Webhook push is an Enterprise capability, outside credit pricing. Costs and the allowance: https://financialfilings.com/developers/
+    Filings and company data for listed companies across the G20 and Europe. Send your API key in the `X-API-Key` header on every request. New here? Start with the [quickstart](https://financialfilings.com/developers/#quickstart).  **Credits.** Every call costs credits, and each endpoint below shows its price. `X-Credits-Charged` on the response says what a call cost, and `GET /usage/` shows the month so far. A free account gets a monthly allowance. Webhooks are an Enterprise feature. Pricing: https://financialfilings.com/developers/  **Rate limits.** Responses carry `X-RateLimit-Burst-Limit` (a rate such as `50/second`), `X-RateLimit-Monthly-Limit`, `X-RateLimit-Monthly-Remaining` and `X-RateLimit-Monthly-Unit` (`requests` or `credits`). All four are strings and can be non-numeric (for example `Unlimited`); the last two are left out when they don't apply.
 
     The version of the OpenAPI document: 1.4.0
     Contact: api@financialfilings.com
@@ -60,7 +60,7 @@ class WatchlistApi:
     ) -> BulkWatchlistResponse:
         """Bulk Add Companies to Watchlist
 
-        **Cost:** 1 credit per request.  --- Adds up to 100 companies to the authenticated user's watchlist in a single request. Companies already in the watchlist are silently skipped.
+        **Cost:** 1 credit per request.  --- Adds up to 100 companies to your watchlist. Companies already on it are skipped.
 
         :param bulk_watchlist: (required)
         :type bulk_watchlist: BulkWatchlist
@@ -131,7 +131,7 @@ class WatchlistApi:
     ) -> ApiResponse[BulkWatchlistResponse]:
         """Bulk Add Companies to Watchlist
 
-        **Cost:** 1 credit per request.  --- Adds up to 100 companies to the authenticated user's watchlist in a single request. Companies already in the watchlist are silently skipped.
+        **Cost:** 1 credit per request.  --- Adds up to 100 companies to your watchlist. Companies already on it are skipped.
 
         :param bulk_watchlist: (required)
         :type bulk_watchlist: BulkWatchlist
@@ -202,7 +202,7 @@ class WatchlistApi:
     ) -> RESTResponseType:
         """Bulk Add Companies to Watchlist
 
-        **Cost:** 1 credit per request.  --- Adds up to 100 companies to the authenticated user's watchlist in a single request. Companies already in the watchlist are silently skipped.
+        **Cost:** 1 credit per request.  --- Adds up to 100 companies to your watchlist. Companies already on it are skipped.
 
         :param bulk_watchlist: (required)
         :type bulk_watchlist: BulkWatchlist
@@ -347,7 +347,7 @@ class WatchlistApi:
     ) -> BulkWatchlistResponse:
         """Bulk Remove Companies from Watchlist
 
-        **Cost:** 1 credit per request.  --- Removes up to 100 companies from the authenticated user's watchlist in a single request. Companies not in the watchlist are silently skipped.
+        **Cost:** 1 credit per request.  --- Removes up to 100 companies from your watchlist. Companies not on it are skipped.
 
         :param bulk_watchlist: (required)
         :type bulk_watchlist: BulkWatchlist
@@ -418,7 +418,7 @@ class WatchlistApi:
     ) -> ApiResponse[BulkWatchlistResponse]:
         """Bulk Remove Companies from Watchlist
 
-        **Cost:** 1 credit per request.  --- Removes up to 100 companies from the authenticated user's watchlist in a single request. Companies not in the watchlist are silently skipped.
+        **Cost:** 1 credit per request.  --- Removes up to 100 companies from your watchlist. Companies not on it are skipped.
 
         :param bulk_watchlist: (required)
         :type bulk_watchlist: BulkWatchlist
@@ -489,7 +489,7 @@ class WatchlistApi:
     ) -> RESTResponseType:
         """Bulk Remove Companies from Watchlist
 
-        **Cost:** 1 credit per request.  --- Removes up to 100 companies from the authenticated user's watchlist in a single request. Companies not in the watchlist are silently skipped.
+        **Cost:** 1 credit per request.  --- Removes up to 100 companies from your watchlist. Companies not on it are skipped.
 
         :param bulk_watchlist: (required)
         :type bulk_watchlist: BulkWatchlist
@@ -634,7 +634,7 @@ class WatchlistApi:
     ) -> WatchlistResponse:
         """Add Company to Watchlist
 
-        **Cost:** 1 credit per request.  --- Adds a specified company to the authenticated user's watchlist.
+        **Cost:** 1 credit per request.  --- Adds a company to your watchlist.
 
         :param watchlist_action: (required)
         :type watchlist_action: WatchlistAction
@@ -705,7 +705,7 @@ class WatchlistApi:
     ) -> ApiResponse[WatchlistResponse]:
         """Add Company to Watchlist
 
-        **Cost:** 1 credit per request.  --- Adds a specified company to the authenticated user's watchlist.
+        **Cost:** 1 credit per request.  --- Adds a company to your watchlist.
 
         :param watchlist_action: (required)
         :type watchlist_action: WatchlistAction
@@ -776,7 +776,7 @@ class WatchlistApi:
     ) -> RESTResponseType:
         """Add Company to Watchlist
 
-        **Cost:** 1 credit per request.  --- Adds a specified company to the authenticated user's watchlist.
+        **Cost:** 1 credit per request.  --- Adds a company to your watchlist.
 
         :param watchlist_action: (required)
         :type watchlist_action: WatchlistAction
@@ -921,7 +921,7 @@ class WatchlistApi:
     ) -> WatchlistResponse:
         """Remove Company from Watchlist
 
-        **Cost:** 1 credit per request.  --- Removes a specified company from the authenticated user's watchlist using the `company_id` from the URL path.
+        **Cost:** 1 credit per request.  --- Removes the company in the path from your watchlist.
 
         :param company_id: (required)
         :type company_id: int
@@ -992,7 +992,7 @@ class WatchlistApi:
     ) -> ApiResponse[WatchlistResponse]:
         """Remove Company from Watchlist
 
-        **Cost:** 1 credit per request.  --- Removes a specified company from the authenticated user's watchlist using the `company_id` from the URL path.
+        **Cost:** 1 credit per request.  --- Removes the company in the path from your watchlist.
 
         :param company_id: (required)
         :type company_id: int
@@ -1063,7 +1063,7 @@ class WatchlistApi:
     ) -> RESTResponseType:
         """Remove Company from Watchlist
 
-        **Cost:** 1 credit per request.  --- Removes a specified company from the authenticated user's watchlist using the `company_id` from the URL path.
+        **Cost:** 1 credit per request.  --- Removes the company in the path from your watchlist.
 
         :param company_id: (required)
         :type company_id: int
@@ -1192,9 +1192,9 @@ class WatchlistApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> WatchlistPage:
-        """Get User's Watchlist
+        """Get Watchlist
 
-        **Cost:** 1 credit per request.  --- Fetches all companies currently in the authenticated user's watchlist. Results are paginated.
+        **Cost:** 1 credit per request.  --- The companies on your watchlist, paginated.
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1258,9 +1258,9 @@ class WatchlistApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[WatchlistPage]:
-        """Get User's Watchlist
+        """Get Watchlist
 
-        **Cost:** 1 credit per request.  --- Fetches all companies currently in the authenticated user's watchlist. Results are paginated.
+        **Cost:** 1 credit per request.  --- The companies on your watchlist, paginated.
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1324,9 +1324,9 @@ class WatchlistApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get User's Watchlist
+        """Get Watchlist
 
-        **Cost:** 1 credit per request.  --- Fetches all companies currently in the authenticated user's watchlist. Results are paginated.
+        **Cost:** 1 credit per request.  --- The companies on your watchlist, paginated.
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request

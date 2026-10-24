@@ -3,7 +3,7 @@
 """
     FinancialFilings API
 
-    Public-company filings across G20 markets and Europe. Authenticate every request with the `X-API-Key` header. Rate-limit headers on authenticated API responses: `X-RateLimit-Burst-Limit` (a rate expression such as `50/second`, not an integer), `X-RateLimit-Monthly-Limit` (an integer or the literal `Unlimited`), `X-RateLimit-Monthly-Remaining` (an integer, or `Unlimited` / `MCP (unlimited)`; omitted when not applicable), and `X-RateLimit-Monthly-Unit` (`requests` or `credits` — pay-as-you-go free-tier accounts are metered in credits, not request counts; omitted whenever Monthly-Remaining is). Parse defensively — these are strings, not numbers.  **Credits.** One key reaches every endpoint, and each call is priced in credits: metadata and search, filing Markdown, and standardized financial line items each have their own cost, stated at the top of every endpoint below. A free account gets a monthly credit allowance; `X-Credits-Charged` on each response says what the call cost, and `GET /usage/` shows the month so far. Webhook push is an Enterprise capability, outside credit pricing. Costs and the allowance: https://financialfilings.com/developers/
+    Filings and company data for listed companies across the G20 and Europe. Send your API key in the `X-API-Key` header on every request. New here? Start with the [quickstart](https://financialfilings.com/developers/#quickstart).  **Credits.** Every call costs credits, and each endpoint below shows its price. `X-Credits-Charged` on the response says what a call cost, and `GET /usage/` shows the month so far. A free account gets a monthly allowance. Webhooks are an Enterprise feature. Pricing: https://financialfilings.com/developers/  **Rate limits.** Responses carry `X-RateLimit-Burst-Limit` (a rate such as `50/second`), `X-RateLimit-Monthly-Limit`, `X-RateLimit-Monthly-Remaining` and `X-RateLimit-Monthly-Unit` (`requests` or `credits`). All four are strings and can be non-numeric (for example `Unlimited`); the last two are left out when they don't apply.
 
     The version of the OpenAPI document: 1.4.0
     Contact: api@financialfilings.com
@@ -30,42 +30,42 @@ class TestAgentAccountApi(unittest.IsolatedAsyncioTestCase):
     async def test_agent_checkout_link(self) -> None:
         """Test case for agent_checkout_link
 
-        Mint a Stripe link for the owner to add a card (pay-as-you-go)
+        Create Checkout Link
         """
         pass
 
     async def test_agent_key_claim(self) -> None:
         """Test case for agent_key_claim
 
-        Collect an existing account's key once its owner approves
+        Claim an Existing Account's Key
         """
         pass
 
     async def test_agent_key_rotate(self) -> None:
         """Test case for agent_key_rotate
 
-        Rotate this agent key
+        Rotate Agent Key
         """
         pass
 
     async def test_agent_owner_confirmation(self) -> None:
         """Test case for agent_owner_confirmation
 
-        Email the account owner a confirmation link
+        Request Owner Confirmation
         """
         pass
 
     async def test_agent_signup(self) -> None:
         """Test case for agent_signup
 
-        Create an API key as an AI agent
+        Create an API Key as an AI Agent
         """
         pass
 
     async def test_agent_status(self) -> None:
         """Test case for agent_status
 
-        Agent account status
+        Get Agent Status
         """
         pass
 
