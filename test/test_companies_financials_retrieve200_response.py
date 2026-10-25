@@ -103,6 +103,18 @@ class TestCompaniesFinancialsRetrieve200Response(unittest.TestCase):
                                                 reason = 'extraction', )
                                             ], 
                                         withdrawn_reason = 'reattributed', 
+                                        as_reported = financial_reports_generated_client.models.companies_financials_retrieve_200_response_periods_inner_statements_inner_line_items_inner_as_reported.companies_financials_retrieve_200_response_periods_inner_statements_inner_line_items_inner_as_reported(
+                                            other = '', 
+                                            lines = [
+                                                financial_reports_generated_client.models.companies_financials_retrieve_200_response_periods_inner_statements_inner_line_items_inner_as_reported_lines_inner.companies_financials_retrieve_200_response_periods_inner_statements_inner_line_items_inner_as_reported_lines_inner(
+                                                    label = '', 
+                                                    concept = '', 
+                                                    value = '', 
+                                                    weight = 56, 
+                                                    codes = [
+                                                        ''
+                                                        ], )
+                                                ], ), 
                                         updated_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
                                         available_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), )
                                     ], 
@@ -219,6 +231,18 @@ class TestCompaniesFinancialsRetrieve200Response(unittest.TestCase):
                                                 reason = 'extraction', )
                                             ], 
                                         withdrawn_reason = 'reattributed', 
+                                        as_reported = financial_reports_generated_client.models.companies_financials_retrieve_200_response_periods_inner_statements_inner_line_items_inner_as_reported.companies_financials_retrieve_200_response_periods_inner_statements_inner_line_items_inner_as_reported(
+                                            other = '', 
+                                            lines = [
+                                                financial_reports_generated_client.models.companies_financials_retrieve_200_response_periods_inner_statements_inner_line_items_inner_as_reported_lines_inner.companies_financials_retrieve_200_response_periods_inner_statements_inner_line_items_inner_as_reported_lines_inner(
+                                                    label = '', 
+                                                    concept = '', 
+                                                    value = '', 
+                                                    weight = 56, 
+                                                    codes = [
+                                                        ''
+                                                        ], )
+                                                ], ), 
                                         updated_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
                                         available_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), )
                                     ], 

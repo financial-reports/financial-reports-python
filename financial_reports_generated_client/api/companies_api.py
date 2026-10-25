@@ -56,7 +56,7 @@ class CompaniesApi:
         fiscal_year: Annotated[Optional[StrictInt], Field(description="Filter by exact fiscal year (e.g. `2024`).")] = None,
         fiscal_year_from: Annotated[Optional[StrictInt], Field(description="Fiscal year range start (inclusive).")] = None,
         fiscal_year_to: Annotated[Optional[StrictInt], Field(description="Fiscal year range end (inclusive).")] = None,
-        include: Annotated[Optional[StrictStr], Field(description="Comma-separated. `revisions` adds a `revisions` list to every line item: each recorded change to that value, oldest first, with `old_value` -> `new_value` and a reason category. With `as_known_at`, only the changes up to that time. `preliminary` adds `preliminary_results`: the company's own preliminary figures, published before the report and labelled preliminary, never merged into `periods`.")] = None,
+        include: Annotated[Optional[StrictStr], Field(description="Comma-separated. `revisions` adds a `revisions` list to every line item: each recorded change to that value, oldest first, with `old_value` -> `new_value` and a reason category. With `as_known_at`, only the changes up to that time. `preliminary` adds `preliminary_results`: the company's own preliminary figures, published before the report and labelled preliminary, never merged into `periods`. `as_reported` adds `as_reported` to a standardised total read straight from the filer's XBRL whose calculation tree ties: the face lines it is made of, as the filer tagged them. Not served with `as_known_at`.")] = None,
         line_items: Annotated[Optional[StrictStr], Field(description="Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Statements with none of the requested codes are dropped. Unknown codes return `400`; see `/line-item-definitions/`.")] = None,
         statement_type: Annotated[Optional[StrictStr], Field(description="Filter to a single statement type.")] = None,
         _request_timeout: Union[
@@ -90,7 +90,7 @@ class CompaniesApi:
         :type fiscal_year_from: int
         :param fiscal_year_to: Fiscal year range end (inclusive).
         :type fiscal_year_to: int
-        :param include: Comma-separated. `revisions` adds a `revisions` list to every line item: each recorded change to that value, oldest first, with `old_value` -> `new_value` and a reason category. With `as_known_at`, only the changes up to that time. `preliminary` adds `preliminary_results`: the company's own preliminary figures, published before the report and labelled preliminary, never merged into `periods`.
+        :param include: Comma-separated. `revisions` adds a `revisions` list to every line item: each recorded change to that value, oldest first, with `old_value` -> `new_value` and a reason category. With `as_known_at`, only the changes up to that time. `preliminary` adds `preliminary_results`: the company's own preliminary figures, published before the report and labelled preliminary, never merged into `periods`. `as_reported` adds `as_reported` to a standardised total read straight from the filer's XBRL whose calculation tree ties: the face lines it is made of, as the filer tagged them. Not served with `as_known_at`.
         :type include: str
         :param line_items: Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Statements with none of the requested codes are dropped. Unknown codes return `400`; see `/line-item-definitions/`.
         :type line_items: str
@@ -163,7 +163,7 @@ class CompaniesApi:
         fiscal_year: Annotated[Optional[StrictInt], Field(description="Filter by exact fiscal year (e.g. `2024`).")] = None,
         fiscal_year_from: Annotated[Optional[StrictInt], Field(description="Fiscal year range start (inclusive).")] = None,
         fiscal_year_to: Annotated[Optional[StrictInt], Field(description="Fiscal year range end (inclusive).")] = None,
-        include: Annotated[Optional[StrictStr], Field(description="Comma-separated. `revisions` adds a `revisions` list to every line item: each recorded change to that value, oldest first, with `old_value` -> `new_value` and a reason category. With `as_known_at`, only the changes up to that time. `preliminary` adds `preliminary_results`: the company's own preliminary figures, published before the report and labelled preliminary, never merged into `periods`.")] = None,
+        include: Annotated[Optional[StrictStr], Field(description="Comma-separated. `revisions` adds a `revisions` list to every line item: each recorded change to that value, oldest first, with `old_value` -> `new_value` and a reason category. With `as_known_at`, only the changes up to that time. `preliminary` adds `preliminary_results`: the company's own preliminary figures, published before the report and labelled preliminary, never merged into `periods`. `as_reported` adds `as_reported` to a standardised total read straight from the filer's XBRL whose calculation tree ties: the face lines it is made of, as the filer tagged them. Not served with `as_known_at`.")] = None,
         line_items: Annotated[Optional[StrictStr], Field(description="Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Statements with none of the requested codes are dropped. Unknown codes return `400`; see `/line-item-definitions/`.")] = None,
         statement_type: Annotated[Optional[StrictStr], Field(description="Filter to a single statement type.")] = None,
         _request_timeout: Union[
@@ -197,7 +197,7 @@ class CompaniesApi:
         :type fiscal_year_from: int
         :param fiscal_year_to: Fiscal year range end (inclusive).
         :type fiscal_year_to: int
-        :param include: Comma-separated. `revisions` adds a `revisions` list to every line item: each recorded change to that value, oldest first, with `old_value` -> `new_value` and a reason category. With `as_known_at`, only the changes up to that time. `preliminary` adds `preliminary_results`: the company's own preliminary figures, published before the report and labelled preliminary, never merged into `periods`.
+        :param include: Comma-separated. `revisions` adds a `revisions` list to every line item: each recorded change to that value, oldest first, with `old_value` -> `new_value` and a reason category. With `as_known_at`, only the changes up to that time. `preliminary` adds `preliminary_results`: the company's own preliminary figures, published before the report and labelled preliminary, never merged into `periods`. `as_reported` adds `as_reported` to a standardised total read straight from the filer's XBRL whose calculation tree ties: the face lines it is made of, as the filer tagged them. Not served with `as_known_at`.
         :type include: str
         :param line_items: Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Statements with none of the requested codes are dropped. Unknown codes return `400`; see `/line-item-definitions/`.
         :type line_items: str
@@ -270,7 +270,7 @@ class CompaniesApi:
         fiscal_year: Annotated[Optional[StrictInt], Field(description="Filter by exact fiscal year (e.g. `2024`).")] = None,
         fiscal_year_from: Annotated[Optional[StrictInt], Field(description="Fiscal year range start (inclusive).")] = None,
         fiscal_year_to: Annotated[Optional[StrictInt], Field(description="Fiscal year range end (inclusive).")] = None,
-        include: Annotated[Optional[StrictStr], Field(description="Comma-separated. `revisions` adds a `revisions` list to every line item: each recorded change to that value, oldest first, with `old_value` -> `new_value` and a reason category. With `as_known_at`, only the changes up to that time. `preliminary` adds `preliminary_results`: the company's own preliminary figures, published before the report and labelled preliminary, never merged into `periods`.")] = None,
+        include: Annotated[Optional[StrictStr], Field(description="Comma-separated. `revisions` adds a `revisions` list to every line item: each recorded change to that value, oldest first, with `old_value` -> `new_value` and a reason category. With `as_known_at`, only the changes up to that time. `preliminary` adds `preliminary_results`: the company's own preliminary figures, published before the report and labelled preliminary, never merged into `periods`. `as_reported` adds `as_reported` to a standardised total read straight from the filer's XBRL whose calculation tree ties: the face lines it is made of, as the filer tagged them. Not served with `as_known_at`.")] = None,
         line_items: Annotated[Optional[StrictStr], Field(description="Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Statements with none of the requested codes are dropped. Unknown codes return `400`; see `/line-item-definitions/`.")] = None,
         statement_type: Annotated[Optional[StrictStr], Field(description="Filter to a single statement type.")] = None,
         _request_timeout: Union[
@@ -304,7 +304,7 @@ class CompaniesApi:
         :type fiscal_year_from: int
         :param fiscal_year_to: Fiscal year range end (inclusive).
         :type fiscal_year_to: int
-        :param include: Comma-separated. `revisions` adds a `revisions` list to every line item: each recorded change to that value, oldest first, with `old_value` -> `new_value` and a reason category. With `as_known_at`, only the changes up to that time. `preliminary` adds `preliminary_results`: the company's own preliminary figures, published before the report and labelled preliminary, never merged into `periods`.
+        :param include: Comma-separated. `revisions` adds a `revisions` list to every line item: each recorded change to that value, oldest first, with `old_value` -> `new_value` and a reason category. With `as_known_at`, only the changes up to that time. `preliminary` adds `preliminary_results`: the company's own preliminary figures, published before the report and labelled preliminary, never merged into `periods`. `as_reported` adds `as_reported` to a standardised total read straight from the filer's XBRL whose calculation tree ties: the face lines it is made of, as the filer tagged them. Not served with `as_known_at`.
         :type include: str
         :param line_items: Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Statements with none of the requested codes are dropped. Unknown codes return `400`; see `/line-item-definitions/`.
         :type line_items: str
