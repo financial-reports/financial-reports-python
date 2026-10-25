@@ -73,6 +73,8 @@ class TestCompaniesFinancialsRetrieve200Response(unittest.TestCase):
                                     name = '', 
                                     symbol = '', ), 
                                 currency_mismatch = True, 
+                                accounting_standard = 'IFRS', 
+                                accounting_standard_basis = 'xbrl_taxonomy', 
                                 extraction = financial_reports_generated_client.models.companies_financials_retrieve_200_response_periods_inner_statements_inner_extraction.companies_financials_retrieve_200_response_periods_inner_statements_inner_extraction(
                                     model = '', 
                                     prompt_version = '', 
@@ -187,6 +189,8 @@ class TestCompaniesFinancialsRetrieve200Response(unittest.TestCase):
                                     name = '', 
                                     symbol = '', ), 
                                 currency_mismatch = True, 
+                                accounting_standard = 'IFRS', 
+                                accounting_standard_basis = 'xbrl_taxonomy', 
                                 extraction = financial_reports_generated_client.models.companies_financials_retrieve_200_response_periods_inner_statements_inner_extraction.companies_financials_retrieve_200_response_periods_inner_statements_inner_extraction(
                                     model = '', 
                                     prompt_version = '', 

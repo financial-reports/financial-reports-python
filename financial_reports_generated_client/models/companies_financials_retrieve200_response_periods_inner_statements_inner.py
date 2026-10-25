@@ -37,19 +37,41 @@ class CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInner(BaseMode
     statement_type_display: StrictStr
     currency: Optional[CompaniesFinancialsRetrieve200ResponseCurrency]
     currency_mismatch: StrictBool = Field(description="True when this statement's currency differs from the company's modal reporting currency - the code held by more than 60% of the statements we serve for that company. When no code clears 60% (a genuinely dual-currency issuer, or one mid-transition) there is no modal currency and this is `false` on every statement, including the off-currency ones. A data-quality signal, not provenance, so it is returned even to masked accounts. It compares a statement against its company's history; it does not mean the statement itself mixes currencies.")
+    accounting_standard: Optional[StrictStr] = Field(default=None, description="The accounting standard the statement was prepared under. National standards that are IFRS word for word (K-IFRS, TIFRS, HKFRS, SFRS(I), AASB, ...) are `IFRS`; ones with carve-outs or only converged (Ind AS, CAS, SAK, JMIS, any national GAAP) are `LOCAL_GAAP`. `UNKNOWN` when neither the filing nor its market says; null on statements not yet classified. See `accounting_standard_basis` for how it is known.")
+    accounting_standard_basis: Optional[StrictStr] = Field(default=None, description="How `accounting_standard` is known. `xbrl_taxonomy`: read from the filing's own XBRL (a declared standard, or the standard taxonomy its facts are tagged in). `market_default`: not read from the filing; the standard listed companies in its home market must use for consolidated accounts, so an issuer with an exemption may differ. `filer_stated` and `document_stated` are reserved. Null when the standard is `UNKNOWN` or not yet classified.")
     extraction: CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerExtraction
     line_items: List[CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItemsInner]
     withdrawn_reason: Optional[StrictStr] = Field(default=None, description="Present only with `as_known_at`, and only on a statement (and on its values) that was served for this company at that time and is not served for it today because it was withdrawn: `reattributed` - the statement now belongs to another company record, where it may be served; `purged` - reserved: its filing was removed altogether (not served yet; the filing's type, release time and links would be null unless recorded). Absent everywhere else.")
     is_comparative: StrictBool = Field(description="True when this period was read from the comparative (prior-year) column of a later report, because no report presented it as its own period. A data-quality signal, not provenance, so it is returned even to masked accounts.")
     source_filing: Optional[CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerSourceFiling] = None
     sources: Optional[List[CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerSourcesInner]] = Field(default=None, description="Every filing that reported this (period, statement_type), including the candidates selection rejected and any filing whose values filled in the selected statement. Omitted unless the account has source unmasking. The selected filing is always available as `source_filing`.")
-    __properties: ClassVar[List[str]] = ["statement_type", "statement_type_display", "currency", "currency_mismatch", "extraction", "line_items", "withdrawn_reason", "is_comparative", "source_filing", "sources"]
+    __properties: ClassVar[List[str]] = ["statement_type", "statement_type_display", "currency", "currency_mismatch", "accounting_standard", "accounting_standard_basis", "extraction", "line_items", "withdrawn_reason", "is_comparative", "source_filing", "sources"]
 
     @field_validator('statement_type')
     def statement_type_validate_enum(cls, value):
         """Validates the enum"""
         if value not in set(['IS', 'BS', 'CFS']):
             raise ValueError("must be one of enum values ('IS', 'BS', 'CFS')")
+        return value
+
+    @field_validator('accounting_standard')
+    def accounting_standard_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['IFRS', 'US_GAAP', 'J_GAAP', 'LOCAL_GAAP', 'OTHER', 'UNKNOWN']):
+            raise ValueError("must be one of enum values ('IFRS', 'US_GAAP', 'J_GAAP', 'LOCAL_GAAP', 'OTHER', 'UNKNOWN')")
+        return value
+
+    @field_validator('accounting_standard_basis')
+    def accounting_standard_basis_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['xbrl_taxonomy', 'filer_stated', 'document_stated', 'market_default']):
+            raise ValueError("must be one of enum values ('xbrl_taxonomy', 'filer_stated', 'document_stated', 'market_default')")
         return value
 
     @field_validator('withdrawn_reason')
@@ -127,6 +149,16 @@ class CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInner(BaseMode
         if self.currency is None and "currency" in self.model_fields_set:
             _dict['currency'] = None
 
+        # set to None if accounting_standard (nullable) is None
+        # and model_fields_set contains the field
+        if self.accounting_standard is None and "accounting_standard" in self.model_fields_set:
+            _dict['accounting_standard'] = None
+
+        # set to None if accounting_standard_basis (nullable) is None
+        # and model_fields_set contains the field
+        if self.accounting_standard_basis is None and "accounting_standard_basis" in self.model_fields_set:
+            _dict['accounting_standard_basis'] = None
+
         # set to None if source_filing (nullable) is None
         # and model_fields_set contains the field
         if self.source_filing is None and "source_filing" in self.model_fields_set:
@@ -148,6 +180,8 @@ class CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInner(BaseMode
             "statement_type_display": obj.get("statement_type_display"),
             "currency": CompaniesFinancialsRetrieve200ResponseCurrency.from_dict(obj["currency"]) if obj.get("currency") is not None else None,
             "currency_mismatch": obj.get("currency_mismatch"),
+            "accounting_standard": obj.get("accounting_standard"),
+            "accounting_standard_basis": obj.get("accounting_standard_basis"),
             "extraction": CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerExtraction.from_dict(obj["extraction"]) if obj.get("extraction") is not None else None,
             "line_items": [CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItemsInner.from_dict(_item) for _item in obj["line_items"]] if obj.get("line_items") is not None else None,
             "withdrawn_reason": obj.get("withdrawn_reason"),
