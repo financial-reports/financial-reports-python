@@ -65,7 +65,7 @@ class FinancialDataApi:
     ) -> PaginatedLineItemDefinitionList:
         """List Line Item Definitions
 
-        **Cost:** 1 credit per request.  --- Every line item a financial statement can contain. `depth` and `parent_code` give the statement hierarchy.  `templates` lists the company types a line item fits (`industrial`, `bank`, `insurer`); filter with `?template=bank`. Industrial-only items still appear for banks and insurers, but mean something different there.  Some codes come only from a filing's XBRL (`goodwill`, `consolidated_net_income`, `total_comprehensive_income` and five others), so a filing without XBRL never has them.
+        **Cost:** 1 credit per request.  --- Every line item a financial statement can contain. `depth` and `parent_code` give the statement hierarchy.  `templates` lists the company types a line item fits (`industrial`, `bank`, `insurer`); filter with `?template=bank`. Industrial-only items still appear for banks and insurers, but mean something different there.  Some codes come only from a filing's XBRL (`goodwill`, `consolidated_net_income`, `total_debt_incl_leases`, `debt_to_equity` and 30 others), so a filing without XBRL never has them.
 
         :param depth: Filter by hierarchy depth (0 = top-level, 1 = component, 2 = sub-component).
         :type depth: int
@@ -158,7 +158,7 @@ class FinancialDataApi:
     ) -> ApiResponse[PaginatedLineItemDefinitionList]:
         """List Line Item Definitions
 
-        **Cost:** 1 credit per request.  --- Every line item a financial statement can contain. `depth` and `parent_code` give the statement hierarchy.  `templates` lists the company types a line item fits (`industrial`, `bank`, `insurer`); filter with `?template=bank`. Industrial-only items still appear for banks and insurers, but mean something different there.  Some codes come only from a filing's XBRL (`goodwill`, `consolidated_net_income`, `total_comprehensive_income` and five others), so a filing without XBRL never has them.
+        **Cost:** 1 credit per request.  --- Every line item a financial statement can contain. `depth` and `parent_code` give the statement hierarchy.  `templates` lists the company types a line item fits (`industrial`, `bank`, `insurer`); filter with `?template=bank`. Industrial-only items still appear for banks and insurers, but mean something different there.  Some codes come only from a filing's XBRL (`goodwill`, `consolidated_net_income`, `total_debt_incl_leases`, `debt_to_equity` and 30 others), so a filing without XBRL never has them.
 
         :param depth: Filter by hierarchy depth (0 = top-level, 1 = component, 2 = sub-component).
         :type depth: int
@@ -251,7 +251,7 @@ class FinancialDataApi:
     ) -> RESTResponseType:
         """List Line Item Definitions
 
-        **Cost:** 1 credit per request.  --- Every line item a financial statement can contain. `depth` and `parent_code` give the statement hierarchy.  `templates` lists the company types a line item fits (`industrial`, `bank`, `insurer`); filter with `?template=bank`. Industrial-only items still appear for banks and insurers, but mean something different there.  Some codes come only from a filing's XBRL (`goodwill`, `consolidated_net_income`, `total_comprehensive_income` and five others), so a filing without XBRL never has them.
+        **Cost:** 1 credit per request.  --- Every line item a financial statement can contain. `depth` and `parent_code` give the statement hierarchy.  `templates` lists the company types a line item fits (`industrial`, `bank`, `insurer`); filter with `?template=bank`. Industrial-only items still appear for banks and insurers, but mean something different there.  Some codes come only from a filing's XBRL (`goodwill`, `consolidated_net_income`, `total_debt_incl_leases`, `debt_to_equity` and 30 others), so a filing without XBRL never has them.
 
         :param depth: Filter by hierarchy depth (0 = top-level, 1 = component, 2 = sub-component).
         :type depth: int

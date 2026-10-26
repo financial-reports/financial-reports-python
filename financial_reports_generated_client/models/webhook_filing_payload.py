@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from datetime import datetime
+from datetime import date, datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from financial_reports_generated_client.models.source import Source
@@ -40,6 +40,10 @@ class WebhookFilingPayload(BaseModel):
     dissemination_datetime: datetime = Field(description="The exact time the filing was disseminated by the source.")
     release_datetime: datetime = Field(description="The official release time of the filing (e.g., the period end).")
     ingestion_mode: StrictStr = Field(description="Whether the filing was added to the platform promptly after publication. `REALTIME`: added within the source's normal publication delay (5 to 48 hours after `release_datetime`, depending on the source). `BACKFILLED`: everything else, including historical imports and new filings that reached the platform late, for example after a source outage. Set once when the filing is added and not recalculated afterwards. Webhooks are not sent for filings added more than 48 hours after `release_datetime` (for FSMA and Finnish Nasdaq filings, after `dissemination_datetime`; outside authorised recovery windows) unless the webhook has `deliver_late_filings` enabled, so most deliveries are REALTIME. A delivery can still carry BACKFILLED when the filing arrived after its source's normal delay but inside those 48 hours, has no `release_datetime`, falls in an authorised recovery window, or is a late delivery (`late: true`).  * `REALTIME` - Realtime * `BACKFILLED` - Backfilled")
+    fiscal_year: Optional[StrictInt] = Field(description="The accounting fiscal year this filing covers (e.g., 2024), as on GET /filings/{id}/. Null if not yet determined, which is common on 'filing.received'.")
+    fiscal_period: Optional[StrictStr] = Field(description="The fiscal period covered (FY, Q1, Q2, Q3, Q4, H1, H2, 9M), as on GET /filings/{id}/. Null if not yet determined, which is common on 'filing.received'.  * `FY` - Full Year * `Q1` - First Quarter * `Q2` - Second Quarter * `Q3` - Third Quarter * `Q4` - Fourth Quarter * `H1` - First Half * `H2` - Second Half * `9M` - Nine Months")
+    period_ending_date: Optional[date] = Field(description="The date the reported financial period ends (YYYY-MM-DD, e.g. 2024-12-31), as on GET /filings/{id}/. Null if not yet determined.")
+    updated_date: datetime = Field(description="When the filing record was last modified (ISO 8601, UTC), as on GET /filings/{id}/. Taken when the payload is built, so a retry or replay can carry a later value than the first attempt.")
     late: StrictBool = Field(description="True when the filing reached the platform more than 48 hours after publication. Such filings are sent only to webhooks with `deliver_late_filings` enabled, and only up to 30 days late; the one exception is a deliberate re-send after an outage on our side, which can reach every webhook at any lag. Always present.")
     ingest_lag_hours: Optional[Union[StrictFloat, StrictInt]] = Field(description="Hours between publication (`release_datetime`; for FSMA, `dissemination_datetime`) and the filing reaching the platform, to one decimal. Null when the filing has no `release_datetime`. Negative when the source dates the filing in the future.")
     document_url: StrictStr = Field(description="Direct link to our hosted copy of the original filing document (e.g. PDF). The link is not signed and does not expire: anyone holding it can download the file, so treat it like a share link. It returns 404 if the filing is later removed or its document replaced. Processed content is served differently: markdown requires an API key and HTML is served through short-lived signed links.")
@@ -47,13 +51,23 @@ class WebhookFilingPayload(BaseModel):
     source_filing_type: Optional[StrictStr] = Field(description="The source authority's own classification label, verbatim. Null when the source publishes no label, it was not captured, or the source is anonymised. Not gated on source identities.")
     source: Optional[Source] = Field(description="The same object as `source` on GET /filings/{id}/. Unless the webhook owner's account has source identities unlocked, `name` is a generic label and `url` is null; `id` is always the real source id (the manifests' `source_id`). Null when the filing has no source.")
     markdown_content: Optional[StrictStr] = Field(description="The full, processed content of the filing in Markdown format. This field is only included if your webhook is configured with 'include_markdown: true' AND the event type is 'filing.processed'. It is null for 'filing.received'. Even with 'include_markdown: true' on a 'filing.processed' event, this field is null unless the webhook owner's plan includes filing markdown -- the same check applied to the REST /markdown/ endpoint.")
-    __properties: ClassVar[List[str]] = ["id", "processing_status", "filing_type_code", "filing_type_name", "language_code", "language_name", "title", "dissemination_datetime", "release_datetime", "ingestion_mode", "late", "ingest_lag_hours", "document_url", "source_url", "source_filing_type", "source", "markdown_content"]
+    __properties: ClassVar[List[str]] = ["id", "processing_status", "filing_type_code", "filing_type_name", "language_code", "language_name", "title", "dissemination_datetime", "release_datetime", "ingestion_mode", "fiscal_year", "fiscal_period", "period_ending_date", "updated_date", "late", "ingest_lag_hours", "document_url", "source_url", "source_filing_type", "source", "markdown_content"]
 
     @field_validator('ingestion_mode')
     def ingestion_mode_validate_enum(cls, value):
         """Validates the enum"""
         if value not in set(['REALTIME', 'BACKFILLED']):
             raise ValueError("must be one of enum values ('REALTIME', 'BACKFILLED')")
+        return value
+
+    @field_validator('fiscal_period')
+    def fiscal_period_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['FY', 'Q1', 'Q2', 'Q3', 'Q4', 'H1', 'H2', '9M']):
+            raise ValueError("must be one of enum values ('FY', 'Q1', 'Q2', 'Q3', 'Q4', 'H1', 'H2', '9M')")
         return value
 
     model_config = ConfigDict(
@@ -103,6 +117,10 @@ class WebhookFilingPayload(BaseModel):
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
             "id",
@@ -115,6 +133,10 @@ class WebhookFilingPayload(BaseModel):
             "dissemination_datetime",
             "release_datetime",
             "ingestion_mode",
+            "fiscal_year",
+            "fiscal_period",
+            "period_ending_date",
+            "updated_date",
             "late",
             "ingest_lag_hours",
             "document_url",
@@ -151,6 +173,21 @@ class WebhookFilingPayload(BaseModel):
         # and model_fields_set contains the field
         if self.language_name is None and "language_name" in self.model_fields_set:
             _dict['language_name'] = None
+
+        # set to None if fiscal_year (nullable) is None
+        # and model_fields_set contains the field
+        if self.fiscal_year is None and "fiscal_year" in self.model_fields_set:
+            _dict['fiscal_year'] = None
+
+        # set to None if fiscal_period (nullable) is None
+        # and model_fields_set contains the field
+        if self.fiscal_period is None and "fiscal_period" in self.model_fields_set:
+            _dict['fiscal_period'] = None
+
+        # set to None if period_ending_date (nullable) is None
+        # and model_fields_set contains the field
+        if self.period_ending_date is None and "period_ending_date" in self.model_fields_set:
+            _dict['period_ending_date'] = None
 
         # set to None if ingest_lag_hours (nullable) is None
         # and model_fields_set contains the field
@@ -199,6 +236,10 @@ class WebhookFilingPayload(BaseModel):
             "dissemination_datetime": obj.get("dissemination_datetime"),
             "release_datetime": obj.get("release_datetime"),
             "ingestion_mode": obj.get("ingestion_mode"),
+            "fiscal_year": obj.get("fiscal_year"),
+            "fiscal_period": obj.get("fiscal_period"),
+            "period_ending_date": obj.get("period_ending_date"),
+            "updated_date": obj.get("updated_date"),
             "late": obj.get("late"),
             "ingest_lag_hours": obj.get("ingest_lag_hours"),
             "document_url": obj.get("document_url"),

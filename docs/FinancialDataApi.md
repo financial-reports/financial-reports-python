@@ -20,7 +20,7 @@ Every line item a financial statement can contain. `depth` and `parent_code` giv
 
 `templates` lists the company types a line item fits (`industrial`, `bank`, `insurer`); filter with `?template=bank`. Industrial-only items still appear for banks and insurers, but mean something different there.
 
-Some codes come only from a filing's XBRL (`goodwill`, `consolidated_net_income`, `total_comprehensive_income` and five others), so a filing without XBRL never has them.
+Some codes come only from a filing's XBRL (`goodwill`, `consolidated_net_income`, `total_debt_incl_leases`, `debt_to_equity` and 30 others), so a filing without XBRL never has them.
 
 ### Example
 
