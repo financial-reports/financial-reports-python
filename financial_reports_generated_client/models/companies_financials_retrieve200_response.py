@@ -25,6 +25,7 @@ from financial_reports_generated_client.models.companies_financials_retrieve200_
 from financial_reports_generated_client.models.companies_financials_retrieve200_response_history_window import CompaniesFinancialsRetrieve200ResponseHistoryWindow
 from financial_reports_generated_client.models.companies_financials_retrieve200_response_periods_inner import CompaniesFinancialsRetrieve200ResponsePeriodsInner
 from financial_reports_generated_client.models.companies_financials_retrieve200_response_preliminary_results_inner import CompaniesFinancialsRetrieve200ResponsePreliminaryResultsInner
+from financial_reports_generated_client.models.companies_financials_retrieve200_response_standalone_quarters_inner import CompaniesFinancialsRetrieve200ResponseStandaloneQuartersInner
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
@@ -43,7 +44,8 @@ class CompaniesFinancialsRetrieve200Response(BaseModel):
     notice: Optional[StrictStr] = None
     history_window: Optional[CompaniesFinancialsRetrieve200ResponseHistoryWindow] = None
     preliminary_results: Optional[List[CompaniesFinancialsRetrieve200ResponsePreliminaryResultsInner]] = Field(default=None, description="Present only with `include=preliminary`. The company's own preliminary results figures, published before the report for the period and expected to differ from it (today: Korean 잠정실적 notices). Never merged into `periods`. One entry per notice and period, corrections included, so the history is point in time: `is_latest` marks the newest notice for its period and basis among those returned.")
-    __properties: ClassVar[List[str]] = ["company_id", "template", "currency", "sources_masked", "filters", "period_count", "periods", "notice", "history_window", "preliminary_results"]
+    standalone_quarters: Optional[List[CompaniesFinancialsRetrieve200ResponseStandaloneQuartersInner]] = Field(default=None, description="Present only with `include=standalone_quarters`. One three-month period per fiscal quarter (a six-month `H2` for a company that reports half years only), income statement and cash flow only, newest first. `reported` values are the company's own three-month figures; `derived` values are differences of its reported year-to-date figures (`formula`, e.g. `H1 - Q1`, and the `source_filing_ids` they rest on); `derived_approx` is EPS as the difference of year-to-date EPS, given only when the weighted share count moved less than 2%. A value that cannot be derived safely is `null` with a `null_reason`. `periods` stays exactly as reported.")
+    __properties: ClassVar[List[str]] = ["company_id", "template", "currency", "sources_masked", "filters", "period_count", "periods", "notice", "history_window", "preliminary_results", "standalone_quarters"]
 
     @field_validator('template')
     def template_validate_enum(cls, value):
@@ -115,6 +117,12 @@ class CompaniesFinancialsRetrieve200Response(BaseModel):
             for _item_preliminary_results in self.preliminary_results:
                 _items.append(_item_preliminary_results.to_dict() if _item_preliminary_results is not None else None)
             _dict['preliminary_results'] = _items
+        # override the default output from pydantic by calling `to_dict()` of each item in standalone_quarters (list)
+        _items = []
+        if self.standalone_quarters:
+            for _item_standalone_quarters in self.standalone_quarters:
+                _items.append(_item_standalone_quarters.to_dict() if _item_standalone_quarters is not None else None)
+            _dict['standalone_quarters'] = _items
         # set to None if currency (nullable) is None
         # and model_fields_set contains the field
         if self.currency is None and "currency" in self.model_fields_set:
@@ -141,7 +149,8 @@ class CompaniesFinancialsRetrieve200Response(BaseModel):
             "periods": [CompaniesFinancialsRetrieve200ResponsePeriodsInner.from_dict(_item) for _item in obj["periods"]] if obj.get("periods") is not None else None,
             "notice": obj.get("notice"),
             "history_window": CompaniesFinancialsRetrieve200ResponseHistoryWindow.from_dict(obj["history_window"]) if obj.get("history_window") is not None else None,
-            "preliminary_results": [CompaniesFinancialsRetrieve200ResponsePreliminaryResultsInner.from_dict(_item) for _item in obj["preliminary_results"]] if obj.get("preliminary_results") is not None else None
+            "preliminary_results": [CompaniesFinancialsRetrieve200ResponsePreliminaryResultsInner.from_dict(_item) for _item in obj["preliminary_results"]] if obj.get("preliminary_results") is not None else None,
+            "standalone_quarters": [CompaniesFinancialsRetrieve200ResponseStandaloneQuartersInner.from_dict(_item) for _item in obj["standalone_quarters"]] if obj.get("standalone_quarters") is not None else None
         })
         return _obj
 

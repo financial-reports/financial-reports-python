@@ -165,6 +165,28 @@ class TestCompaniesFinancialsRetrieve200Response(unittest.TestCase):
                                 unit = '', 
                                 currency = '', )
                             ], )
+                    ],
+                standalone_quarters = [
+                    financial_reports_generated_client.models.companies_financials_retrieve_200_response_standalone_quarters_inner.companies_financials_retrieve_200_response_standalone_quarters_inner(
+                        status = 'derived', 
+                        fiscal_year = 56, 
+                        fiscal_period = 'Q1', 
+                        period_start_date = datetime.datetime.strptime('1975-12-30', '%Y-%m-%d').date(), 
+                        period_end_date = datetime.datetime.strptime('1975-12-30', '%Y-%m-%d').date(), 
+                        line_items = [
+                            financial_reports_generated_client.models.companies_financials_retrieve_200_response_standalone_quarters_inner_line_items_inner.companies_financials_retrieve_200_response_standalone_quarters_inner_line_items_inner(
+                                code = '', 
+                                name = '', 
+                                statement_type = 'IS', 
+                                value = '', 
+                                currency = '', 
+                                basis = 'reported', 
+                                formula = '', 
+                                source_filing_ids = [
+                                    56
+                                    ], 
+                                null_reason = 'ytd_basis_disagrees_with_served_quarter', )
+                            ], )
                     ]
             )
         else:
