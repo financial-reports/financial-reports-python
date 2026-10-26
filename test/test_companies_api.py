@@ -69,6 +69,13 @@ class TestCompaniesApi(unittest.IsolatedAsyncioTestCase):
         """
         pass
 
+    async def test_companies_segments_retrieve(self) -> None:
+        """Test case for companies_segments_retrieve
+
+        Retrieve Company Segments
+        """
+        pass
+
 
 if __name__ == '__main__':
     unittest.main()

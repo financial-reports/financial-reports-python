@@ -10,6 +10,7 @@ Method | HTTP request | Description
 [**companies_next_annual_report_retrieve**](CompaniesApi.md#companies_next_annual_report_retrieve) | **GET** /companies/{id}/next-annual-report/ | Predict Next Annual Report
 [**companies_resolve_create**](CompaniesApi.md#companies_resolve_create) | **POST** /companies/resolve/ | Resolve Companies by Identifier (Batch)
 [**companies_retrieve**](CompaniesApi.md#companies_retrieve) | **GET** /companies/{id}/ | Retrieve Company Details
+[**companies_segments_retrieve**](CompaniesApi.md#companies_segments_retrieve) | **GET** /companies/{id}/segments/ | Retrieve Company Segments
 
 
 # **companies_financials_retrieve**
@@ -648,6 +649,112 @@ Name | Type | Description  | Notes
 **200** | Success |  -  |
 **401** | Unauthorized |  -  |
 **404** | Not Found |  -  |
+**403** | Missing or invalid API key, or the plan does not include this endpoint. |  -  |
+**429** | Rate limit, plan quota or spend cap reached. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **companies_segments_retrieve**
+> CompaniesSegmentsRetrieve200Response companies_segments_retrieve(id, axis=axis, metric=metric, period=period)
+
+Retrieve Company Segments
+
+**Cost:** 40 credits per request.
+
+---
+**Experimental:** the response may change without an API version bump.
+
+Returns a company's business-segment and geographic figures: revenue, operating profit and assets per segment and period, as the company tagged them in its XBRL filings. Available where companies tag their segment note in XBRL: US, Japan, Korea, Chile and India, and the few European companies that tag theirs.
+
+**As reported.** Names, segment definitions and currencies are the company's own; nothing is mapped to a standard taxonomy or converted. `operating_profit` is the company's segment profit measure, which may differ from its consolidated operating income. Revenue is the measure the company tags for most of its segments, external-customer revenue where it tags that, otherwise segment revenue as it totals it. Geographic areas may overlap (a region and a country within it). `concept` and `member` say which tag each figure came from.
+
+**One filing per period and metric.** When several filings report the same metric for the same period, every segment's figure for it comes from the latest of them, so a restated or recast period replaces the original for that metric. Each value names its `source_filing`. Totals, eliminations and reconciling items are left out, and so are figures that also cut a segment by product or another dimension.
+
+**Values** are exact decimal strings: parse them with a decimal type.
+
+### Example
+
+* Bearer (JWT) Authentication (CognitoJWT):
+* Api Key Authentication (ApiKeyAuth):
+
+```python
+import financial_reports_generated_client
+from financial_reports_generated_client.models.companies_segments_retrieve200_response import CompaniesSegmentsRetrieve200Response
+from financial_reports_generated_client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.financialreports.eu
+# See configuration.py for a list of all supported configuration parameters.
+configuration = financial_reports_generated_client.Configuration(
+    host = "https://api.financialreports.eu"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization (JWT): CognitoJWT
+configuration = financial_reports_generated_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Configure API key authorization: ApiKeyAuth
+configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+async with financial_reports_generated_client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = financial_reports_generated_client.CompaniesApi(api_client)
+    id = 56 # int | A unique integer value identifying this company.
+    axis = 'axis_example' # str | Only business segments or only geographic areas. (optional)
+    metric = 'metric_example' # str | Only this metric. (optional)
+    period = 'period_example' # str | Only periods of this length (`FY`, `9M`, `H`, `Q`). A balance (assets) has no length, so this leaves balances out. (optional)
+
+    try:
+        # Retrieve Company Segments
+        api_response = await api_instance.companies_segments_retrieve(id, axis=axis, metric=metric, period=period)
+        print("The response of CompaniesApi->companies_segments_retrieve:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling CompaniesApi->companies_segments_retrieve: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **int**| A unique integer value identifying this company. | 
+ **axis** | **str**| Only business segments or only geographic areas. | [optional] 
+ **metric** | **str**| Only this metric. | [optional] 
+ **period** | **str**| Only periods of this length (&#x60;FY&#x60;, &#x60;9M&#x60;, &#x60;H&#x60;, &#x60;Q&#x60;). A balance (assets) has no length, so this leaves balances out. | [optional] 
+
+### Return type
+
+[**CompaniesSegmentsRetrieve200Response**](CompaniesSegmentsRetrieve200Response.md)
+
+### Authorization
+
+[CognitoJWT](../README.md#CognitoJWT), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Segment figures. |  -  |
+**400** | Invalid query parameter. |  -  |
+**404** | Company not found. |  -  |
 **403** | Missing or invalid API key, or the plan does not include this endpoint. |  -  |
 **429** | Rate limit, plan quota or spend cap reached. |  -  |
 
