@@ -27,6 +27,13 @@ class TestCompaniesApi(unittest.IsolatedAsyncioTestCase):
     async def asyncTearDown(self) -> None:
         await self.api.api_client.close()
 
+    async def test_companies_dividends_retrieve(self) -> None:
+        """Test case for companies_dividends_retrieve
+
+        Retrieve Company Dividends
+        """
+        pass
+
     async def test_companies_financials_retrieve(self) -> None:
         """Test case for companies_financials_retrieve
 

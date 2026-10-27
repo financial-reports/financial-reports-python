@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "1.4.145"
+__version__ = "1.4.146"
 
 # Define package exports
 __all__ = [
@@ -47,6 +47,10 @@ __all__ = [
     "AgentSignupRequest",
     "BulkWatchlist",
     "BulkWatchlistResponse",
+    "CompaniesDividendsRetrieve200Response",
+    "CompaniesDividendsRetrieve200ResponseDividendsInner",
+    "CompaniesDividendsRetrieve200ResponseDividendsInnerDateChangesInner",
+    "CompaniesDividendsRetrieve200ResponseFilters",
     "CompaniesFinancialsRetrieve200Response",
     "CompaniesFinancialsRetrieve200ResponseCurrency",
     "CompaniesFinancialsRetrieve200ResponseFilters",
@@ -188,6 +192,10 @@ from financial_reports_generated_client.models.agent_key_claim_request import Ag
 from financial_reports_generated_client.models.agent_signup_request import AgentSignupRequest as AgentSignupRequest
 from financial_reports_generated_client.models.bulk_watchlist import BulkWatchlist as BulkWatchlist
 from financial_reports_generated_client.models.bulk_watchlist_response import BulkWatchlistResponse as BulkWatchlistResponse
+from financial_reports_generated_client.models.companies_dividends_retrieve200_response import CompaniesDividendsRetrieve200Response as CompaniesDividendsRetrieve200Response
+from financial_reports_generated_client.models.companies_dividends_retrieve200_response_dividends_inner import CompaniesDividendsRetrieve200ResponseDividendsInner as CompaniesDividendsRetrieve200ResponseDividendsInner
+from financial_reports_generated_client.models.companies_dividends_retrieve200_response_dividends_inner_date_changes_inner import CompaniesDividendsRetrieve200ResponseDividendsInnerDateChangesInner as CompaniesDividendsRetrieve200ResponseDividendsInnerDateChangesInner
+from financial_reports_generated_client.models.companies_dividends_retrieve200_response_filters import CompaniesDividendsRetrieve200ResponseFilters as CompaniesDividendsRetrieve200ResponseFilters
 from financial_reports_generated_client.models.companies_financials_retrieve200_response import CompaniesFinancialsRetrieve200Response as CompaniesFinancialsRetrieve200Response
 from financial_reports_generated_client.models.companies_financials_retrieve200_response_currency import CompaniesFinancialsRetrieve200ResponseCurrency as CompaniesFinancialsRetrieve200ResponseCurrency
 from financial_reports_generated_client.models.companies_financials_retrieve200_response_filters import CompaniesFinancialsRetrieve200ResponseFilters as CompaniesFinancialsRetrieve200ResponseFilters
