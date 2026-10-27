@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **op** | **str** | &#x60;insert&#x60;: first written. &#x60;update&#x60;: corrected. &#x60;delete&#x60;: removed (it may be written again by a later &#x60;insert&#x60;). &#x60;pre_recording&#x60;: a correction from before recording started, approximate time. | 
 **old_value** | **decimal.Decimal** | &#x60;value&#x60; before the change; null on insert. | 
 **new_value** | **decimal.Decimal** | &#x60;value&#x60; after the change; null on delete. A change to another field of the value (its as-reported figure, currency or statement) has old_value &#x3D;&#x3D; new_value. | 
-**reason** | **str** | &#x60;extraction&#x60;: (re-)extraction from the document. &#x60;cleanup&#x60;: an automated rule-based correction. &#x60;repair&#x60;: an operator-run correction pass. &#x60;manual&#x60;: a hand edit. &#x60;unknown&#x60;: not recorded. | 
+**reason** | **str** | &#x60;extraction&#x60;: (re-)extraction from the document. &#x60;cleanup&#x60;: an automated rule-based correction. &#x60;repair&#x60;: a correction pass run by our team. &#x60;manual&#x60;: a hand edit. &#x60;unknown&#x60;: not recorded. | 
 
 ## Example
 

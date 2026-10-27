@@ -1,6 +1,6 @@
 # CompanyMergedInto
 
-Inline schema type for `merged_into` on CompanySerializer (#1118).  Deliberately two fields: the pointer exists so a consumer can repoint its own row, not so it can avoid a second request. Fetch the canonical id for the full record.
+The canonical company that replaced this one. Fetch its id for the full record.
 
 ## Properties
 

@@ -12,6 +12,7 @@ Method | HTTP request | Description
 [**companies_resolve_create**](CompaniesApi.md#companies_resolve_create) | **POST** /companies/resolve/ | Resolve Companies by Identifier (Batch)
 [**companies_retrieve**](CompaniesApi.md#companies_retrieve) | **GET** /companies/{id}/ | Retrieve Company Details
 [**companies_segments_retrieve**](CompaniesApi.md#companies_segments_retrieve) | **GET** /companies/{id}/segments/ | Retrieve Company Segments
+[**companies_splits_retrieve**](CompaniesApi.md#companies_splits_retrieve) | **GET** /companies/{id}/splits/ | Retrieve Company Stock Splits
 
 
 # **companies_dividends_retrieve**
@@ -656,7 +657,7 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Reconciliation complete. Individual rows may still be unmatched. |  -  |
-**400** | Malformed batch — too many rows, no rows, or duplicate &#x60;ref&#x60; values. |  -  |
+**400** | Malformed batch: too many rows, no rows, or duplicate &#x60;ref&#x60; values. |  -  |
 **401** | Unauthorized |  -  |
 **403** | Your API plan does not include access to this endpoint. |  -  |
 **429** | Rate limit, plan quota or spend cap reached. |  -  |
@@ -854,6 +855,106 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Segment figures. |  -  |
+**400** | Invalid query parameter. |  -  |
+**404** | Company not found. |  -  |
+**403** | Missing or invalid API key, or the plan does not include this endpoint. |  -  |
+**429** | Rate limit, plan quota or spend cap reached. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **companies_splits_retrieve**
+> CompaniesSplitsRetrieve200Response companies_splits_retrieve(id, status=status)
+
+Retrieve Company Stock Splits
+
+**Cost:** 40 credits per request.
+
+---
+**Experimental:** the response may change without an API version bump.
+
+Returns a company's stock splits, reverse splits and bonus issues, newest first, including splits that are announced but not yet effective. Each split is one event, however many notices the company published about it (proposal, approval, record date, completion).
+
+**Ratio.** `ratio_new:ratio_old` is shares after to shares before, in lowest terms: a 4-for-1 split is `4:1`, a 1-for-10 reverse split `1:10`, a bonus issue of one new share for every two held `3:2`. `factor` is the same ratio as one number.
+
+**Dates** are as the company or its exchange stated them; a date that was not stated is `null`, never estimated.
+
+### Example
+
+* Bearer (JWT) Authentication (CognitoJWT):
+* Api Key Authentication (ApiKeyAuth):
+
+```python
+import financial_reports_generated_client
+from financial_reports_generated_client.models.companies_splits_retrieve200_response import CompaniesSplitsRetrieve200Response
+from financial_reports_generated_client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.financialreports.eu
+# See configuration.py for a list of all supported configuration parameters.
+configuration = financial_reports_generated_client.Configuration(
+    host = "https://api.financialreports.eu"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization (JWT): CognitoJWT
+configuration = financial_reports_generated_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Configure API key authorization: ApiKeyAuth
+configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+async with financial_reports_generated_client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = financial_reports_generated_client.CompaniesApi(api_client)
+    id = 56 # int | A unique integer value identifying this company.
+    status = 'status_example' # str | Only splits with this status. (optional)
+
+    try:
+        # Retrieve Company Stock Splits
+        api_response = await api_instance.companies_splits_retrieve(id, status=status)
+        print("The response of CompaniesApi->companies_splits_retrieve:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling CompaniesApi->companies_splits_retrieve: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **int**| A unique integer value identifying this company. | 
+ **status** | **str**| Only splits with this status. | [optional] 
+
+### Return type
+
+[**CompaniesSplitsRetrieve200Response**](CompaniesSplitsRetrieve200Response.md)
+
+### Authorization
+
+[CognitoJWT](../README.md#CognitoJWT), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Split events. |  -  |
 **400** | Invalid query parameter. |  -  |
 **404** | Company not found. |  -  |
 **403** | Missing or invalid API key, or the plan does not include this endpoint. |  -  |

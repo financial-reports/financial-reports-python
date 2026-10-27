@@ -27,7 +27,7 @@ from pydantic_core import to_jsonable_python
 
 class WatchlistPage(BaseModel):
     """
-    Paginated watchlist envelope: the standard GlobalCustomPagination fields plus the `is_locked` flag the watchlist view appends to the page.
+    One page of your watchlist: the standard pagination fields plus `is_locked`.
     """ # noqa: E501
     count: StrictInt = Field(description="Total number of companies on the watchlist.")
     next: Optional[StrictStr] = Field(description="URL of the next page of results, or null on the last page.")

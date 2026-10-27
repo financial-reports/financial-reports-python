@@ -26,7 +26,7 @@ from pydantic_core import to_jsonable_python
 
 class CompanyResolveMatch(BaseModel):
     """
-    The company payload on a resolve result.  Purpose-built rather than reusing CompanyMinimalSerializer, which has no `ticker` -- unusable for a ticker-reconciliation endpoint. Every field here is already published on /api/companies/, so this adds no new public surface.
+    The company on a resolve result, with its primary ticker.
     """ # noqa: E501
     id: StrictInt = Field(description="Unique company identifier.")
     name: StrictStr = Field(description="Company name.")

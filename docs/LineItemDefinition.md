@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**code** | **str** | Stable machine code, e.g. &#39;revenue&#39;, &#39;total_assets&#39;. Never rename in place — deprecate and add a new code. | 
+**code** | **str** | Stable machine code, e.g. &#x60;revenue&#x60;, &#x60;total_assets&#x60;. A code is never renamed; a retired code is replaced by a new one and drops out of this list. | 
 **name** | **str** | Human display name, e.g. &#39;Total Revenue&#39;. | 
 **statement_type** | [**StatementTypeEnum**](StatementTypeEnum.md) |  | 
 **statement_type_display** | **str** | Human-readable statement type. | 
@@ -13,7 +13,7 @@ Name | Type | Description | Notes
 **parent_code** | **str** | Code of the parent line item in the hierarchy, or null for top-level items. | [optional] 
 **sort_order** | **int** | Display order within (statement_type, category). | [optional] 
 **category** | **str** | Optional grouping within a statement (e.g. &#39;Operating Expenses&#39;). | [optional] 
-**description** | **str** | Definition of the KPI. Used in the extraction prompt. | [optional] 
+**description** | **str** | Definition of the line item. | [optional] 
 **aliases** | **List[str]** | Alternative labels this line item may appear under in source filings. | [readonly] 
 **templates** | **List[str]** | KPI templates this line item is meaningful for: &#x60;industrial&#x60;, &#x60;bank&#x60;, &#x60;insurer&#x60;. Industrial-only items (gross profit, current assets, ...) are still served for banks and insurers but do not mean the same thing there. A company&#39;s template is the &#x60;template&#x60; field of its financials. | [readonly] 
 

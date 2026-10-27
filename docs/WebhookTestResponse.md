@@ -1,6 +1,6 @@
 # WebhookTestResponse
 
-Result of POST .../test/ — same shape on success (200) and failure (400).
+Result of a test delivery. Same shape on success (200) and failure (400).
 
 ## Properties
 

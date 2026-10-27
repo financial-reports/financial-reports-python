@@ -28,7 +28,7 @@ class AgentKeyClaimRequest(BaseModel):
     """
     AgentKeyClaimRequest
     """ # noqa: E501
-    claim_token: StrictStr = Field(description="claim_token from the signup 409.")
+    claim_token: StrictStr = Field(description="The `claim_token` returned in the signup 409 response.")
     __properties: ClassVar[List[str]] = ["claim_token"]
 
     model_config = ConfigDict(

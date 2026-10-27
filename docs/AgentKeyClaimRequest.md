@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**claim_token** | **str** | claim_token from the signup 409. | 
+**claim_token** | **str** | The &#x60;claim_token&#x60; returned in the signup 409 response. | 
 
 ## Example
 

@@ -26,7 +26,7 @@ from pydantic_core import to_jsonable_python
 
 class CompanyMergedInto(BaseModel):
     """
-    Inline schema type for `merged_into` on CompanySerializer (#1118).  Deliberately two fields: the pointer exists so a consumer can repoint its own row, not so it can avoid a second request. Fetch the canonical id for the full record.
+    The canonical company that replaced this one. Fetch its id for the full record.
     """ # noqa: E501
     id: StrictInt = Field(description="Internal id of the canonical company that replaced this one.")
     name: StrictStr = Field(description="Name of the canonical company.")

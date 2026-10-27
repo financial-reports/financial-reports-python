@@ -23,6 +23,7 @@ from typing_extensions import Annotated
 from financial_reports_generated_client.models.companies_dividends_retrieve200_response import CompaniesDividendsRetrieve200Response
 from financial_reports_generated_client.models.companies_financials_retrieve200_response import CompaniesFinancialsRetrieve200Response
 from financial_reports_generated_client.models.companies_segments_retrieve200_response import CompaniesSegmentsRetrieve200Response
+from financial_reports_generated_client.models.companies_splits_retrieve200_response import CompaniesSplitsRetrieve200Response
 from financial_reports_generated_client.models.company import Company
 from financial_reports_generated_client.models.company_resolve_request import CompanyResolveRequest
 from financial_reports_generated_client.models.company_resolve_response import CompanyResolveResponse
@@ -2846,6 +2847,297 @@ class CompaniesApi:
         return self.api_client.param_serialize(
             method='GET',
             resource_path='/companies/{id}/segments/',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    async def companies_splits_retrieve(
+        self,
+        id: Annotated[StrictInt, Field(description="A unique integer value identifying this company.")],
+        status: Annotated[Optional[StrictStr], Field(description="Only splits with this status.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> CompaniesSplitsRetrieve200Response:
+        """Retrieve Company Stock Splits
+
+        **Cost:** 40 credits per request.  --- **Experimental:** the response may change without an API version bump.  Returns a company's stock splits, reverse splits and bonus issues, newest first, including splits that are announced but not yet effective. Each split is one event, however many notices the company published about it (proposal, approval, record date, completion).  **Ratio.** `ratio_new:ratio_old` is shares after to shares before, in lowest terms: a 4-for-1 split is `4:1`, a 1-for-10 reverse split `1:10`, a bonus issue of one new share for every two held `3:2`. `factor` is the same ratio as one number.  **Dates** are as the company or its exchange stated them; a date that was not stated is `null`, never estimated.
+
+        :param id: A unique integer value identifying this company. (required)
+        :type id: int
+        :param status: Only splits with this status.
+        :type status: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._companies_splits_retrieve_serialize(
+            id=id,
+            status=status,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "CompaniesSplitsRetrieve200Response",
+            '400': "Dict[str, object]",
+            '404': None,
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    async def companies_splits_retrieve_with_http_info(
+        self,
+        id: Annotated[StrictInt, Field(description="A unique integer value identifying this company.")],
+        status: Annotated[Optional[StrictStr], Field(description="Only splits with this status.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[CompaniesSplitsRetrieve200Response]:
+        """Retrieve Company Stock Splits
+
+        **Cost:** 40 credits per request.  --- **Experimental:** the response may change without an API version bump.  Returns a company's stock splits, reverse splits and bonus issues, newest first, including splits that are announced but not yet effective. Each split is one event, however many notices the company published about it (proposal, approval, record date, completion).  **Ratio.** `ratio_new:ratio_old` is shares after to shares before, in lowest terms: a 4-for-1 split is `4:1`, a 1-for-10 reverse split `1:10`, a bonus issue of one new share for every two held `3:2`. `factor` is the same ratio as one number.  **Dates** are as the company or its exchange stated them; a date that was not stated is `null`, never estimated.
+
+        :param id: A unique integer value identifying this company. (required)
+        :type id: int
+        :param status: Only splits with this status.
+        :type status: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._companies_splits_retrieve_serialize(
+            id=id,
+            status=status,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "CompaniesSplitsRetrieve200Response",
+            '400': "Dict[str, object]",
+            '404': None,
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    async def companies_splits_retrieve_without_preload_content(
+        self,
+        id: Annotated[StrictInt, Field(description="A unique integer value identifying this company.")],
+        status: Annotated[Optional[StrictStr], Field(description="Only splits with this status.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Retrieve Company Stock Splits
+
+        **Cost:** 40 credits per request.  --- **Experimental:** the response may change without an API version bump.  Returns a company's stock splits, reverse splits and bonus issues, newest first, including splits that are announced but not yet effective. Each split is one event, however many notices the company published about it (proposal, approval, record date, completion).  **Ratio.** `ratio_new:ratio_old` is shares after to shares before, in lowest terms: a 4-for-1 split is `4:1`, a 1-for-10 reverse split `1:10`, a bonus issue of one new share for every two held `3:2`. `factor` is the same ratio as one number.  **Dates** are as the company or its exchange stated them; a date that was not stated is `null`, never estimated.
+
+        :param id: A unique integer value identifying this company. (required)
+        :type id: int
+        :param status: Only splits with this status.
+        :type status: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._companies_splits_retrieve_serialize(
+            id=id,
+            status=status,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "CompaniesSplitsRetrieve200Response",
+            '400': "Dict[str, object]",
+            '404': None,
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _companies_splits_retrieve_serialize(
+        self,
+        id,
+        status,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if id is not None:
+            _path_params['id'] = id
+        # process the query parameters
+        if status is not None:
+            
+            _query_params.append(('status', status))
+            
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'CognitoJWT', 
+            'ApiKeyAuth'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/companies/{id}/splits/',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,

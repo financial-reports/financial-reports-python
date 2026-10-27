@@ -30,7 +30,7 @@ class LineItemDefinition(BaseModel):
     """
     LineItemDefinition
     """ # noqa: E501
-    code: Annotated[str, Field(strict=True, max_length=80)] = Field(description="Stable machine code, e.g. 'revenue', 'total_assets'. Never rename in place — deprecate and add a new code.")
+    code: Annotated[str, Field(strict=True, max_length=80)] = Field(description="Stable machine code, e.g. `revenue`, `total_assets`. A code is never renamed; a retired code is replaced by a new one and drops out of this list.")
     name: Annotated[str, Field(strict=True, max_length=200)] = Field(description="Human display name, e.g. 'Total Revenue'.")
     statement_type: StatementTypeEnum
     statement_type_display: StrictStr = Field(description="Human-readable statement type.")
@@ -38,7 +38,7 @@ class LineItemDefinition(BaseModel):
     parent_code: Optional[StrictStr] = Field(default=None, description="Code of the parent line item in the hierarchy, or null for top-level items.")
     sort_order: Optional[Annotated[int, Field(le=2147483647, strict=True, ge=0)]] = Field(default=None, description="Display order within (statement_type, category).")
     category: Optional[Annotated[str, Field(strict=True, max_length=80)]] = Field(default=None, description="Optional grouping within a statement (e.g. 'Operating Expenses').")
-    description: Optional[StrictStr] = Field(default=None, description="Definition of the KPI. Used in the extraction prompt.")
+    description: Optional[StrictStr] = Field(default=None, description="Definition of the line item.")
     aliases: List[StrictStr] = Field(description="Alternative labels this line item may appear under in source filings.")
     templates: List[StrictStr] = Field(description="KPI templates this line item is meaningful for: `industrial`, `bank`, `insurer`. Industrial-only items (gross profit, current assets, ...) are still served for banks and insurers but do not mean the same thing there. A company's template is the `template` field of its financials.")
     __properties: ClassVar[List[str]] = ["code", "name", "statement_type", "statement_type_display", "depth", "parent_code", "sort_order", "category", "description", "aliases", "templates"]

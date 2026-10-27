@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **period_start_date** | **date** |  | 
 **period_end_date** | **date** |  | 
 **line_items** | [**List[CompaniesFinancialsRetrieve200ResponseStandaloneQuartersInnerLineItemsInner]**](CompaniesFinancialsRetrieve200ResponseStandaloneQuartersInnerLineItemsInner.md) |  | 
+**balance_sheet** | [**List[CompaniesFinancialsRetrieve200ResponseStandaloneQuartersInnerBalanceSheetInner]**](CompaniesFinancialsRetrieve200ResponseStandaloneQuartersInnerBalanceSheetInner.md) | The balance sheet &#x60;periods&#x60; serves at this period&#39;s &#x60;period_end_date&#x60;, as reported (a balance sheet is never derived). &#x60;periods&#x60; serves one balance sheet per date, under the longest period ending on it, so a US quarterly report&#39;s is there under &#x60;H1&#x60; or &#x60;9M&#x60;; here it is on &#x60;Q2&#x60; or &#x60;Q3&#x60;. Empty when no balance sheet is served at that date. | [optional] 
 
 ## Example
 

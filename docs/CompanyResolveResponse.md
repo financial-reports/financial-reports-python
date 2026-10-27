@@ -1,6 +1,6 @@
 # CompanyResolveResponse
 
-Deliberately not the paginated `{count, next, previous, results}` envelope: this is a single non-paginated POST action whose result set is exactly the request's rows, in the same order.
+Resolve results: `summary` counts plus one `results` entry per request row, in request order. Not paginated.
 
 ## Properties
 

@@ -26,7 +26,7 @@ from pydantic_core import to_jsonable_python
 
 class CompanyListing(BaseModel):
     """
-    Inline schema type for the curated `listings[]` array on CompanySerializer.  These 6 fields are what ``CompanySerializer.get_listings`` returns — a de-duplicated, equity-only subset of ``SecurityListing`` rows.  Using an explicit serializer here (rather than ``SecurityListingSerializer``) keeps the OpenAPI contract tight and avoids advertising the 11-field full model shape that includes ``company``, ``market_sector``, etc.
+    One equity listing of the company: venue, ticker and FIGI.
     """ # noqa: E501
     mic: Optional[StrictStr] = Field(description="ISO 10383 Market Identifier Code of the venue.")
     ticker: StrictStr = Field(description="Ticker on that venue.")

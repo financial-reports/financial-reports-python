@@ -50,6 +50,7 @@ class TestPaginatedWebhookList(unittest.TestCase):
                         trigger_on_filing_received = True, 
                         trigger_on_filing_processed = True, 
                         trigger_on_filing_updated = True, 
+                        trigger_on_dividend_events = True, 
                         deliver_late_filings = True, 
                         subscribed_filing_types = [
                             ''
@@ -72,6 +73,7 @@ class TestPaginatedWebhookList(unittest.TestCase):
                         trigger_on_filing_received = True, 
                         trigger_on_filing_processed = True, 
                         trigger_on_filing_updated = True, 
+                        trigger_on_dividend_events = True, 
                         deliver_late_filings = True, 
                         subscribed_filing_types = [
                             ''

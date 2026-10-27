@@ -34,7 +34,7 @@ class WebhookDeliveryDetail(BaseModel):
     uuid: UUID
     webhook_id: StrictInt
     event_type: StrictStr
-    filing_id: Optional[StrictInt] = Field(description="ID of the filing reference to reconstruct payload")
+    filing_id: Optional[StrictInt] = Field(description="Id of the filing this delivery carried. Null for a test delivery.")
     status: StatusEnum
     response_status_code: Optional[StrictInt]
     duration_ms: Optional[StrictInt]

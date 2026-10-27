@@ -28,7 +28,7 @@ from pydantic_core import to_jsonable_python
 
 class CompanySuccessionLink(BaseModel):
     """
-    Inline schema type for `predecessors` / `successors` on CompanySerializer (#1926).
+    A predecessor or successor company linked to this one.
     """ # noqa: E501
     id: StrictInt = Field(description="Internal id of the linked company.")
     name: StrictStr = Field(description="Name of the linked company.")

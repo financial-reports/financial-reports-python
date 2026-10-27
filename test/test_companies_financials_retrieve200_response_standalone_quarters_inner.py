@@ -54,6 +54,18 @@ class TestCompaniesFinancialsRetrieve200ResponseStandaloneQuartersInner(unittest
                             56
                             ], 
                         null_reason = 'ytd_basis_disagrees_with_served_quarter', )
+                    ],
+                balance_sheet = [
+                    financial_reports_generated_client.models.companies_financials_retrieve_200_response_standalone_quarters_inner_balance_sheet_inner.companies_financials_retrieve_200_response_standalone_quarters_inner_balance_sheet_inner(
+                        code = '', 
+                        name = '', 
+                        statement_type = 'BS', 
+                        value = '', 
+                        currency = '', 
+                        basis = 'reported', 
+                        source_filing_ids = [
+                            56
+                            ], )
                     ]
             )
         else:

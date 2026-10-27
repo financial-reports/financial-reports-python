@@ -28,7 +28,7 @@ from pydantic_core import to_jsonable_python
 
 class CompanyMerge(BaseModel):
     """
-    One duplicate-company merge, as served by /api/companies/merges/ (#1118).  Ids come from the denormalised ``shell_pk``/``canonical_pk`` snapshots rather than the FKs: the FKs are ``SET_NULL``, so they go blank if either company row is ever hard-deleted, while the snapshots keep the record self-describing.
+    One merge of a duplicate company into its canonical company. The ids stay set even if either company is later deleted.
     """ # noqa: E501
     id: StrictInt
     shell_id: StrictInt = Field(description="Id of the retired duplicate. Stop using this id; it will not appear in the company list.")
@@ -36,10 +36,10 @@ class CompanyMerge(BaseModel):
     shell_name: Optional[Annotated[str, Field(strict=True, max_length=250)]] = None
     canonical_name: Optional[Annotated[str, Field(strict=True, max_length=250)]] = None
     pattern: StrictStr = Field(description="Why the pair matched, e.g. exact_duplicate, suffix_variant, gb_us_adr.")
-    confidence: Optional[Union[StrictFloat, StrictInt]] = Field(description="Matcher confidence 0-1, or null for an operator hand-merge.")
+    confidence: Optional[Union[StrictFloat, StrictInt]] = Field(description="Matching confidence from 0 to 1, or null for a merge made by hand.")
     merged_at: datetime = Field(description="When the merge was applied (ISO 8601, UTC). Never changes.")
     reversed_at: Optional[datetime] = Field(description="Set when a merge was undone: the shell is live again and the canonical pointer no longer holds. Null for an active merge.")
-    updated_at: datetime = Field(description="When this record last changed, by merge OR reversal. Poll `updated_at_from` to receive reversals; `merged_at` alone cannot surface them because a reversal edits the existing record in place.")
+    updated_at: datetime = Field(description="When this record last changed, by a merge or a reversal. Poll `updated_at_from` to receive reversals; `merged_at` alone cannot surface them because a reversal edits the existing record in place.")
     __properties: ClassVar[List[str]] = ["id", "shell_id", "canonical_id", "shell_name", "canonical_name", "pattern", "confidence", "merged_at", "reversed_at", "updated_at"]
 
     model_config = ConfigDict(

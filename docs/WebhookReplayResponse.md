@@ -1,6 +1,6 @@
 # WebhookReplayResponse
 
-Result of POST .../deliveries/{uuid}/replay/.
+Result of a request to replay a delivery.
 
 ## Properties
 

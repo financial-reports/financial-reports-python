@@ -1,6 +1,6 @@
 # WatchlistPage
 
-Paginated watchlist envelope: the standard GlobalCustomPagination fields plus the `is_locked` flag the watchlist view appends to the page.
+One page of your watchlist: the standard pagination fields plus `is_locked`.
 
 ## Properties
 

@@ -27,7 +27,7 @@ from pydantic_core import to_jsonable_python
 
 class MarkdownNotFound(BaseModel):
     """
-    404 body of `GET /filings/{id}/markdown/` (#997, #3514).
+    Returned with a 404 when a filing has no markdown to serve.
     """ # noqa: E501
     detail: StrictStr = Field(description="A human-readable message describing the error.")
     processing_status: StrictStr = Field(description="The filing's conversion status, e.g. `PENDING`, `QUEUED`, `PROCESSING`, `FAILED`, `SKIPPED`.")

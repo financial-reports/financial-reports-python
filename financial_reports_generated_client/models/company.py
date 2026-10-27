@@ -63,7 +63,7 @@ class Company(BaseModel):
     ir_link: Optional[StrictStr] = Field(description="Link to the company's Investor Relations page.")
     homepage_link: Optional[StrictStr] = Field(description="Link to the company's main homepage.")
     logo: Optional[StrictStr] = Field(description="URL of the company's logo file.")
-    date_public: Optional[date] = Field(description="Date this company record was last updated on the FinancialFilings platform. This is NOT the IPO date — see `date_ipo` instead.")
+    date_public: Optional[date] = Field(description="Date this company record was last updated on the FinancialFilings platform. This is not the IPO date: see `date_ipo` for that.")
     date_ipo: Optional[date] = Field(description="Date of the company's Initial Public Offering (IPO). Returns null when the IPO date is unknown.")
     main_stock_exchange: Optional[StrictStr] = Field(description="URL of the company's listing page on its main stock exchange, where known; empty for most companies. Not a MIC: exchange codes are in `listings`.")
     is_listed: Optional[StrictBool] = Field(description="Indicates if the company is currently publicly listed.")

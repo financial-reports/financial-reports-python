@@ -19,8 +19,9 @@ import re  # noqa: F401
 import json
 
 from datetime import date
-from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr, field_validator
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
+from financial_reports_generated_client.models.companies_financials_retrieve200_response_standalone_quarters_inner_balance_sheet_inner import CompaniesFinancialsRetrieve200ResponseStandaloneQuartersInnerBalanceSheetInner
 from financial_reports_generated_client.models.companies_financials_retrieve200_response_standalone_quarters_inner_line_items_inner import CompaniesFinancialsRetrieve200ResponseStandaloneQuartersInnerLineItemsInner
 from typing import Optional, Set
 from typing_extensions import Self
@@ -36,7 +37,8 @@ class CompaniesFinancialsRetrieve200ResponseStandaloneQuartersInner(BaseModel):
     period_start_date: Optional[date]
     period_end_date: Optional[date]
     line_items: List[CompaniesFinancialsRetrieve200ResponseStandaloneQuartersInnerLineItemsInner]
-    __properties: ClassVar[List[str]] = ["status", "fiscal_year", "fiscal_period", "period_start_date", "period_end_date", "line_items"]
+    balance_sheet: Optional[List[CompaniesFinancialsRetrieve200ResponseStandaloneQuartersInnerBalanceSheetInner]] = Field(default=None, description="The balance sheet `periods` serves at this period's `period_end_date`, as reported (a balance sheet is never derived). `periods` serves one balance sheet per date, under the longest period ending on it, so a US quarterly report's is there under `H1` or `9M`; here it is on `Q2` or `Q3`. Empty when no balance sheet is served at that date.")
+    __properties: ClassVar[List[str]] = ["status", "fiscal_year", "fiscal_period", "period_start_date", "period_end_date", "line_items", "balance_sheet"]
 
     @field_validator('status')
     def status_validate_enum(cls, value):
@@ -97,6 +99,12 @@ class CompaniesFinancialsRetrieve200ResponseStandaloneQuartersInner(BaseModel):
             for _item_line_items in self.line_items:
                 _items.append(_item_line_items.to_dict() if _item_line_items is not None else None)
             _dict['line_items'] = _items
+        # override the default output from pydantic by calling `to_dict()` of each item in balance_sheet (list)
+        _items = []
+        if self.balance_sheet:
+            for _item_balance_sheet in self.balance_sheet:
+                _items.append(_item_balance_sheet.to_dict() if _item_balance_sheet is not None else None)
+            _dict['balance_sheet'] = _items
         # set to None if period_start_date (nullable) is None
         # and model_fields_set contains the field
         if self.period_start_date is None and "period_start_date" in self.model_fields_set:
@@ -124,7 +132,8 @@ class CompaniesFinancialsRetrieve200ResponseStandaloneQuartersInner(BaseModel):
             "fiscal_period": obj.get("fiscal_period"),
             "period_start_date": obj.get("period_start_date"),
             "period_end_date": obj.get("period_end_date"),
-            "line_items": [CompaniesFinancialsRetrieve200ResponseStandaloneQuartersInnerLineItemsInner.from_dict(_item) for _item in obj["line_items"]] if obj.get("line_items") is not None else None
+            "line_items": [CompaniesFinancialsRetrieve200ResponseStandaloneQuartersInnerLineItemsInner.from_dict(_item) for _item in obj["line_items"]] if obj.get("line_items") is not None else None,
+            "balance_sheet": [CompaniesFinancialsRetrieve200ResponseStandaloneQuartersInnerBalanceSheetInner.from_dict(_item) for _item in obj["balance_sheet"]] if obj.get("balance_sheet") is not None else None
         })
         return _obj
 

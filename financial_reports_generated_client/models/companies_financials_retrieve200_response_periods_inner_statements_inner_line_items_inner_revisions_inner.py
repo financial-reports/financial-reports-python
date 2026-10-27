@@ -33,7 +33,7 @@ class CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItems
     op: StrictStr = Field(description="`insert`: first written. `update`: corrected. `delete`: removed (it may be written again by a later `insert`). `pre_recording`: a correction from before recording started, approximate time.")
     old_value: Optional[StrictStr] = Field(description="`value` before the change; null on insert.")
     new_value: Optional[StrictStr] = Field(description="`value` after the change; null on delete. A change to another field of the value (its as-reported figure, currency or statement) has old_value == new_value.")
-    reason: StrictStr = Field(description="`extraction`: (re-)extraction from the document. `cleanup`: an automated rule-based correction. `repair`: an operator-run correction pass. `manual`: a hand edit. `unknown`: not recorded.")
+    reason: StrictStr = Field(description="`extraction`: (re-)extraction from the document. `cleanup`: an automated rule-based correction. `repair`: a correction pass run by our team. `manual`: a hand edit. `unknown`: not recorded.")
     __properties: ClassVar[List[str]] = ["changed_at", "op", "old_value", "new_value", "reason"]
 
     @field_validator('op')

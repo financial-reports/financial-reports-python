@@ -26,7 +26,7 @@ Name | Type | Description | Notes
 **ir_link** | **str** | Link to the company&#39;s Investor Relations page. | [readonly] 
 **homepage_link** | **str** | Link to the company&#39;s main homepage. | [readonly] 
 **logo** | **str** | URL of the company&#39;s logo file. | [readonly] 
-**date_public** | **date** | Date this company record was last updated on the FinancialFilings platform. This is NOT the IPO date — see &#x60;date_ipo&#x60; instead. | [readonly] 
+**date_public** | **date** | Date this company record was last updated on the FinancialFilings platform. This is not the IPO date: see &#x60;date_ipo&#x60; for that. | [readonly] 
 **date_ipo** | **date** | Date of the company&#39;s Initial Public Offering (IPO). Returns null when the IPO date is unknown. | [readonly] 
 **main_stock_exchange** | **str** | URL of the company&#39;s listing page on its main stock exchange, where known; empty for most companies. Not a MIC: exchange codes are in &#x60;listings&#x60;. | [readonly] 
 **is_listed** | **bool** | Indicates if the company is currently publicly listed. | [readonly] 

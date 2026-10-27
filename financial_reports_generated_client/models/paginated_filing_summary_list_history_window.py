@@ -27,7 +27,7 @@ from pydantic_core import to_jsonable_python
 
 class PaginatedFilingSummaryListHistoryWindow(BaseModel):
     """
-    Present when the caller's plan applies a rolling history window AND this request reached past its cutoff. Absent for callers with unrestricted history. It means the PLAN bounds how far back this account can see — filings older than the cutoff exist in the FinancialFilings archive. It is never a statement about catalog coverage, and it does not by itself prove that this particular result set lost rows.
+    Present when the caller's plan applies a rolling history window and this request reached past its cutoff. Absent for callers with unrestricted history. It means the plan limits how far back this account can see: filings older than the cutoff exist in the FinancialFilings archive. It is never a statement about catalog coverage, and it does not by itself prove that this particular result set lost rows.
     """ # noqa: E501
     limited: Optional[StrictBool] = None
     max_history_days: Optional[StrictInt] = None

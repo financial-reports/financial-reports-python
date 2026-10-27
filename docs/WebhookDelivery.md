@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **uuid** | **UUID** |  | [readonly] 
 **webhook_id** | **int** |  | [readonly] 
 **event_type** | **str** |  | [readonly] 
-**filing_id** | **int** | ID of the filing reference to reconstruct payload | [readonly] 
+**filing_id** | **int** | Id of the filing this delivery carried. Null for a test delivery. | [readonly] 
 **status** | [**StatusEnum**](StatusEnum.md) |  | [readonly] 
 **response_status_code** | **int** |  | [readonly] 
 **duration_ms** | **int** |  | [readonly] 

@@ -28,7 +28,7 @@ from pydantic_core import to_jsonable_python
 
 class WebhookCreateResponse(BaseModel):
     """
-    Response body for `create()` — identical to WebhookSerializer plus the one-time `secret_key`, which the view injects into the create response.
+    The new webhook, plus its signing `secret_key`, which is returned only in this response.
     """ # noqa: E501
     id: StrictInt = Field(description="The unique identifier for the webhook.")
     url: Annotated[str, Field(strict=True, max_length=500)] = Field(description="Your HTTPS endpoint that receives the payloads.")
@@ -38,13 +38,14 @@ class WebhookCreateResponse(BaseModel):
     track_all_companies: Optional[StrictBool] = Field(default=False, description="`true`: filings from every company. `false` (default): only companies on your watchlist.")
     trigger_on_filing_received: Optional[StrictBool] = Field(default=False, description="Send `filing.received` as soon as a filing arrives (fastest). Filing type and other metadata may still be null, and there is no Markdown. Default `false`.")
     trigger_on_filing_processed: Optional[StrictBool] = Field(default=True, description="Send `filing.processed` once a filing is classified and converted, with full metadata (and Markdown if `include_markdown` is on). Default `true`.")
-    trigger_on_filing_updated: Optional[StrictBool] = Field(default=False, description="Also send `filing.updated` when a filing you received is re-typed or moved to another company, and `filing.removed` when it is deleted, hidden or leaves this webhook's scope, within 30 days of delivery. Not billed. Default `false`.")
+    trigger_on_filing_updated: Optional[StrictBool] = Field(default=False, description="Also send `filing.updated` when a filing you received is re-typed or moved to another company, and `filing.removed` when it leaves this webhook's scope, within 30 days of delivery or while it is held back. `filing.removed` for a withdrawn or deleted filing is sent without this flag. Not billed. Default `false`.")
+    trigger_on_dividend_events: Optional[StrictBool] = Field(default=False, description="Also send `dividend.created` when a company in this webhook's scope announces a cash dividend, and `dividend.updated` when a later notice changes its dates, stage or cancellation. Requires a plan that includes structured financials. Not billed. Default `false`.")
     deliver_late_filings: Optional[StrictBool] = Field(default=False, description="Also deliver filings that reached us more than 48 hours (and at most 30 days) after publication, marked `late: true`. Default `false`: late arrivals are mostly backfills.")
     subscribed_filing_types: Optional[List[StrictStr]] = Field(default=None, description="Filing type codes to subscribe to (e.g. `['10-K', 'IR']`). Empty or omitted: all types.")
     created_at: datetime = Field(description="Timestamp when the webhook was created.")
     updated_at: datetime = Field(description="Timestamp when the webhook was last updated.")
     secret_key: StrictStr = Field(description="The webhook signing secret. Returned only once, in the create response.")
-    __properties: ClassVar[List[str]] = ["id", "url", "is_active", "include_markdown", "include_isins", "track_all_companies", "trigger_on_filing_received", "trigger_on_filing_processed", "trigger_on_filing_updated", "deliver_late_filings", "subscribed_filing_types", "created_at", "updated_at", "secret_key"]
+    __properties: ClassVar[List[str]] = ["id", "url", "is_active", "include_markdown", "include_isins", "track_all_companies", "trigger_on_filing_received", "trigger_on_filing_processed", "trigger_on_filing_updated", "trigger_on_dividend_events", "deliver_late_filings", "subscribed_filing_types", "created_at", "updated_at", "secret_key"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -114,6 +115,7 @@ class WebhookCreateResponse(BaseModel):
             "trigger_on_filing_received": obj.get("trigger_on_filing_received") if obj.get("trigger_on_filing_received") is not None else False,
             "trigger_on_filing_processed": obj.get("trigger_on_filing_processed") if obj.get("trigger_on_filing_processed") is not None else True,
             "trigger_on_filing_updated": obj.get("trigger_on_filing_updated") if obj.get("trigger_on_filing_updated") is not None else False,
+            "trigger_on_dividend_events": obj.get("trigger_on_dividend_events") if obj.get("trigger_on_dividend_events") is not None else False,
             "deliver_late_filings": obj.get("deliver_late_filings") if obj.get("deliver_late_filings") is not None else False,
             "subscribed_filing_types": obj.get("subscribed_filing_types"),
             "created_at": obj.get("created_at"),

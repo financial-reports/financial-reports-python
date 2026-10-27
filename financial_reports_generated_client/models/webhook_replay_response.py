@@ -26,7 +26,7 @@ from pydantic_core import to_jsonable_python
 
 class WebhookReplayResponse(BaseModel):
     """
-    Result of POST .../deliveries/{uuid}/replay/.
+    Result of a request to replay a delivery.
     """ # noqa: E501
     status: StrictStr = Field(description="Indicates the replay was accepted (e.g. 'success').")
     message: StrictStr = Field(description="Human-readable description of the replay outcome.")

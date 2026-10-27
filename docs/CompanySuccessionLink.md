@@ -1,6 +1,6 @@
 # CompanySuccessionLink
 
-Inline schema type for `predecessors` / `successors` on CompanySerializer (#1926).
+A predecessor or successor company linked to this one.
 
 ## Properties
 

@@ -27,7 +27,7 @@ from pydantic_core import to_jsonable_python
 
 class WebhookTestResponse(BaseModel):
     """
-    Result of POST .../test/ — same shape on success (200) and failure (400).
+    Result of a test delivery. Same shape on success (200) and failure (400).
     """ # noqa: E501
     status: StrictStr = Field(description="Delivery status of the test event (e.g. 'success', 'failed').")
     message: StrictStr = Field(description="Human-readable description of the test outcome.")

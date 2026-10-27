@@ -349,7 +349,7 @@ class WebhooksManagementApi:
     ) -> WebhookReplayResponse:
         """Replay Delivery
 
-        Queues the delivery's event to be sent again (202). The new attempt appears in the delivery logs. `filing.removed` events can't be replayed.
+        Queues the delivery's event to be sent again (202). The new attempt appears in the delivery logs. `filing.removed` and dividend events can't be replayed.
 
         :param delivery_uuid: (required)
         :type delivery_uuid: str
@@ -427,7 +427,7 @@ class WebhooksManagementApi:
     ) -> ApiResponse[WebhookReplayResponse]:
         """Replay Delivery
 
-        Queues the delivery's event to be sent again (202). The new attempt appears in the delivery logs. `filing.removed` events can't be replayed.
+        Queues the delivery's event to be sent again (202). The new attempt appears in the delivery logs. `filing.removed` and dividend events can't be replayed.
 
         :param delivery_uuid: (required)
         :type delivery_uuid: str
@@ -505,7 +505,7 @@ class WebhooksManagementApi:
     ) -> RESTResponseType:
         """Replay Delivery
 
-        Queues the delivery's event to be sent again (202). The new attempt appears in the delivery logs. `filing.removed` events can't be replayed.
+        Queues the delivery's event to be sent again (202). The new attempt appears in the delivery logs. `filing.removed` and dividend events can't be replayed.
 
         :param delivery_uuid: (required)
         :type delivery_uuid: str

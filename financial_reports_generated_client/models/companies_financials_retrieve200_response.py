@@ -37,14 +37,14 @@ class CompaniesFinancialsRetrieve200Response(BaseModel):
     company_id: StrictInt
     template: Optional[StrictStr] = Field(default=None, description="The company's KPI template. Banks and insurers also get their template's own line items; see `templates` on /api/line-item-definitions/ for which items are meaningful for it.")
     currency: Optional[CompaniesFinancialsRetrieve200ResponseCurrency] = None
-    sources_masked: StrictBool
+    sources_masked: StrictBool = Field(description="True when your account does not have source identities unlocked. Then `sources` is omitted from every statement.")
     filters: CompaniesFinancialsRetrieve200ResponseFilters
     period_count: StrictInt
     periods: List[CompaniesFinancialsRetrieve200ResponsePeriodsInner]
     notice: Optional[StrictStr] = None
     history_window: Optional[CompaniesFinancialsRetrieve200ResponseHistoryWindow] = None
     preliminary_results: Optional[List[CompaniesFinancialsRetrieve200ResponsePreliminaryResultsInner]] = Field(default=None, description="Present only with `include=preliminary`. The company's own preliminary results figures, published before the report for the period and expected to differ from it (today: Korean 잠정실적 notices). Never merged into `periods`. One entry per notice and period, corrections included, so the history is point in time: `is_latest` marks the newest notice for its period and basis among those returned.")
-    standalone_quarters: Optional[List[CompaniesFinancialsRetrieve200ResponseStandaloneQuartersInner]] = Field(default=None, description="Present only with `include=standalone_quarters`. One three-month period per fiscal quarter (a six-month `H2` for a company that reports half years only), income statement and cash flow only, newest first. `reported` values are the company's own three-month figures; `derived` values are differences of its reported year-to-date figures (`formula`, e.g. `H1 - Q1`, and the `source_filing_ids` they rest on); `derived_approx` is EPS as the difference of year-to-date EPS, given only when the weighted share count moved less than 2%. A value that cannot be derived safely is `null` with a `null_reason`. `periods` stays exactly as reported.")
+    standalone_quarters: Optional[List[CompaniesFinancialsRetrieve200ResponseStandaloneQuartersInner]] = Field(default=None, description="Present only with `include=standalone_quarters`. One three-month period per fiscal quarter (a six-month `H2` for a company that reports half years only), income statement and cash flow, newest first. `reported` values are the company's own three-month figures; `derived` values are differences of its reported year-to-date figures (`formula`, e.g. `H1 - Q1`, and the `source_filing_ids` they rest on); `derived_approx` is EPS as the difference of year-to-date EPS, given only when the weighted share count moved less than 2%. A value that cannot be derived safely is `null` with a `null_reason`. `periods` stays exactly as reported.")
     __properties: ClassVar[List[str]] = ["company_id", "template", "currency", "sources_masked", "filters", "period_count", "periods", "notice", "history_window", "preliminary_results", "standalone_quarters"]
 
     @field_validator('template')

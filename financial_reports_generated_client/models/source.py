@@ -32,7 +32,7 @@ class Source(BaseModel):
     name: StrictStr = Field(description="Generic label identifying the regional authority for this data source.")
     url: Optional[StrictStr] = Field(description="Homepage URL for the data source, when available.")
     description: StrictStr = Field(description="Description of the data source.")
-    has_named_speakers: Optional[StrictBool] = Field(description="Tri-state: true if this source's CT (call transcript) filings are confirmed to carry named speaker attribution (name/title/affiliation), false if confirmed generic labels like 'Speaker 1', null if not yet measured. Treat null as 'not a positive match', not as false — an unmeasured source is not the same claim as a confirmed-generic one. Not meaningful for non-transcript sources.")
+    has_named_speakers: Optional[StrictBool] = Field(description="True if this source's call transcripts are confirmed to name each speaker (name, title, affiliation), false if they are confirmed to use generic labels such as 'Speaker 1', null if not yet measured. Treat null as unknown, not as false: an unmeasured source is not the same claim as a confirmed-generic one. Not meaningful for sources without transcripts.")
     __properties: ClassVar[List[str]] = ["id", "name", "url", "description", "has_named_speakers"]
 
     model_config = ConfigDict(

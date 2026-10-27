@@ -1,6 +1,6 @@
 # CompanyListing
 
-Inline schema type for the curated `listings[]` array on CompanySerializer.  These 6 fields are what ``CompanySerializer.get_listings`` returns — a de-duplicated, equity-only subset of ``SecurityListing`` rows.  Using an explicit serializer here (rather than ``SecurityListingSerializer``) keeps the OpenAPI contract tight and avoids advertising the 11-field full model shape that includes ``company``, ``market_sector``, etc.
+One equity listing of the company: venue, ticker and FIGI.
 
 ## Properties
 
