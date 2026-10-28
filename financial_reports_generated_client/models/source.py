@@ -29,7 +29,7 @@ class Source(BaseModel):
     Source
     """ # noqa: E501
     id: StrictInt = Field(description="Unique identifier for the source. Filter filings with `?source=<id>`.")
-    name: StrictStr = Field(description="Generic label identifying the regional authority for this data source.")
+    name: StrictStr = Field(description="Generic label identifying the regional authority for this data source. Not unique: several sources can share a label, so use `id` to tell them apart.")
     url: Optional[StrictStr] = Field(description="Homepage URL for the data source, when available.")
     description: StrictStr = Field(description="Description of the data source.")
     has_named_speakers: Optional[StrictBool] = Field(description="True if this source's call transcripts are confirmed to name each speaker (name, title, affiliation), false if they are confirmed to use generic labels such as 'Speaker 1', null if not yet measured. Treat null as unknown, not as false: an unmeasured source is not the same claim as a confirmed-generic one. Not meaningful for sources without transcripts.")
