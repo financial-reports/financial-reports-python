@@ -6,7 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **int** | Unique identifier for the filing. | [readonly] 
-**company** | [**CompanyMinimal**](CompanyMinimal.md) | The company that filed it, in the company summary shape. | [readonly] 
+**company** | [**CompanyMinimal**](CompanyMinimal.md) | The company that filed it, in the company summary shape. Its &#x60;date_public&#x60; is when we last updated the company record, not when the company was listed. | [readonly] 
 **filing_type** | [**FilingType**](FilingType.md) | What kind of document it is, e.g. an annual report. | [readonly] 
 **language** | [**Language**](Language.md) | The document&#39;s language. | [readonly] 
 **filing_date** | **date** | The official date of the filing (soon to be deprecated). | 
@@ -17,7 +17,7 @@ Name | Type | Description | Notes
 **release_datetime** | **datetime** | Time the document was published on the authority page | [optional] 
 **source** | [**Source**](Source.md) | The authority that published the filing, under a generic public label. Use its &#x60;id&#x60; to filter with &#x60;?source&#x3D;&#x60;. | [readonly] 
 **document** | **str** | Direct link to our hosted copy of the original filing document or package (e.g. PDF/ZIP). Not signed and does not expire; anyone holding the link can download the file. Returns 404 if the filing is later removed or its document replaced. | [readonly] 
-**proxy_url** | **str** | Browser-renderable main document: for ZIP packages, a link that extracts and serves the main document; for every other format, the same link as the original document. | [readonly] 
+**proxy_url** | **str** | The main document as one readable file. For a ZIP package, an API link (&#x60;/filings/{id}/document/&#x60;, needs your API key) that extracts and serves the main document; for every other format, the same link as the original document. | [readonly] 
 **viewer_url** | **str** | URL to view the filing in the interactive web platform. | [readonly] 
 **file_extension** | **str** | File extension (e.g., PDF, HTML). | [optional] 
 **file_size** | **int** | File size in bytes. | [optional] 

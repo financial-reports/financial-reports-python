@@ -38,7 +38,7 @@ class Filing(BaseModel):
     Filing
     """ # noqa: E501
     id: StrictInt = Field(description="Unique identifier for the filing.")
-    company: CompanyMinimal = Field(description="The company that filed it, in the company summary shape.")
+    company: CompanyMinimal = Field(description="The company that filed it, in the company summary shape. Its `date_public` is when we last updated the company record, not when the company was listed.")
     filing_type: FilingType = Field(description="What kind of document it is, e.g. an annual report.")
     language: Language = Field(description="The document's language.")
     filing_date: date = Field(description="The official date of the filing (soon to be deprecated).")
@@ -49,7 +49,7 @@ class Filing(BaseModel):
     release_datetime: Optional[datetime] = Field(default=None, description="Time the document was published on the authority page")
     source: Optional[Source] = Field(description="The authority that published the filing, under a generic public label. Use its `id` to filter with `?source=`.")
     document: Optional[StrictStr] = Field(description="Direct link to our hosted copy of the original filing document or package (e.g. PDF/ZIP). Not signed and does not expire; anyone holding the link can download the file. Returns 404 if the filing is later removed or its document replaced.")
-    proxy_url: Optional[StrictStr] = Field(description="Browser-renderable main document: for ZIP packages, a link that extracts and serves the main document; for every other format, the same link as the original document.")
+    proxy_url: Optional[StrictStr] = Field(description="The main document as one readable file. For a ZIP package, an API link (`/filings/{id}/document/`, needs your API key) that extracts and serves the main document; for every other format, the same link as the original document.")
     viewer_url: Optional[StrictStr] = Field(description="URL to view the filing in the interactive web platform.")
     file_extension: Optional[Annotated[str, Field(strict=True, max_length=10)]] = Field(default=None, description="File extension (e.g., PDF, HTML).")
     file_size: Optional[Annotated[int, Field(le=2147483647, strict=True, ge=0)]] = Field(default=None, description="File size in bytes.")
