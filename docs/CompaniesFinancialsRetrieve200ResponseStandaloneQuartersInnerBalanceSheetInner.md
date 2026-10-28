@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **currency** | **str** |  | [optional] 
 **basis** | **str** |  | 
 **source_filing_ids** | **List[int]** |  | 
+**split_adjusted** | [**CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItemsInnerSplitAdjusted**](CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItemsInnerSplitAdjusted.md) |  | [optional] 
 
 ## Example
 

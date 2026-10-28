@@ -22,6 +22,7 @@ from datetime import date, datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from financial_reports_generated_client.models.companies_dividends_retrieve200_response_dividends_inner_date_changes_inner import CompaniesDividendsRetrieve200ResponseDividendsInnerDateChangesInner
+from financial_reports_generated_client.models.companies_dividends_retrieve200_response_dividends_inner_split_adjusted import CompaniesDividendsRetrieve200ResponseDividendsInnerSplitAdjusted
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
@@ -38,7 +39,7 @@ class CompaniesDividendsRetrieve200ResponseDividendsInner(BaseModel):
     share_class: StrictStr = Field(description="`common`, `preferred`, or the class as the company names it.")
     fiscal_period: Optional[StrictStr] = None
     instalment: Optional[StrictStr] = Field(default=None, description="`1/2`, `2/2` ... when the dividend is paid in instalments, each its own entry.")
-    amount: StrictStr = Field(description="Gross amount per share, as declared. Not adjusted for later splits.")
+    amount: StrictStr = Field(description="Gross amount per share, as declared. Not adjusted for later splits: see `split_adjusted`.")
     currency: StrictStr
     announcement_date: Optional[date] = None
     agm_date: Optional[date] = None
@@ -53,7 +54,8 @@ class CompaniesDividendsRetrieve200ResponseDividendsInner(BaseModel):
     source_filing_ids: Optional[List[StrictInt]] = None
     evidence_quote: Optional[StrictStr] = None
     updated_at: Optional[datetime] = None
-    __properties: ClassVar[List[str]] = ["id", "status", "stage", "kind", "is_interest_on_equity", "share_class", "fiscal_period", "instalment", "amount", "currency", "announcement_date", "agm_date", "last_cum_date", "ex_date", "record_date", "payment_date", "ex_date_derived", "derived_dates", "date_changes", "announcement_filing", "source_filing_ids", "evidence_quote", "updated_at"]
+    split_adjusted: Optional[CompaniesDividendsRetrieve200ResponseDividendsInnerSplitAdjusted]
+    __properties: ClassVar[List[str]] = ["id", "status", "stage", "kind", "is_interest_on_equity", "share_class", "fiscal_period", "instalment", "amount", "currency", "announcement_date", "agm_date", "last_cum_date", "ex_date", "record_date", "payment_date", "ex_date_derived", "derived_dates", "date_changes", "announcement_filing", "source_filing_ids", "evidence_quote", "updated_at", "split_adjusted"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -100,6 +102,9 @@ class CompaniesDividendsRetrieve200ResponseDividendsInner(BaseModel):
             for _item_date_changes in self.date_changes:
                 _items.append(_item_date_changes.to_dict() if _item_date_changes is not None else None)
             _dict['date_changes'] = _items
+        # override the default output from pydantic by calling `to_dict()` of split_adjusted
+        if self.split_adjusted:
+            _dict['split_adjusted'] = self.split_adjusted.to_dict()
         # set to None if fiscal_period (nullable) is None
         # and model_fields_set contains the field
         if self.fiscal_period is None and "fiscal_period" in self.model_fields_set:
@@ -140,6 +145,11 @@ class CompaniesDividendsRetrieve200ResponseDividendsInner(BaseModel):
         if self.payment_date is None and "payment_date" in self.model_fields_set:
             _dict['payment_date'] = None
 
+        # set to None if split_adjusted (nullable) is None
+        # and model_fields_set contains the field
+        if self.split_adjusted is None and "split_adjusted" in self.model_fields_set:
+            _dict['split_adjusted'] = None
+
         return _dict
 
     @classmethod
@@ -174,7 +184,8 @@ class CompaniesDividendsRetrieve200ResponseDividendsInner(BaseModel):
             "announcement_filing": obj.get("announcement_filing"),
             "source_filing_ids": obj.get("source_filing_ids"),
             "evidence_quote": obj.get("evidence_quote"),
-            "updated_at": obj.get("updated_at")
+            "updated_at": obj.get("updated_at"),
+            "split_adjusted": CompaniesDividendsRetrieve200ResponseDividendsInnerSplitAdjusted.from_dict(obj["split_adjusted"]) if obj.get("split_adjusted") is not None else None
         })
         return _obj
 

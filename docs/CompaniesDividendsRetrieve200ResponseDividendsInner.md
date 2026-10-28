@@ -13,7 +13,7 @@ Name | Type | Description | Notes
 **share_class** | **str** | &#x60;common&#x60;, &#x60;preferred&#x60;, or the class as the company names it. | 
 **fiscal_period** | **str** |  | [optional] 
 **instalment** | **str** | &#x60;1/2&#x60;, &#x60;2/2&#x60; ... when the dividend is paid in instalments, each its own entry. | [optional] 
-**amount** | **decimal.Decimal** | Gross amount per share, as declared. Not adjusted for later splits. | 
+**amount** | **decimal.Decimal** | Gross amount per share, as declared. Not adjusted for later splits: see &#x60;split_adjusted&#x60;. | 
 **currency** | **str** |  | 
 **announcement_date** | **date** |  | [optional] 
 **agm_date** | **date** |  | [optional] 
@@ -28,6 +28,7 @@ Name | Type | Description | Notes
 **source_filing_ids** | **List[int]** |  | [optional] 
 **evidence_quote** | **str** |  | [optional] 
 **updated_at** | **datetime** |  | [optional] 
+**split_adjusted** | [**CompaniesDividendsRetrieve200ResponseDividendsInnerSplitAdjusted**](CompaniesDividendsRetrieve200ResponseDividendsInnerSplitAdjusted.md) |  | 
 
 ## Example
 

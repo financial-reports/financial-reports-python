@@ -46,7 +46,14 @@ class TestCompaniesFinancialsRetrieve200ResponseStandaloneQuartersInnerLineItems
                 source_filing_ids = [
                     56
                     ],
-                null_reason = 'ytd_basis_disagrees_with_served_quarter'
+                null_reason = 'ytd_basis_disagrees_with_served_quarter',
+                split_adjusted = financial_reports_generated_client.models.companies_financials_retrieve_200_response_periods_inner_statements_inner_line_items_inner_split_adjusted.companies_financials_retrieve_200_response_periods_inner_statements_inner_line_items_inner_split_adjusted(
+                    value = '', 
+                    adjustment_factor = '', 
+                    split_event_ids = [
+                        56
+                        ], 
+                    null_reason = '', )
             )
         else:
             return CompaniesFinancialsRetrieve200ResponseStandaloneQuartersInnerLineItemsInner(

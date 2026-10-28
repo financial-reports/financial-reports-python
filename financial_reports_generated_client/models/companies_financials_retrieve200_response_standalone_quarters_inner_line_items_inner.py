@@ -20,6 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
+from financial_reports_generated_client.models.companies_financials_retrieve200_response_periods_inner_statements_inner_line_items_inner_split_adjusted import CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItemsInnerSplitAdjusted
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
@@ -37,7 +38,8 @@ class CompaniesFinancialsRetrieve200ResponseStandaloneQuartersInnerLineItemsInne
     formula: Optional[StrictStr] = None
     source_filing_ids: List[StrictInt]
     null_reason: Optional[StrictStr]
-    __properties: ClassVar[List[str]] = ["code", "name", "statement_type", "value", "currency", "basis", "formula", "source_filing_ids", "null_reason"]
+    split_adjusted: Optional[CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItemsInnerSplitAdjusted] = None
+    __properties: ClassVar[List[str]] = ["code", "name", "statement_type", "value", "currency", "basis", "formula", "source_filing_ids", "null_reason", "split_adjusted"]
 
     @field_validator('statement_type')
     def statement_type_validate_enum(cls, value):
@@ -105,6 +107,9 @@ class CompaniesFinancialsRetrieve200ResponseStandaloneQuartersInnerLineItemsInne
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of split_adjusted
+        if self.split_adjusted:
+            _dict['split_adjusted'] = self.split_adjusted.to_dict()
         # set to None if name (nullable) is None
         # and model_fields_set contains the field
         if self.name is None and "name" in self.model_fields_set:
@@ -135,6 +140,11 @@ class CompaniesFinancialsRetrieve200ResponseStandaloneQuartersInnerLineItemsInne
         if self.null_reason is None and "null_reason" in self.model_fields_set:
             _dict['null_reason'] = None
 
+        # set to None if split_adjusted (nullable) is None
+        # and model_fields_set contains the field
+        if self.split_adjusted is None and "split_adjusted" in self.model_fields_set:
+            _dict['split_adjusted'] = None
+
         return _dict
 
     @classmethod
@@ -155,7 +165,8 @@ class CompaniesFinancialsRetrieve200ResponseStandaloneQuartersInnerLineItemsInne
             "basis": obj.get("basis"),
             "formula": obj.get("formula"),
             "source_filing_ids": obj.get("source_filing_ids"),
-            "null_reason": obj.get("null_reason")
+            "null_reason": obj.get("null_reason"),
+            "split_adjusted": CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItemsInnerSplitAdjusted.from_dict(obj["split_adjusted"]) if obj.get("split_adjusted") is not None else None
         })
         return _obj
 

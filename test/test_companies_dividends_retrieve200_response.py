@@ -73,7 +73,14 @@ class TestCompaniesDividendsRetrieve200Response(unittest.TestCase):
                             56
                             ], 
                         evidence_quote = '', 
-                        updated_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), )
+                        updated_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
+                        split_adjusted = financial_reports_generated_client.models.companies_dividends_retrieve_200_response_dividends_inner_split_adjusted.companies_dividends_retrieve_200_response_dividends_inner_split_adjusted(
+                            value = '', 
+                            adjustment_factor = '', 
+                            split_event_ids = [
+                                56
+                                ], 
+                            null_reason = '', ), )
                     ],
                 history_window = None
             )
@@ -116,7 +123,14 @@ class TestCompaniesDividendsRetrieve200Response(unittest.TestCase):
                             56
                             ], 
                         evidence_quote = '', 
-                        updated_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), )
+                        updated_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
+                        split_adjusted = financial_reports_generated_client.models.companies_dividends_retrieve_200_response_dividends_inner_split_adjusted.companies_dividends_retrieve_200_response_dividends_inner_split_adjusted(
+                            value = '', 
+                            adjustment_factor = '', 
+                            split_event_ids = [
+                                56
+                                ], 
+                            null_reason = '', ), )
                     ],
         )
         """

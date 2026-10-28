@@ -14,6 +14,7 @@ Name | Type | Description | Notes
 **formula** | **str** |  | [optional] 
 **source_filing_ids** | **List[int]** |  | 
 **null_reason** | **str** |  | 
+**split_adjusted** | [**CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItemsInnerSplitAdjusted**](CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItemsInnerSplitAdjusted.md) |  | [optional] 
 
 ## Example
 
