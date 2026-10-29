@@ -131,7 +131,7 @@ Returns a company's standardized income statement, balance sheet and cash flow s
 
 **Currency is never converted.** `currency` is the currency the company presented in. A company that switches currency does not restate earlier years, so compare `currency.code` across periods before aggregating. A line item with its own `currency` comes from a dual-currency filing.
 
-**Values.** `value` and `raw_value` are exact decimal strings: parse them with a decimal type. `raw_value` and `scale` are `null` when a figure was computed rather than read off the page. `confidence` is set only where an independent check re-derived the figure and agreed: `null` means unjudged, not low confidence. `source_page` is reserved and currently `null`.
+**Values.** `value` and `raw_value` are exact decimal strings: parse them with a decimal type. `raw_value` and `scale` are `null` when a figure was computed rather than read off the page. `confidence` is set only where an independent check re-derived the figure and agreed: `null` means unjudged, not low confidence. `source_page` is the page of the filing's PDF a value read from that PDF is printed on, `null` where it is not known.
 
 **Source.** Each statement names its `source_filing`, with `document_url` and `viewer_url` to the document. The full `sources` list, including candidates that were not selected, is only returned to accounts with it enabled; `sources_masked` says which applies.
 
