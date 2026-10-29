@@ -38,7 +38,7 @@ class WebhookCompanyPayload(BaseModel):
     country_code_alpha2: StrictStr = Field(description="ISO 3166-1 alpha-2 country code.")
     isins: List[StrictStr] = Field(description="List of ISIN codes (strings) associated with the company, at most 1,000. The Primary ISIN is always at index 0; the rest are in ascending code order. Only included if your webhook is configured with 'include_isins: true'. When the company has more than 1,000 ISINs the list is cut and isins_url is set.")
     isin_count: StrictInt = Field(description="Total number of ISINs on the company, which can exceed the number listed in `isins`. Only included with 'include_isins: true'.")
-    isins_url: StrictStr = Field(description="Only present when isins was cut at 1,000: the company's paginated REST listing, e.g. https://api.financialreports.eu/isins/?company=35612. Offset pagination stops at 50,000 rows; above that, narrow with &search=<code prefix>.")
+    isins_url: StrictStr = Field(description="Only present when isins was cut at 1,000: the company's paginated REST listing. Offset pagination stops at 50,000 rows; above that, narrow with &search=<code prefix>. Example: https://api.financialreports.eu/isins/?company=35612")
     __properties: ClassVar[List[str]] = ["id", "name", "ticker", "lei", "website", "company_page", "country_name", "country_code_alpha2", "isins", "isin_count", "isins_url"]
 
     model_config = ConfigDict(
