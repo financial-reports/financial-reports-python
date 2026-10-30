@@ -213,6 +213,30 @@ class TestCompaniesFinancialsRetrieve200Response(unittest.TestCase):
                                     56
                                     ], )
                             ], )
+                    ],
+                ratios = [
+                    financial_reports_generated_client.models.companies_financials_retrieve_200_response_ratios_inner.companies_financials_retrieve_200_response_ratios_inner(
+                        fiscal_year = 56, 
+                        fiscal_period = 'FY', 
+                        period_end_date = datetime.datetime.strptime('1975-12-30', '%Y-%m-%d').date(), 
+                        ratios = [
+                            financial_reports_generated_client.models.companies_financials_retrieve_200_response_ratios_inner_ratios_inner.companies_financials_retrieve_200_response_ratios_inner_ratios_inner(
+                                code = 'gross_margin', 
+                                name = '', 
+                                value = '', 
+                                currency = '', 
+                                null_reason = 'missing_input', 
+                                missing_inputs = [
+                                    ''
+                                    ], 
+                                formula = '', 
+                                inputs = {
+                                    'key' : ''
+                                    }, 
+                                source_filing_ids = [
+                                    56
+                                    ], )
+                            ], )
                     ]
             )
         else:
