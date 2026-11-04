@@ -21,6 +21,8 @@ from pydantic import Field, StrictBool, StrictBytes, StrictFloat, StrictInt, Str
 from typing import Optional, Tuple, Union
 from typing_extensions import Annotated
 from financial_reports_generated_client.models.filing import Filing
+from financial_reports_generated_client.models.markdown_batch_search_request import MarkdownBatchSearchRequest
+from financial_reports_generated_client.models.markdown_batch_search_response import MarkdownBatchSearchResponse
 from financial_reports_generated_client.models.paginated_filing_history_list import PaginatedFilingHistoryList
 from financial_reports_generated_client.models.paginated_filing_summary_list import PaginatedFilingSummaryList
 
@@ -1990,6 +1992,287 @@ class FilingsApi:
 
 
     @validate_call
+    async def filings_markdown_search_create(
+        self,
+        markdown_batch_search_request: MarkdownBatchSearchRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> MarkdownBatchSearchResponse:
+        """Search Many Filings at Once
+
+        **Cost:** 6 credits per filing with at least one hit (filings with no match are free) (12 for premium filing types); unavailable and skipped filings are free. A filing is billed at most once, however many of your queries it is searched for. `billed_credits` is that credit list price for this request, before the once-per-day MCP markdown dedup; the `X-Credits-Charged` header is the actual charge. On a plan metered in requests, each billed filing counts as one request, and a request that bills nothing still counts as one.  --- Search inside up to 50 filings for up to 3 queries in one call (at most 150 query x filing pairs), with the same case-insensitive matcher and ~440-character snippets as `GET /filings/{id}/markdown/search/`. Queries are trimmed and de-duplicated like `filing_ids` (order kept); results echo the trimmed query.  Every (filing_id, query) pair you send comes back exactly once, with one `status`: - `hit`: searched, at least one match; snippets returned. - `no_match`: the full text was searched and the query is not in it. This is the only status that says anything about the document. - `unavailable` (`reason`: not_found, outside_history_window, not_processed, no_narrative_content, content_missing): we could not search this filing. - `skipped` (`reason`: deadline, byte_budget, quota): not searched in this request. Retry these.  `unavailable` and `skipped` are NOT evidence that the text is absent: only `no_match` is.
+
+        :param markdown_batch_search_request: (required)
+        :type markdown_batch_search_request: MarkdownBatchSearchRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._filings_markdown_search_create_serialize(
+            markdown_batch_search_request=markdown_batch_search_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MarkdownBatchSearchResponse",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    async def filings_markdown_search_create_with_http_info(
+        self,
+        markdown_batch_search_request: MarkdownBatchSearchRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[MarkdownBatchSearchResponse]:
+        """Search Many Filings at Once
+
+        **Cost:** 6 credits per filing with at least one hit (filings with no match are free) (12 for premium filing types); unavailable and skipped filings are free. A filing is billed at most once, however many of your queries it is searched for. `billed_credits` is that credit list price for this request, before the once-per-day MCP markdown dedup; the `X-Credits-Charged` header is the actual charge. On a plan metered in requests, each billed filing counts as one request, and a request that bills nothing still counts as one.  --- Search inside up to 50 filings for up to 3 queries in one call (at most 150 query x filing pairs), with the same case-insensitive matcher and ~440-character snippets as `GET /filings/{id}/markdown/search/`. Queries are trimmed and de-duplicated like `filing_ids` (order kept); results echo the trimmed query.  Every (filing_id, query) pair you send comes back exactly once, with one `status`: - `hit`: searched, at least one match; snippets returned. - `no_match`: the full text was searched and the query is not in it. This is the only status that says anything about the document. - `unavailable` (`reason`: not_found, outside_history_window, not_processed, no_narrative_content, content_missing): we could not search this filing. - `skipped` (`reason`: deadline, byte_budget, quota): not searched in this request. Retry these.  `unavailable` and `skipped` are NOT evidence that the text is absent: only `no_match` is.
+
+        :param markdown_batch_search_request: (required)
+        :type markdown_batch_search_request: MarkdownBatchSearchRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._filings_markdown_search_create_serialize(
+            markdown_batch_search_request=markdown_batch_search_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MarkdownBatchSearchResponse",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    async def filings_markdown_search_create_without_preload_content(
+        self,
+        markdown_batch_search_request: MarkdownBatchSearchRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Search Many Filings at Once
+
+        **Cost:** 6 credits per filing with at least one hit (filings with no match are free) (12 for premium filing types); unavailable and skipped filings are free. A filing is billed at most once, however many of your queries it is searched for. `billed_credits` is that credit list price for this request, before the once-per-day MCP markdown dedup; the `X-Credits-Charged` header is the actual charge. On a plan metered in requests, each billed filing counts as one request, and a request that bills nothing still counts as one.  --- Search inside up to 50 filings for up to 3 queries in one call (at most 150 query x filing pairs), with the same case-insensitive matcher and ~440-character snippets as `GET /filings/{id}/markdown/search/`. Queries are trimmed and de-duplicated like `filing_ids` (order kept); results echo the trimmed query.  Every (filing_id, query) pair you send comes back exactly once, with one `status`: - `hit`: searched, at least one match; snippets returned. - `no_match`: the full text was searched and the query is not in it. This is the only status that says anything about the document. - `unavailable` (`reason`: not_found, outside_history_window, not_processed, no_narrative_content, content_missing): we could not search this filing. - `skipped` (`reason`: deadline, byte_budget, quota): not searched in this request. Retry these.  `unavailable` and `skipped` are NOT evidence that the text is absent: only `no_match` is.
+
+        :param markdown_batch_search_request: (required)
+        :type markdown_batch_search_request: MarkdownBatchSearchRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._filings_markdown_search_create_serialize(
+            markdown_batch_search_request=markdown_batch_search_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MarkdownBatchSearchResponse",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _filings_markdown_search_create_serialize(
+        self,
+        markdown_batch_search_request,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+        if markdown_batch_search_request is not None:
+            _body_params = markdown_batch_search_request
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'CognitoJWT', 
+            'ApiKeyAuth'
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/filings/markdown/search/',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
     async def filings_markdown_search_retrieve(
         self,
         id: Annotated[StrictInt, Field(description="A unique integer value identifying this filing.")],
@@ -2010,7 +2293,7 @@ class FilingsApi:
     ) -> None:
         """Search Within a Filing's Markdown
 
-        **Cost:** 6 credits per request (12 for premium filing types).  --- Find text inside one filing's processed Markdown without downloading all of it. Case-insensitive substring match; hits come back in document order, each with ~440 characters of context and its character `offset`. Pass that offset (minus a margin) to `GET /filings/{id}/markdown/?offset=&limit=` to read the surrounding section. `total_hits` counts every match, so you can tell when `max_hits` was spent on the table of contents. Billed as one Markdown request.
+        **Cost:** 6 credits per request (12 for premium filing types).  --- Find text inside one filing's processed Markdown without downloading all of it. Case-insensitive substring match; hits come back in document order, each with ~440 characters of context and its character `offset`. Pass that offset (minus a margin) to `GET /filings/{id}/markdown/?offset=&limit=` to read the surrounding section. `total_hits` counts every match, so you can tell when `max_hits` was spent on the table of contents. Billed as one Markdown request, at the price in the Cost line, only when it finds at least one match; a search with no match bills nothing (on a plan metered in requests it still counts as one request).
 
         :param id: A unique integer value identifying this filing. (required)
         :type id: int
@@ -2087,7 +2370,7 @@ class FilingsApi:
     ) -> ApiResponse[None]:
         """Search Within a Filing's Markdown
 
-        **Cost:** 6 credits per request (12 for premium filing types).  --- Find text inside one filing's processed Markdown without downloading all of it. Case-insensitive substring match; hits come back in document order, each with ~440 characters of context and its character `offset`. Pass that offset (minus a margin) to `GET /filings/{id}/markdown/?offset=&limit=` to read the surrounding section. `total_hits` counts every match, so you can tell when `max_hits` was spent on the table of contents. Billed as one Markdown request.
+        **Cost:** 6 credits per request (12 for premium filing types).  --- Find text inside one filing's processed Markdown without downloading all of it. Case-insensitive substring match; hits come back in document order, each with ~440 characters of context and its character `offset`. Pass that offset (minus a margin) to `GET /filings/{id}/markdown/?offset=&limit=` to read the surrounding section. `total_hits` counts every match, so you can tell when `max_hits` was spent on the table of contents. Billed as one Markdown request, at the price in the Cost line, only when it finds at least one match; a search with no match bills nothing (on a plan metered in requests it still counts as one request).
 
         :param id: A unique integer value identifying this filing. (required)
         :type id: int
@@ -2164,7 +2447,7 @@ class FilingsApi:
     ) -> RESTResponseType:
         """Search Within a Filing's Markdown
 
-        **Cost:** 6 credits per request (12 for premium filing types).  --- Find text inside one filing's processed Markdown without downloading all of it. Case-insensitive substring match; hits come back in document order, each with ~440 characters of context and its character `offset`. Pass that offset (minus a margin) to `GET /filings/{id}/markdown/?offset=&limit=` to read the surrounding section. `total_hits` counts every match, so you can tell when `max_hits` was spent on the table of contents. Billed as one Markdown request.
+        **Cost:** 6 credits per request (12 for premium filing types).  --- Find text inside one filing's processed Markdown without downloading all of it. Case-insensitive substring match; hits come back in document order, each with ~440 characters of context and its character `offset`. Pass that offset (minus a margin) to `GET /filings/{id}/markdown/?offset=&limit=` to read the surrounding section. `total_hits` counts every match, so you can tell when `max_hits` was spent on the table of contents. Billed as one Markdown request, at the price in the Cost line, only when it finds at least one match; a search with no match bills nothing (on a plan metered in requests it still counts as one request).
 
         :param id: A unique integer value identifying this filing. (required)
         :type id: int

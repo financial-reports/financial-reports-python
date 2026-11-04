@@ -8,6 +8,7 @@ Method | HTTP request | Description
 [**filings_history_retrieve**](FilingsApi.md#filings_history_retrieve) | **GET** /filings/{id}/history/ | Retrieve Filing History (Audit Trail)
 [**filings_list**](FilingsApi.md#filings_list) | **GET** /filings/ | List Filings
 [**filings_markdown_retrieve**](FilingsApi.md#filings_markdown_retrieve) | **GET** /filings/{id}/markdown/ | Retrieve Filing Markdown
+[**filings_markdown_search_create**](FilingsApi.md#filings_markdown_search_create) | **POST** /filings/markdown/search/ | Search Many Filings at Once
 [**filings_markdown_search_retrieve**](FilingsApi.md#filings_markdown_search_retrieve) | **GET** /filings/{id}/markdown/search/ | Search Within a Filing&#39;s Markdown
 [**filings_retrieve**](FilingsApi.md#filings_retrieve) | **GET** /filings/{id}/ | Retrieve Filing Details
 
@@ -476,6 +477,105 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **filings_markdown_search_create**
+> MarkdownBatchSearchResponse filings_markdown_search_create(markdown_batch_search_request)
+
+Search Many Filings at Once
+
+**Cost:** 6 credits per filing with at least one hit (filings with no match are free) (12 for premium filing types); unavailable and skipped filings are free. A filing is billed at most once, however many of your queries it is searched for. `billed_credits` is that credit list price for this request, before the once-per-day MCP markdown dedup; the `X-Credits-Charged` header is the actual charge. On a plan metered in requests, each billed filing counts as one request, and a request that bills nothing still counts as one.
+
+---
+Search inside up to 50 filings for up to 3 queries in one call (at most 150 query x filing pairs), with the same case-insensitive matcher and ~440-character snippets as `GET /filings/{id}/markdown/search/`. Queries are trimmed and de-duplicated like `filing_ids` (order kept); results echo the trimmed query.
+
+Every (filing_id, query) pair you send comes back exactly once, with one `status`:
+- `hit`: searched, at least one match; snippets returned.
+- `no_match`: the full text was searched and the query is not in it. This is the only status that says anything about the document.
+- `unavailable` (`reason`: not_found, outside_history_window, not_processed, no_narrative_content, content_missing): we could not search this filing.
+- `skipped` (`reason`: deadline, byte_budget, quota): not searched in this request. Retry these.
+
+`unavailable` and `skipped` are NOT evidence that the text is absent: only `no_match` is.
+
+### Example
+
+* Bearer (JWT) Authentication (CognitoJWT):
+* Api Key Authentication (ApiKeyAuth):
+
+```python
+import financial_reports_generated_client
+from financial_reports_generated_client.models.markdown_batch_search_request import MarkdownBatchSearchRequest
+from financial_reports_generated_client.models.markdown_batch_search_response import MarkdownBatchSearchResponse
+from financial_reports_generated_client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.financialreports.eu
+# See configuration.py for a list of all supported configuration parameters.
+configuration = financial_reports_generated_client.Configuration(
+    host = "https://api.financialreports.eu"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization (JWT): CognitoJWT
+configuration = financial_reports_generated_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Configure API key authorization: ApiKeyAuth
+configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+async with financial_reports_generated_client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = financial_reports_generated_client.FilingsApi(api_client)
+    markdown_batch_search_request = financial_reports_generated_client.MarkdownBatchSearchRequest() # MarkdownBatchSearchRequest | 
+
+    try:
+        # Search Many Filings at Once
+        api_response = await api_instance.filings_markdown_search_create(markdown_batch_search_request)
+        print("The response of FilingsApi->filings_markdown_search_create:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling FilingsApi->filings_markdown_search_create: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **markdown_batch_search_request** | [**MarkdownBatchSearchRequest**](MarkdownBatchSearchRequest.md)|  | 
+
+### Return type
+
+[**MarkdownBatchSearchResponse**](MarkdownBatchSearchResponse.md)
+
+### Authorization
+
+[CognitoJWT](../README.md#CognitoJWT), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** |  |  -  |
+**403** | Missing or invalid API key, or the plan does not include this endpoint. |  -  |
+**429** | Rate limit, plan quota or spend cap reached. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **filings_markdown_search_retrieve**
 > filings_markdown_search_retrieve(id, q, max_hits=max_hits)
 
@@ -484,7 +584,7 @@ Search Within a Filing's Markdown
 **Cost:** 6 credits per request (12 for premium filing types).
 
 ---
-Find text inside one filing's processed Markdown without downloading all of it. Case-insensitive substring match; hits come back in document order, each with ~440 characters of context and its character `offset`. Pass that offset (minus a margin) to `GET /filings/{id}/markdown/?offset=&limit=` to read the surrounding section. `total_hits` counts every match, so you can tell when `max_hits` was spent on the table of contents. Billed as one Markdown request.
+Find text inside one filing's processed Markdown without downloading all of it. Case-insensitive substring match; hits come back in document order, each with ~440 characters of context and its character `offset`. Pass that offset (minus a margin) to `GET /filings/{id}/markdown/?offset=&limit=` to read the surrounding section. `total_hits` counts every match, so you can tell when `max_hits` was spent on the table of contents. Billed as one Markdown request, at the price in the Cost line, only when it finds at least one match; a search with no match bills nothing (on a plan metered in requests it still counts as one request).
 
 ### Example
 

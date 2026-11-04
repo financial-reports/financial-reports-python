@@ -55,6 +55,13 @@ class TestFilingsApi(unittest.IsolatedAsyncioTestCase):
         """
         pass
 
+    async def test_filings_markdown_search_create(self) -> None:
+        """Test case for filings_markdown_search_create
+
+        Search Many Filings at Once
+        """
+        pass
+
     async def test_filings_markdown_search_retrieve(self) -> None:
         """Test case for filings_markdown_search_retrieve
 

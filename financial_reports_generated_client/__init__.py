@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "1.4.158"
+__version__ = "1.4.159"
 
 # Define package exports
 __all__ = [
@@ -121,6 +121,11 @@ __all__ = [
     "Language",
     "LineItemDefinition",
     "ListedStockExchange",
+    "MarkdownBatchSearchHit",
+    "MarkdownBatchSearchRequest",
+    "MarkdownBatchSearchResponse",
+    "MarkdownBatchSearchResult",
+    "MarkdownBatchSearchResultStatusEnum",
     "MarkdownNotFound",
     "NextAnnualReport",
     "OicsNodeRef",
@@ -275,6 +280,11 @@ from financial_reports_generated_client.models.kind_enum import KindEnum as Kind
 from financial_reports_generated_client.models.language import Language as Language
 from financial_reports_generated_client.models.line_item_definition import LineItemDefinition as LineItemDefinition
 from financial_reports_generated_client.models.listed_stock_exchange import ListedStockExchange as ListedStockExchange
+from financial_reports_generated_client.models.markdown_batch_search_hit import MarkdownBatchSearchHit as MarkdownBatchSearchHit
+from financial_reports_generated_client.models.markdown_batch_search_request import MarkdownBatchSearchRequest as MarkdownBatchSearchRequest
+from financial_reports_generated_client.models.markdown_batch_search_response import MarkdownBatchSearchResponse as MarkdownBatchSearchResponse
+from financial_reports_generated_client.models.markdown_batch_search_result import MarkdownBatchSearchResult as MarkdownBatchSearchResult
+from financial_reports_generated_client.models.markdown_batch_search_result_status_enum import MarkdownBatchSearchResultStatusEnum as MarkdownBatchSearchResultStatusEnum
 from financial_reports_generated_client.models.markdown_not_found import MarkdownNotFound as MarkdownNotFound
 from financial_reports_generated_client.models.next_annual_report import NextAnnualReport as NextAnnualReport
 from financial_reports_generated_client.models.oics_node_ref import OicsNodeRef as OicsNodeRef
