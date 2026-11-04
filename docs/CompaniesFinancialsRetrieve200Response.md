@@ -6,7 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **company_id** | **int** |  | 
-**template** | **str** | The company&#39;s KPI template. Banks and insurers also get their template&#39;s own line items; see &#x60;templates&#x60; on /api/line-item-definitions/ for which items are meaningful for it. | [optional] 
+**template** | **str** | The company&#39;s KPI template. Banks and insurers also get their template&#39;s own line items, and are not served the industrial-only ones; see &#x60;templates&#x60; on /api/line-item-definitions/ for which items are meaningful for it. | [optional] 
 **currency** | [**CompaniesFinancialsRetrieve200ResponseCurrency**](CompaniesFinancialsRetrieve200ResponseCurrency.md) |  | [optional] 
 **sources_masked** | **bool** | True when your account does not have source identities unlocked. Then &#x60;sources&#x60; is omitted from every statement. | 
 **filters** | [**CompaniesFinancialsRetrieve200ResponseFilters**](CompaniesFinancialsRetrieve200ResponseFilters.md) |  | 

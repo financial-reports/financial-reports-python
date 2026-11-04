@@ -32,7 +32,7 @@ class CompaniesDividendsRetrieve200ResponseDividendsInner(BaseModel):
     CompaniesDividendsRetrieve200ResponseDividendsInner
     """ # noqa: E501
     id: StrictInt = Field(description="Stable id of this dividend.")
-    status: StrictStr = Field(description="`upcoming` while its ex, record or payment date is today or later (or, with no date announced yet, for a year after it was announced); then `paid`. `cancelled` when the company withdrew it.")
+    status: StrictStr = Field(description="`upcoming` while its ex, record or payment date is today or later (or, with no date announced yet, for 180 days after it was announced); then `paid`. Today is the date in Berlin. `cancelled` when the company withdrew it.")
     stage: StrictStr = Field(description="`proposed` while it awaits shareholder approval.")
     kind: StrictStr
     is_interest_on_equity: Optional[StrictBool] = Field(default=None, description="Brazil: interest on equity (juros sobre capital próprio).")

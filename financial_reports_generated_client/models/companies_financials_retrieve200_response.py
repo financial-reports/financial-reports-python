@@ -36,7 +36,7 @@ class CompaniesFinancialsRetrieve200Response(BaseModel):
     CompaniesFinancialsRetrieve200Response
     """ # noqa: E501
     company_id: StrictInt
-    template: Optional[StrictStr] = Field(default=None, description="The company's KPI template. Banks and insurers also get their template's own line items; see `templates` on /api/line-item-definitions/ for which items are meaningful for it.")
+    template: Optional[StrictStr] = Field(default=None, description="The company's KPI template. Banks and insurers also get their template's own line items, and are not served the industrial-only ones; see `templates` on /api/line-item-definitions/ for which items are meaningful for it.")
     currency: Optional[CompaniesFinancialsRetrieve200ResponseCurrency] = None
     sources_masked: StrictBool = Field(description="True when your account does not have source identities unlocked. Then `sources` is omitted from every statement.")
     filters: CompaniesFinancialsRetrieve200ResponseFilters

@@ -6,7 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **int** | Stable id of this dividend. | 
-**status** | **str** | &#x60;upcoming&#x60; while its ex, record or payment date is today or later (or, with no date announced yet, for a year after it was announced); then &#x60;paid&#x60;. &#x60;cancelled&#x60; when the company withdrew it. | 
+**status** | **str** | &#x60;upcoming&#x60; while its ex, record or payment date is today or later (or, with no date announced yet, for 180 days after it was announced); then &#x60;paid&#x60;. Today is the date in Berlin. &#x60;cancelled&#x60; when the company withdrew it. | 
 **stage** | **str** | &#x60;proposed&#x60; while it awaits shareholder approval. | 
 **kind** | **str** |  | 
 **is_interest_on_equity** | **bool** | Brazil: interest on equity (juros sobre capital próprio). | [optional] 
