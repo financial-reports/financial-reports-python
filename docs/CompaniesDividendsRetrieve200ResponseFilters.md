@@ -6,6 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **status** | **str** |  | [optional] 
+**include_predecessors** | **bool** | Present, &#x60;true&#x60;, when asked for. | [optional] 
 
 ## Example
 

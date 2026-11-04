@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **axis** | **str** |  | [optional] 
 **metric** | **str** |  | [optional] 
 **period** | **str** |  | [optional] 
+**include_predecessors** | **bool** | Present, &#x60;true&#x60;, when asked for. | [optional] 
 
 ## Example
 

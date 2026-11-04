@@ -38,7 +38,8 @@ class TestCompaniesSplitsRetrieve200Response(unittest.TestCase):
             return CompaniesSplitsRetrieve200Response(
                 company_id = 56,
                 filters = financial_reports_generated_client.models.companies_dividends_retrieve_200_response_filters.companies_dividends_retrieve_200_response_filters(
-                    status = '', ),
+                    status = '', 
+                    include_predecessors = True, ),
                 splits = [
                     financial_reports_generated_client.models.companies_splits_retrieve_200_response_splits_inner.companies_splits_retrieve_200_response_splits_inner(
                         id = 56, 
@@ -64,7 +65,8 @@ class TestCompaniesSplitsRetrieve200Response(unittest.TestCase):
             return CompaniesSplitsRetrieve200Response(
                 company_id = 56,
                 filters = financial_reports_generated_client.models.companies_dividends_retrieve_200_response_filters.companies_dividends_retrieve_200_response_filters(
-                    status = '', ),
+                    status = '', 
+                    include_predecessors = True, ),
                 splits = [
                     financial_reports_generated_client.models.companies_splits_retrieve_200_response_splits_inner.companies_splits_retrieve_200_response_splits_inner(
                         id = 56, 

@@ -40,7 +40,8 @@ class TestCompaniesSegmentsRetrieve200Response(unittest.TestCase):
                 filters = financial_reports_generated_client.models.companies_segments_retrieve_200_response_filters.companies_segments_retrieve_200_response_filters(
                     axis = '', 
                     metric = '', 
-                    period = '', ),
+                    period = '', 
+                    include_predecessors = True, ),
                 segments = [
                     financial_reports_generated_client.models.companies_segments_retrieve_200_response_segments_inner.companies_segments_retrieve_200_response_segments_inner(
                         axis = '', 
@@ -75,7 +76,8 @@ class TestCompaniesSegmentsRetrieve200Response(unittest.TestCase):
                 filters = financial_reports_generated_client.models.companies_segments_retrieve_200_response_filters.companies_segments_retrieve_200_response_filters(
                     axis = '', 
                     metric = '', 
-                    period = '', ),
+                    period = '', 
+                    include_predecessors = True, ),
                 segments = [
                     financial_reports_generated_client.models.companies_segments_retrieve_200_response_segments_inner.companies_segments_retrieve_200_response_segments_inner(
                         axis = '', 

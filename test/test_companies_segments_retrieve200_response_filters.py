@@ -38,7 +38,8 @@ class TestCompaniesSegmentsRetrieve200ResponseFilters(unittest.TestCase):
             return CompaniesSegmentsRetrieve200ResponseFilters(
                 axis = '',
                 metric = '',
-                period = ''
+                period = '',
+                include_predecessors = True
             )
         else:
             return CompaniesSegmentsRetrieve200ResponseFilters(

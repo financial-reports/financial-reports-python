@@ -36,7 +36,8 @@ class TestCompaniesDividendsRetrieve200ResponseFilters(unittest.TestCase):
         model = CompaniesDividendsRetrieve200ResponseFilters()
         if include_optional:
             return CompaniesDividendsRetrieve200ResponseFilters(
-                status = ''
+                status = '',
+                include_predecessors = True
             )
         else:
             return CompaniesDividendsRetrieve200ResponseFilters(

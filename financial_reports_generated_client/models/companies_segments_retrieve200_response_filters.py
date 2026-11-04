@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
@@ -31,7 +31,8 @@ class CompaniesSegmentsRetrieve200ResponseFilters(BaseModel):
     axis: Optional[StrictStr] = None
     metric: Optional[StrictStr] = None
     period: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["axis", "metric", "period"]
+    include_predecessors: Optional[StrictBool] = Field(default=None, description="Present, `true`, when asked for.")
+    __properties: ClassVar[List[str]] = ["axis", "metric", "period", "include_predecessors"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -101,7 +102,8 @@ class CompaniesSegmentsRetrieve200ResponseFilters(BaseModel):
         _obj = cls.model_validate({
             "axis": obj.get("axis"),
             "metric": obj.get("metric"),
-            "period": obj.get("period")
+            "period": obj.get("period"),
+            "include_predecessors": obj.get("include_predecessors")
         })
         return _obj
 

@@ -53,6 +53,7 @@ class CompaniesApi:
     async def companies_dividends_retrieve(
         self,
         id: Annotated[StrictInt, Field(description="A unique integer value identifying this company.")],
+        include_predecessors: Annotated[Optional[StrictBool], Field(description="Also serve the dividends of the company's predecessors: the issuers it succeeded by reorganisation or redomicile (its `predecessors` of kind reorganization or other on GET /companies/{id}/, followed back through the chain), each announced by a notice released up to and including the link's effective date (UTC), as `include_predecessors` does on GET /filings/. A dividend two of them hold (same kind, class, amount, currency and date) is served once, from the nearer company. `split_adjusted` then divides by the predecessors' splits too; a link states no exchange ratio, so each predecessor share counts as one share of its successor. Predecessors your plan cannot see are left out.")] = None,
         status: Annotated[Optional[StrictStr], Field(description="Only dividends in this status.")] = None,
         _request_timeout: Union[
             None,
@@ -73,6 +74,8 @@ class CompaniesApi:
 
         :param id: A unique integer value identifying this company. (required)
         :type id: int
+        :param include_predecessors: Also serve the dividends of the company's predecessors: the issuers it succeeded by reorganisation or redomicile (its `predecessors` of kind reorganization or other on GET /companies/{id}/, followed back through the chain), each announced by a notice released up to and including the link's effective date (UTC), as `include_predecessors` does on GET /filings/. A dividend two of them hold (same kind, class, amount, currency and date) is served once, from the nearer company. `split_adjusted` then divides by the predecessors' splits too; a link states no exchange ratio, so each predecessor share counts as one share of its successor. Predecessors your plan cannot see are left out.
+        :type include_predecessors: bool
         :param status: Only dividends in this status.
         :type status: str
         :param _request_timeout: timeout setting for this request. If one
@@ -99,6 +102,7 @@ class CompaniesApi:
 
         _param = self._companies_dividends_retrieve_serialize(
             id=id,
+            include_predecessors=include_predecessors,
             status=status,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -128,6 +132,7 @@ class CompaniesApi:
     async def companies_dividends_retrieve_with_http_info(
         self,
         id: Annotated[StrictInt, Field(description="A unique integer value identifying this company.")],
+        include_predecessors: Annotated[Optional[StrictBool], Field(description="Also serve the dividends of the company's predecessors: the issuers it succeeded by reorganisation or redomicile (its `predecessors` of kind reorganization or other on GET /companies/{id}/, followed back through the chain), each announced by a notice released up to and including the link's effective date (UTC), as `include_predecessors` does on GET /filings/. A dividend two of them hold (same kind, class, amount, currency and date) is served once, from the nearer company. `split_adjusted` then divides by the predecessors' splits too; a link states no exchange ratio, so each predecessor share counts as one share of its successor. Predecessors your plan cannot see are left out.")] = None,
         status: Annotated[Optional[StrictStr], Field(description="Only dividends in this status.")] = None,
         _request_timeout: Union[
             None,
@@ -148,6 +153,8 @@ class CompaniesApi:
 
         :param id: A unique integer value identifying this company. (required)
         :type id: int
+        :param include_predecessors: Also serve the dividends of the company's predecessors: the issuers it succeeded by reorganisation or redomicile (its `predecessors` of kind reorganization or other on GET /companies/{id}/, followed back through the chain), each announced by a notice released up to and including the link's effective date (UTC), as `include_predecessors` does on GET /filings/. A dividend two of them hold (same kind, class, amount, currency and date) is served once, from the nearer company. `split_adjusted` then divides by the predecessors' splits too; a link states no exchange ratio, so each predecessor share counts as one share of its successor. Predecessors your plan cannot see are left out.
+        :type include_predecessors: bool
         :param status: Only dividends in this status.
         :type status: str
         :param _request_timeout: timeout setting for this request. If one
@@ -174,6 +181,7 @@ class CompaniesApi:
 
         _param = self._companies_dividends_retrieve_serialize(
             id=id,
+            include_predecessors=include_predecessors,
             status=status,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -203,6 +211,7 @@ class CompaniesApi:
     async def companies_dividends_retrieve_without_preload_content(
         self,
         id: Annotated[StrictInt, Field(description="A unique integer value identifying this company.")],
+        include_predecessors: Annotated[Optional[StrictBool], Field(description="Also serve the dividends of the company's predecessors: the issuers it succeeded by reorganisation or redomicile (its `predecessors` of kind reorganization or other on GET /companies/{id}/, followed back through the chain), each announced by a notice released up to and including the link's effective date (UTC), as `include_predecessors` does on GET /filings/. A dividend two of them hold (same kind, class, amount, currency and date) is served once, from the nearer company. `split_adjusted` then divides by the predecessors' splits too; a link states no exchange ratio, so each predecessor share counts as one share of its successor. Predecessors your plan cannot see are left out.")] = None,
         status: Annotated[Optional[StrictStr], Field(description="Only dividends in this status.")] = None,
         _request_timeout: Union[
             None,
@@ -223,6 +232,8 @@ class CompaniesApi:
 
         :param id: A unique integer value identifying this company. (required)
         :type id: int
+        :param include_predecessors: Also serve the dividends of the company's predecessors: the issuers it succeeded by reorganisation or redomicile (its `predecessors` of kind reorganization or other on GET /companies/{id}/, followed back through the chain), each announced by a notice released up to and including the link's effective date (UTC), as `include_predecessors` does on GET /filings/. A dividend two of them hold (same kind, class, amount, currency and date) is served once, from the nearer company. `split_adjusted` then divides by the predecessors' splits too; a link states no exchange ratio, so each predecessor share counts as one share of its successor. Predecessors your plan cannot see are left out.
+        :type include_predecessors: bool
         :param status: Only dividends in this status.
         :type status: str
         :param _request_timeout: timeout setting for this request. If one
@@ -249,6 +260,7 @@ class CompaniesApi:
 
         _param = self._companies_dividends_retrieve_serialize(
             id=id,
+            include_predecessors=include_predecessors,
             status=status,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -273,6 +285,7 @@ class CompaniesApi:
     def _companies_dividends_retrieve_serialize(
         self,
         id,
+        include_predecessors,
         status,
         _request_auth,
         _content_type,
@@ -298,6 +311,10 @@ class CompaniesApi:
         if id is not None:
             _path_params['id'] = id
         # process the query parameters
+        if include_predecessors is not None:
+            
+            _query_params.append(('include_predecessors', include_predecessors))
+            
         if status is not None:
             
             _query_params.append(('status', status))
@@ -351,7 +368,7 @@ class CompaniesApi:
         fiscal_year_from: Annotated[Optional[StrictInt], Field(description="Fiscal year range start (inclusive).")] = None,
         fiscal_year_to: Annotated[Optional[StrictInt], Field(description="Fiscal year range end (inclusive).")] = None,
         include: Annotated[Optional[StrictStr], Field(description="**Per-share figures and share counts are as reported, on each filing's own share basis: pass `split_adjusted` for a series comparable across stock splits.**  Comma-separated. `revisions` adds a `revisions` list to every line item: each recorded change to that value, oldest first, with `old_value` -> `new_value` and a reason category. With `as_known_at`, only the changes up to that time. `preliminary` adds `preliminary_results`: the company's own preliminary figures, published before the report and labelled preliminary, never merged into `periods`. `as_reported` adds `as_reported` to a standardised total read straight from the filer's XBRL whose calculation tree ties: the face lines it is made of, as the filer tagged them. Not served with `as_known_at`. `standalone_quarters` adds `standalone_quarters`: one three-month period per fiscal quarter (H2 for half-year reporters), income statement and cash flow, derived from year-to-date interims where the company reports no three-month figure, each value flagged `reported`, `derived` or `derived_approx`, never merged into `periods`. `split_adjusted` adds `split_adjusted` to every per-share figure (EPS, book value per share) and share count, in `periods` and `standalone_quarters`: the value on today's share basis (or `as_of`'s), next to the unchanged as-reported `value`, with its `adjustment_factor` and the `split_event_ids` from `/companies/{id}/splits/` it applies. Recomputed on every request, so a split re-adjusts history the day it takes effect. Not served with `as_known_at`. `ratios` adds `ratios`: per served fiscal year, fundamental ratios (margins, returns, leverage with and without lease liabilities, liquidity, turnover, growth, cash payout, per share and per employee) computed from the values `periods` serves, each with its `inputs` and `source_filing_ids`, or `null` with a `null_reason`. No ratios on share prices.")] = None,
-        include_predecessors: Annotated[Optional[StrictBool], Field(description="Also serve the statements of the company's predecessors: the issuers it succeeded by reorganisation or redomicile (its `predecessors` of kind reorganization or other on GET /companies/{id}/, followed back through the chain), each from filings released up to and including the link's effective date (UTC), as `include_predecessors` does on GET /filings/. Each company is selected on its own statements; the requested company's win their periods, and a predecessor fills only periods no nearer company serves. `source_filing` names the filing each statement came from. Predecessors your plan cannot see are left out. Not combined with `as_known_at`, `include=preliminary`, `include=standalone_quarters` or `include=split_adjusted` (`400`).")] = None,
+        include_predecessors: Annotated[Optional[StrictBool], Field(description="Also serve the statements of the company's predecessors: the issuers it succeeded by reorganisation or redomicile (its `predecessors` of kind reorganization or other on GET /companies/{id}/, followed back through the chain), each from filings released up to and including the link's effective date (UTC), as `include_predecessors` does on GET /filings/. Each company is selected on its own statements; the requested company's win their periods, and a predecessor fills only periods no nearer company serves. `source_filing` names the filing each statement came from. Predecessors your plan cannot see are left out. With `include=split_adjusted`, values are adjusted by the predecessors' splits too, as GET /companies/{id}/splits/?include_predecessors=true serves them; a link states no exchange ratio, so each predecessor share counts as one share of its successor. Not combined with `as_known_at`, `include=preliminary` or `include=standalone_quarters` (`400`).")] = None,
         line_items: Annotated[Optional[StrictStr], Field(description="Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Statements with none of the requested codes are dropped. Unknown codes return `400`; see `/line-item-definitions/`.")] = None,
         statement_type: Annotated[Optional[StrictStr], Field(description="Filter to a single statement type.")] = None,
         _request_timeout: Union[
@@ -387,7 +404,7 @@ class CompaniesApi:
         :type fiscal_year_to: int
         :param include: **Per-share figures and share counts are as reported, on each filing's own share basis: pass `split_adjusted` for a series comparable across stock splits.**  Comma-separated. `revisions` adds a `revisions` list to every line item: each recorded change to that value, oldest first, with `old_value` -> `new_value` and a reason category. With `as_known_at`, only the changes up to that time. `preliminary` adds `preliminary_results`: the company's own preliminary figures, published before the report and labelled preliminary, never merged into `periods`. `as_reported` adds `as_reported` to a standardised total read straight from the filer's XBRL whose calculation tree ties: the face lines it is made of, as the filer tagged them. Not served with `as_known_at`. `standalone_quarters` adds `standalone_quarters`: one three-month period per fiscal quarter (H2 for half-year reporters), income statement and cash flow, derived from year-to-date interims where the company reports no three-month figure, each value flagged `reported`, `derived` or `derived_approx`, never merged into `periods`. `split_adjusted` adds `split_adjusted` to every per-share figure (EPS, book value per share) and share count, in `periods` and `standalone_quarters`: the value on today's share basis (or `as_of`'s), next to the unchanged as-reported `value`, with its `adjustment_factor` and the `split_event_ids` from `/companies/{id}/splits/` it applies. Recomputed on every request, so a split re-adjusts history the day it takes effect. Not served with `as_known_at`. `ratios` adds `ratios`: per served fiscal year, fundamental ratios (margins, returns, leverage with and without lease liabilities, liquidity, turnover, growth, cash payout, per share and per employee) computed from the values `periods` serves, each with its `inputs` and `source_filing_ids`, or `null` with a `null_reason`. No ratios on share prices.
         :type include: str
-        :param include_predecessors: Also serve the statements of the company's predecessors: the issuers it succeeded by reorganisation or redomicile (its `predecessors` of kind reorganization or other on GET /companies/{id}/, followed back through the chain), each from filings released up to and including the link's effective date (UTC), as `include_predecessors` does on GET /filings/. Each company is selected on its own statements; the requested company's win their periods, and a predecessor fills only periods no nearer company serves. `source_filing` names the filing each statement came from. Predecessors your plan cannot see are left out. Not combined with `as_known_at`, `include=preliminary`, `include=standalone_quarters` or `include=split_adjusted` (`400`).
+        :param include_predecessors: Also serve the statements of the company's predecessors: the issuers it succeeded by reorganisation or redomicile (its `predecessors` of kind reorganization or other on GET /companies/{id}/, followed back through the chain), each from filings released up to and including the link's effective date (UTC), as `include_predecessors` does on GET /filings/. Each company is selected on its own statements; the requested company's win their periods, and a predecessor fills only periods no nearer company serves. `source_filing` names the filing each statement came from. Predecessors your plan cannot see are left out. With `include=split_adjusted`, values are adjusted by the predecessors' splits too, as GET /companies/{id}/splits/?include_predecessors=true serves them; a link states no exchange ratio, so each predecessor share counts as one share of its successor. Not combined with `as_known_at`, `include=preliminary` or `include=standalone_quarters` (`400`).
         :type include_predecessors: bool
         :param line_items: Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Statements with none of the requested codes are dropped. Unknown codes return `400`; see `/line-item-definitions/`.
         :type line_items: str
@@ -462,7 +479,7 @@ class CompaniesApi:
         fiscal_year_from: Annotated[Optional[StrictInt], Field(description="Fiscal year range start (inclusive).")] = None,
         fiscal_year_to: Annotated[Optional[StrictInt], Field(description="Fiscal year range end (inclusive).")] = None,
         include: Annotated[Optional[StrictStr], Field(description="**Per-share figures and share counts are as reported, on each filing's own share basis: pass `split_adjusted` for a series comparable across stock splits.**  Comma-separated. `revisions` adds a `revisions` list to every line item: each recorded change to that value, oldest first, with `old_value` -> `new_value` and a reason category. With `as_known_at`, only the changes up to that time. `preliminary` adds `preliminary_results`: the company's own preliminary figures, published before the report and labelled preliminary, never merged into `periods`. `as_reported` adds `as_reported` to a standardised total read straight from the filer's XBRL whose calculation tree ties: the face lines it is made of, as the filer tagged them. Not served with `as_known_at`. `standalone_quarters` adds `standalone_quarters`: one three-month period per fiscal quarter (H2 for half-year reporters), income statement and cash flow, derived from year-to-date interims where the company reports no three-month figure, each value flagged `reported`, `derived` or `derived_approx`, never merged into `periods`. `split_adjusted` adds `split_adjusted` to every per-share figure (EPS, book value per share) and share count, in `periods` and `standalone_quarters`: the value on today's share basis (or `as_of`'s), next to the unchanged as-reported `value`, with its `adjustment_factor` and the `split_event_ids` from `/companies/{id}/splits/` it applies. Recomputed on every request, so a split re-adjusts history the day it takes effect. Not served with `as_known_at`. `ratios` adds `ratios`: per served fiscal year, fundamental ratios (margins, returns, leverage with and without lease liabilities, liquidity, turnover, growth, cash payout, per share and per employee) computed from the values `periods` serves, each with its `inputs` and `source_filing_ids`, or `null` with a `null_reason`. No ratios on share prices.")] = None,
-        include_predecessors: Annotated[Optional[StrictBool], Field(description="Also serve the statements of the company's predecessors: the issuers it succeeded by reorganisation or redomicile (its `predecessors` of kind reorganization or other on GET /companies/{id}/, followed back through the chain), each from filings released up to and including the link's effective date (UTC), as `include_predecessors` does on GET /filings/. Each company is selected on its own statements; the requested company's win their periods, and a predecessor fills only periods no nearer company serves. `source_filing` names the filing each statement came from. Predecessors your plan cannot see are left out. Not combined with `as_known_at`, `include=preliminary`, `include=standalone_quarters` or `include=split_adjusted` (`400`).")] = None,
+        include_predecessors: Annotated[Optional[StrictBool], Field(description="Also serve the statements of the company's predecessors: the issuers it succeeded by reorganisation or redomicile (its `predecessors` of kind reorganization or other on GET /companies/{id}/, followed back through the chain), each from filings released up to and including the link's effective date (UTC), as `include_predecessors` does on GET /filings/. Each company is selected on its own statements; the requested company's win their periods, and a predecessor fills only periods no nearer company serves. `source_filing` names the filing each statement came from. Predecessors your plan cannot see are left out. With `include=split_adjusted`, values are adjusted by the predecessors' splits too, as GET /companies/{id}/splits/?include_predecessors=true serves them; a link states no exchange ratio, so each predecessor share counts as one share of its successor. Not combined with `as_known_at`, `include=preliminary` or `include=standalone_quarters` (`400`).")] = None,
         line_items: Annotated[Optional[StrictStr], Field(description="Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Statements with none of the requested codes are dropped. Unknown codes return `400`; see `/line-item-definitions/`.")] = None,
         statement_type: Annotated[Optional[StrictStr], Field(description="Filter to a single statement type.")] = None,
         _request_timeout: Union[
@@ -498,7 +515,7 @@ class CompaniesApi:
         :type fiscal_year_to: int
         :param include: **Per-share figures and share counts are as reported, on each filing's own share basis: pass `split_adjusted` for a series comparable across stock splits.**  Comma-separated. `revisions` adds a `revisions` list to every line item: each recorded change to that value, oldest first, with `old_value` -> `new_value` and a reason category. With `as_known_at`, only the changes up to that time. `preliminary` adds `preliminary_results`: the company's own preliminary figures, published before the report and labelled preliminary, never merged into `periods`. `as_reported` adds `as_reported` to a standardised total read straight from the filer's XBRL whose calculation tree ties: the face lines it is made of, as the filer tagged them. Not served with `as_known_at`. `standalone_quarters` adds `standalone_quarters`: one three-month period per fiscal quarter (H2 for half-year reporters), income statement and cash flow, derived from year-to-date interims where the company reports no three-month figure, each value flagged `reported`, `derived` or `derived_approx`, never merged into `periods`. `split_adjusted` adds `split_adjusted` to every per-share figure (EPS, book value per share) and share count, in `periods` and `standalone_quarters`: the value on today's share basis (or `as_of`'s), next to the unchanged as-reported `value`, with its `adjustment_factor` and the `split_event_ids` from `/companies/{id}/splits/` it applies. Recomputed on every request, so a split re-adjusts history the day it takes effect. Not served with `as_known_at`. `ratios` adds `ratios`: per served fiscal year, fundamental ratios (margins, returns, leverage with and without lease liabilities, liquidity, turnover, growth, cash payout, per share and per employee) computed from the values `periods` serves, each with its `inputs` and `source_filing_ids`, or `null` with a `null_reason`. No ratios on share prices.
         :type include: str
-        :param include_predecessors: Also serve the statements of the company's predecessors: the issuers it succeeded by reorganisation or redomicile (its `predecessors` of kind reorganization or other on GET /companies/{id}/, followed back through the chain), each from filings released up to and including the link's effective date (UTC), as `include_predecessors` does on GET /filings/. Each company is selected on its own statements; the requested company's win their periods, and a predecessor fills only periods no nearer company serves. `source_filing` names the filing each statement came from. Predecessors your plan cannot see are left out. Not combined with `as_known_at`, `include=preliminary`, `include=standalone_quarters` or `include=split_adjusted` (`400`).
+        :param include_predecessors: Also serve the statements of the company's predecessors: the issuers it succeeded by reorganisation or redomicile (its `predecessors` of kind reorganization or other on GET /companies/{id}/, followed back through the chain), each from filings released up to and including the link's effective date (UTC), as `include_predecessors` does on GET /filings/. Each company is selected on its own statements; the requested company's win their periods, and a predecessor fills only periods no nearer company serves. `source_filing` names the filing each statement came from. Predecessors your plan cannot see are left out. With `include=split_adjusted`, values are adjusted by the predecessors' splits too, as GET /companies/{id}/splits/?include_predecessors=true serves them; a link states no exchange ratio, so each predecessor share counts as one share of its successor. Not combined with `as_known_at`, `include=preliminary` or `include=standalone_quarters` (`400`).
         :type include_predecessors: bool
         :param line_items: Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Statements with none of the requested codes are dropped. Unknown codes return `400`; see `/line-item-definitions/`.
         :type line_items: str
@@ -573,7 +590,7 @@ class CompaniesApi:
         fiscal_year_from: Annotated[Optional[StrictInt], Field(description="Fiscal year range start (inclusive).")] = None,
         fiscal_year_to: Annotated[Optional[StrictInt], Field(description="Fiscal year range end (inclusive).")] = None,
         include: Annotated[Optional[StrictStr], Field(description="**Per-share figures and share counts are as reported, on each filing's own share basis: pass `split_adjusted` for a series comparable across stock splits.**  Comma-separated. `revisions` adds a `revisions` list to every line item: each recorded change to that value, oldest first, with `old_value` -> `new_value` and a reason category. With `as_known_at`, only the changes up to that time. `preliminary` adds `preliminary_results`: the company's own preliminary figures, published before the report and labelled preliminary, never merged into `periods`. `as_reported` adds `as_reported` to a standardised total read straight from the filer's XBRL whose calculation tree ties: the face lines it is made of, as the filer tagged them. Not served with `as_known_at`. `standalone_quarters` adds `standalone_quarters`: one three-month period per fiscal quarter (H2 for half-year reporters), income statement and cash flow, derived from year-to-date interims where the company reports no three-month figure, each value flagged `reported`, `derived` or `derived_approx`, never merged into `periods`. `split_adjusted` adds `split_adjusted` to every per-share figure (EPS, book value per share) and share count, in `periods` and `standalone_quarters`: the value on today's share basis (or `as_of`'s), next to the unchanged as-reported `value`, with its `adjustment_factor` and the `split_event_ids` from `/companies/{id}/splits/` it applies. Recomputed on every request, so a split re-adjusts history the day it takes effect. Not served with `as_known_at`. `ratios` adds `ratios`: per served fiscal year, fundamental ratios (margins, returns, leverage with and without lease liabilities, liquidity, turnover, growth, cash payout, per share and per employee) computed from the values `periods` serves, each with its `inputs` and `source_filing_ids`, or `null` with a `null_reason`. No ratios on share prices.")] = None,
-        include_predecessors: Annotated[Optional[StrictBool], Field(description="Also serve the statements of the company's predecessors: the issuers it succeeded by reorganisation or redomicile (its `predecessors` of kind reorganization or other on GET /companies/{id}/, followed back through the chain), each from filings released up to and including the link's effective date (UTC), as `include_predecessors` does on GET /filings/. Each company is selected on its own statements; the requested company's win their periods, and a predecessor fills only periods no nearer company serves. `source_filing` names the filing each statement came from. Predecessors your plan cannot see are left out. Not combined with `as_known_at`, `include=preliminary`, `include=standalone_quarters` or `include=split_adjusted` (`400`).")] = None,
+        include_predecessors: Annotated[Optional[StrictBool], Field(description="Also serve the statements of the company's predecessors: the issuers it succeeded by reorganisation or redomicile (its `predecessors` of kind reorganization or other on GET /companies/{id}/, followed back through the chain), each from filings released up to and including the link's effective date (UTC), as `include_predecessors` does on GET /filings/. Each company is selected on its own statements; the requested company's win their periods, and a predecessor fills only periods no nearer company serves. `source_filing` names the filing each statement came from. Predecessors your plan cannot see are left out. With `include=split_adjusted`, values are adjusted by the predecessors' splits too, as GET /companies/{id}/splits/?include_predecessors=true serves them; a link states no exchange ratio, so each predecessor share counts as one share of its successor. Not combined with `as_known_at`, `include=preliminary` or `include=standalone_quarters` (`400`).")] = None,
         line_items: Annotated[Optional[StrictStr], Field(description="Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Statements with none of the requested codes are dropped. Unknown codes return `400`; see `/line-item-definitions/`.")] = None,
         statement_type: Annotated[Optional[StrictStr], Field(description="Filter to a single statement type.")] = None,
         _request_timeout: Union[
@@ -609,7 +626,7 @@ class CompaniesApi:
         :type fiscal_year_to: int
         :param include: **Per-share figures and share counts are as reported, on each filing's own share basis: pass `split_adjusted` for a series comparable across stock splits.**  Comma-separated. `revisions` adds a `revisions` list to every line item: each recorded change to that value, oldest first, with `old_value` -> `new_value` and a reason category. With `as_known_at`, only the changes up to that time. `preliminary` adds `preliminary_results`: the company's own preliminary figures, published before the report and labelled preliminary, never merged into `periods`. `as_reported` adds `as_reported` to a standardised total read straight from the filer's XBRL whose calculation tree ties: the face lines it is made of, as the filer tagged them. Not served with `as_known_at`. `standalone_quarters` adds `standalone_quarters`: one three-month period per fiscal quarter (H2 for half-year reporters), income statement and cash flow, derived from year-to-date interims where the company reports no three-month figure, each value flagged `reported`, `derived` or `derived_approx`, never merged into `periods`. `split_adjusted` adds `split_adjusted` to every per-share figure (EPS, book value per share) and share count, in `periods` and `standalone_quarters`: the value on today's share basis (or `as_of`'s), next to the unchanged as-reported `value`, with its `adjustment_factor` and the `split_event_ids` from `/companies/{id}/splits/` it applies. Recomputed on every request, so a split re-adjusts history the day it takes effect. Not served with `as_known_at`. `ratios` adds `ratios`: per served fiscal year, fundamental ratios (margins, returns, leverage with and without lease liabilities, liquidity, turnover, growth, cash payout, per share and per employee) computed from the values `periods` serves, each with its `inputs` and `source_filing_ids`, or `null` with a `null_reason`. No ratios on share prices.
         :type include: str
-        :param include_predecessors: Also serve the statements of the company's predecessors: the issuers it succeeded by reorganisation or redomicile (its `predecessors` of kind reorganization or other on GET /companies/{id}/, followed back through the chain), each from filings released up to and including the link's effective date (UTC), as `include_predecessors` does on GET /filings/. Each company is selected on its own statements; the requested company's win their periods, and a predecessor fills only periods no nearer company serves. `source_filing` names the filing each statement came from. Predecessors your plan cannot see are left out. Not combined with `as_known_at`, `include=preliminary`, `include=standalone_quarters` or `include=split_adjusted` (`400`).
+        :param include_predecessors: Also serve the statements of the company's predecessors: the issuers it succeeded by reorganisation or redomicile (its `predecessors` of kind reorganization or other on GET /companies/{id}/, followed back through the chain), each from filings released up to and including the link's effective date (UTC), as `include_predecessors` does on GET /filings/. Each company is selected on its own statements; the requested company's win their periods, and a predecessor fills only periods no nearer company serves. `source_filing` names the filing each statement came from. Predecessors your plan cannot see are left out. With `include=split_adjusted`, values are adjusted by the predecessors' splits too, as GET /companies/{id}/splits/?include_predecessors=true serves them; a link states no exchange ratio, so each predecessor share counts as one share of its successor. Not combined with `as_known_at`, `include=preliminary` or `include=standalone_quarters` (`400`).
         :type include_predecessors: bool
         :param line_items: Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Statements with none of the requested codes are dropped. Unknown codes return `400`; see `/line-item-definitions/`.
         :type line_items: str
@@ -2559,6 +2576,7 @@ class CompaniesApi:
         self,
         id: Annotated[StrictInt, Field(description="A unique integer value identifying this company.")],
         axis: Annotated[Optional[StrictStr], Field(description="Only business segments or only geographic areas.")] = None,
+        include_predecessors: Annotated[Optional[StrictBool], Field(description="Also serve the segments of the company's predecessors: the issuers it succeeded by reorganisation or redomicile (its `predecessors` of kind reorganization or other on GET /companies/{id}/, followed back through the chain), from their filings released up to and including the link's effective date (UTC), as `include_predecessors` does on GET /filings/. The latest filing reporting a period and metric wins it, whichever company filed it; `source_filing` names it. Predecessors your plan cannot see are left out.")] = None,
         metric: Annotated[Optional[StrictStr], Field(description="Only this metric.")] = None,
         period: Annotated[Optional[StrictStr], Field(description="Only periods of this length (`FY`, `9M`, `H`, `Q`). A balance (assets) has no length, so this leaves balances out.")] = None,
         _request_timeout: Union[
@@ -2582,6 +2600,8 @@ class CompaniesApi:
         :type id: int
         :param axis: Only business segments or only geographic areas.
         :type axis: str
+        :param include_predecessors: Also serve the segments of the company's predecessors: the issuers it succeeded by reorganisation or redomicile (its `predecessors` of kind reorganization or other on GET /companies/{id}/, followed back through the chain), from their filings released up to and including the link's effective date (UTC), as `include_predecessors` does on GET /filings/. The latest filing reporting a period and metric wins it, whichever company filed it; `source_filing` names it. Predecessors your plan cannot see are left out.
+        :type include_predecessors: bool
         :param metric: Only this metric.
         :type metric: str
         :param period: Only periods of this length (`FY`, `9M`, `H`, `Q`). A balance (assets) has no length, so this leaves balances out.
@@ -2611,6 +2631,7 @@ class CompaniesApi:
         _param = self._companies_segments_retrieve_serialize(
             id=id,
             axis=axis,
+            include_predecessors=include_predecessors,
             metric=metric,
             period=period,
             _request_auth=_request_auth,
@@ -2642,6 +2663,7 @@ class CompaniesApi:
         self,
         id: Annotated[StrictInt, Field(description="A unique integer value identifying this company.")],
         axis: Annotated[Optional[StrictStr], Field(description="Only business segments or only geographic areas.")] = None,
+        include_predecessors: Annotated[Optional[StrictBool], Field(description="Also serve the segments of the company's predecessors: the issuers it succeeded by reorganisation or redomicile (its `predecessors` of kind reorganization or other on GET /companies/{id}/, followed back through the chain), from their filings released up to and including the link's effective date (UTC), as `include_predecessors` does on GET /filings/. The latest filing reporting a period and metric wins it, whichever company filed it; `source_filing` names it. Predecessors your plan cannot see are left out.")] = None,
         metric: Annotated[Optional[StrictStr], Field(description="Only this metric.")] = None,
         period: Annotated[Optional[StrictStr], Field(description="Only periods of this length (`FY`, `9M`, `H`, `Q`). A balance (assets) has no length, so this leaves balances out.")] = None,
         _request_timeout: Union[
@@ -2665,6 +2687,8 @@ class CompaniesApi:
         :type id: int
         :param axis: Only business segments or only geographic areas.
         :type axis: str
+        :param include_predecessors: Also serve the segments of the company's predecessors: the issuers it succeeded by reorganisation or redomicile (its `predecessors` of kind reorganization or other on GET /companies/{id}/, followed back through the chain), from their filings released up to and including the link's effective date (UTC), as `include_predecessors` does on GET /filings/. The latest filing reporting a period and metric wins it, whichever company filed it; `source_filing` names it. Predecessors your plan cannot see are left out.
+        :type include_predecessors: bool
         :param metric: Only this metric.
         :type metric: str
         :param period: Only periods of this length (`FY`, `9M`, `H`, `Q`). A balance (assets) has no length, so this leaves balances out.
@@ -2694,6 +2718,7 @@ class CompaniesApi:
         _param = self._companies_segments_retrieve_serialize(
             id=id,
             axis=axis,
+            include_predecessors=include_predecessors,
             metric=metric,
             period=period,
             _request_auth=_request_auth,
@@ -2725,6 +2750,7 @@ class CompaniesApi:
         self,
         id: Annotated[StrictInt, Field(description="A unique integer value identifying this company.")],
         axis: Annotated[Optional[StrictStr], Field(description="Only business segments or only geographic areas.")] = None,
+        include_predecessors: Annotated[Optional[StrictBool], Field(description="Also serve the segments of the company's predecessors: the issuers it succeeded by reorganisation or redomicile (its `predecessors` of kind reorganization or other on GET /companies/{id}/, followed back through the chain), from their filings released up to and including the link's effective date (UTC), as `include_predecessors` does on GET /filings/. The latest filing reporting a period and metric wins it, whichever company filed it; `source_filing` names it. Predecessors your plan cannot see are left out.")] = None,
         metric: Annotated[Optional[StrictStr], Field(description="Only this metric.")] = None,
         period: Annotated[Optional[StrictStr], Field(description="Only periods of this length (`FY`, `9M`, `H`, `Q`). A balance (assets) has no length, so this leaves balances out.")] = None,
         _request_timeout: Union[
@@ -2748,6 +2774,8 @@ class CompaniesApi:
         :type id: int
         :param axis: Only business segments or only geographic areas.
         :type axis: str
+        :param include_predecessors: Also serve the segments of the company's predecessors: the issuers it succeeded by reorganisation or redomicile (its `predecessors` of kind reorganization or other on GET /companies/{id}/, followed back through the chain), from their filings released up to and including the link's effective date (UTC), as `include_predecessors` does on GET /filings/. The latest filing reporting a period and metric wins it, whichever company filed it; `source_filing` names it. Predecessors your plan cannot see are left out.
+        :type include_predecessors: bool
         :param metric: Only this metric.
         :type metric: str
         :param period: Only periods of this length (`FY`, `9M`, `H`, `Q`). A balance (assets) has no length, so this leaves balances out.
@@ -2777,6 +2805,7 @@ class CompaniesApi:
         _param = self._companies_segments_retrieve_serialize(
             id=id,
             axis=axis,
+            include_predecessors=include_predecessors,
             metric=metric,
             period=period,
             _request_auth=_request_auth,
@@ -2803,6 +2832,7 @@ class CompaniesApi:
         self,
         id,
         axis,
+        include_predecessors,
         metric,
         period,
         _request_auth,
@@ -2832,6 +2862,10 @@ class CompaniesApi:
         if axis is not None:
             
             _query_params.append(('axis', axis))
+            
+        if include_predecessors is not None:
+            
+            _query_params.append(('include_predecessors', include_predecessors))
             
         if metric is not None:
             
@@ -2883,6 +2917,7 @@ class CompaniesApi:
     async def companies_splits_retrieve(
         self,
         id: Annotated[StrictInt, Field(description="A unique integer value identifying this company.")],
+        include_predecessors: Annotated[Optional[StrictBool], Field(description="Also serve the splits of the company's predecessors: the issuers it succeeded by reorganisation or redomicile (its `predecessors` of kind reorganization or other on GET /companies/{id}/, followed back through the chain), each dated up to and including the link's effective date. A split two of them hold (same type, ratio and date) is served once, from the nearer company. A link states no exchange ratio, so each predecessor share counts as one share of its successor. Predecessors your plan cannot see are left out.")] = None,
         status: Annotated[Optional[StrictStr], Field(description="Only splits with this status.")] = None,
         _request_timeout: Union[
             None,
@@ -2903,6 +2938,8 @@ class CompaniesApi:
 
         :param id: A unique integer value identifying this company. (required)
         :type id: int
+        :param include_predecessors: Also serve the splits of the company's predecessors: the issuers it succeeded by reorganisation or redomicile (its `predecessors` of kind reorganization or other on GET /companies/{id}/, followed back through the chain), each dated up to and including the link's effective date. A split two of them hold (same type, ratio and date) is served once, from the nearer company. A link states no exchange ratio, so each predecessor share counts as one share of its successor. Predecessors your plan cannot see are left out.
+        :type include_predecessors: bool
         :param status: Only splits with this status.
         :type status: str
         :param _request_timeout: timeout setting for this request. If one
@@ -2929,6 +2966,7 @@ class CompaniesApi:
 
         _param = self._companies_splits_retrieve_serialize(
             id=id,
+            include_predecessors=include_predecessors,
             status=status,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -2958,6 +2996,7 @@ class CompaniesApi:
     async def companies_splits_retrieve_with_http_info(
         self,
         id: Annotated[StrictInt, Field(description="A unique integer value identifying this company.")],
+        include_predecessors: Annotated[Optional[StrictBool], Field(description="Also serve the splits of the company's predecessors: the issuers it succeeded by reorganisation or redomicile (its `predecessors` of kind reorganization or other on GET /companies/{id}/, followed back through the chain), each dated up to and including the link's effective date. A split two of them hold (same type, ratio and date) is served once, from the nearer company. A link states no exchange ratio, so each predecessor share counts as one share of its successor. Predecessors your plan cannot see are left out.")] = None,
         status: Annotated[Optional[StrictStr], Field(description="Only splits with this status.")] = None,
         _request_timeout: Union[
             None,
@@ -2978,6 +3017,8 @@ class CompaniesApi:
 
         :param id: A unique integer value identifying this company. (required)
         :type id: int
+        :param include_predecessors: Also serve the splits of the company's predecessors: the issuers it succeeded by reorganisation or redomicile (its `predecessors` of kind reorganization or other on GET /companies/{id}/, followed back through the chain), each dated up to and including the link's effective date. A split two of them hold (same type, ratio and date) is served once, from the nearer company. A link states no exchange ratio, so each predecessor share counts as one share of its successor. Predecessors your plan cannot see are left out.
+        :type include_predecessors: bool
         :param status: Only splits with this status.
         :type status: str
         :param _request_timeout: timeout setting for this request. If one
@@ -3004,6 +3045,7 @@ class CompaniesApi:
 
         _param = self._companies_splits_retrieve_serialize(
             id=id,
+            include_predecessors=include_predecessors,
             status=status,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -3033,6 +3075,7 @@ class CompaniesApi:
     async def companies_splits_retrieve_without_preload_content(
         self,
         id: Annotated[StrictInt, Field(description="A unique integer value identifying this company.")],
+        include_predecessors: Annotated[Optional[StrictBool], Field(description="Also serve the splits of the company's predecessors: the issuers it succeeded by reorganisation or redomicile (its `predecessors` of kind reorganization or other on GET /companies/{id}/, followed back through the chain), each dated up to and including the link's effective date. A split two of them hold (same type, ratio and date) is served once, from the nearer company. A link states no exchange ratio, so each predecessor share counts as one share of its successor. Predecessors your plan cannot see are left out.")] = None,
         status: Annotated[Optional[StrictStr], Field(description="Only splits with this status.")] = None,
         _request_timeout: Union[
             None,
@@ -3053,6 +3096,8 @@ class CompaniesApi:
 
         :param id: A unique integer value identifying this company. (required)
         :type id: int
+        :param include_predecessors: Also serve the splits of the company's predecessors: the issuers it succeeded by reorganisation or redomicile (its `predecessors` of kind reorganization or other on GET /companies/{id}/, followed back through the chain), each dated up to and including the link's effective date. A split two of them hold (same type, ratio and date) is served once, from the nearer company. A link states no exchange ratio, so each predecessor share counts as one share of its successor. Predecessors your plan cannot see are left out.
+        :type include_predecessors: bool
         :param status: Only splits with this status.
         :type status: str
         :param _request_timeout: timeout setting for this request. If one
@@ -3079,6 +3124,7 @@ class CompaniesApi:
 
         _param = self._companies_splits_retrieve_serialize(
             id=id,
+            include_predecessors=include_predecessors,
             status=status,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -3103,6 +3149,7 @@ class CompaniesApi:
     def _companies_splits_retrieve_serialize(
         self,
         id,
+        include_predecessors,
         status,
         _request_auth,
         _content_type,
@@ -3128,6 +3175,10 @@ class CompaniesApi:
         if id is not None:
             _path_params['id'] = id
         # process the query parameters
+        if include_predecessors is not None:
+            
+            _query_params.append(('include_predecessors', include_predecessors))
+            
         if status is not None:
             
             _query_params.append(('status', status))

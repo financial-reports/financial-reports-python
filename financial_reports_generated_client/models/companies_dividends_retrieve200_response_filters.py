@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
@@ -29,7 +29,8 @@ class CompaniesDividendsRetrieve200ResponseFilters(BaseModel):
     CompaniesDividendsRetrieve200ResponseFilters
     """ # noqa: E501
     status: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["status"]
+    include_predecessors: Optional[StrictBool] = Field(default=None, description="Present, `true`, when asked for.")
+    __properties: ClassVar[List[str]] = ["status", "include_predecessors"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -87,7 +88,8 @@ class CompaniesDividendsRetrieve200ResponseFilters(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "status": obj.get("status")
+            "status": obj.get("status"),
+            "include_predecessors": obj.get("include_predecessors")
         })
         return _obj
 

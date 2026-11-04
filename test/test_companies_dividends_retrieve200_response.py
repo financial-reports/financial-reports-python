@@ -38,7 +38,8 @@ class TestCompaniesDividendsRetrieve200Response(unittest.TestCase):
             return CompaniesDividendsRetrieve200Response(
                 company_id = 56,
                 filters = financial_reports_generated_client.models.companies_dividends_retrieve_200_response_filters.companies_dividends_retrieve_200_response_filters(
-                    status = '', ),
+                    status = '', 
+                    include_predecessors = True, ),
                 dividends = [
                     financial_reports_generated_client.models.companies_dividends_retrieve_200_response_dividends_inner.companies_dividends_retrieve_200_response_dividends_inner(
                         id = 56, 
@@ -88,7 +89,8 @@ class TestCompaniesDividendsRetrieve200Response(unittest.TestCase):
             return CompaniesDividendsRetrieve200Response(
                 company_id = 56,
                 filters = financial_reports_generated_client.models.companies_dividends_retrieve_200_response_filters.companies_dividends_retrieve_200_response_filters(
-                    status = '', ),
+                    status = '', 
+                    include_predecessors = True, ),
                 dividends = [
                     financial_reports_generated_client.models.companies_dividends_retrieve_200_response_dividends_inner.companies_dividends_retrieve_200_response_dividends_inner(
                         id = 56, 
