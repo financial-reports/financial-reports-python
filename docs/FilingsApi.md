@@ -64,7 +64,7 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
     # Create an instance of the API class
     api_instance = financial_reports_generated_client.FilingsApi(api_client)
     id = 56 # int | A unique integer value identifying this filing.
-    format = 'format_example' # str |  (optional)
+    format = 'format_example' # str | No effect on a successful response, which is always the filing's own document or a redirect to it. Kept for compatibility. (optional)
 
     try:
         # Retrieve Filing Document
@@ -83,7 +83,7 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer value identifying this filing. | 
- **format** | **str**|  | [optional] 
+ **format** | **str**| No effect on a successful response, which is always the filing&#39;s own document or a redirect to it. Kept for compatibility. | [optional] 
 
 ### Return type
 
@@ -271,7 +271,7 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
     min_confidence = 3.4 # float | Minimum classifier confidence for the assigned filing type (0.0-1.0). (optional)
     on_watchlist = True # bool | `true`: only companies on your watchlist. `false`: exclude them. Omit for all. (optional)
     ordering = 'ordering_example' # str | Which field to use when ordering the results. Available fields: `id`, `release_datetime`, `added_to_platform`, `filing_type_confidence`. Prefix with '-' for descending order (e.g., `-release_datetime`). Rows that tie on the chosen field are ordered by `id` in the same direction, so paging through results with `next` does not repeat or skip a filing as long as the matching filings do not change while you page. `-filing_type_confidence` lists filings without a score first; add `min_confidence=0` to leave those out. (optional)
-    page = 56 # int | A page number within the paginated result set. (optional)
+    page = 56 # int | A page number within the paginated result set. Page depth is capped: (page - 1) x page_size above 50,000 (500,000 inside an added_to_platform_from/added_to_platform_to window of 7 days or less) returns 400 `offset_too_large`, and a page past the last one returns 404 `page_out_of_range`. To walk further, use `cursor`, which has no offset limit. (optional)
     page_size = 56 # int | Number of results to return per page. (optional)
     period_ending_date = 'period_ending_date_example' # str | Exact period end date (YYYY-MM-DD, e.g. `2024-12-31`). Set only on 10-K, 10-K-ESEF, IR and ER filings. (optional)
     period_ending_date_from = 'period_ending_date_from_example' # str | Period end date on or after (YYYY-MM-DD). (optional)
@@ -332,7 +332,7 @@ Name | Type | Description  | Notes
  **min_confidence** | **float**| Minimum classifier confidence for the assigned filing type (0.0-1.0). | [optional] 
  **on_watchlist** | **bool**| &#x60;true&#x60;: only companies on your watchlist. &#x60;false&#x60;: exclude them. Omit for all. | [optional] 
  **ordering** | **str**| Which field to use when ordering the results. Available fields: &#x60;id&#x60;, &#x60;release_datetime&#x60;, &#x60;added_to_platform&#x60;, &#x60;filing_type_confidence&#x60;. Prefix with &#39;-&#39; for descending order (e.g., &#x60;-release_datetime&#x60;). Rows that tie on the chosen field are ordered by &#x60;id&#x60; in the same direction, so paging through results with &#x60;next&#x60; does not repeat or skip a filing as long as the matching filings do not change while you page. &#x60;-filing_type_confidence&#x60; lists filings without a score first; add &#x60;min_confidence&#x3D;0&#x60; to leave those out. | [optional] 
- **page** | **int**| A page number within the paginated result set. | [optional] 
+ **page** | **int**| A page number within the paginated result set. Page depth is capped: (page - 1) x page_size above 50,000 (500,000 inside an added_to_platform_from/added_to_platform_to window of 7 days or less) returns 400 &#x60;offset_too_large&#x60;, and a page past the last one returns 404 &#x60;page_out_of_range&#x60;. To walk further, use &#x60;cursor&#x60;, which has no offset limit. | [optional] 
  **page_size** | **int**| Number of results to return per page. | [optional] 
  **period_ending_date** | **str**| Exact period end date (YYYY-MM-DD, e.g. &#x60;2024-12-31&#x60;). Set only on 10-K, 10-K-ESEF, IR and ER filings. | [optional] 
  **period_ending_date_from** | **str**| Period end date on or after (YYYY-MM-DD). | [optional] 
@@ -428,8 +428,8 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
     # Create an instance of the API class
     api_instance = financial_reports_generated_client.FilingsApi(api_client)
     id = 56 # int | A unique integer value identifying this filing.
-    format = 'format_example' # str |  (optional)
-    limit = 56 # int | Characters to return, 1-200,000 (default 200,000 when offset is given). (optional)
+    format = 'format_example' # str | No effect on a successful response, which is always `text/markdown`. Kept for compatibility. (optional)
+    limit = 56 # int | Window size in characters, at most 200,000 per request (default 200,000 when only offset is given). Not a cap on the document: omit both offset and limit to get the whole document; `X-Total-Chars` gives its length. (optional)
     offset = 56 # int | Character offset to start reading at (default 0). Passing offset or limit returns a window instead of the whole document. (optional)
 
     try:
@@ -449,8 +449,8 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer value identifying this filing. | 
- **format** | **str**|  | [optional] 
- **limit** | **int**| Characters to return, 1-200,000 (default 200,000 when offset is given). | [optional] 
+ **format** | **str**| No effect on a successful response, which is always &#x60;text/markdown&#x60;. Kept for compatibility. | [optional] 
+ **limit** | **int**| Window size in characters, at most 200,000 per request (default 200,000 when only offset is given). Not a cap on the document: omit both offset and limit to get the whole document; &#x60;X-Total-Chars&#x60; gives its length. | [optional] 
  **offset** | **int**| Character offset to start reading at (default 0). Passing offset or limit returns a window instead of the whole document. | [optional] 
 
 ### Return type

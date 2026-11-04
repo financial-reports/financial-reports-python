@@ -45,6 +45,7 @@ class TestCompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInner(unit
                 currency_mismatch = True,
                 accounting_standard = 'IFRS',
                 accounting_standard_basis = 'xbrl_taxonomy',
+                consolidation_basis = 'consolidated',
                 extraction = financial_reports_generated_client.models.companies_financials_retrieve_200_response_periods_inner_statements_inner_extraction.companies_financials_retrieve_200_response_periods_inner_statements_inner_extraction(
                     model = '', 
                     prompt_version = '', 

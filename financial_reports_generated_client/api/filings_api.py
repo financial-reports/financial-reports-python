@@ -48,7 +48,7 @@ class FilingsApi:
     async def filings_document_retrieve(
         self,
         id: Annotated[StrictInt, Field(description="A unique integer value identifying this filing.")],
-        format: Optional[StrictStr] = None,
+        format: Annotated[Optional[StrictStr], Field(description="No effect on a successful response, which is always the filing's own document or a redirect to it. Kept for compatibility.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -68,7 +68,7 @@ class FilingsApi:
 
         :param id: A unique integer value identifying this filing. (required)
         :type id: int
-        :param format:
+        :param format: No effect on a successful response, which is always the filing's own document or a redirect to it. Kept for compatibility.
         :type format: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -123,7 +123,7 @@ class FilingsApi:
     async def filings_document_retrieve_with_http_info(
         self,
         id: Annotated[StrictInt, Field(description="A unique integer value identifying this filing.")],
-        format: Optional[StrictStr] = None,
+        format: Annotated[Optional[StrictStr], Field(description="No effect on a successful response, which is always the filing's own document or a redirect to it. Kept for compatibility.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -143,7 +143,7 @@ class FilingsApi:
 
         :param id: A unique integer value identifying this filing. (required)
         :type id: int
-        :param format:
+        :param format: No effect on a successful response, which is always the filing's own document or a redirect to it. Kept for compatibility.
         :type format: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -198,7 +198,7 @@ class FilingsApi:
     async def filings_document_retrieve_without_preload_content(
         self,
         id: Annotated[StrictInt, Field(description="A unique integer value identifying this filing.")],
-        format: Optional[StrictStr] = None,
+        format: Annotated[Optional[StrictStr], Field(description="No effect on a successful response, which is always the filing's own document or a redirect to it. Kept for compatibility.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -218,7 +218,7 @@ class FilingsApi:
 
         :param id: A unique integer value identifying this filing. (required)
         :type id: int
-        :param format:
+        :param format: No effect on a successful response, which is always the filing's own document or a redirect to it. Kept for compatibility.
         :type format: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -633,7 +633,7 @@ class FilingsApi:
         min_confidence: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Minimum classifier confidence for the assigned filing type (0.0-1.0).")] = None,
         on_watchlist: Annotated[Optional[StrictBool], Field(description="`true`: only companies on your watchlist. `false`: exclude them. Omit for all.")] = None,
         ordering: Annotated[Optional[StrictStr], Field(description="Which field to use when ordering the results. Available fields: `id`, `release_datetime`, `added_to_platform`, `filing_type_confidence`. Prefix with '-' for descending order (e.g., `-release_datetime`). Rows that tie on the chosen field are ordered by `id` in the same direction, so paging through results with `next` does not repeat or skip a filing as long as the matching filings do not change while you page. `-filing_type_confidence` lists filings without a score first; add `min_confidence=0` to leave those out.")] = None,
-        page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
+        page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set. Page depth is capped: (page - 1) x page_size above 50,000 (500,000 inside an added_to_platform_from/added_to_platform_to window of 7 days or less) returns 400 `offset_too_large`, and a page past the last one returns 404 `page_out_of_range`. To walk further, use `cursor`, which has no offset limit.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
         period_ending_date: Annotated[Optional[StrictStr], Field(description="Exact period end date (YYYY-MM-DD, e.g. `2024-12-31`). Set only on 10-K, 10-K-ESEF, IR and ER filings.")] = None,
         period_ending_date_from: Annotated[Optional[StrictStr], Field(description="Period end date on or after (YYYY-MM-DD).")] = None,
@@ -717,7 +717,7 @@ class FilingsApi:
         :type on_watchlist: bool
         :param ordering: Which field to use when ordering the results. Available fields: `id`, `release_datetime`, `added_to_platform`, `filing_type_confidence`. Prefix with '-' for descending order (e.g., `-release_datetime`). Rows that tie on the chosen field are ordered by `id` in the same direction, so paging through results with `next` does not repeat or skip a filing as long as the matching filings do not change while you page. `-filing_type_confidence` lists filings without a score first; add `min_confidence=0` to leave those out.
         :type ordering: str
-        :param page: A page number within the paginated result set.
+        :param page: A page number within the paginated result set. Page depth is capped: (page - 1) x page_size above 50,000 (500,000 inside an added_to_platform_from/added_to_platform_to window of 7 days or less) returns 400 `offset_too_large`, and a page past the last one returns 404 `page_out_of_range`. To walk further, use `cursor`, which has no offset limit.
         :type page: int
         :param page_size: Number of results to return per page.
         :type page_size: int
@@ -876,7 +876,7 @@ class FilingsApi:
         min_confidence: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Minimum classifier confidence for the assigned filing type (0.0-1.0).")] = None,
         on_watchlist: Annotated[Optional[StrictBool], Field(description="`true`: only companies on your watchlist. `false`: exclude them. Omit for all.")] = None,
         ordering: Annotated[Optional[StrictStr], Field(description="Which field to use when ordering the results. Available fields: `id`, `release_datetime`, `added_to_platform`, `filing_type_confidence`. Prefix with '-' for descending order (e.g., `-release_datetime`). Rows that tie on the chosen field are ordered by `id` in the same direction, so paging through results with `next` does not repeat or skip a filing as long as the matching filings do not change while you page. `-filing_type_confidence` lists filings without a score first; add `min_confidence=0` to leave those out.")] = None,
-        page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
+        page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set. Page depth is capped: (page - 1) x page_size above 50,000 (500,000 inside an added_to_platform_from/added_to_platform_to window of 7 days or less) returns 400 `offset_too_large`, and a page past the last one returns 404 `page_out_of_range`. To walk further, use `cursor`, which has no offset limit.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
         period_ending_date: Annotated[Optional[StrictStr], Field(description="Exact period end date (YYYY-MM-DD, e.g. `2024-12-31`). Set only on 10-K, 10-K-ESEF, IR and ER filings.")] = None,
         period_ending_date_from: Annotated[Optional[StrictStr], Field(description="Period end date on or after (YYYY-MM-DD).")] = None,
@@ -960,7 +960,7 @@ class FilingsApi:
         :type on_watchlist: bool
         :param ordering: Which field to use when ordering the results. Available fields: `id`, `release_datetime`, `added_to_platform`, `filing_type_confidence`. Prefix with '-' for descending order (e.g., `-release_datetime`). Rows that tie on the chosen field are ordered by `id` in the same direction, so paging through results with `next` does not repeat or skip a filing as long as the matching filings do not change while you page. `-filing_type_confidence` lists filings without a score first; add `min_confidence=0` to leave those out.
         :type ordering: str
-        :param page: A page number within the paginated result set.
+        :param page: A page number within the paginated result set. Page depth is capped: (page - 1) x page_size above 50,000 (500,000 inside an added_to_platform_from/added_to_platform_to window of 7 days or less) returns 400 `offset_too_large`, and a page past the last one returns 404 `page_out_of_range`. To walk further, use `cursor`, which has no offset limit.
         :type page: int
         :param page_size: Number of results to return per page.
         :type page_size: int
@@ -1119,7 +1119,7 @@ class FilingsApi:
         min_confidence: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Minimum classifier confidence for the assigned filing type (0.0-1.0).")] = None,
         on_watchlist: Annotated[Optional[StrictBool], Field(description="`true`: only companies on your watchlist. `false`: exclude them. Omit for all.")] = None,
         ordering: Annotated[Optional[StrictStr], Field(description="Which field to use when ordering the results. Available fields: `id`, `release_datetime`, `added_to_platform`, `filing_type_confidence`. Prefix with '-' for descending order (e.g., `-release_datetime`). Rows that tie on the chosen field are ordered by `id` in the same direction, so paging through results with `next` does not repeat or skip a filing as long as the matching filings do not change while you page. `-filing_type_confidence` lists filings without a score first; add `min_confidence=0` to leave those out.")] = None,
-        page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
+        page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set. Page depth is capped: (page - 1) x page_size above 50,000 (500,000 inside an added_to_platform_from/added_to_platform_to window of 7 days or less) returns 400 `offset_too_large`, and a page past the last one returns 404 `page_out_of_range`. To walk further, use `cursor`, which has no offset limit.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
         period_ending_date: Annotated[Optional[StrictStr], Field(description="Exact period end date (YYYY-MM-DD, e.g. `2024-12-31`). Set only on 10-K, 10-K-ESEF, IR and ER filings.")] = None,
         period_ending_date_from: Annotated[Optional[StrictStr], Field(description="Period end date on or after (YYYY-MM-DD).")] = None,
@@ -1203,7 +1203,7 @@ class FilingsApi:
         :type on_watchlist: bool
         :param ordering: Which field to use when ordering the results. Available fields: `id`, `release_datetime`, `added_to_platform`, `filing_type_confidence`. Prefix with '-' for descending order (e.g., `-release_datetime`). Rows that tie on the chosen field are ordered by `id` in the same direction, so paging through results with `next` does not repeat or skip a filing as long as the matching filings do not change while you page. `-filing_type_confidence` lists filings without a score first; add `min_confidence=0` to leave those out.
         :type ordering: str
-        :param page: A page number within the paginated result set.
+        :param page: A page number within the paginated result set. Page depth is capped: (page - 1) x page_size above 50,000 (500,000 inside an added_to_platform_from/added_to_platform_to window of 7 days or less) returns 400 `offset_too_large`, and a page past the last one returns 404 `page_out_of_range`. To walk further, use `cursor`, which has no offset limit.
         :type page: int
         :param page_size: Number of results to return per page.
         :type page_size: int
@@ -1672,8 +1672,8 @@ class FilingsApi:
     async def filings_markdown_retrieve(
         self,
         id: Annotated[StrictInt, Field(description="A unique integer value identifying this filing.")],
-        format: Optional[StrictStr] = None,
-        limit: Annotated[Optional[StrictInt], Field(description="Characters to return, 1-200,000 (default 200,000 when offset is given).")] = None,
+        format: Annotated[Optional[StrictStr], Field(description="No effect on a successful response, which is always `text/markdown`. Kept for compatibility.")] = None,
+        limit: Annotated[Optional[StrictInt], Field(description="Window size in characters, at most 200,000 per request (default 200,000 when only offset is given). Not a cap on the document: omit both offset and limit to get the whole document; `X-Total-Chars` gives its length.")] = None,
         offset: Annotated[Optional[StrictInt], Field(description="Character offset to start reading at (default 0). Passing offset or limit returns a window instead of the whole document.")] = None,
         _request_timeout: Union[
             None,
@@ -1694,9 +1694,9 @@ class FilingsApi:
 
         :param id: A unique integer value identifying this filing. (required)
         :type id: int
-        :param format:
+        :param format: No effect on a successful response, which is always `text/markdown`. Kept for compatibility.
         :type format: str
-        :param limit: Characters to return, 1-200,000 (default 200,000 when offset is given).
+        :param limit: Window size in characters, at most 200,000 per request (default 200,000 when only offset is given). Not a cap on the document: omit both offset and limit to get the whole document; `X-Total-Chars` gives its length.
         :type limit: int
         :param offset: Character offset to start reading at (default 0). Passing offset or limit returns a window instead of the whole document.
         :type offset: int
@@ -1754,8 +1754,8 @@ class FilingsApi:
     async def filings_markdown_retrieve_with_http_info(
         self,
         id: Annotated[StrictInt, Field(description="A unique integer value identifying this filing.")],
-        format: Optional[StrictStr] = None,
-        limit: Annotated[Optional[StrictInt], Field(description="Characters to return, 1-200,000 (default 200,000 when offset is given).")] = None,
+        format: Annotated[Optional[StrictStr], Field(description="No effect on a successful response, which is always `text/markdown`. Kept for compatibility.")] = None,
+        limit: Annotated[Optional[StrictInt], Field(description="Window size in characters, at most 200,000 per request (default 200,000 when only offset is given). Not a cap on the document: omit both offset and limit to get the whole document; `X-Total-Chars` gives its length.")] = None,
         offset: Annotated[Optional[StrictInt], Field(description="Character offset to start reading at (default 0). Passing offset or limit returns a window instead of the whole document.")] = None,
         _request_timeout: Union[
             None,
@@ -1776,9 +1776,9 @@ class FilingsApi:
 
         :param id: A unique integer value identifying this filing. (required)
         :type id: int
-        :param format:
+        :param format: No effect on a successful response, which is always `text/markdown`. Kept for compatibility.
         :type format: str
-        :param limit: Characters to return, 1-200,000 (default 200,000 when offset is given).
+        :param limit: Window size in characters, at most 200,000 per request (default 200,000 when only offset is given). Not a cap on the document: omit both offset and limit to get the whole document; `X-Total-Chars` gives its length.
         :type limit: int
         :param offset: Character offset to start reading at (default 0). Passing offset or limit returns a window instead of the whole document.
         :type offset: int
@@ -1836,8 +1836,8 @@ class FilingsApi:
     async def filings_markdown_retrieve_without_preload_content(
         self,
         id: Annotated[StrictInt, Field(description="A unique integer value identifying this filing.")],
-        format: Optional[StrictStr] = None,
-        limit: Annotated[Optional[StrictInt], Field(description="Characters to return, 1-200,000 (default 200,000 when offset is given).")] = None,
+        format: Annotated[Optional[StrictStr], Field(description="No effect on a successful response, which is always `text/markdown`. Kept for compatibility.")] = None,
+        limit: Annotated[Optional[StrictInt], Field(description="Window size in characters, at most 200,000 per request (default 200,000 when only offset is given). Not a cap on the document: omit both offset and limit to get the whole document; `X-Total-Chars` gives its length.")] = None,
         offset: Annotated[Optional[StrictInt], Field(description="Character offset to start reading at (default 0). Passing offset or limit returns a window instead of the whole document.")] = None,
         _request_timeout: Union[
             None,
@@ -1858,9 +1858,9 @@ class FilingsApi:
 
         :param id: A unique integer value identifying this filing. (required)
         :type id: int
-        :param format:
+        :param format: No effect on a successful response, which is always `text/markdown`. Kept for compatibility.
         :type format: str
-        :param limit: Characters to return, 1-200,000 (default 200,000 when offset is given).
+        :param limit: Window size in characters, at most 200,000 per request (default 200,000 when only offset is given). Not a cap on the document: omit both offset and limit to get the whole document; `X-Total-Chars` gives its length.
         :type limit: int
         :param offset: Character offset to start reading at (default 0). Passing offset or limit returns a window instead of the whole document.
         :type offset: int
