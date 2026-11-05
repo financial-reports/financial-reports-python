@@ -19,7 +19,7 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr, field_validator
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from financial_reports_generated_client.models.companies_financials_retrieve200_response_periods_inner_statements_inner_line_items_inner_as_reported import CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItemsInnerAsReported
 from financial_reports_generated_client.models.companies_financials_retrieve200_response_periods_inner_statements_inner_line_items_inner_revisions_inner import CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItemsInnerRevisionsInner
@@ -38,19 +38,21 @@ class CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItems
     depth: StrictInt
     parent_code: Optional[StrictStr]
     sort_order: StrictInt
-    value: Optional[StrictStr] = Field(description="Value in absolute units, as an exact decimal string, not a number. Parse with a decimal type; float loses precision at financial magnitudes. Null when the figure was withheld as unrecoverable.")
+    value: Optional[StrictStr] = Field(description="Value in absolute units, as an exact decimal string, not a number. Parse with a decimal type; float loses precision at financial magnitudes. Null when the figure was withheld: as unrecoverable; where `total_current_liabilities` exceeds `total_liabilities` in the statement it is served in, as whichever of the two `total_assets` less `total_equity` contradicts (both where it cannot tell); as `total_liabilities_and_equity` equal to `total_equity` and short of a `total_assets` the other lines add up to, as `total_liabilities` that is the non-current liabilities, or as a current total of a US GAAP balance sheet that presents none. A withheld line keeps its place in the statement.")
     raw_value: Optional[StrictStr] = Field(description="The figure as printed in the document, as an exact decimal string. When non-null, `value == raw_value * multiplier(scale)` to rounding (within 1% or 0.01). Null, together with `scale`, when `value` is null, when `value` was computed from other line items rather than read from the document (e.g. `net_debt` recomputed from the figures served beside it), or whenever `raw_value * scale` does not reproduce `value` (e.g. a value rescaled against the company's other filings), because then the printed figure is no longer the value's provenance. A printed total that is missing some of its components keeps its `raw_value`, because the printed figure is still its provenance. On a statement a language model read (`extraction.model` not `xbrl-native`), `raw_value` is the figure the model returned, which can be a total it computed from other lines rather than one the document prints.")
     scale: Optional[StrictStr] = Field(description="Reporting scale of `raw_value`. Withheld with it.")
     currency: Optional[StrictStr] = Field(description="The value's own currency code, which may differ from the statement's reporting currency for per-share figures. Null for ratios.")
     confidence: Optional[Union[StrictFloat, StrictInt]] = Field(description="Confidence that this value is the figure the document states, or null where nothing has judged it. Non-null only where a second, independent check of the filing agreed with the extracted value; the number is that check's probability for the figure it picked. Null does not mean low confidence: it means unjudged, which is every value not yet checked and every value sent for review. Treat it as a filter, not a score: branch on non-null, do not compare nulls.")
     source_page: Optional[StrictInt] = Field(description="The 1-based page of the source filing's PDF the value is printed on, for a value read from the PDF rather than from XBRL. Null when it is not known: the document is not a PDF (XBRL, HTML), the value could not be placed on exactly one page, or the value served is computed or withheld rather than the printed figure (`raw_value` is then null too).")
+    confirmed: Optional[StrictBool] = Field(description="True where a second, independent source agrees with this value (within 0.5%): for a value read from the report, a second extraction of the same filing; for a value that fills a gap in the report's own statements, a value extracted elsewhere in the company's filings. Null otherwise: no second source, or one that does not agree. Null does not mean wrong. Always null under `as_known_at`: confirmation is not reconstructed as of a past time.")
+    confirmed_precision: Optional[Union[StrictFloat, StrictInt]] = Field(description="How often values confirmed this way were right when judged blind (0.975 for a second extraction agreeing, 0.93 for an extracted value agreeing with a filled gap): a rate for the class, not a probability for this value. Null when `confirmed` is null.")
     revisions: Optional[List[CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItemsInnerRevisionsInner]] = Field(default=None, description="Present only with `include=revisions`: every recorded change to this value, oldest first (with `as_known_at`, up to that time). Empty when none was recorded. Recording started 2026-10-19T17:05:18Z; `pre_recording` entries are older corrections whose `changed_at` is approximate (the change happened at or before it).")
     withdrawn_reason: Optional[StrictStr] = Field(default=None, description="Present only with `as_known_at`, and only on a statement (and on its values) that was served for this company at that time and is not served for it today because it was withdrawn: `reattributed`: the statement now belongs to another company record, where it may be served; `purged`: reserved, its filing was removed altogether (not served yet; the filing's type, release time and links would be null unless recorded). Absent everywhere else.")
     as_reported: Optional[CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItemsInnerAsReported] = None
     split_adjusted: Optional[CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItemsInnerSplitAdjusted] = None
     updated_at: datetime = Field(description="When this value was last written. Equal to the extraction time for an untouched value; moves when a later correction pass rewrites the value in place (a re-extraction replaces the whole statement and sets a new one). Compare it with the value from your previous poll to detect a changed figure without diffing. It does not move when a whole statement is withdrawn or when a different filing starts supplying the period; watch `source_filing` for that.")
     available_at: Optional[datetime] = Field(description="When the filing this value was read from was released. Usually the statement's own `source_filing.release_datetime`. Later where the value was filled in from another filing because the selected statement lacks it (named in `extraction.notes`): for example a prior-year figure taken from the next annual report. For a point-in-time series, drop values whose `available_at` is after your cutoff, or pass `as_of`, which never serves a value from a filing released after it.")
-    __properties: ClassVar[List[str]] = ["code", "name", "statement_type", "depth", "parent_code", "sort_order", "value", "raw_value", "scale", "currency", "confidence", "source_page", "revisions", "withdrawn_reason", "as_reported", "split_adjusted", "updated_at", "available_at"]
+    __properties: ClassVar[List[str]] = ["code", "name", "statement_type", "depth", "parent_code", "sort_order", "value", "raw_value", "scale", "currency", "confidence", "source_page", "confirmed", "confirmed_precision", "revisions", "withdrawn_reason", "as_reported", "split_adjusted", "updated_at", "available_at"]
 
     @field_validator('statement_type')
     def statement_type_validate_enum(cls, value):
@@ -165,6 +167,16 @@ class CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItems
         if self.source_page is None and "source_page" in self.model_fields_set:
             _dict['source_page'] = None
 
+        # set to None if confirmed (nullable) is None
+        # and model_fields_set contains the field
+        if self.confirmed is None and "confirmed" in self.model_fields_set:
+            _dict['confirmed'] = None
+
+        # set to None if confirmed_precision (nullable) is None
+        # and model_fields_set contains the field
+        if self.confirmed_precision is None and "confirmed_precision" in self.model_fields_set:
+            _dict['confirmed_precision'] = None
+
         # set to None if split_adjusted (nullable) is None
         # and model_fields_set contains the field
         if self.split_adjusted is None and "split_adjusted" in self.model_fields_set:
@@ -199,6 +211,8 @@ class CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItems
             "currency": obj.get("currency"),
             "confidence": obj.get("confidence"),
             "source_page": obj.get("source_page"),
+            "confirmed": obj.get("confirmed"),
+            "confirmed_precision": obj.get("confirmed_precision"),
             "revisions": [CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItemsInnerRevisionsInner.from_dict(_item) for _item in obj["revisions"]] if obj.get("revisions") is not None else None,
             "withdrawn_reason": obj.get("withdrawn_reason"),
             "as_reported": CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItemsInnerAsReported.from_dict(obj["as_reported"]) if obj.get("as_reported") is not None else None,
