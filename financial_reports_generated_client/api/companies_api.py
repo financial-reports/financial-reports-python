@@ -814,11 +814,11 @@ class CompaniesApi:
         isin: Annotated[Optional[StrictStr], Field(description="Filter by Company ISIN. Case-insensitive.")] = None,
         lei: Annotated[Optional[StrictStr], Field(description="Filter by Company Legal Entity Identifier (LEI). Case-insensitive.")] = None,
         listing_status: Annotated[Optional[StrictStr], Field(description="Filter by exchange-listing state (LISTED, DELISTED, SUSPENDED, UNKNOWN).  * `LISTED` - Listed * `DELISTED` - Delisted * `SUSPENDED` - Suspended * `UNKNOWN` - Unknown")] = None,
-        oics_class: Annotated[Optional[StrictStr], Field(description="Filter by OICS class code (e.g. `TC.SC.SEM.CHP`). Matches the company's primary class, not its secondaries. Public preview, OICS v0.3.")] = None,
-        oics_entity_type: Annotated[Optional[StrictStr], Field(description="Filter by OICS entity type: OPERATING, HOLDING, FUND, SPAC_SHELL, FINANCING_VEHICLE or PUBLIC_SECTOR. Public preview, OICS v0.3.")] = None,
-        oics_group: Annotated[Optional[StrictStr], Field(description="Filter by OICS industry group code (e.g. `TC.SC`). Matches the company's primary class. Public preview, OICS v0.3.")] = None,
-        oics_industry: Annotated[Optional[StrictStr], Field(description="Filter by OICS industry code (e.g. `TC.SC.SEM`). Matches the company's primary class. Public preview, OICS v0.3.")] = None,
-        oics_sector: Annotated[Optional[StrictStr], Field(description="Filter by OICS sector code (e.g. `TC`). Matches the company's primary class. Public preview, OICS v0.3.")] = None,
+        oics_class: Annotated[Optional[StrictStr], Field(description="Filter by OICS class code (e.g. `TC.SC.SEM.CHP`). Matches the company's primary class, not its secondaries. Public preview, OICS v0.4.")] = None,
+        oics_entity_type: Annotated[Optional[StrictStr], Field(description="Filter by OICS entity type: OPERATING, HOLDING, FUND, SPAC_SHELL, FINANCING_VEHICLE or PUBLIC_SECTOR. Public preview, OICS v0.4.")] = None,
+        oics_group: Annotated[Optional[StrictStr], Field(description="Filter by OICS industry group code (e.g. `TC.SC`). Matches the company's primary class. Public preview, OICS v0.4.")] = None,
+        oics_industry: Annotated[Optional[StrictStr], Field(description="Filter by OICS industry code (e.g. `TC.SC.SEM`). Matches the company's primary class. Public preview, OICS v0.4.")] = None,
+        oics_sector: Annotated[Optional[StrictStr], Field(description="Filter by OICS sector code (e.g. `TC`). Matches the company's primary class. Public preview, OICS v0.4.")] = None,
         on_watchlist: Annotated[Optional[StrictBool], Field(description="Filter by companies on the user's watchlist. Use 'true' to see only watchlist companies, 'false' to exclude them. Omitting the parameter returns all companies.")] = None,
         ordering: Annotated[Optional[StrictStr], Field(description="Sort field: `id`, `name`, `date_ipo`, `year_founded`, `country_iso__name`, `date_public` or `relevance`. Prefix with `-` for descending (e.g. `-name`).  `date_public` is the date the record last changed (Europe/Berlin). `-date_public` lists companies without one first; add `date_public_after` to leave those out.  `date_ipo` lists companies without a known IPO date last, `-date_ipo` lists them first.  With `search` or `ticker` and no `ordering`, results are ranked by relevance: exact ticker, exact name, name prefix, then fuzzy match, ties broken by filing volume. `relevance` only works with one of those two.")] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
@@ -865,15 +865,15 @@ class CompaniesApi:
         :type lei: str
         :param listing_status: Filter by exchange-listing state (LISTED, DELISTED, SUSPENDED, UNKNOWN).  * `LISTED` - Listed * `DELISTED` - Delisted * `SUSPENDED` - Suspended * `UNKNOWN` - Unknown
         :type listing_status: str
-        :param oics_class: Filter by OICS class code (e.g. `TC.SC.SEM.CHP`). Matches the company's primary class, not its secondaries. Public preview, OICS v0.3.
+        :param oics_class: Filter by OICS class code (e.g. `TC.SC.SEM.CHP`). Matches the company's primary class, not its secondaries. Public preview, OICS v0.4.
         :type oics_class: str
-        :param oics_entity_type: Filter by OICS entity type: OPERATING, HOLDING, FUND, SPAC_SHELL, FINANCING_VEHICLE or PUBLIC_SECTOR. Public preview, OICS v0.3.
+        :param oics_entity_type: Filter by OICS entity type: OPERATING, HOLDING, FUND, SPAC_SHELL, FINANCING_VEHICLE or PUBLIC_SECTOR. Public preview, OICS v0.4.
         :type oics_entity_type: str
-        :param oics_group: Filter by OICS industry group code (e.g. `TC.SC`). Matches the company's primary class. Public preview, OICS v0.3.
+        :param oics_group: Filter by OICS industry group code (e.g. `TC.SC`). Matches the company's primary class. Public preview, OICS v0.4.
         :type oics_group: str
-        :param oics_industry: Filter by OICS industry code (e.g. `TC.SC.SEM`). Matches the company's primary class. Public preview, OICS v0.3.
+        :param oics_industry: Filter by OICS industry code (e.g. `TC.SC.SEM`). Matches the company's primary class. Public preview, OICS v0.4.
         :type oics_industry: str
-        :param oics_sector: Filter by OICS sector code (e.g. `TC`). Matches the company's primary class. Public preview, OICS v0.3.
+        :param oics_sector: Filter by OICS sector code (e.g. `TC`). Matches the company's primary class. Public preview, OICS v0.4.
         :type oics_sector: str
         :param on_watchlist: Filter by companies on the user's watchlist. Use 'true' to see only watchlist companies, 'false' to exclude them. Omitting the parameter returns all companies.
         :type on_watchlist: bool
@@ -976,11 +976,11 @@ class CompaniesApi:
         isin: Annotated[Optional[StrictStr], Field(description="Filter by Company ISIN. Case-insensitive.")] = None,
         lei: Annotated[Optional[StrictStr], Field(description="Filter by Company Legal Entity Identifier (LEI). Case-insensitive.")] = None,
         listing_status: Annotated[Optional[StrictStr], Field(description="Filter by exchange-listing state (LISTED, DELISTED, SUSPENDED, UNKNOWN).  * `LISTED` - Listed * `DELISTED` - Delisted * `SUSPENDED` - Suspended * `UNKNOWN` - Unknown")] = None,
-        oics_class: Annotated[Optional[StrictStr], Field(description="Filter by OICS class code (e.g. `TC.SC.SEM.CHP`). Matches the company's primary class, not its secondaries. Public preview, OICS v0.3.")] = None,
-        oics_entity_type: Annotated[Optional[StrictStr], Field(description="Filter by OICS entity type: OPERATING, HOLDING, FUND, SPAC_SHELL, FINANCING_VEHICLE or PUBLIC_SECTOR. Public preview, OICS v0.3.")] = None,
-        oics_group: Annotated[Optional[StrictStr], Field(description="Filter by OICS industry group code (e.g. `TC.SC`). Matches the company's primary class. Public preview, OICS v0.3.")] = None,
-        oics_industry: Annotated[Optional[StrictStr], Field(description="Filter by OICS industry code (e.g. `TC.SC.SEM`). Matches the company's primary class. Public preview, OICS v0.3.")] = None,
-        oics_sector: Annotated[Optional[StrictStr], Field(description="Filter by OICS sector code (e.g. `TC`). Matches the company's primary class. Public preview, OICS v0.3.")] = None,
+        oics_class: Annotated[Optional[StrictStr], Field(description="Filter by OICS class code (e.g. `TC.SC.SEM.CHP`). Matches the company's primary class, not its secondaries. Public preview, OICS v0.4.")] = None,
+        oics_entity_type: Annotated[Optional[StrictStr], Field(description="Filter by OICS entity type: OPERATING, HOLDING, FUND, SPAC_SHELL, FINANCING_VEHICLE or PUBLIC_SECTOR. Public preview, OICS v0.4.")] = None,
+        oics_group: Annotated[Optional[StrictStr], Field(description="Filter by OICS industry group code (e.g. `TC.SC`). Matches the company's primary class. Public preview, OICS v0.4.")] = None,
+        oics_industry: Annotated[Optional[StrictStr], Field(description="Filter by OICS industry code (e.g. `TC.SC.SEM`). Matches the company's primary class. Public preview, OICS v0.4.")] = None,
+        oics_sector: Annotated[Optional[StrictStr], Field(description="Filter by OICS sector code (e.g. `TC`). Matches the company's primary class. Public preview, OICS v0.4.")] = None,
         on_watchlist: Annotated[Optional[StrictBool], Field(description="Filter by companies on the user's watchlist. Use 'true' to see only watchlist companies, 'false' to exclude them. Omitting the parameter returns all companies.")] = None,
         ordering: Annotated[Optional[StrictStr], Field(description="Sort field: `id`, `name`, `date_ipo`, `year_founded`, `country_iso__name`, `date_public` or `relevance`. Prefix with `-` for descending (e.g. `-name`).  `date_public` is the date the record last changed (Europe/Berlin). `-date_public` lists companies without one first; add `date_public_after` to leave those out.  `date_ipo` lists companies without a known IPO date last, `-date_ipo` lists them first.  With `search` or `ticker` and no `ordering`, results are ranked by relevance: exact ticker, exact name, name prefix, then fuzzy match, ties broken by filing volume. `relevance` only works with one of those two.")] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
@@ -1027,15 +1027,15 @@ class CompaniesApi:
         :type lei: str
         :param listing_status: Filter by exchange-listing state (LISTED, DELISTED, SUSPENDED, UNKNOWN).  * `LISTED` - Listed * `DELISTED` - Delisted * `SUSPENDED` - Suspended * `UNKNOWN` - Unknown
         :type listing_status: str
-        :param oics_class: Filter by OICS class code (e.g. `TC.SC.SEM.CHP`). Matches the company's primary class, not its secondaries. Public preview, OICS v0.3.
+        :param oics_class: Filter by OICS class code (e.g. `TC.SC.SEM.CHP`). Matches the company's primary class, not its secondaries. Public preview, OICS v0.4.
         :type oics_class: str
-        :param oics_entity_type: Filter by OICS entity type: OPERATING, HOLDING, FUND, SPAC_SHELL, FINANCING_VEHICLE or PUBLIC_SECTOR. Public preview, OICS v0.3.
+        :param oics_entity_type: Filter by OICS entity type: OPERATING, HOLDING, FUND, SPAC_SHELL, FINANCING_VEHICLE or PUBLIC_SECTOR. Public preview, OICS v0.4.
         :type oics_entity_type: str
-        :param oics_group: Filter by OICS industry group code (e.g. `TC.SC`). Matches the company's primary class. Public preview, OICS v0.3.
+        :param oics_group: Filter by OICS industry group code (e.g. `TC.SC`). Matches the company's primary class. Public preview, OICS v0.4.
         :type oics_group: str
-        :param oics_industry: Filter by OICS industry code (e.g. `TC.SC.SEM`). Matches the company's primary class. Public preview, OICS v0.3.
+        :param oics_industry: Filter by OICS industry code (e.g. `TC.SC.SEM`). Matches the company's primary class. Public preview, OICS v0.4.
         :type oics_industry: str
-        :param oics_sector: Filter by OICS sector code (e.g. `TC`). Matches the company's primary class. Public preview, OICS v0.3.
+        :param oics_sector: Filter by OICS sector code (e.g. `TC`). Matches the company's primary class. Public preview, OICS v0.4.
         :type oics_sector: str
         :param on_watchlist: Filter by companies on the user's watchlist. Use 'true' to see only watchlist companies, 'false' to exclude them. Omitting the parameter returns all companies.
         :type on_watchlist: bool
@@ -1138,11 +1138,11 @@ class CompaniesApi:
         isin: Annotated[Optional[StrictStr], Field(description="Filter by Company ISIN. Case-insensitive.")] = None,
         lei: Annotated[Optional[StrictStr], Field(description="Filter by Company Legal Entity Identifier (LEI). Case-insensitive.")] = None,
         listing_status: Annotated[Optional[StrictStr], Field(description="Filter by exchange-listing state (LISTED, DELISTED, SUSPENDED, UNKNOWN).  * `LISTED` - Listed * `DELISTED` - Delisted * `SUSPENDED` - Suspended * `UNKNOWN` - Unknown")] = None,
-        oics_class: Annotated[Optional[StrictStr], Field(description="Filter by OICS class code (e.g. `TC.SC.SEM.CHP`). Matches the company's primary class, not its secondaries. Public preview, OICS v0.3.")] = None,
-        oics_entity_type: Annotated[Optional[StrictStr], Field(description="Filter by OICS entity type: OPERATING, HOLDING, FUND, SPAC_SHELL, FINANCING_VEHICLE or PUBLIC_SECTOR. Public preview, OICS v0.3.")] = None,
-        oics_group: Annotated[Optional[StrictStr], Field(description="Filter by OICS industry group code (e.g. `TC.SC`). Matches the company's primary class. Public preview, OICS v0.3.")] = None,
-        oics_industry: Annotated[Optional[StrictStr], Field(description="Filter by OICS industry code (e.g. `TC.SC.SEM`). Matches the company's primary class. Public preview, OICS v0.3.")] = None,
-        oics_sector: Annotated[Optional[StrictStr], Field(description="Filter by OICS sector code (e.g. `TC`). Matches the company's primary class. Public preview, OICS v0.3.")] = None,
+        oics_class: Annotated[Optional[StrictStr], Field(description="Filter by OICS class code (e.g. `TC.SC.SEM.CHP`). Matches the company's primary class, not its secondaries. Public preview, OICS v0.4.")] = None,
+        oics_entity_type: Annotated[Optional[StrictStr], Field(description="Filter by OICS entity type: OPERATING, HOLDING, FUND, SPAC_SHELL, FINANCING_VEHICLE or PUBLIC_SECTOR. Public preview, OICS v0.4.")] = None,
+        oics_group: Annotated[Optional[StrictStr], Field(description="Filter by OICS industry group code (e.g. `TC.SC`). Matches the company's primary class. Public preview, OICS v0.4.")] = None,
+        oics_industry: Annotated[Optional[StrictStr], Field(description="Filter by OICS industry code (e.g. `TC.SC.SEM`). Matches the company's primary class. Public preview, OICS v0.4.")] = None,
+        oics_sector: Annotated[Optional[StrictStr], Field(description="Filter by OICS sector code (e.g. `TC`). Matches the company's primary class. Public preview, OICS v0.4.")] = None,
         on_watchlist: Annotated[Optional[StrictBool], Field(description="Filter by companies on the user's watchlist. Use 'true' to see only watchlist companies, 'false' to exclude them. Omitting the parameter returns all companies.")] = None,
         ordering: Annotated[Optional[StrictStr], Field(description="Sort field: `id`, `name`, `date_ipo`, `year_founded`, `country_iso__name`, `date_public` or `relevance`. Prefix with `-` for descending (e.g. `-name`).  `date_public` is the date the record last changed (Europe/Berlin). `-date_public` lists companies without one first; add `date_public_after` to leave those out.  `date_ipo` lists companies without a known IPO date last, `-date_ipo` lists them first.  With `search` or `ticker` and no `ordering`, results are ranked by relevance: exact ticker, exact name, name prefix, then fuzzy match, ties broken by filing volume. `relevance` only works with one of those two.")] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
@@ -1189,15 +1189,15 @@ class CompaniesApi:
         :type lei: str
         :param listing_status: Filter by exchange-listing state (LISTED, DELISTED, SUSPENDED, UNKNOWN).  * `LISTED` - Listed * `DELISTED` - Delisted * `SUSPENDED` - Suspended * `UNKNOWN` - Unknown
         :type listing_status: str
-        :param oics_class: Filter by OICS class code (e.g. `TC.SC.SEM.CHP`). Matches the company's primary class, not its secondaries. Public preview, OICS v0.3.
+        :param oics_class: Filter by OICS class code (e.g. `TC.SC.SEM.CHP`). Matches the company's primary class, not its secondaries. Public preview, OICS v0.4.
         :type oics_class: str
-        :param oics_entity_type: Filter by OICS entity type: OPERATING, HOLDING, FUND, SPAC_SHELL, FINANCING_VEHICLE or PUBLIC_SECTOR. Public preview, OICS v0.3.
+        :param oics_entity_type: Filter by OICS entity type: OPERATING, HOLDING, FUND, SPAC_SHELL, FINANCING_VEHICLE or PUBLIC_SECTOR. Public preview, OICS v0.4.
         :type oics_entity_type: str
-        :param oics_group: Filter by OICS industry group code (e.g. `TC.SC`). Matches the company's primary class. Public preview, OICS v0.3.
+        :param oics_group: Filter by OICS industry group code (e.g. `TC.SC`). Matches the company's primary class. Public preview, OICS v0.4.
         :type oics_group: str
-        :param oics_industry: Filter by OICS industry code (e.g. `TC.SC.SEM`). Matches the company's primary class. Public preview, OICS v0.3.
+        :param oics_industry: Filter by OICS industry code (e.g. `TC.SC.SEM`). Matches the company's primary class. Public preview, OICS v0.4.
         :type oics_industry: str
-        :param oics_sector: Filter by OICS sector code (e.g. `TC`). Matches the company's primary class. Public preview, OICS v0.3.
+        :param oics_sector: Filter by OICS sector code (e.g. `TC`). Matches the company's primary class. Public preview, OICS v0.4.
         :type oics_sector: str
         :param on_watchlist: Filter by companies on the user's watchlist. Use 'true' to see only watchlist companies, 'false' to exclude them. Omitting the parameter returns all companies.
         :type on_watchlist: bool

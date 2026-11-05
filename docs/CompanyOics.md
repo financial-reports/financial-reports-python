@@ -1,6 +1,6 @@
 # CompanyOics
 
-A company's label under the Open Industry Classification Standard (OICS): its primary class with the class's sector, industry group and industry, its entity type and up to two secondary classes. Public preview, OICS v0.3.
+A company's label under the Open Industry Classification Standard (OICS): its primary class with the class's sector, industry group and industry, its entity type and up to two secondary classes. Public preview, OICS v0.4.
 
 ## Properties
 
