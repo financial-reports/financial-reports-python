@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "1.4.167"
+__version__ = "1.4.168"
 
 # Define package exports
 __all__ = [
@@ -106,6 +106,9 @@ __all__ = [
     "FilingHistory",
     "FilingProcessedPayload",
     "FilingRemovedPayload",
+    "FilingSearchHit",
+    "FilingSearchMatch",
+    "FilingSearchResult",
     "FilingSummary",
     "FilingType",
     "FilingUpdatedPayload",
@@ -134,8 +137,10 @@ __all__ = [
     "PaginatedCountryList",
     "PaginatedFilingCategoryList",
     "PaginatedFilingHistoryList",
+    "PaginatedFilingSearchResultList",
+    "PaginatedFilingSearchResultListHistoryWindow",
+    "PaginatedFilingSearchResultListSearch",
     "PaginatedFilingSummaryList",
-    "PaginatedFilingSummaryListHistoryWindow",
     "PaginatedFilingTypeList",
     "PaginatedISICClassList",
     "PaginatedISICDivisionList",
@@ -265,6 +270,9 @@ from financial_reports_generated_client.models.filing_category import FilingCate
 from financial_reports_generated_client.models.filing_history import FilingHistory as FilingHistory
 from financial_reports_generated_client.models.filing_processed_payload import FilingProcessedPayload as FilingProcessedPayload
 from financial_reports_generated_client.models.filing_removed_payload import FilingRemovedPayload as FilingRemovedPayload
+from financial_reports_generated_client.models.filing_search_hit import FilingSearchHit as FilingSearchHit
+from financial_reports_generated_client.models.filing_search_match import FilingSearchMatch as FilingSearchMatch
+from financial_reports_generated_client.models.filing_search_result import FilingSearchResult as FilingSearchResult
 from financial_reports_generated_client.models.filing_summary import FilingSummary as FilingSummary
 from financial_reports_generated_client.models.filing_type import FilingType as FilingType
 from financial_reports_generated_client.models.filing_updated_payload import FilingUpdatedPayload as FilingUpdatedPayload
@@ -293,8 +301,10 @@ from financial_reports_generated_client.models.paginated_company_minimal_list im
 from financial_reports_generated_client.models.paginated_country_list import PaginatedCountryList as PaginatedCountryList
 from financial_reports_generated_client.models.paginated_filing_category_list import PaginatedFilingCategoryList as PaginatedFilingCategoryList
 from financial_reports_generated_client.models.paginated_filing_history_list import PaginatedFilingHistoryList as PaginatedFilingHistoryList
+from financial_reports_generated_client.models.paginated_filing_search_result_list import PaginatedFilingSearchResultList as PaginatedFilingSearchResultList
+from financial_reports_generated_client.models.paginated_filing_search_result_list_history_window import PaginatedFilingSearchResultListHistoryWindow as PaginatedFilingSearchResultListHistoryWindow
+from financial_reports_generated_client.models.paginated_filing_search_result_list_search import PaginatedFilingSearchResultListSearch as PaginatedFilingSearchResultListSearch
 from financial_reports_generated_client.models.paginated_filing_summary_list import PaginatedFilingSummaryList as PaginatedFilingSummaryList
-from financial_reports_generated_client.models.paginated_filing_summary_list_history_window import PaginatedFilingSummaryListHistoryWindow as PaginatedFilingSummaryListHistoryWindow
 from financial_reports_generated_client.models.paginated_filing_type_list import PaginatedFilingTypeList as PaginatedFilingTypeList
 from financial_reports_generated_client.models.paginated_isic_class_list import PaginatedISICClassList as PaginatedISICClassList
 from financial_reports_generated_client.models.paginated_isic_division_list import PaginatedISICDivisionList as PaginatedISICDivisionList

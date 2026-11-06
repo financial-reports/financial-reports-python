@@ -1,0 +1,44 @@
+# FilingSearchResult
+
+
+## Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**id** | **int** | Unique identifier for the filing. | [readonly] 
+**title** | **str** | Optional title for the filing | [optional] 
+**release_datetime** | **datetime** | Time the document was published on the authority page | [optional] 
+**document_url** | **str** | Direct link to our hosted copy of the original filing document or package (e.g. PDF/ZIP). Not signed and does not expire; anyone holding the link can download the file. Returns 404 if the filing is later removed or its document replaced. | [readonly] 
+**proxy_url** | **str** | The main document as one readable file. For a ZIP package, an API link (&#x60;/filings/{id}/document/&#x60;, needs your API key) that extracts and serves the main document; for every other format, the same link as the original document. | [readonly] 
+**viewer_url** | **str** | URL to view the filing in the interactive web platform. | [readonly] 
+**company** | [**CompanyMinimal**](CompanyMinimal.md) | The company that filed it, in the company summary shape. Its &#x60;date_public&#x60; is when we last updated the company record, not when the company was listed. | [readonly] 
+**filing_type** | [**FilingType**](FilingType.md) | What kind of document it is, e.g. an annual report. | [readonly] 
+**processing_status** | [**ProcessingStatusEnum**](ProcessingStatusEnum.md) | The lifecycle status of the raw document to markdown conversion.  * &#x60;PENDING&#x60; - Pending * &#x60;QUEUED&#x60; - Queued * &#x60;PROCESSING&#x60; - Processing * &#x60;COMPLETED&#x60; - Completed * &#x60;FAILED&#x60; - Failed * &#x60;SKIPPED&#x60; - Skipped | [optional] 
+**file_extension** | **str** | File extension (e.g., PDF, HTML). | [optional] 
+**file_size** | **int** | File size in bytes. | [optional] 
+**ingestion_mode** | [**IngestionModeEnum**](IngestionModeEnum.md) | Whether the filing was added to the platform promptly after publication. &#x60;REALTIME&#x60;: added within the source&#39;s normal publication delay (5 to 48 hours after &#x60;release_datetime&#x60;, depending on the source). &#x60;BACKFILLED&#x60;: everything else, including historical imports and new filings that reached the platform late, for example after a source outage. Set once when the filing is added and not recalculated afterwards.  * &#x60;REALTIME&#x60; - Realtime * &#x60;BACKFILLED&#x60; - Backfilled | [readonly] 
+**source_url** | **str** | Original public link for this filing at the source authority. Null when unavailable, for anonymised sources, or when the account does not have source identities unlocked. | [readonly] 
+**source_filing_type** | **str** | The source authority&#39;s own classification label, verbatim. Null when the source publishes no label, it was not captured, or the source is anonymised. Not gated on source identities. | [readonly] 
+**source_filing_id** | **str** | The publisher&#39;s own identifier for this document, verbatim. Unique per source. On sources that publish one record per event and fan it out into one row per language and per attachment, the leading portion is a shared event stem, so rows of one disclosure sort together (see the cross-language grouping recipe in the API docs). Null on legacy rows ingested before the identifier was retained. | [readonly] 
+**match** | [**FilingSearchMatch**](FilingSearchMatch.md) |  | 
+
+## Example
+
+```python
+from financial_reports_generated_client.models.filing_search_result import FilingSearchResult
+
+# TODO update the JSON string below
+json = "{}"
+# create an instance of FilingSearchResult from a JSON string
+filing_search_result_instance = FilingSearchResult.from_json(json)
+# print the JSON string representation of the object
+print(FilingSearchResult.to_json())
+
+# convert the object into a dict
+filing_search_result_dict = filing_search_result_instance.to_dict()
+# create an instance of FilingSearchResult from a dict
+filing_search_result_from_dict = FilingSearchResult.from_dict(filing_search_result_dict)
+```
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+

@@ -18,12 +18,13 @@ from typing_extensions import Annotated
 
 from datetime import datetime
 from pydantic import Field, StrictBool, StrictBytes, StrictFloat, StrictInt, StrictStr, field_validator
-from typing import Optional, Tuple, Union
+from typing import List, Optional, Tuple, Union
 from typing_extensions import Annotated
 from financial_reports_generated_client.models.filing import Filing
 from financial_reports_generated_client.models.markdown_batch_search_request import MarkdownBatchSearchRequest
 from financial_reports_generated_client.models.markdown_batch_search_response import MarkdownBatchSearchResponse
 from financial_reports_generated_client.models.paginated_filing_history_list import PaginatedFilingHistoryList
+from financial_reports_generated_client.models.paginated_filing_search_result_list import PaginatedFilingSearchResultList
 from financial_reports_generated_client.models.paginated_filing_summary_list import PaginatedFilingSummaryList
 
 from financial_reports_generated_client.api_client import ApiClient, RequestSerialized
@@ -2833,6 +2834,662 @@ class FilingsApi:
         return self.api_client.param_serialize(
             method='GET',
             resource_path='/filings/{id}/',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    async def filings_search_list(
+        self,
+        q: Annotated[List[StrictStr], Field(description="Text to find in the full text of filings, across all filings. Repeatable: the values are alternatives, OR-ed, so pass translations and synonyms (at most 5, each 1-200 characters). Results are ordered by relevance unless `ordering` is given, and capped at the first 1000 by relevance. Billed as one Markdown request only when the page has at least one result.")],
+        added_to_platform_from: Annotated[Optional[datetime], Field(description="Filter by date added to platform (inclusive start date, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
+        added_to_platform_to: Annotated[Optional[datetime], Field(description="Filter by date added to platform (inclusive end date, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
+        company: Annotated[Optional[StrictInt], Field(description="Filter by internal Company ID.")] = None,
+        company_isin: Annotated[Optional[StrictStr], Field(description="Filter by Company ISIN. Case-insensitive.")] = None,
+        countries: Annotated[Optional[StrictStr], Field(description="Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values (e.g., US,GB,DE).")] = None,
+        include_companions: Annotated[Optional[StrictBool], Field(description="Include companion data files in type and category filters. Companions are small machine-readable XBRL/XML/JSON files stored beside a report for financial extraction, typed like that report. Most are not converted to markdown and show processing_status SKIPPED; the report beside them carries the text. Default false: type, types, category and categories return the reports only.")] = None,
+        include_predecessors: Annotated[Optional[StrictBool], Field(description="With `company`, also return the filings of the company's predecessors: the issuers it succeeded by reorganisation or redomicile (its `predecessors` of kind reorganization or other on GET /companies/{id}/, followed back through the chain; merged-in targets and spin-off parents are not included), each up to and including the link's effective date (UTC). Each filing's `company` is still the issuer that filed it. Default false. Requires `company`; `lei` and `company_isin` do not follow predecessors.")] = None,
+        language: Annotated[Optional[StrictStr], Field(description="Filter by a single filing language ISO 639-1 code (e.g., en).")] = None,
+        languages: Annotated[Optional[StrictStr], Field(description="Filter by filing language ISO 639-1 code(s). Comma-separated for multiple values (e.g., en,de).")] = None,
+        lei: Annotated[Optional[StrictStr], Field(description="Filter by Company Legal Entity Identifier (LEI).")] = None,
+        ordering: Annotated[Optional[StrictStr], Field(description="`relevance` (the default: best match first, then newest `release_datetime`, then `id`), or one of `id`, `release_datetime`, `added_to_platform`, `filing_type_confidence`, prefixed with '-' for descending order. Any ordering sorts the same capped set of matches.")] = None,
+        page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set. Page depth is capped: (page - 1) x page_size above 50,000 (500,000 inside an added_to_platform_from/added_to_platform_to window of 7 days or less) returns 400 `offset_too_large`, and a page past the last one returns 404 `page_out_of_range`. To walk further, use `cursor`, which has no offset limit.")] = None,
+        page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
+        release_datetime_from: Annotated[Optional[datetime], Field(description="Filter by release datetime (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
+        release_datetime_to: Annotated[Optional[datetime], Field(description="Filter by release datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
+        source: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Filter by a single data source ID.")] = None,
+        sources: Annotated[Optional[StrictStr], Field(description="Filter by data source ID(s). Comma-separated for multiple values (e.g., 38,40,51).")] = None,
+        type: Annotated[Optional[StrictStr], Field(description="One FinancialFilings filing type code (e.g. `10-K`). Unknown codes return 400. Codes are listed at GET /filing-types/; for the source's own form name, use `source_filing_type`.")] = None,
+        types: Annotated[Optional[StrictStr], Field(description="Several filing type codes, comma-separated (e.g. `10-K,IR`). Unknown codes return 400. Codes are listed at GET /filing-types/; for the source's own form names, use `source_filing_type`.")] = None,
+        view: Annotated[Optional[StrictStr], Field(description="`summary` (default) or `full`, which returns every field of each filing.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> PaginatedFilingSearchResultList:
+        """Search Filing Text Across All Filings
+
+        **Cost:** 6 credits per request (12 for premium filing types).  --- Find the filings whose text mentions something, across every filing with text. Every returned filing matched the full-text index.  - `q` = full-text content of filings. Filters that can be combined with it: `added_to_platform_from`, `added_to_platform_to`, `company`, `company_isin`, `countries`, `include_companions`, `include_predecessors`, `language`, `languages`, `lei`, `release_datetime_from`, `release_datetime_to`, `source`, `sources`, `type`, `types`. Any other filter, and `search` (the company/title name match on `GET /filings/`), returns 400 `filter_not_supported_with_q`. - `q` is repeatable and its values are alternatives, OR-ed: pass translations and synonyms in the filing languages (`q=buyback&q=share repurchase&q=自社株買い`). At most 5 values, each at most 200 characters. - Results are ordered by relevance (best match first) unless `ordering` is given. - Only the first 1000 matches by relevance are paged: `count` is the number of those you can see (at most 1000); when `search.scan_complete` is false it is a lower bound, not the visible total. `search.capped` true means more matching filings MAY exist beyond what this endpoint pages. `search.scan_complete` false means the scan stopped before checking every candidate; an EMPTY page with `scan_complete` false is NOT an absence: narrow `q` or the filters and search again. A page past the first 1000 returns 400 `search_page_past_cap`: narrow `q` or the filters. - Each result carries `match`, snippets from its text: `{query, hits, total_hits}` with the `q` value that was found literally; `{\"query\": null, \"hits\": [], \"total_hits\": 0}` when the text was read but no value occurs literally (it matched through stemming, accent folding or word segmentation); `null` when snippets were not computed (results after the first 10 of a page, or text that could not be read in time). Neither `null` nor 0 means the filing did not match. `match.truncated` is true when the filing is longer than the 20 MB the index reads, so a match past that point is not found. - 503 `search_unavailable` when the full-text index cannot be reached; retry later. - 429 `search_busy` when too many searches are already running (at most 2 at a time per account): retry after `Retry-After` seconds. Not billed.  Billed as one Markdown request per page, at the price in the Cost line, only when the page has at least one result; a page with no results bills nothing (on a plan metered in requests it still counts as one request).
+
+        :param q: Text to find in the full text of filings, across all filings. Repeatable: the values are alternatives, OR-ed, so pass translations and synonyms (at most 5, each 1-200 characters). Results are ordered by relevance unless `ordering` is given, and capped at the first 1000 by relevance. Billed as one Markdown request only when the page has at least one result. (required)
+        :type q: List[str]
+        :param added_to_platform_from: Filter by date added to platform (inclusive start date, YYYY-MM-DDTHH:MM:SSZ format).
+        :type added_to_platform_from: datetime
+        :param added_to_platform_to: Filter by date added to platform (inclusive end date, YYYY-MM-DDTHH:MM:SSZ format).
+        :type added_to_platform_to: datetime
+        :param company: Filter by internal Company ID.
+        :type company: int
+        :param company_isin: Filter by Company ISIN. Case-insensitive.
+        :type company_isin: str
+        :param countries: Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values (e.g., US,GB,DE).
+        :type countries: str
+        :param include_companions: Include companion data files in type and category filters. Companions are small machine-readable XBRL/XML/JSON files stored beside a report for financial extraction, typed like that report. Most are not converted to markdown and show processing_status SKIPPED; the report beside them carries the text. Default false: type, types, category and categories return the reports only.
+        :type include_companions: bool
+        :param include_predecessors: With `company`, also return the filings of the company's predecessors: the issuers it succeeded by reorganisation or redomicile (its `predecessors` of kind reorganization or other on GET /companies/{id}/, followed back through the chain; merged-in targets and spin-off parents are not included), each up to and including the link's effective date (UTC). Each filing's `company` is still the issuer that filed it. Default false. Requires `company`; `lei` and `company_isin` do not follow predecessors.
+        :type include_predecessors: bool
+        :param language: Filter by a single filing language ISO 639-1 code (e.g., en).
+        :type language: str
+        :param languages: Filter by filing language ISO 639-1 code(s). Comma-separated for multiple values (e.g., en,de).
+        :type languages: str
+        :param lei: Filter by Company Legal Entity Identifier (LEI).
+        :type lei: str
+        :param ordering: `relevance` (the default: best match first, then newest `release_datetime`, then `id`), or one of `id`, `release_datetime`, `added_to_platform`, `filing_type_confidence`, prefixed with '-' for descending order. Any ordering sorts the same capped set of matches.
+        :type ordering: str
+        :param page: A page number within the paginated result set. Page depth is capped: (page - 1) x page_size above 50,000 (500,000 inside an added_to_platform_from/added_to_platform_to window of 7 days or less) returns 400 `offset_too_large`, and a page past the last one returns 404 `page_out_of_range`. To walk further, use `cursor`, which has no offset limit.
+        :type page: int
+        :param page_size: Number of results to return per page.
+        :type page_size: int
+        :param release_datetime_from: Filter by release datetime (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).
+        :type release_datetime_from: datetime
+        :param release_datetime_to: Filter by release datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).
+        :type release_datetime_to: datetime
+        :param source: Filter by a single data source ID.
+        :type source: float
+        :param sources: Filter by data source ID(s). Comma-separated for multiple values (e.g., 38,40,51).
+        :type sources: str
+        :param type: One FinancialFilings filing type code (e.g. `10-K`). Unknown codes return 400. Codes are listed at GET /filing-types/; for the source's own form name, use `source_filing_type`.
+        :type type: str
+        :param types: Several filing type codes, comma-separated (e.g. `10-K,IR`). Unknown codes return 400. Codes are listed at GET /filing-types/; for the source's own form names, use `source_filing_type`.
+        :type types: str
+        :param view: `summary` (default) or `full`, which returns every field of each filing.
+        :type view: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._filings_search_list_serialize(
+            q=q,
+            added_to_platform_from=added_to_platform_from,
+            added_to_platform_to=added_to_platform_to,
+            company=company,
+            company_isin=company_isin,
+            countries=countries,
+            include_companions=include_companions,
+            include_predecessors=include_predecessors,
+            language=language,
+            languages=languages,
+            lei=lei,
+            ordering=ordering,
+            page=page,
+            page_size=page_size,
+            release_datetime_from=release_datetime_from,
+            release_datetime_to=release_datetime_to,
+            source=source,
+            sources=sources,
+            type=type,
+            types=types,
+            view=view,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PaginatedFilingSearchResultList",
+            '400': "Dict[str, object]",
+            '401': "ErrorDetail",
+            '429': "ErrorDetail",
+            '503': "ErrorDetail",
+            '403': "ErrorDetail",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    async def filings_search_list_with_http_info(
+        self,
+        q: Annotated[List[StrictStr], Field(description="Text to find in the full text of filings, across all filings. Repeatable: the values are alternatives, OR-ed, so pass translations and synonyms (at most 5, each 1-200 characters). Results are ordered by relevance unless `ordering` is given, and capped at the first 1000 by relevance. Billed as one Markdown request only when the page has at least one result.")],
+        added_to_platform_from: Annotated[Optional[datetime], Field(description="Filter by date added to platform (inclusive start date, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
+        added_to_platform_to: Annotated[Optional[datetime], Field(description="Filter by date added to platform (inclusive end date, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
+        company: Annotated[Optional[StrictInt], Field(description="Filter by internal Company ID.")] = None,
+        company_isin: Annotated[Optional[StrictStr], Field(description="Filter by Company ISIN. Case-insensitive.")] = None,
+        countries: Annotated[Optional[StrictStr], Field(description="Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values (e.g., US,GB,DE).")] = None,
+        include_companions: Annotated[Optional[StrictBool], Field(description="Include companion data files in type and category filters. Companions are small machine-readable XBRL/XML/JSON files stored beside a report for financial extraction, typed like that report. Most are not converted to markdown and show processing_status SKIPPED; the report beside them carries the text. Default false: type, types, category and categories return the reports only.")] = None,
+        include_predecessors: Annotated[Optional[StrictBool], Field(description="With `company`, also return the filings of the company's predecessors: the issuers it succeeded by reorganisation or redomicile (its `predecessors` of kind reorganization or other on GET /companies/{id}/, followed back through the chain; merged-in targets and spin-off parents are not included), each up to and including the link's effective date (UTC). Each filing's `company` is still the issuer that filed it. Default false. Requires `company`; `lei` and `company_isin` do not follow predecessors.")] = None,
+        language: Annotated[Optional[StrictStr], Field(description="Filter by a single filing language ISO 639-1 code (e.g., en).")] = None,
+        languages: Annotated[Optional[StrictStr], Field(description="Filter by filing language ISO 639-1 code(s). Comma-separated for multiple values (e.g., en,de).")] = None,
+        lei: Annotated[Optional[StrictStr], Field(description="Filter by Company Legal Entity Identifier (LEI).")] = None,
+        ordering: Annotated[Optional[StrictStr], Field(description="`relevance` (the default: best match first, then newest `release_datetime`, then `id`), or one of `id`, `release_datetime`, `added_to_platform`, `filing_type_confidence`, prefixed with '-' for descending order. Any ordering sorts the same capped set of matches.")] = None,
+        page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set. Page depth is capped: (page - 1) x page_size above 50,000 (500,000 inside an added_to_platform_from/added_to_platform_to window of 7 days or less) returns 400 `offset_too_large`, and a page past the last one returns 404 `page_out_of_range`. To walk further, use `cursor`, which has no offset limit.")] = None,
+        page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
+        release_datetime_from: Annotated[Optional[datetime], Field(description="Filter by release datetime (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
+        release_datetime_to: Annotated[Optional[datetime], Field(description="Filter by release datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
+        source: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Filter by a single data source ID.")] = None,
+        sources: Annotated[Optional[StrictStr], Field(description="Filter by data source ID(s). Comma-separated for multiple values (e.g., 38,40,51).")] = None,
+        type: Annotated[Optional[StrictStr], Field(description="One FinancialFilings filing type code (e.g. `10-K`). Unknown codes return 400. Codes are listed at GET /filing-types/; for the source's own form name, use `source_filing_type`.")] = None,
+        types: Annotated[Optional[StrictStr], Field(description="Several filing type codes, comma-separated (e.g. `10-K,IR`). Unknown codes return 400. Codes are listed at GET /filing-types/; for the source's own form names, use `source_filing_type`.")] = None,
+        view: Annotated[Optional[StrictStr], Field(description="`summary` (default) or `full`, which returns every field of each filing.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[PaginatedFilingSearchResultList]:
+        """Search Filing Text Across All Filings
+
+        **Cost:** 6 credits per request (12 for premium filing types).  --- Find the filings whose text mentions something, across every filing with text. Every returned filing matched the full-text index.  - `q` = full-text content of filings. Filters that can be combined with it: `added_to_platform_from`, `added_to_platform_to`, `company`, `company_isin`, `countries`, `include_companions`, `include_predecessors`, `language`, `languages`, `lei`, `release_datetime_from`, `release_datetime_to`, `source`, `sources`, `type`, `types`. Any other filter, and `search` (the company/title name match on `GET /filings/`), returns 400 `filter_not_supported_with_q`. - `q` is repeatable and its values are alternatives, OR-ed: pass translations and synonyms in the filing languages (`q=buyback&q=share repurchase&q=自社株買い`). At most 5 values, each at most 200 characters. - Results are ordered by relevance (best match first) unless `ordering` is given. - Only the first 1000 matches by relevance are paged: `count` is the number of those you can see (at most 1000); when `search.scan_complete` is false it is a lower bound, not the visible total. `search.capped` true means more matching filings MAY exist beyond what this endpoint pages. `search.scan_complete` false means the scan stopped before checking every candidate; an EMPTY page with `scan_complete` false is NOT an absence: narrow `q` or the filters and search again. A page past the first 1000 returns 400 `search_page_past_cap`: narrow `q` or the filters. - Each result carries `match`, snippets from its text: `{query, hits, total_hits}` with the `q` value that was found literally; `{\"query\": null, \"hits\": [], \"total_hits\": 0}` when the text was read but no value occurs literally (it matched through stemming, accent folding or word segmentation); `null` when snippets were not computed (results after the first 10 of a page, or text that could not be read in time). Neither `null` nor 0 means the filing did not match. `match.truncated` is true when the filing is longer than the 20 MB the index reads, so a match past that point is not found. - 503 `search_unavailable` when the full-text index cannot be reached; retry later. - 429 `search_busy` when too many searches are already running (at most 2 at a time per account): retry after `Retry-After` seconds. Not billed.  Billed as one Markdown request per page, at the price in the Cost line, only when the page has at least one result; a page with no results bills nothing (on a plan metered in requests it still counts as one request).
+
+        :param q: Text to find in the full text of filings, across all filings. Repeatable: the values are alternatives, OR-ed, so pass translations and synonyms (at most 5, each 1-200 characters). Results are ordered by relevance unless `ordering` is given, and capped at the first 1000 by relevance. Billed as one Markdown request only when the page has at least one result. (required)
+        :type q: List[str]
+        :param added_to_platform_from: Filter by date added to platform (inclusive start date, YYYY-MM-DDTHH:MM:SSZ format).
+        :type added_to_platform_from: datetime
+        :param added_to_platform_to: Filter by date added to platform (inclusive end date, YYYY-MM-DDTHH:MM:SSZ format).
+        :type added_to_platform_to: datetime
+        :param company: Filter by internal Company ID.
+        :type company: int
+        :param company_isin: Filter by Company ISIN. Case-insensitive.
+        :type company_isin: str
+        :param countries: Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values (e.g., US,GB,DE).
+        :type countries: str
+        :param include_companions: Include companion data files in type and category filters. Companions are small machine-readable XBRL/XML/JSON files stored beside a report for financial extraction, typed like that report. Most are not converted to markdown and show processing_status SKIPPED; the report beside them carries the text. Default false: type, types, category and categories return the reports only.
+        :type include_companions: bool
+        :param include_predecessors: With `company`, also return the filings of the company's predecessors: the issuers it succeeded by reorganisation or redomicile (its `predecessors` of kind reorganization or other on GET /companies/{id}/, followed back through the chain; merged-in targets and spin-off parents are not included), each up to and including the link's effective date (UTC). Each filing's `company` is still the issuer that filed it. Default false. Requires `company`; `lei` and `company_isin` do not follow predecessors.
+        :type include_predecessors: bool
+        :param language: Filter by a single filing language ISO 639-1 code (e.g., en).
+        :type language: str
+        :param languages: Filter by filing language ISO 639-1 code(s). Comma-separated for multiple values (e.g., en,de).
+        :type languages: str
+        :param lei: Filter by Company Legal Entity Identifier (LEI).
+        :type lei: str
+        :param ordering: `relevance` (the default: best match first, then newest `release_datetime`, then `id`), or one of `id`, `release_datetime`, `added_to_platform`, `filing_type_confidence`, prefixed with '-' for descending order. Any ordering sorts the same capped set of matches.
+        :type ordering: str
+        :param page: A page number within the paginated result set. Page depth is capped: (page - 1) x page_size above 50,000 (500,000 inside an added_to_platform_from/added_to_platform_to window of 7 days or less) returns 400 `offset_too_large`, and a page past the last one returns 404 `page_out_of_range`. To walk further, use `cursor`, which has no offset limit.
+        :type page: int
+        :param page_size: Number of results to return per page.
+        :type page_size: int
+        :param release_datetime_from: Filter by release datetime (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).
+        :type release_datetime_from: datetime
+        :param release_datetime_to: Filter by release datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).
+        :type release_datetime_to: datetime
+        :param source: Filter by a single data source ID.
+        :type source: float
+        :param sources: Filter by data source ID(s). Comma-separated for multiple values (e.g., 38,40,51).
+        :type sources: str
+        :param type: One FinancialFilings filing type code (e.g. `10-K`). Unknown codes return 400. Codes are listed at GET /filing-types/; for the source's own form name, use `source_filing_type`.
+        :type type: str
+        :param types: Several filing type codes, comma-separated (e.g. `10-K,IR`). Unknown codes return 400. Codes are listed at GET /filing-types/; for the source's own form names, use `source_filing_type`.
+        :type types: str
+        :param view: `summary` (default) or `full`, which returns every field of each filing.
+        :type view: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._filings_search_list_serialize(
+            q=q,
+            added_to_platform_from=added_to_platform_from,
+            added_to_platform_to=added_to_platform_to,
+            company=company,
+            company_isin=company_isin,
+            countries=countries,
+            include_companions=include_companions,
+            include_predecessors=include_predecessors,
+            language=language,
+            languages=languages,
+            lei=lei,
+            ordering=ordering,
+            page=page,
+            page_size=page_size,
+            release_datetime_from=release_datetime_from,
+            release_datetime_to=release_datetime_to,
+            source=source,
+            sources=sources,
+            type=type,
+            types=types,
+            view=view,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PaginatedFilingSearchResultList",
+            '400': "Dict[str, object]",
+            '401': "ErrorDetail",
+            '429': "ErrorDetail",
+            '503': "ErrorDetail",
+            '403': "ErrorDetail",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    async def filings_search_list_without_preload_content(
+        self,
+        q: Annotated[List[StrictStr], Field(description="Text to find in the full text of filings, across all filings. Repeatable: the values are alternatives, OR-ed, so pass translations and synonyms (at most 5, each 1-200 characters). Results are ordered by relevance unless `ordering` is given, and capped at the first 1000 by relevance. Billed as one Markdown request only when the page has at least one result.")],
+        added_to_platform_from: Annotated[Optional[datetime], Field(description="Filter by date added to platform (inclusive start date, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
+        added_to_platform_to: Annotated[Optional[datetime], Field(description="Filter by date added to platform (inclusive end date, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
+        company: Annotated[Optional[StrictInt], Field(description="Filter by internal Company ID.")] = None,
+        company_isin: Annotated[Optional[StrictStr], Field(description="Filter by Company ISIN. Case-insensitive.")] = None,
+        countries: Annotated[Optional[StrictStr], Field(description="Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values (e.g., US,GB,DE).")] = None,
+        include_companions: Annotated[Optional[StrictBool], Field(description="Include companion data files in type and category filters. Companions are small machine-readable XBRL/XML/JSON files stored beside a report for financial extraction, typed like that report. Most are not converted to markdown and show processing_status SKIPPED; the report beside them carries the text. Default false: type, types, category and categories return the reports only.")] = None,
+        include_predecessors: Annotated[Optional[StrictBool], Field(description="With `company`, also return the filings of the company's predecessors: the issuers it succeeded by reorganisation or redomicile (its `predecessors` of kind reorganization or other on GET /companies/{id}/, followed back through the chain; merged-in targets and spin-off parents are not included), each up to and including the link's effective date (UTC). Each filing's `company` is still the issuer that filed it. Default false. Requires `company`; `lei` and `company_isin` do not follow predecessors.")] = None,
+        language: Annotated[Optional[StrictStr], Field(description="Filter by a single filing language ISO 639-1 code (e.g., en).")] = None,
+        languages: Annotated[Optional[StrictStr], Field(description="Filter by filing language ISO 639-1 code(s). Comma-separated for multiple values (e.g., en,de).")] = None,
+        lei: Annotated[Optional[StrictStr], Field(description="Filter by Company Legal Entity Identifier (LEI).")] = None,
+        ordering: Annotated[Optional[StrictStr], Field(description="`relevance` (the default: best match first, then newest `release_datetime`, then `id`), or one of `id`, `release_datetime`, `added_to_platform`, `filing_type_confidence`, prefixed with '-' for descending order. Any ordering sorts the same capped set of matches.")] = None,
+        page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set. Page depth is capped: (page - 1) x page_size above 50,000 (500,000 inside an added_to_platform_from/added_to_platform_to window of 7 days or less) returns 400 `offset_too_large`, and a page past the last one returns 404 `page_out_of_range`. To walk further, use `cursor`, which has no offset limit.")] = None,
+        page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
+        release_datetime_from: Annotated[Optional[datetime], Field(description="Filter by release datetime (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
+        release_datetime_to: Annotated[Optional[datetime], Field(description="Filter by release datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
+        source: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Filter by a single data source ID.")] = None,
+        sources: Annotated[Optional[StrictStr], Field(description="Filter by data source ID(s). Comma-separated for multiple values (e.g., 38,40,51).")] = None,
+        type: Annotated[Optional[StrictStr], Field(description="One FinancialFilings filing type code (e.g. `10-K`). Unknown codes return 400. Codes are listed at GET /filing-types/; for the source's own form name, use `source_filing_type`.")] = None,
+        types: Annotated[Optional[StrictStr], Field(description="Several filing type codes, comma-separated (e.g. `10-K,IR`). Unknown codes return 400. Codes are listed at GET /filing-types/; for the source's own form names, use `source_filing_type`.")] = None,
+        view: Annotated[Optional[StrictStr], Field(description="`summary` (default) or `full`, which returns every field of each filing.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Search Filing Text Across All Filings
+
+        **Cost:** 6 credits per request (12 for premium filing types).  --- Find the filings whose text mentions something, across every filing with text. Every returned filing matched the full-text index.  - `q` = full-text content of filings. Filters that can be combined with it: `added_to_platform_from`, `added_to_platform_to`, `company`, `company_isin`, `countries`, `include_companions`, `include_predecessors`, `language`, `languages`, `lei`, `release_datetime_from`, `release_datetime_to`, `source`, `sources`, `type`, `types`. Any other filter, and `search` (the company/title name match on `GET /filings/`), returns 400 `filter_not_supported_with_q`. - `q` is repeatable and its values are alternatives, OR-ed: pass translations and synonyms in the filing languages (`q=buyback&q=share repurchase&q=自社株買い`). At most 5 values, each at most 200 characters. - Results are ordered by relevance (best match first) unless `ordering` is given. - Only the first 1000 matches by relevance are paged: `count` is the number of those you can see (at most 1000); when `search.scan_complete` is false it is a lower bound, not the visible total. `search.capped` true means more matching filings MAY exist beyond what this endpoint pages. `search.scan_complete` false means the scan stopped before checking every candidate; an EMPTY page with `scan_complete` false is NOT an absence: narrow `q` or the filters and search again. A page past the first 1000 returns 400 `search_page_past_cap`: narrow `q` or the filters. - Each result carries `match`, snippets from its text: `{query, hits, total_hits}` with the `q` value that was found literally; `{\"query\": null, \"hits\": [], \"total_hits\": 0}` when the text was read but no value occurs literally (it matched through stemming, accent folding or word segmentation); `null` when snippets were not computed (results after the first 10 of a page, or text that could not be read in time). Neither `null` nor 0 means the filing did not match. `match.truncated` is true when the filing is longer than the 20 MB the index reads, so a match past that point is not found. - 503 `search_unavailable` when the full-text index cannot be reached; retry later. - 429 `search_busy` when too many searches are already running (at most 2 at a time per account): retry after `Retry-After` seconds. Not billed.  Billed as one Markdown request per page, at the price in the Cost line, only when the page has at least one result; a page with no results bills nothing (on a plan metered in requests it still counts as one request).
+
+        :param q: Text to find in the full text of filings, across all filings. Repeatable: the values are alternatives, OR-ed, so pass translations and synonyms (at most 5, each 1-200 characters). Results are ordered by relevance unless `ordering` is given, and capped at the first 1000 by relevance. Billed as one Markdown request only when the page has at least one result. (required)
+        :type q: List[str]
+        :param added_to_platform_from: Filter by date added to platform (inclusive start date, YYYY-MM-DDTHH:MM:SSZ format).
+        :type added_to_platform_from: datetime
+        :param added_to_platform_to: Filter by date added to platform (inclusive end date, YYYY-MM-DDTHH:MM:SSZ format).
+        :type added_to_platform_to: datetime
+        :param company: Filter by internal Company ID.
+        :type company: int
+        :param company_isin: Filter by Company ISIN. Case-insensitive.
+        :type company_isin: str
+        :param countries: Filter by Company country ISO Alpha-2 code(s). Comma-separated for multiple values (e.g., US,GB,DE).
+        :type countries: str
+        :param include_companions: Include companion data files in type and category filters. Companions are small machine-readable XBRL/XML/JSON files stored beside a report for financial extraction, typed like that report. Most are not converted to markdown and show processing_status SKIPPED; the report beside them carries the text. Default false: type, types, category and categories return the reports only.
+        :type include_companions: bool
+        :param include_predecessors: With `company`, also return the filings of the company's predecessors: the issuers it succeeded by reorganisation or redomicile (its `predecessors` of kind reorganization or other on GET /companies/{id}/, followed back through the chain; merged-in targets and spin-off parents are not included), each up to and including the link's effective date (UTC). Each filing's `company` is still the issuer that filed it. Default false. Requires `company`; `lei` and `company_isin` do not follow predecessors.
+        :type include_predecessors: bool
+        :param language: Filter by a single filing language ISO 639-1 code (e.g., en).
+        :type language: str
+        :param languages: Filter by filing language ISO 639-1 code(s). Comma-separated for multiple values (e.g., en,de).
+        :type languages: str
+        :param lei: Filter by Company Legal Entity Identifier (LEI).
+        :type lei: str
+        :param ordering: `relevance` (the default: best match first, then newest `release_datetime`, then `id`), or one of `id`, `release_datetime`, `added_to_platform`, `filing_type_confidence`, prefixed with '-' for descending order. Any ordering sorts the same capped set of matches.
+        :type ordering: str
+        :param page: A page number within the paginated result set. Page depth is capped: (page - 1) x page_size above 50,000 (500,000 inside an added_to_platform_from/added_to_platform_to window of 7 days or less) returns 400 `offset_too_large`, and a page past the last one returns 404 `page_out_of_range`. To walk further, use `cursor`, which has no offset limit.
+        :type page: int
+        :param page_size: Number of results to return per page.
+        :type page_size: int
+        :param release_datetime_from: Filter by release datetime (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).
+        :type release_datetime_from: datetime
+        :param release_datetime_to: Filter by release datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).
+        :type release_datetime_to: datetime
+        :param source: Filter by a single data source ID.
+        :type source: float
+        :param sources: Filter by data source ID(s). Comma-separated for multiple values (e.g., 38,40,51).
+        :type sources: str
+        :param type: One FinancialFilings filing type code (e.g. `10-K`). Unknown codes return 400. Codes are listed at GET /filing-types/; for the source's own form name, use `source_filing_type`.
+        :type type: str
+        :param types: Several filing type codes, comma-separated (e.g. `10-K,IR`). Unknown codes return 400. Codes are listed at GET /filing-types/; for the source's own form names, use `source_filing_type`.
+        :type types: str
+        :param view: `summary` (default) or `full`, which returns every field of each filing.
+        :type view: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._filings_search_list_serialize(
+            q=q,
+            added_to_platform_from=added_to_platform_from,
+            added_to_platform_to=added_to_platform_to,
+            company=company,
+            company_isin=company_isin,
+            countries=countries,
+            include_companions=include_companions,
+            include_predecessors=include_predecessors,
+            language=language,
+            languages=languages,
+            lei=lei,
+            ordering=ordering,
+            page=page,
+            page_size=page_size,
+            release_datetime_from=release_datetime_from,
+            release_datetime_to=release_datetime_to,
+            source=source,
+            sources=sources,
+            type=type,
+            types=types,
+            view=view,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PaginatedFilingSearchResultList",
+            '400': "Dict[str, object]",
+            '401': "ErrorDetail",
+            '429': "ErrorDetail",
+            '503': "ErrorDetail",
+            '403': "ErrorDetail",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _filings_search_list_serialize(
+        self,
+        q,
+        added_to_platform_from,
+        added_to_platform_to,
+        company,
+        company_isin,
+        countries,
+        include_companions,
+        include_predecessors,
+        language,
+        languages,
+        lei,
+        ordering,
+        page,
+        page_size,
+        release_datetime_from,
+        release_datetime_to,
+        source,
+        sources,
+        type,
+        types,
+        view,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+            'q': 'multi',
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        if added_to_platform_from is not None:
+            if isinstance(added_to_platform_from, datetime):
+                _query_params.append(
+                    (
+                        'added_to_platform_from',
+                        added_to_platform_from.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('added_to_platform_from', added_to_platform_from))
+            
+        if added_to_platform_to is not None:
+            if isinstance(added_to_platform_to, datetime):
+                _query_params.append(
+                    (
+                        'added_to_platform_to',
+                        added_to_platform_to.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('added_to_platform_to', added_to_platform_to))
+            
+        if company is not None:
+            
+            _query_params.append(('company', company))
+            
+        if company_isin is not None:
+            
+            _query_params.append(('company_isin', company_isin))
+            
+        if countries is not None:
+            
+            _query_params.append(('countries', countries))
+            
+        if include_companions is not None:
+            
+            _query_params.append(('include_companions', include_companions))
+            
+        if include_predecessors is not None:
+            
+            _query_params.append(('include_predecessors', include_predecessors))
+            
+        if language is not None:
+            
+            _query_params.append(('language', language))
+            
+        if languages is not None:
+            
+            _query_params.append(('languages', languages))
+            
+        if lei is not None:
+            
+            _query_params.append(('lei', lei))
+            
+        if ordering is not None:
+            
+            _query_params.append(('ordering', ordering))
+            
+        if page is not None:
+            
+            _query_params.append(('page', page))
+            
+        if page_size is not None:
+            
+            _query_params.append(('page_size', page_size))
+            
+        if q is not None:
+            
+            _query_params.append(('q', q))
+            
+        if release_datetime_from is not None:
+            if isinstance(release_datetime_from, datetime):
+                _query_params.append(
+                    (
+                        'release_datetime_from',
+                        release_datetime_from.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('release_datetime_from', release_datetime_from))
+            
+        if release_datetime_to is not None:
+            if isinstance(release_datetime_to, datetime):
+                _query_params.append(
+                    (
+                        'release_datetime_to',
+                        release_datetime_to.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('release_datetime_to', release_datetime_to))
+            
+        if source is not None:
+            
+            _query_params.append(('source', source))
+            
+        if sources is not None:
+            
+            _query_params.append(('sources', sources))
+            
+        if type is not None:
+            
+            _query_params.append(('type', type))
+            
+        if types is not None:
+            
+            _query_params.append(('types', types))
+            
+        if view is not None:
+            
+            _query_params.append(('view', view))
+            
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'CognitoJWT', 
+            'ApiKeyAuth'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/filings/search/',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,

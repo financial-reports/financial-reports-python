@@ -18,22 +18,31 @@ import pprint
 import re  # noqa: F401
 import json
 
-from datetime import datetime
-from pydantic import BaseModel, ConfigDict, StrictBool, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
 
-class PaginatedFilingSummaryListHistoryWindow(BaseModel):
+class PaginatedFilingSearchResultListSearch(BaseModel):
     """
-    Present when the caller's plan applies a rolling history window and this request reached past its cutoff. Absent for callers with unrestricted history. It means the plan limits how far back this account can see: filings older than the cutoff exist in the FinancialFilings archive. It is never a statement about catalog coverage, and it does not by itself prove that this particular result set lost rows.
+    About the full-text candidate set. `count` is the number of matching filings you can see among those this endpoint pages, at most `max_results`. Visibility is checked against the index's candidates in relevance order, up to a scan limit.
     """ # noqa: E501
-    limited: Optional[StrictBool] = None
-    max_history_days: Optional[StrictInt] = None
-    cutoff: Optional[datetime] = None
-    detail: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["limited", "max_history_days", "cutoff", "detail"]
+    capped: Optional[StrictBool] = Field(default=None, description="True: more matching filings MAY exist beyond what this endpoint pages, either because more than `max_results` are visible or because the scan stopped early (`scan_complete` false). False: `count` is every match you can see.")
+    scan_complete: Optional[StrictBool] = Field(default=None, description="True: every candidate the index matched was checked. False: the scan stopped (a scan limit or time budget) before checking every candidate. An EMPTY page with `scan_complete` false is NOT an absence, and more matching filings may exist; `count` is then a lower bound (what the scan found), not the visible total: narrow `q` or the filters and search again.")
+    max_results: Optional[StrictInt] = None
+    scope: Optional[StrictStr] = None
+    __properties: ClassVar[List[str]] = ["capped", "scan_complete", "max_results", "scope"]
+
+    @field_validator('scope')
+    def scope_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['filings_with_text']):
+            raise ValueError("must be one of enum values ('filings_with_text')")
+        return value
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -53,7 +62,7 @@ class PaginatedFilingSummaryListHistoryWindow(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of PaginatedFilingSummaryListHistoryWindow from a JSON string"""
+        """Create an instance of PaginatedFilingSearchResultListSearch from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -78,7 +87,7 @@ class PaginatedFilingSummaryListHistoryWindow(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of PaginatedFilingSummaryListHistoryWindow from a dict"""
+        """Create an instance of PaginatedFilingSearchResultListSearch from a dict"""
         if obj is None:
             return None
 
@@ -86,10 +95,10 @@ class PaginatedFilingSummaryListHistoryWindow(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "limited": obj.get("limited"),
-            "max_history_days": obj.get("max_history_days"),
-            "cutoff": obj.get("cutoff"),
-            "detail": obj.get("detail")
+            "capped": obj.get("capped"),
+            "scan_complete": obj.get("scan_complete"),
+            "max_results": obj.get("max_results"),
+            "scope": obj.get("scope")
         })
         return _obj
 

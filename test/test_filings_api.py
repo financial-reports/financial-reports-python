@@ -76,6 +76,13 @@ class TestFilingsApi(unittest.IsolatedAsyncioTestCase):
         """
         pass
 
+    async def test_filings_search_list(self) -> None:
+        """Test case for filings_search_list
+
+        Search Filing Text Across All Filings
+        """
+        pass
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -42,7 +42,7 @@ class TestMarkdownBatchSearchResult(unittest.TestCase):
                 reason = '',
                 total_hits = 56,
                 hits = [
-                    financial_reports_generated_client.models.markdown_batch_search_hit.MarkdownBatchSearchHit(
+                    financial_reports_generated_client.models.filing_search_hit.FilingSearchHit(
                         offset = 56, 
                         snippet = '', )
                     ]

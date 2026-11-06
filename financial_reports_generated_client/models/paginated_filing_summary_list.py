@@ -21,7 +21,7 @@ import json
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from financial_reports_generated_client.models.filing_summary import FilingSummary
-from financial_reports_generated_client.models.paginated_filing_summary_list_history_window import PaginatedFilingSummaryListHistoryWindow
+from financial_reports_generated_client.models.paginated_filing_search_result_list_history_window import PaginatedFilingSearchResultListHistoryWindow
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
@@ -34,7 +34,7 @@ class PaginatedFilingSummaryList(BaseModel):
     next: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["http://api.example.org/accounts/?page=4"]})
     previous: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["http://api.example.org/accounts/?page=2"]})
     results: List[FilingSummary]
-    history_window: Optional[PaginatedFilingSummaryListHistoryWindow] = None
+    history_window: Optional[PaginatedFilingSearchResultListHistoryWindow] = None
     __properties: ClassVar[List[str]] = ["count", "next", "previous", "results", "history_window"]
 
     model_config = ConfigDict(
@@ -101,7 +101,7 @@ class PaginatedFilingSummaryList(BaseModel):
             "next": obj.get("next"),
             "previous": obj.get("previous"),
             "results": [FilingSummary.from_dict(_item) for _item in obj["results"]] if obj.get("results") is not None else None,
-            "history_window": PaginatedFilingSummaryListHistoryWindow.from_dict(obj["history_window"]) if obj.get("history_window") is not None else None
+            "history_window": PaginatedFilingSearchResultListHistoryWindow.from_dict(obj["history_window"]) if obj.get("history_window") is not None else None
         })
         return _obj
 
