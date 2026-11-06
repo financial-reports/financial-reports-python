@@ -1,6 +1,6 @@
 # CompanyListing
 
-One equity listing of the company: venue, ticker and FIGI.
+One equity listing of the company: venue, ticker, FIGI, and whether it is historical.
 
 ## Properties
 
@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **exch_code** | **str** | Short exchange code, e.g. &#x60;GY&#x60; for Xetra. | 
 **security_type** | **str** | Security type, e.g. &#x60;Common Stock&#x60;. | 
 **figi** | **str** | Financial Instrument Global Identifier (FIGI) of this listing. | 
+**historical** | **bool** | &#x60;true&#x60; when the company is delisted: the line records a venue it used to trade on, not a current one. The ticker may since have been reused by another issuer. | 
 
 ## Example
 

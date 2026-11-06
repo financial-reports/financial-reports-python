@@ -3,7 +3,7 @@
 """
     FinancialFilings API
 
-    Filings and company data for listed companies across the G20 and Europe. Send your API key in the `X-API-Key` header on every request. New here? Start with the [quickstart](https://financialfilings.com/developers/#quickstart).  **Credits.** Every call costs credits, and each endpoint below shows its price. `X-Credits-Charged` on the response says what a call cost, and `GET /usage/` shows the month so far. A free account gets a monthly allowance. Webhooks are an Enterprise feature. Pricing: https://financialfilings.com/developers/  **Rate limits.** Responses carry `X-RateLimit-Burst-Limit` (a rate such as `50/second`), `X-RateLimit-Monthly-Limit`, `X-RateLimit-Monthly-Remaining` and `X-RateLimit-Monthly-Unit` (`requests` or `credits`). All four are strings and can be non-numeric (for example `Unlimited`); the last two are left out when they don't apply.
+    Filings and company data for listed companies across the G20 and Europe. Send your API key in the `X-API-Key` header on every request. New here? Start with the [quickstart](https://financialfilings.com/developers/#quickstart).  **Credits.** Every call costs credits, and each endpoint below shows its price. `X-Credits-Charged` on the response says what a call cost, and `GET /usage/` shows the month so far. A free account gets a monthly allowance. Webhooks are an Enterprise feature. Pricing: https://financialfilings.com/developers/  **Rate limits.** Responses carry `X-RateLimit-Burst-Limit` (a rate such as `50/second`), `X-RateLimit-Monthly-Limit`, `X-RateLimit-Monthly-Remaining` and `X-RateLimit-Monthly-Unit` (`requests` or `credits`). All four are strings and can be non-numeric (for example `Unlimited`); the last two are left out when they don't apply.  **Without an API key (x402).** Most read endpoints can also be paid per call in USDC on Base: a request without a key answers `402 Payment Required` with the price in the `PAYMENT-REQUIRED` header. Terms: https://financialfilings.com/api-terms/#keyless-access. Agent directories read the paid routes from https://api.financialreports.eu/openapi.json.
 
     The version of the OpenAPI document: 1.4.0
     Contact: api@financialfilings.com
@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
@@ -26,7 +26,7 @@ from pydantic_core import to_jsonable_python
 
 class CompanyListing(BaseModel):
     """
-    One equity listing of the company: venue, ticker and FIGI.
+    One equity listing of the company: venue, ticker, FIGI, and whether it is historical.
     """ # noqa: E501
     mic: Optional[StrictStr] = Field(description="ISO 10383 Market Identifier Code of the venue.")
     ticker: StrictStr = Field(description="Ticker on that venue.")
@@ -34,7 +34,8 @@ class CompanyListing(BaseModel):
     exch_code: Optional[StrictStr] = Field(description="Short exchange code, e.g. `GY` for Xetra.")
     security_type: Optional[StrictStr] = Field(description="Security type, e.g. `Common Stock`.")
     figi: Optional[StrictStr] = Field(description="Financial Instrument Global Identifier (FIGI) of this listing.")
-    __properties: ClassVar[List[str]] = ["mic", "ticker", "exchange_name", "exch_code", "security_type", "figi"]
+    historical: StrictBool = Field(description="`true` when the company is delisted: the line records a venue it used to trade on, not a current one. The ticker may since have been reused by another issuer.")
+    __properties: ClassVar[List[str]] = ["mic", "ticker", "exchange_name", "exch_code", "security_type", "figi", "historical"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -117,7 +118,8 @@ class CompanyListing(BaseModel):
             "exchange_name": obj.get("exchange_name"),
             "exch_code": obj.get("exch_code"),
             "security_type": obj.get("security_type"),
-            "figi": obj.get("figi")
+            "figi": obj.get("figi"),
+            "historical": obj.get("historical")
         })
         return _obj
 

@@ -3,7 +3,7 @@
 """
     FinancialFilings API
 
-    Filings and company data for listed companies across the G20 and Europe. Send your API key in the `X-API-Key` header on every request. New here? Start with the [quickstart](https://financialfilings.com/developers/#quickstart).  **Credits.** Every call costs credits, and each endpoint below shows its price. `X-Credits-Charged` on the response says what a call cost, and `GET /usage/` shows the month so far. A free account gets a monthly allowance. Webhooks are an Enterprise feature. Pricing: https://financialfilings.com/developers/  **Rate limits.** Responses carry `X-RateLimit-Burst-Limit` (a rate such as `50/second`), `X-RateLimit-Monthly-Limit`, `X-RateLimit-Monthly-Remaining` and `X-RateLimit-Monthly-Unit` (`requests` or `credits`). All four are strings and can be non-numeric (for example `Unlimited`); the last two are left out when they don't apply.
+    Filings and company data for listed companies across the G20 and Europe. Send your API key in the `X-API-Key` header on every request. New here? Start with the [quickstart](https://financialfilings.com/developers/#quickstart).  **Credits.** Every call costs credits, and each endpoint below shows its price. `X-Credits-Charged` on the response says what a call cost, and `GET /usage/` shows the month so far. A free account gets a monthly allowance. Webhooks are an Enterprise feature. Pricing: https://financialfilings.com/developers/  **Rate limits.** Responses carry `X-RateLimit-Burst-Limit` (a rate such as `50/second`), `X-RateLimit-Monthly-Limit`, `X-RateLimit-Monthly-Remaining` and `X-RateLimit-Monthly-Unit` (`requests` or `credits`). All four are strings and can be non-numeric (for example `Unlimited`); the last two are left out when they don't apply.  **Without an API key (x402).** Most read endpoints can also be paid per call in USDC on Base: a request without a key answers `402 Payment Required` with the price in the `PAYMENT-REQUIRED` header. Terms: https://financialfilings.com/api-terms/#keyless-access. Agent directories read the paid routes from https://api.financialreports.eu/openapi.json.
 
     The version of the OpenAPI document: 1.4.0
     Contact: api@financialfilings.com
@@ -136,7 +136,8 @@ class TestCompany(unittest.TestCase):
                         exchange_name = '', 
                         exch_code = '', 
                         security_type = '', 
-                        figi = '', )
+                        figi = '', 
+                        historical = True, )
                     ],
                 legal_status = '',
                 legal_form = financial_reports_generated_client.models.entity_legal_form.EntityLegalForm(
@@ -269,7 +270,8 @@ class TestCompany(unittest.TestCase):
                         exchange_name = '', 
                         exch_code = '', 
                         security_type = '', 
-                        figi = '', )
+                        figi = '', 
+                        historical = True, )
                     ],
                 legal_status = '',
                 legal_form = financial_reports_generated_client.models.entity_legal_form.EntityLegalForm(

@@ -1,7 +1,7 @@
 """
     FinancialFilings API
 
-    Filings and company data for listed companies across the G20 and Europe. Send your API key in the `X-API-Key` header on every request. New here? Start with the [quickstart](https://financialfilings.com/developers/#quickstart).  **Credits.** Every call costs credits, and each endpoint below shows its price. `X-Credits-Charged` on the response says what a call cost, and `GET /usage/` shows the month so far. A free account gets a monthly allowance. Webhooks are an Enterprise feature. Pricing: https://financialfilings.com/developers/  **Rate limits.** Responses carry `X-RateLimit-Burst-Limit` (a rate such as `50/second`), `X-RateLimit-Monthly-Limit`, `X-RateLimit-Monthly-Remaining` and `X-RateLimit-Monthly-Unit` (`requests` or `credits`). All four are strings and can be non-numeric (for example `Unlimited`); the last two are left out when they don't apply.
+    Filings and company data for listed companies across the G20 and Europe. Send your API key in the `X-API-Key` header on every request. New here? Start with the [quickstart](https://financialfilings.com/developers/#quickstart).  **Credits.** Every call costs credits, and each endpoint below shows its price. `X-Credits-Charged` on the response says what a call cost, and `GET /usage/` shows the month so far. A free account gets a monthly allowance. Webhooks are an Enterprise feature. Pricing: https://financialfilings.com/developers/  **Rate limits.** Responses carry `X-RateLimit-Burst-Limit` (a rate such as `50/second`), `X-RateLimit-Monthly-Limit`, `X-RateLimit-Monthly-Remaining` and `X-RateLimit-Monthly-Unit` (`requests` or `credits`). All four are strings and can be non-numeric (for example `Unlimited`); the last two are left out when they don't apply.  **Without an API key (x402).** Most read endpoints can also be paid per call in USDC on Base: a request without a key answers `402 Payment Required` with the price in the `PAYMENT-REQUIRED` header. Terms: https://financialfilings.com/api-terms/#keyless-access. Agent directories read the paid routes from https://api.financialreports.eu/openapi.json.
 
     The version of the OpenAPI document: 1.4.0
     Contact: api@financialfilings.com
@@ -20,7 +20,7 @@ from setuptools import setup, find_packages  # noqa: H301
 # prerequisite: setuptools
 # http://pypi.python.org/pypi/setuptools
 NAME = "financial-reports-generated-client"
-VERSION = "1.4.166"
+VERSION = "1.4.167"
 PYTHON_REQUIRES = ">= 3.10"
 REQUIRES = [
     "python-dateutil >= 2.8.2",
@@ -44,7 +44,7 @@ setup(
     include_package_data=True,
     long_description_content_type='text/markdown',
     long_description="""\
-    Filings and company data for listed companies across the G20 and Europe. Send your API key in the &#x60;X-API-Key&#x60; header on every request. New here? Start with the [quickstart](https://financialfilings.com/developers/#quickstart).  **Credits.** Every call costs credits, and each endpoint below shows its price. &#x60;X-Credits-Charged&#x60; on the response says what a call cost, and &#x60;GET /usage/&#x60; shows the month so far. A free account gets a monthly allowance. Webhooks are an Enterprise feature. Pricing: https://financialfilings.com/developers/  **Rate limits.** Responses carry &#x60;X-RateLimit-Burst-Limit&#x60; (a rate such as &#x60;50/second&#x60;), &#x60;X-RateLimit-Monthly-Limit&#x60;, &#x60;X-RateLimit-Monthly-Remaining&#x60; and &#x60;X-RateLimit-Monthly-Unit&#x60; (&#x60;requests&#x60; or &#x60;credits&#x60;). All four are strings and can be non-numeric (for example &#x60;Unlimited&#x60;); the last two are left out when they don&#39;t apply.
+    Filings and company data for listed companies across the G20 and Europe. Send your API key in the &#x60;X-API-Key&#x60; header on every request. New here? Start with the [quickstart](https://financialfilings.com/developers/#quickstart).  **Credits.** Every call costs credits, and each endpoint below shows its price. &#x60;X-Credits-Charged&#x60; on the response says what a call cost, and &#x60;GET /usage/&#x60; shows the month so far. A free account gets a monthly allowance. Webhooks are an Enterprise feature. Pricing: https://financialfilings.com/developers/  **Rate limits.** Responses carry &#x60;X-RateLimit-Burst-Limit&#x60; (a rate such as &#x60;50/second&#x60;), &#x60;X-RateLimit-Monthly-Limit&#x60;, &#x60;X-RateLimit-Monthly-Remaining&#x60; and &#x60;X-RateLimit-Monthly-Unit&#x60; (&#x60;requests&#x60; or &#x60;credits&#x60;). All four are strings and can be non-numeric (for example &#x60;Unlimited&#x60;); the last two are left out when they don&#39;t apply.  **Without an API key (x402).** Most read endpoints can also be paid per call in USDC on Base: a request without a key answers &#x60;402 Payment Required&#x60; with the price in the &#x60;PAYMENT-REQUIRED&#x60; header. Terms: https://financialfilings.com/api-terms/#keyless-access. Agent directories read the paid routes from https://api.financialreports.eu/openapi.json.
     """,  # noqa: E501
     package_data={"financial_reports_generated_client": ["py.typed"]},
 )

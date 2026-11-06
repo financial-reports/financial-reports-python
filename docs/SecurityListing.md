@@ -16,6 +16,7 @@ Name | Type | Description | Notes
 **figi** | **str** |  | [readonly] 
 **composite_figi** | **str** |  | [readonly] 
 **share_class_figi** | **str** |  | [readonly] 
+**historical** | **bool** | &#x60;true&#x60; when the company is delisted: the line records a venue it used to trade on, not a current one. The ticker may since have been reused by another issuer. | [readonly] 
 
 ## Example
 
