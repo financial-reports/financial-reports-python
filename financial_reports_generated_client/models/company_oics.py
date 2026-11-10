@@ -28,7 +28,7 @@ from pydantic_core import to_jsonable_python
 
 class CompanyOics(BaseModel):
     """
-    A company's label under the Open Industry Classification Standard (OICS): its primary class with the class's sector, industry group and industry, its entity type and up to two secondary classes. Public preview, OICS v0.4.
+    A company's label under the Open Industry Classification Standard (OICS): its primary class with the class's sector, industry group and industry, its entity type and up to two secondary classes. OICS v0.4: codes can still change before v1.0.
     """ # noqa: E501
     code: Optional[StrictStr] = Field(description="Primary class code: the class's place in the tree, SECTOR.GROUP.INDUSTRY.CLASS (e.g. `TC.SC.SEM.CHP`). Null for an entity type that carries no class.")
     name: Optional[StrictStr] = Field(description="Primary class name. Null when `code` is.")
