@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "1.4.171"
+__version__ = "1.4.172"
 
 # Define package exports
 __all__ = [
@@ -140,6 +140,7 @@ __all__ = [
     "PaginatedFilingSearchResultList",
     "PaginatedFilingSearchResultListHistoryWindow",
     "PaginatedFilingSearchResultListSearch",
+    "PaginatedFilingSearchResultListSearchTypesResolvedInner",
     "PaginatedFilingSummaryList",
     "PaginatedFilingTypeList",
     "PaginatedISICClassList",
@@ -304,6 +305,7 @@ from financial_reports_generated_client.models.paginated_filing_history_list imp
 from financial_reports_generated_client.models.paginated_filing_search_result_list import PaginatedFilingSearchResultList as PaginatedFilingSearchResultList
 from financial_reports_generated_client.models.paginated_filing_search_result_list_history_window import PaginatedFilingSearchResultListHistoryWindow as PaginatedFilingSearchResultListHistoryWindow
 from financial_reports_generated_client.models.paginated_filing_search_result_list_search import PaginatedFilingSearchResultListSearch as PaginatedFilingSearchResultListSearch
+from financial_reports_generated_client.models.paginated_filing_search_result_list_search_types_resolved_inner import PaginatedFilingSearchResultListSearchTypesResolvedInner as PaginatedFilingSearchResultListSearchTypesResolvedInner
 from financial_reports_generated_client.models.paginated_filing_summary_list import PaginatedFilingSummaryList as PaginatedFilingSummaryList
 from financial_reports_generated_client.models.paginated_filing_type_list import PaginatedFilingTypeList as PaginatedFilingTypeList
 from financial_reports_generated_client.models.paginated_isic_class_list import PaginatedISICClassList as PaginatedISICClassList

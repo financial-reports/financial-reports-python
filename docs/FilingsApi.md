@@ -761,7 +761,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **filings_search_list**
-> PaginatedFilingSearchResultList filings_search_list(q, added_to_platform_from=added_to_platform_from, added_to_platform_to=added_to_platform_to, company=company, company_isin=company_isin, countries=countries, include_companions=include_companions, include_predecessors=include_predecessors, language=language, languages=languages, lei=lei, ordering=ordering, page=page, page_size=page_size, release_datetime_from=release_datetime_from, release_datetime_to=release_datetime_to, source=source, sources=sources, type=type, types=types, view=view)
+> PaginatedFilingSearchResultList filings_search_list(q, added_to_platform_from=added_to_platform_from, added_to_platform_to=added_to_platform_to, company=company, company_isin=company_isin, countries=countries, include_companions=include_companions, include_predecessors=include_predecessors, language=language, languages=languages, lei=lei, max_results=max_results, ordering=ordering, page=page, page_size=page_size, release_datetime_from=release_datetime_from, release_datetime_to=release_datetime_to, source=source, sources=sources, type=type, types=types, view=view)
 
 Search Filing Text Across All Filings
 
@@ -772,8 +772,9 @@ Find the filings whose text mentions something, across every filing with text. E
 
 - `q` = full-text content of filings. Filters that can be combined with it: `added_to_platform_from`, `added_to_platform_to`, `company`, `company_isin`, `countries`, `include_companions`, `include_predecessors`, `language`, `languages`, `lei`, `release_datetime_from`, `release_datetime_to`, `source`, `sources`, `type`, `types`. Any other filter, and `search` (the company/title name match on `GET /filings/`), returns 400 `filter_not_supported_with_q`.
 - `q` is repeatable and its values are alternatives, OR-ed: pass translations and synonyms in the filing languages (`q=buyback&q=share repurchase&q=自社株買い`). At most 5 values, each at most 200 characters.
+- `type`/`types` also take regulator form names (`10-Q`, `8-K`, `S-1`, `20-F`): each is searched as the FinancialFilings type(s) its filings are filed under, and `search.types_resolved` says which, with `widens` when those types hold other filings too and `may_miss` when some filings of the form are under a type not included. A code with no mapping returns 400.
 - Results are ordered by relevance (best match first) unless `ordering` is given.
-- Only the first 1000 matches by relevance are paged: `count` is the number of those you can see (at most 1000); when `search.scan_complete` is false it is a lower bound, not the visible total. `search.capped` true means more matching filings MAY exist beyond what this endpoint pages. `search.scan_complete` false means the scan stopped before checking every candidate; an EMPTY page with `scan_complete` false is NOT an absence: narrow `q` or the filters and search again. A page past the first 1000 returns 400 `search_page_past_cap`: narrow `q` or the filters.
+- Only the first `max_results` matches by relevance are paged (default 1000; send `max_results` from 1 to 10000 to change it, echoed in `search.max_results`): `count` is the number of those you can see (at most `max_results`); when `search.scan_complete` is false it is a lower bound, not the visible total. `search.capped` true means more matching filings MAY exist beyond what this endpoint pages. `search.scan_complete` false means the scan stopped before checking every candidate (a larger `max_results` gets the same time to scan, so it is more likely to stop early); an EMPTY page with `scan_complete` false is NOT an absence: narrow `q` or the filters and search again. A page past the first `max_results` returns 400 `search_page_past_cap`: narrow `q` or the filters, or raise `max_results`. Each page is billed the same whatever `max_results` is.
 - Each result carries `match`, snippets from its text: `{query, hits, total_hits}` with the `q` value that was found literally; `{"query": null, "hits": [], "total_hits": 0}` when the text was read but no value occurs literally (it matched through stemming, accent folding or word segmentation); `null` when snippets were not computed (results after the first 10 of a page, or text that could not be read in time). Neither `null` nor 0 means the filing did not match. `match.truncated` is true when the filing is longer than the 20 MB the index reads, so a match past that point is not found.
 - 503 `search_unavailable` when the full-text index cannot be reached; retry later.
 - 429 `search_busy` when too many searches are already running (at most 2 at a time per account): retry after `Retry-After` seconds. Not billed.
@@ -817,7 +818,7 @@ configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
 async with financial_reports_generated_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = financial_reports_generated_client.FilingsApi(api_client)
-    q = ['q_example'] # List[str] | Text to find in the full text of filings, across all filings. Repeatable: the values are alternatives, OR-ed, so pass translations and synonyms (at most 5, each 1-200 characters). Results are ordered by relevance unless `ordering` is given, and capped at the first 1000 by relevance. Billed as one Markdown request only when the page has at least one result.
+    q = ['q_example'] # List[str] | Text to find in the full text of filings, across all filings. Repeatable: the values are alternatives, OR-ed, so pass translations and synonyms (at most 5, each 1-200 characters). Results are ordered by relevance unless `ordering` is given, and capped at the first `max_results` by relevance (default 1000). Billed as one Markdown request only when the page has at least one result.
     added_to_platform_from = '2013-10-20T19:20:30+01:00' # datetime | Filter by date added to platform (inclusive start date, YYYY-MM-DDTHH:MM:SSZ format). (optional)
     added_to_platform_to = '2013-10-20T19:20:30+01:00' # datetime | Filter by date added to platform (inclusive end date, YYYY-MM-DDTHH:MM:SSZ format). (optional)
     company = 56 # int | Filter by internal Company ID. (optional)
@@ -828,6 +829,7 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
     language = 'language_example' # str | Filter by a single filing language ISO 639-1 code (e.g., en). (optional)
     languages = 'languages_example' # str | Filter by filing language ISO 639-1 code(s). Comma-separated for multiple values (e.g., en,de). (optional)
     lei = 'lei_example' # str | Filter by Company Legal Entity Identifier (LEI). (optional)
+    max_results = 56 # int | How many matches, best first, this search pages: a whole number from 1 to 10000 (default 1000). `count` and the pages stop there, and `search.max_results` echoes it. A larger value gets the same time to scan, so `search.scan_complete` is more likely to be false. Each page is billed the same whatever this is. Out of range or not a whole number: 400 `invalid_max_results`. (optional)
     ordering = 'ordering_example' # str | `relevance` (the default: best match first, then newest `release_datetime`, then `id`), or one of `id`, `release_datetime`, `added_to_platform`, `filing_type_confidence`, prefixed with '-' for descending order. Any ordering sorts the same capped set of matches. (optional)
     page = 56 # int | A page number within the paginated result set. Page depth is capped: (page - 1) x page_size above 50,000 (500,000 inside an added_to_platform_from/added_to_platform_to window of 7 days or less) returns 400 `offset_too_large`, and a page past the last one returns 404 `page_out_of_range`. To walk further, use `cursor`, which has no offset limit. (optional)
     page_size = 56 # int | Number of results to return per page. (optional)
@@ -835,13 +837,13 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
     release_datetime_to = '2013-10-20T19:20:30+01:00' # datetime | Filter by release datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format). (optional)
     source = 3.4 # float | Filter by a single data source ID. (optional)
     sources = 'sources_example' # str | Filter by data source ID(s). Comma-separated for multiple values (e.g., 38,40,51). (optional)
-    type = 'type_example' # str | One FinancialFilings filing type code (e.g. `10-K`). Unknown codes return 400. Codes are listed at GET /filing-types/; for the source's own form name, use `source_filing_type`. (optional)
-    types = 'types_example' # str | Several filing type codes, comma-separated (e.g. `10-K,IR`). Unknown codes return 400. Codes are listed at GET /filing-types/; for the source's own form names, use `source_filing_type`. (optional)
+    type = 'type_example' # str | One filing type code (e.g. `10-K`), listed at GET /filing-types/. A regulator form name such as `10-Q` or `8-K` is searched as the type(s) its filings are filed under and reported in `search.types_resolved`; a code with no mapping returns 400. (optional)
+    types = 'types_example' # str | Several filing type codes, comma-separated (e.g. `10-K,IR`), listed at GET /filing-types/. Regulator form names such as `10-Q`, `8-K` or `S-1` are searched as the type(s) their filings are filed under and reported in `search.types_resolved`, with `widens` when the types also hold other filings; a code with no mapping returns 400. (optional)
     view = 'summary' # str | `summary` (default) or `full`, which returns every field of each filing. (optional) (default to 'summary')
 
     try:
         # Search Filing Text Across All Filings
-        api_response = await api_instance.filings_search_list(q, added_to_platform_from=added_to_platform_from, added_to_platform_to=added_to_platform_to, company=company, company_isin=company_isin, countries=countries, include_companions=include_companions, include_predecessors=include_predecessors, language=language, languages=languages, lei=lei, ordering=ordering, page=page, page_size=page_size, release_datetime_from=release_datetime_from, release_datetime_to=release_datetime_to, source=source, sources=sources, type=type, types=types, view=view)
+        api_response = await api_instance.filings_search_list(q, added_to_platform_from=added_to_platform_from, added_to_platform_to=added_to_platform_to, company=company, company_isin=company_isin, countries=countries, include_companions=include_companions, include_predecessors=include_predecessors, language=language, languages=languages, lei=lei, max_results=max_results, ordering=ordering, page=page, page_size=page_size, release_datetime_from=release_datetime_from, release_datetime_to=release_datetime_to, source=source, sources=sources, type=type, types=types, view=view)
         print("The response of FilingsApi->filings_search_list:\n")
         pprint(api_response)
     except Exception as e:
@@ -855,7 +857,7 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **q** | [**List[str]**](str.md)| Text to find in the full text of filings, across all filings. Repeatable: the values are alternatives, OR-ed, so pass translations and synonyms (at most 5, each 1-200 characters). Results are ordered by relevance unless &#x60;ordering&#x60; is given, and capped at the first 1000 by relevance. Billed as one Markdown request only when the page has at least one result. | 
+ **q** | [**List[str]**](str.md)| Text to find in the full text of filings, across all filings. Repeatable: the values are alternatives, OR-ed, so pass translations and synonyms (at most 5, each 1-200 characters). Results are ordered by relevance unless &#x60;ordering&#x60; is given, and capped at the first &#x60;max_results&#x60; by relevance (default 1000). Billed as one Markdown request only when the page has at least one result. | 
  **added_to_platform_from** | **datetime**| Filter by date added to platform (inclusive start date, YYYY-MM-DDTHH:MM:SSZ format). | [optional] 
  **added_to_platform_to** | **datetime**| Filter by date added to platform (inclusive end date, YYYY-MM-DDTHH:MM:SSZ format). | [optional] 
  **company** | **int**| Filter by internal Company ID. | [optional] 
@@ -866,6 +868,7 @@ Name | Type | Description  | Notes
  **language** | **str**| Filter by a single filing language ISO 639-1 code (e.g., en). | [optional] 
  **languages** | **str**| Filter by filing language ISO 639-1 code(s). Comma-separated for multiple values (e.g., en,de). | [optional] 
  **lei** | **str**| Filter by Company Legal Entity Identifier (LEI). | [optional] 
+ **max_results** | **int**| How many matches, best first, this search pages: a whole number from 1 to 10000 (default 1000). &#x60;count&#x60; and the pages stop there, and &#x60;search.max_results&#x60; echoes it. A larger value gets the same time to scan, so &#x60;search.scan_complete&#x60; is more likely to be false. Each page is billed the same whatever this is. Out of range or not a whole number: 400 &#x60;invalid_max_results&#x60;. | [optional] 
  **ordering** | **str**| &#x60;relevance&#x60; (the default: best match first, then newest &#x60;release_datetime&#x60;, then &#x60;id&#x60;), or one of &#x60;id&#x60;, &#x60;release_datetime&#x60;, &#x60;added_to_platform&#x60;, &#x60;filing_type_confidence&#x60;, prefixed with &#39;-&#39; for descending order. Any ordering sorts the same capped set of matches. | [optional] 
  **page** | **int**| A page number within the paginated result set. Page depth is capped: (page - 1) x page_size above 50,000 (500,000 inside an added_to_platform_from/added_to_platform_to window of 7 days or less) returns 400 &#x60;offset_too_large&#x60;, and a page past the last one returns 404 &#x60;page_out_of_range&#x60;. To walk further, use &#x60;cursor&#x60;, which has no offset limit. | [optional] 
  **page_size** | **int**| Number of results to return per page. | [optional] 
@@ -873,8 +876,8 @@ Name | Type | Description  | Notes
  **release_datetime_to** | **datetime**| Filter by release datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format). | [optional] 
  **source** | **float**| Filter by a single data source ID. | [optional] 
  **sources** | **str**| Filter by data source ID(s). Comma-separated for multiple values (e.g., 38,40,51). | [optional] 
- **type** | **str**| One FinancialFilings filing type code (e.g. &#x60;10-K&#x60;). Unknown codes return 400. Codes are listed at GET /filing-types/; for the source&#39;s own form name, use &#x60;source_filing_type&#x60;. | [optional] 
- **types** | **str**| Several filing type codes, comma-separated (e.g. &#x60;10-K,IR&#x60;). Unknown codes return 400. Codes are listed at GET /filing-types/; for the source&#39;s own form names, use &#x60;source_filing_type&#x60;. | [optional] 
+ **type** | **str**| One filing type code (e.g. &#x60;10-K&#x60;), listed at GET /filing-types/. A regulator form name such as &#x60;10-Q&#x60; or &#x60;8-K&#x60; is searched as the type(s) its filings are filed under and reported in &#x60;search.types_resolved&#x60;; a code with no mapping returns 400. | [optional] 
+ **types** | **str**| Several filing type codes, comma-separated (e.g. &#x60;10-K,IR&#x60;), listed at GET /filing-types/. Regulator form names such as &#x60;10-Q&#x60;, &#x60;8-K&#x60; or &#x60;S-1&#x60; are searched as the type(s) their filings are filed under and reported in &#x60;search.types_resolved&#x60;, with &#x60;widens&#x60; when the types also hold other filings; a code with no mapping returns 400. | [optional] 
  **view** | **str**| &#x60;summary&#x60; (default) or &#x60;full&#x60;, which returns every field of each filing. | [optional] [default to &#39;summary&#39;]
 
 ### Return type
@@ -895,7 +898,7 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** |  |  -  |
-**400** | Invalid query parameter: &#x60;q&#x60; missing, too many or too long, a filter value, or a page past the full-text cap (&#x60;search_page_past_cap&#x60;). |  -  |
+**400** | Invalid query parameter: &#x60;q&#x60; missing, too many or too long, a filter value, &#x60;max_results&#x60; out of range (&#x60;invalid_max_results&#x60;), or a page past the full-text cap (&#x60;search_page_past_cap&#x60;). |  -  |
 **401** | Unauthorized |  -  |
 **429** | Too many searches running (&#x60;search_busy&#x60;), or a plan rate limit. Retry after &#x60;Retry-After&#x60; seconds. Not billed. |  -  |
 **503** | The full-text index is unavailable (&#x60;search_unavailable&#x60;). Retry later. |  -  |

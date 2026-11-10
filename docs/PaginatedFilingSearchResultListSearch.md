@@ -8,8 +8,9 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **capped** | **bool** | True: more matching filings MAY exist beyond what this endpoint pages, either because more than &#x60;max_results&#x60; are visible or because the scan stopped early (&#x60;scan_complete&#x60; false). False: &#x60;count&#x60; is every match you can see. | [optional] 
 **scan_complete** | **bool** | True: every candidate the index matched was checked. False: the scan stopped (a scan limit or time budget) before checking every candidate. An EMPTY page with &#x60;scan_complete&#x60; false is NOT an absence, and more matching filings may exist; &#x60;count&#x60; is then a lower bound (what the scan found), not the visible total: narrow &#x60;q&#x60; or the filters and search again. | [optional] 
-**max_results** | **int** |  | [optional] 
+**max_results** | **int** | The cap this request was served with: the &#x60;max_results&#x60; you sent, else the default. &#x60;count&#x60; and the pages never go past it. | [optional] 
 **scope** | **str** |  | [optional] 
+**types_resolved** | [**List[PaginatedFilingSearchResultListSearchTypesResolvedInner]**](PaginatedFilingSearchResultListSearchTypesResolvedInner.md) | How each &#x60;type&#x60;/&#x60;types&#x60; code that is not a FinancialFilings type code (a regulator form name such as 10-Q or 8-K, or a retired code) was searched. Empty when every code was a type code. | [optional] 
 
 ## Example
 

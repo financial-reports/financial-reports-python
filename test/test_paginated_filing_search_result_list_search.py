@@ -39,7 +39,18 @@ class TestPaginatedFilingSearchResultListSearch(unittest.TestCase):
                 capped = True,
                 scan_complete = True,
                 max_results = 56,
-                scope = 'filings_with_text'
+                scope = 'filings_with_text',
+                types_resolved = [
+                    financial_reports_generated_client.models.paginated_filing_search_result_list_search_types_resolved_inner.PaginatedFilingSearchResultList_search_types_resolved_inner(
+                        param = 'type', 
+                        requested = '', 
+                        types = [
+                            ''
+                            ], 
+                        widens = True, 
+                        may_miss = True, 
+                        note = '', )
+                    ]
             )
         else:
             return PaginatedFilingSearchResultListSearch(

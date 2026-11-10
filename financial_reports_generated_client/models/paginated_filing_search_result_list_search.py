@@ -20,6 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
+from financial_reports_generated_client.models.paginated_filing_search_result_list_search_types_resolved_inner import PaginatedFilingSearchResultListSearchTypesResolvedInner
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
@@ -30,9 +31,10 @@ class PaginatedFilingSearchResultListSearch(BaseModel):
     """ # noqa: E501
     capped: Optional[StrictBool] = Field(default=None, description="True: more matching filings MAY exist beyond what this endpoint pages, either because more than `max_results` are visible or because the scan stopped early (`scan_complete` false). False: `count` is every match you can see.")
     scan_complete: Optional[StrictBool] = Field(default=None, description="True: every candidate the index matched was checked. False: the scan stopped (a scan limit or time budget) before checking every candidate. An EMPTY page with `scan_complete` false is NOT an absence, and more matching filings may exist; `count` is then a lower bound (what the scan found), not the visible total: narrow `q` or the filters and search again.")
-    max_results: Optional[StrictInt] = None
+    max_results: Optional[StrictInt] = Field(default=None, description="The cap this request was served with: the `max_results` you sent, else the default. `count` and the pages never go past it.")
     scope: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["capped", "scan_complete", "max_results", "scope"]
+    types_resolved: Optional[List[PaginatedFilingSearchResultListSearchTypesResolvedInner]] = Field(default=None, description="How each `type`/`types` code that is not a FinancialFilings type code (a regulator form name such as 10-Q or 8-K, or a retired code) was searched. Empty when every code was a type code.")
+    __properties: ClassVar[List[str]] = ["capped", "scan_complete", "max_results", "scope", "types_resolved"]
 
     @field_validator('scope')
     def scope_validate_enum(cls, value):
@@ -83,6 +85,12 @@ class PaginatedFilingSearchResultListSearch(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of each item in types_resolved (list)
+        _items = []
+        if self.types_resolved:
+            for _item_types_resolved in self.types_resolved:
+                _items.append(_item_types_resolved.to_dict() if _item_types_resolved is not None else None)
+            _dict['types_resolved'] = _items
         return _dict
 
     @classmethod
@@ -98,7 +106,8 @@ class PaginatedFilingSearchResultListSearch(BaseModel):
             "capped": obj.get("capped"),
             "scan_complete": obj.get("scan_complete"),
             "max_results": obj.get("max_results"),
-            "scope": obj.get("scope")
+            "scope": obj.get("scope"),
+            "types_resolved": [PaginatedFilingSearchResultListSearchTypesResolvedInner.from_dict(_item) for _item in obj["types_resolved"]] if obj.get("types_resolved") is not None else None
         })
         return _obj
 
