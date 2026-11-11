@@ -1,6 +1,6 @@
 # PaginatedFilingSearchResultListSearch
 
-About the full-text candidate set. `count` is the number of matching filings you can see among those this endpoint pages, at most `max_results`. Visibility is checked against the index's candidates in relevance order, up to a scan limit.
+About the full-text candidate set. `count` is the number of matching filings you can see among those this endpoint pages, at most `max_results` (with `group_by=company`, the number of company rows). Visibility is checked against the index's candidates in relevance order, up to a scan limit.
 
 ## Properties
 
@@ -10,6 +10,9 @@ Name | Type | Description | Notes
 **scan_complete** | **bool** | True: every candidate the index matched was checked. False: the scan stopped (a scan limit or time budget) before checking every candidate. An EMPTY page with &#x60;scan_complete&#x60; false is NOT an absence, and more matching filings may exist; &#x60;count&#x60; is then a lower bound (what the scan found), not the visible total: narrow &#x60;q&#x60; or the filters and search again. | [optional] 
 **max_results** | **int** | The cap this request was served with: the &#x60;max_results&#x60; you sent, else the default. &#x60;count&#x60; and the pages never go past it. | [optional] 
 **scope** | **str** |  | [optional] 
+**group_by** | **str** | Present with &#x60;group_by&#x3D;company&#x60;: &#x60;results&#x60; are company rows, not filings. | [optional] 
+**filings_grouped** | **int** | With &#x60;group_by&#x60;: how many matching filings the rows were counted over (at most &#x60;max_results&#x60;). Counts and dates cover only these. | [optional] 
+**message** | **str** | With &#x60;group_by&#x60;: what the counts cover, in words. | [optional] 
 **types_resolved** | [**List[PaginatedFilingSearchResultListSearchTypesResolvedInner]**](PaginatedFilingSearchResultListSearchTypesResolvedInner.md) | How each &#x60;type&#x60;/&#x60;types&#x60; code that is not a FinancialFilings type code (a regulator form name such as 10-Q or 8-K, or a retired code) was searched. Empty when every code was a type code. | [optional] 
 
 ## Example

@@ -27,14 +27,17 @@ from pydantic_core import to_jsonable_python
 
 class PaginatedFilingSearchResultListSearch(BaseModel):
     """
-    About the full-text candidate set. `count` is the number of matching filings you can see among those this endpoint pages, at most `max_results`. Visibility is checked against the index's candidates in relevance order, up to a scan limit.
+    About the full-text candidate set. `count` is the number of matching filings you can see among those this endpoint pages, at most `max_results` (with `group_by=company`, the number of company rows). Visibility is checked against the index's candidates in relevance order, up to a scan limit.
     """ # noqa: E501
     capped: Optional[StrictBool] = Field(default=None, description="True: more matching filings MAY exist beyond what this endpoint pages, either because more than `max_results` are visible or because the scan stopped early (`scan_complete` false). False: `count` is every match you can see.")
     scan_complete: Optional[StrictBool] = Field(default=None, description="True: every candidate the index matched was checked. False: the scan stopped (a scan limit or time budget) before checking every candidate. An EMPTY page with `scan_complete` false is NOT an absence, and more matching filings may exist; `count` is then a lower bound (what the scan found), not the visible total: narrow `q` or the filters and search again.")
     max_results: Optional[StrictInt] = Field(default=None, description="The cap this request was served with: the `max_results` you sent, else the default. `count` and the pages never go past it.")
     scope: Optional[StrictStr] = None
+    group_by: Optional[StrictStr] = Field(default=None, description="Present with `group_by=company`: `results` are company rows, not filings.")
+    filings_grouped: Optional[StrictInt] = Field(default=None, description="With `group_by`: how many matching filings the rows were counted over (at most `max_results`). Counts and dates cover only these.")
+    message: Optional[StrictStr] = Field(default=None, description="With `group_by`: what the counts cover, in words.")
     types_resolved: Optional[List[PaginatedFilingSearchResultListSearchTypesResolvedInner]] = Field(default=None, description="How each `type`/`types` code that is not a FinancialFilings type code (a regulator form name such as 10-Q or 8-K, or a retired code) was searched. Empty when every code was a type code.")
-    __properties: ClassVar[List[str]] = ["capped", "scan_complete", "max_results", "scope", "types_resolved"]
+    __properties: ClassVar[List[str]] = ["capped", "scan_complete", "max_results", "scope", "group_by", "filings_grouped", "message", "types_resolved"]
 
     @field_validator('scope')
     def scope_validate_enum(cls, value):
@@ -44,6 +47,16 @@ class PaginatedFilingSearchResultListSearch(BaseModel):
 
         if value not in set(['filings_with_text']):
             raise ValueError("must be one of enum values ('filings_with_text')")
+        return value
+
+    @field_validator('group_by')
+    def group_by_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['company']):
+            raise ValueError("must be one of enum values ('company')")
         return value
 
     model_config = ConfigDict(
@@ -107,6 +120,9 @@ class PaginatedFilingSearchResultListSearch(BaseModel):
             "scan_complete": obj.get("scan_complete"),
             "max_results": obj.get("max_results"),
             "scope": obj.get("scope"),
+            "group_by": obj.get("group_by"),
+            "filings_grouped": obj.get("filings_grouped"),
+            "message": obj.get("message"),
             "types_resolved": [PaginatedFilingSearchResultListSearchTypesResolvedInner.from_dict(_item) for _item in obj["types_resolved"]] if obj.get("types_resolved") is not None else None
         })
         return _obj

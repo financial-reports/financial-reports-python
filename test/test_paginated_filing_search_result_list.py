@@ -68,6 +68,9 @@ class TestPaginatedFilingSearchResultList(unittest.TestCase):
                     scan_complete = True, 
                     max_results = 56, 
                     scope = 'filings_with_text', 
+                    group_by = 'company', 
+                    filings_grouped = 56, 
+                    message = '', 
                     types_resolved = [
                         financial_reports_generated_client.models.paginated_filing_search_result_list_search_types_resolved_inner.PaginatedFilingSearchResultList_search_types_resolved_inner(
                             param = 'type', 
