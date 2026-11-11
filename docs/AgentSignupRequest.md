@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **email** | **str** | The account owner&#39;s real email address. | 
 **agent_name** | **str** | 1-64 chars: letters, digits, space, _ or -. | 
+**handoff** | **str** | Optional. The hand-off token in the prompt your user copied from our site, if it has one. Send it as given. | [optional] 
 
 ## Example
 

@@ -37,7 +37,8 @@ class TestAgentSignupRequest(unittest.TestCase):
         if include_optional:
             return AgentSignupRequest(
                 email = '',
-                agent_name = ''
+                agent_name = '',
+                handoff = ''
             )
         else:
             return AgentSignupRequest(

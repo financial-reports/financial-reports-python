@@ -19,7 +19,7 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List
+from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
@@ -30,7 +30,8 @@ class AgentSignupRequest(BaseModel):
     """ # noqa: E501
     email: StrictStr = Field(description="The account owner's real email address.")
     agent_name: StrictStr = Field(description="1-64 chars: letters, digits, space, _ or -.")
-    __properties: ClassVar[List[str]] = ["email", "agent_name"]
+    handoff: Optional[StrictStr] = Field(default=None, description="Optional. The hand-off token in the prompt your user copied from our site, if it has one. Send it as given.")
+    __properties: ClassVar[List[str]] = ["email", "agent_name", "handoff"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -84,7 +85,8 @@ class AgentSignupRequest(BaseModel):
 
         _obj = cls.model_validate({
             "email": obj.get("email"),
-            "agent_name": obj.get("agent_name")
+            "agent_name": obj.get("agent_name"),
+            "handoff": obj.get("handoff")
         })
         return _obj
 
