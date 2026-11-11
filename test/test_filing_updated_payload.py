@@ -48,6 +48,10 @@ class TestFilingUpdatedPayload(unittest.TestCase):
                     company_page = '', 
                     country_name = '', 
                     country_code_alpha2 = '', 
+                    ciks = [
+                        ''
+                        ], 
+                    primary_isin = '', 
                     isins = [
                         ''
                         ], 
@@ -92,6 +96,10 @@ class TestFilingUpdatedPayload(unittest.TestCase):
                     company_page = '', 
                     country_name = '', 
                     country_code_alpha2 = '', 
+                    ciks = [
+                        ''
+                        ], 
+                    primary_isin = '', 
                     isins = [
                         ''
                         ], 

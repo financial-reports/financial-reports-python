@@ -19,7 +19,7 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List
+from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
@@ -36,10 +36,12 @@ class WebhookCompanyPayload(BaseModel):
     company_page: StrictStr = Field(description="URL to the company's page on FinancialFilings.")
     country_name: StrictStr = Field(description="Name of the company's country of incorporation.")
     country_code_alpha2: StrictStr = Field(description="ISO 3166-1 alpha-2 country code.")
+    ciks: List[StrictStr] = Field(description="SEC Central Index Keys of the company as 10-digit, zero-padded strings (e.g. \"0001508655\"), sorted. Empty when the company has none; a few companies have two. Always included.")
+    primary_isin: Optional[StrictStr] = Field(description="The company's primary ISIN, usually its listed equity line, or null when no primary is designated. Always included, independent of 'include_isins'.")
     isins: List[StrictStr] = Field(description="List of ISIN codes (strings) associated with the company, at most 1,000. The Primary ISIN is always at index 0; the rest are in ascending code order. Only included if your webhook is configured with 'include_isins: true'. When the company has more than 1,000 ISINs the list is cut and isins_url is set.")
     isin_count: StrictInt = Field(description="Total number of ISINs on the company, which can exceed the number listed in `isins`. Only included with 'include_isins: true'.")
     isins_url: StrictStr = Field(description="Only present when isins was cut at 1,000: the company's paginated REST listing. Offset pagination stops at 50,000 rows; above that, narrow with &search=<code prefix>. Example: https://api.financialreports.eu/isins/?company=35612")
-    __properties: ClassVar[List[str]] = ["id", "name", "ticker", "lei", "website", "company_page", "country_name", "country_code_alpha2", "isins", "isin_count", "isins_url"]
+    __properties: ClassVar[List[str]] = ["id", "name", "ticker", "lei", "website", "company_page", "country_name", "country_code_alpha2", "ciks", "primary_isin", "isins", "isin_count", "isins_url"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -82,6 +84,8 @@ class WebhookCompanyPayload(BaseModel):
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
             "id",
@@ -92,6 +96,8 @@ class WebhookCompanyPayload(BaseModel):
             "company_page",
             "country_name",
             "country_code_alpha2",
+            "ciks",
+            "primary_isin",
             "isins",
             "isin_count",
             "isins_url",
@@ -102,6 +108,11 @@ class WebhookCompanyPayload(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if primary_isin (nullable) is None
+        # and model_fields_set contains the field
+        if self.primary_isin is None and "primary_isin" in self.model_fields_set:
+            _dict['primary_isin'] = None
+
         return _dict
 
     @classmethod
@@ -122,6 +133,8 @@ class WebhookCompanyPayload(BaseModel):
             "company_page": obj.get("company_page"),
             "country_name": obj.get("country_name"),
             "country_code_alpha2": obj.get("country_code_alpha2"),
+            "ciks": obj.get("ciks"),
+            "primary_isin": obj.get("primary_isin"),
             "isins": obj.get("isins"),
             "isin_count": obj.get("isin_count"),
             "isins_url": obj.get("isins_url")
