@@ -67,6 +67,7 @@ class TestCompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInner(unit
                         source_page = 56, 
                         confirmed = True, 
                         confirmed_precision = 1.337, 
+                        withheld_reason = 'derived_unconfirmed', 
                         revisions = [
                             financial_reports_generated_client.models.companies_financials_retrieve_200_response_periods_inner_statements_inner_line_items_inner_revisions_inner.companies_financials_retrieve_200_response_periods_inner_statements_inner_line_items_inner_revisions_inner(
                                 changed_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
@@ -144,6 +145,7 @@ class TestCompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInner(unit
                         source_page = 56, 
                         confirmed = True, 
                         confirmed_precision = 1.337, 
+                        withheld_reason = 'derived_unconfirmed', 
                         revisions = [
                             financial_reports_generated_client.models.companies_financials_retrieve_200_response_periods_inner_statements_inner_line_items_inner_revisions_inner.companies_financials_retrieve_200_response_periods_inner_statements_inner_line_items_inner_revisions_inner(
                                 changed_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
