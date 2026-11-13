@@ -14,6 +14,7 @@ Name | Type | Description | Notes
 **group_by** | **str** | Present with &#x60;group_by&#x3D;company&#x60;: &#x60;results&#x60; are company rows, not filings. | [optional] 
 **filings_grouped** | **int** | With &#x60;group_by&#x60;: how many matching filings the rows were counted over (at most &#x60;max_results&#x60;). Counts and dates cover only these. | [optional] 
 **message** | **str** | With &#x60;group_by&#x60;: what the counts cover, in words. | [optional] 
+**relaxed_note** | **str** | Present only when no filing contained every word of a long &#x60;q&#x60; value (6 words or more): the results then contain most of its words, not all. Shorter, key-term values are more precise. | [optional] 
 **types_resolved** | [**List[PaginatedFilingSearchResultListSearchTypesResolvedInner]**](PaginatedFilingSearchResultListSearchTypesResolvedInner.md) | How each &#x60;type&#x60;/&#x60;types&#x60; code that is not a FinancialFilings type code (a regulator form name such as 10-Q or 8-K, or a retired code) was searched. Empty when every code was a type code. | [optional] 
 
 ## Example
