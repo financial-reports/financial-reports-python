@@ -39,6 +39,7 @@ class TestPaginatedFilingSearchResultListSearch(unittest.TestCase):
                 capped = True,
                 scan_complete = True,
                 max_results = 56,
+                max_results_note = '',
                 scope = 'filings_with_text',
                 group_by = 'company',
                 filings_grouped = 56,

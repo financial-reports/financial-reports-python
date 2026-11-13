@@ -31,13 +31,14 @@ class PaginatedFilingSearchResultListSearch(BaseModel):
     """ # noqa: E501
     capped: Optional[StrictBool] = Field(default=None, description="True: more matching filings MAY exist beyond what this endpoint pages, either because more than `max_results` are visible or because the scan stopped early (`scan_complete` false). False: `count` is every match you can see.")
     scan_complete: Optional[StrictBool] = Field(default=None, description="True: every candidate the index matched was checked. False: the scan stopped (a scan limit or time budget) before checking every candidate. An EMPTY page with `scan_complete` false is NOT an absence, and more matching filings may exist; `count` is then a lower bound (what the scan found), not the visible total: narrow `q` or the filters and search again.")
-    max_results: Optional[StrictInt] = Field(default=None, description="The cap this request was served with: the `max_results` you sent, else the default. `count` and the pages never go past it.")
+    max_results: Optional[StrictInt] = Field(default=None, description="The cap this request was served with: the `max_results` you sent (lowered to your plan's limit when it asked for more), else the default. `count` and the pages never go past it.")
+    max_results_note: Optional[StrictStr] = Field(default=None, description="Present only when `max_results` asked for more than your plan allows: what was searched instead, and which plans may raise it.")
     scope: Optional[StrictStr] = None
     group_by: Optional[StrictStr] = Field(default=None, description="Present with `group_by=company`: `results` are company rows, not filings.")
     filings_grouped: Optional[StrictInt] = Field(default=None, description="With `group_by`: how many matching filings the rows were counted over (at most `max_results`). Counts and dates cover only these.")
     message: Optional[StrictStr] = Field(default=None, description="With `group_by`: what the counts cover, in words.")
     types_resolved: Optional[List[PaginatedFilingSearchResultListSearchTypesResolvedInner]] = Field(default=None, description="How each `type`/`types` code that is not a FinancialFilings type code (a regulator form name such as 10-Q or 8-K, or a retired code) was searched. Empty when every code was a type code.")
-    __properties: ClassVar[List[str]] = ["capped", "scan_complete", "max_results", "scope", "group_by", "filings_grouped", "message", "types_resolved"]
+    __properties: ClassVar[List[str]] = ["capped", "scan_complete", "max_results", "max_results_note", "scope", "group_by", "filings_grouped", "message", "types_resolved"]
 
     @field_validator('scope')
     def scope_validate_enum(cls, value):
@@ -119,6 +120,7 @@ class PaginatedFilingSearchResultListSearch(BaseModel):
             "capped": obj.get("capped"),
             "scan_complete": obj.get("scan_complete"),
             "max_results": obj.get("max_results"),
+            "max_results_note": obj.get("max_results_note"),
             "scope": obj.get("scope"),
             "group_by": obj.get("group_by"),
             "filings_grouped": obj.get("filings_grouped"),

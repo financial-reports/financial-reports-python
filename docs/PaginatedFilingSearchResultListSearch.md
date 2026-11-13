@@ -8,7 +8,8 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **capped** | **bool** | True: more matching filings MAY exist beyond what this endpoint pages, either because more than &#x60;max_results&#x60; are visible or because the scan stopped early (&#x60;scan_complete&#x60; false). False: &#x60;count&#x60; is every match you can see. | [optional] 
 **scan_complete** | **bool** | True: every candidate the index matched was checked. False: the scan stopped (a scan limit or time budget) before checking every candidate. An EMPTY page with &#x60;scan_complete&#x60; false is NOT an absence, and more matching filings may exist; &#x60;count&#x60; is then a lower bound (what the scan found), not the visible total: narrow &#x60;q&#x60; or the filters and search again. | [optional] 
-**max_results** | **int** | The cap this request was served with: the &#x60;max_results&#x60; you sent, else the default. &#x60;count&#x60; and the pages never go past it. | [optional] 
+**max_results** | **int** | The cap this request was served with: the &#x60;max_results&#x60; you sent (lowered to your plan&#39;s limit when it asked for more), else the default. &#x60;count&#x60; and the pages never go past it. | [optional] 
+**max_results_note** | **str** | Present only when &#x60;max_results&#x60; asked for more than your plan allows: what was searched instead, and which plans may raise it. | [optional] 
 **scope** | **str** |  | [optional] 
 **group_by** | **str** | Present with &#x60;group_by&#x3D;company&#x60;: &#x60;results&#x60; are company rows, not filings. | [optional] 
 **filings_grouped** | **int** | With &#x60;group_by&#x60;: how many matching filings the rows were counted over (at most &#x60;max_results&#x60;). Counts and dates cover only these. | [optional] 
