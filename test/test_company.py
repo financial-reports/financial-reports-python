@@ -133,6 +133,7 @@ class TestCompany(unittest.TestCase):
                     financial_reports_generated_client.models.company_listing.CompanyListing(
                         mic = '', 
                         ticker = '', 
+                        exchange_symbol = '', 
                         exchange_name = '', 
                         exch_code = '', 
                         security_type = '', 
@@ -267,6 +268,7 @@ class TestCompany(unittest.TestCase):
                     financial_reports_generated_client.models.company_listing.CompanyListing(
                         mic = '', 
                         ticker = '', 
+                        exchange_symbol = '', 
                         exchange_name = '', 
                         exch_code = '', 
                         security_type = '', 

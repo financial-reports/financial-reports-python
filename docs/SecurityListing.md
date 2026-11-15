@@ -17,6 +17,7 @@ Name | Type | Description | Notes
 **composite_figi** | **str** |  | [readonly] 
 **share_class_figi** | **str** |  | [readonly] 
 **historical** | **bool** | &#x60;true&#x60; when the company is delisted: the line records a venue it used to trade on, not a current one. The ticker may since have been reused by another issuer. | [readonly] 
+**exchange_symbol** | **str** | The exchange&#39;s own code where it differs from &#x60;ticker&#x60;: the NSE symbol on XNSE (&#x60;ICICIBANK&#x60;), the numeric BSE scrip code on XBOM (&#x60;532174&#x60;). Empty elsewhere and where unknown. | [readonly] 
 
 ## Example
 

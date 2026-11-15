@@ -58,7 +58,8 @@ class TestSecurityListing(unittest.TestCase):
                 figi = '',
                 composite_figi = '',
                 share_class_figi = '',
-                historical = True
+                historical = True,
+                exchange_symbol = ''
             )
         else:
             return SecurityListing(
@@ -85,6 +86,7 @@ class TestSecurityListing(unittest.TestCase):
                 composite_figi = '',
                 share_class_figi = '',
                 historical = True,
+                exchange_symbol = '',
         )
         """
 

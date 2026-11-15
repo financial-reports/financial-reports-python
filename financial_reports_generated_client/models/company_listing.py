@@ -29,13 +29,14 @@ class CompanyListing(BaseModel):
     One equity listing of the company: venue, ticker, FIGI, and whether it is historical.
     """ # noqa: E501
     mic: Optional[StrictStr] = Field(description="ISO 10383 Market Identifier Code of the venue.")
-    ticker: StrictStr = Field(description="Ticker on that venue.")
+    ticker: StrictStr = Field(description="Ticker on that venue, as published with its FIGI. On most venues it is the exchange's symbol; on Indian venues it is not (`ICICIBC`), and the exchange's is in `exchange_symbol`.")
+    exchange_symbol: Optional[StrictStr] = Field(description="The exchange's own code where it differs from `ticker`: the NSE symbol on XNSE (`ICICIBANK`), the numeric BSE scrip code on XBOM (`532174`). Null elsewhere and where unknown.")
     exchange_name: Optional[StrictStr] = Field(description="Name of the venue.")
     exch_code: Optional[StrictStr] = Field(description="Short exchange code, e.g. `GY` for Xetra.")
     security_type: Optional[StrictStr] = Field(description="Security type, e.g. `Common Stock`.")
     figi: Optional[StrictStr] = Field(description="Financial Instrument Global Identifier (FIGI) of this listing.")
     historical: StrictBool = Field(description="`true` when the company is delisted: the line records a venue it used to trade on, not a current one. The ticker may since have been reused by another issuer.")
-    __properties: ClassVar[List[str]] = ["mic", "ticker", "exchange_name", "exch_code", "security_type", "figi", "historical"]
+    __properties: ClassVar[List[str]] = ["mic", "ticker", "exchange_symbol", "exchange_name", "exch_code", "security_type", "figi", "historical"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -81,6 +82,11 @@ class CompanyListing(BaseModel):
         if self.mic is None and "mic" in self.model_fields_set:
             _dict['mic'] = None
 
+        # set to None if exchange_symbol (nullable) is None
+        # and model_fields_set contains the field
+        if self.exchange_symbol is None and "exchange_symbol" in self.model_fields_set:
+            _dict['exchange_symbol'] = None
+
         # set to None if exchange_name (nullable) is None
         # and model_fields_set contains the field
         if self.exchange_name is None and "exchange_name" in self.model_fields_set:
@@ -115,6 +121,7 @@ class CompanyListing(BaseModel):
         _obj = cls.model_validate({
             "mic": obj.get("mic"),
             "ticker": obj.get("ticker"),
+            "exchange_symbol": obj.get("exchange_symbol"),
             "exchange_name": obj.get("exchange_name"),
             "exch_code": obj.get("exch_code"),
             "security_type": obj.get("security_type"),

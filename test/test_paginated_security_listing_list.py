@@ -52,7 +52,8 @@ class TestPaginatedSecurityListingList(unittest.TestCase):
                         figi = '', 
                         composite_figi = '', 
                         share_class_figi = '', 
-                        historical = True, )
+                        historical = True, 
+                        exchange_symbol = '', )
                     ]
             )
         else:
@@ -71,7 +72,8 @@ class TestPaginatedSecurityListingList(unittest.TestCase):
                         figi = '', 
                         composite_figi = '', 
                         share_class_figi = '', 
-                        historical = True, )
+                        historical = True, 
+                        exchange_symbol = '', )
                     ],
         )
         """

@@ -38,6 +38,7 @@ class TestCompanyListing(unittest.TestCase):
             return CompanyListing(
                 mic = '',
                 ticker = '',
+                exchange_symbol = '',
                 exchange_name = '',
                 exch_code = '',
                 security_type = '',
@@ -48,6 +49,7 @@ class TestCompanyListing(unittest.TestCase):
             return CompanyListing(
                 mic = '',
                 ticker = '',
+                exchange_symbol = '',
                 exchange_name = '',
                 exch_code = '',
                 security_type = '',
