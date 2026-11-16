@@ -15,7 +15,7 @@ Name | Type | Description | Notes
 **security_type2** | **str** | Secondary security type classification providing additional granularity. | [readonly] 
 **market_sector** | **str** | Market sector classification from OpenFIGI (e.g., Equity, Govt, Corp). | [readonly] 
 **exch_code** | **str** | Exchange code where this security is listed (e.g., GY, US, LN). | [readonly] 
-**figi_last_updated** | **datetime** | Timestamp of the last successful FIGI data enrichment for this ISIN. | [readonly] 
+**figi_last_updated** | **datetime** | When OpenFIGI was last checked for this ISIN. Also set when OpenFIGI returned no match, in which case the FIGI fields above keep their earlier values. | [readonly] 
 
 ## Example
 

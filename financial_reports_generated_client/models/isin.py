@@ -40,7 +40,7 @@ class ISIN(BaseModel):
     security_type2: StrictStr = Field(description="Secondary security type classification providing additional granularity.")
     market_sector: StrictStr = Field(description="Market sector classification from OpenFIGI (e.g., Equity, Govt, Corp).")
     exch_code: StrictStr = Field(description="Exchange code where this security is listed (e.g., GY, US, LN).")
-    figi_last_updated: Optional[datetime] = Field(description="Timestamp of the last successful FIGI data enrichment for this ISIN.")
+    figi_last_updated: Optional[datetime] = Field(description="When OpenFIGI was last checked for this ISIN. Also set when OpenFIGI returned no match, in which case the FIGI fields above keep their earlier values.")
     __properties: ClassVar[List[str]] = ["code", "is_primary", "company", "figi", "composite_figi", "share_class_figi", "security_type", "security_type2", "market_sector", "exch_code", "figi_last_updated"]
 
     model_config = ConfigDict(
