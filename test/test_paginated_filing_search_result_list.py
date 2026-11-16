@@ -72,6 +72,12 @@ class TestPaginatedFilingSearchResultList(unittest.TestCase):
                     group_by = 'company', 
                     filings_grouped = 56, 
                     message = '', 
+                    expanded_terms = {
+                        'key' : [
+                            ''
+                            ]
+                        }, 
+                    expanded_note = '', 
                     relaxed_note = '', 
                     types_resolved = [
                         financial_reports_generated_client.models.paginated_filing_search_result_list_search_types_resolved_inner.PaginatedFilingSearchResultList_search_types_resolved_inner(

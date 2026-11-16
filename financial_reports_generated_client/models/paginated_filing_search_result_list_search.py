@@ -37,9 +37,11 @@ class PaginatedFilingSearchResultListSearch(BaseModel):
     group_by: Optional[StrictStr] = Field(default=None, description="Present with `group_by=company`: `results` are company rows, not filings.")
     filings_grouped: Optional[StrictInt] = Field(default=None, description="With `group_by`: how many matching filings the rows were counted over (at most `max_results`). Counts and dates cover only these.")
     message: Optional[StrictStr] = Field(default=None, description="With `group_by`: what the counts cover, in words.")
+    expanded_terms: Optional[Dict[str, List[StrictStr]]] = Field(default=None, description="Present only when a `q` value is a known finance term (e.g. \"going concern\", \"share buyback\") and the request filters by `languages`/`language` or `countries`: the same term in those filing languages, also searched (weighted below your own terms), per value.")
+    expanded_note: Optional[StrictStr] = Field(default=None, description="The same, in words.")
     relaxed_note: Optional[StrictStr] = Field(default=None, description="Present only when no filing contained every word of a long `q` value (6 words or more): the results then contain most of its words, not all. Shorter, key-term values are more precise.")
     types_resolved: Optional[List[PaginatedFilingSearchResultListSearchTypesResolvedInner]] = Field(default=None, description="How each `type`/`types` code that is not a FinancialFilings type code (a regulator form name such as 10-Q or 8-K, or a retired code) was searched. Empty when every code was a type code.")
-    __properties: ClassVar[List[str]] = ["capped", "scan_complete", "max_results", "max_results_note", "scope", "group_by", "filings_grouped", "message", "relaxed_note", "types_resolved"]
+    __properties: ClassVar[List[str]] = ["capped", "scan_complete", "max_results", "max_results_note", "scope", "group_by", "filings_grouped", "message", "expanded_terms", "expanded_note", "relaxed_note", "types_resolved"]
 
     @field_validator('scope')
     def scope_validate_enum(cls, value):
@@ -126,6 +128,8 @@ class PaginatedFilingSearchResultListSearch(BaseModel):
             "group_by": obj.get("group_by"),
             "filings_grouped": obj.get("filings_grouped"),
             "message": obj.get("message"),
+            "expanded_terms": obj.get("expanded_terms"),
+            "expanded_note": obj.get("expanded_note"),
             "relaxed_note": obj.get("relaxed_note"),
             "types_resolved": [PaginatedFilingSearchResultListSearchTypesResolvedInner.from_dict(_item) for _item in obj["types_resolved"]] if obj.get("types_resolved") is not None else None
         })
