@@ -41,6 +41,13 @@ class TestCompaniesApi(unittest.IsolatedAsyncioTestCase):
         """
         pass
 
+    async def test_companies_financials_trust_tiers_retrieve(self) -> None:
+        """Test case for companies_financials_trust_tiers_retrieve
+
+        Measured accuracy of each trust tier
+        """
+        pass
+
     async def test_companies_list(self) -> None:
         """Test case for companies_list
 

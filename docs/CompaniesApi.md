@@ -6,6 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**companies_dividends_retrieve**](CompaniesApi.md#companies_dividends_retrieve) | **GET** /companies/{id}/dividends/ | Retrieve Company Dividends
 [**companies_financials_retrieve**](CompaniesApi.md#companies_financials_retrieve) | **GET** /companies/{id}/financials/ | Retrieve Company Financials
+[**companies_financials_trust_tiers_retrieve**](CompaniesApi.md#companies_financials_trust_tiers_retrieve) | **GET** /companies/financials/trust-tiers/ | Measured accuracy of each trust tier
 [**companies_list**](CompaniesApi.md#companies_list) | **GET** /companies/ | List Companies
 [**companies_merges_retrieve**](CompaniesApi.md#companies_merges_retrieve) | **GET** /companies/merges/ | List Company Merges
 [**companies_next_annual_report_retrieve**](CompaniesApi.md#companies_next_annual_report_retrieve) | **GET** /companies/{id}/next-annual-report/ | Predict Next Annual Report
@@ -118,7 +119,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **companies_financials_retrieve**
-> CompaniesFinancialsRetrieve200Response companies_financials_retrieve(id, as_known_at=as_known_at, as_of=as_of, fiscal_period=fiscal_period, fiscal_year=fiscal_year, fiscal_year_from=fiscal_year_from, fiscal_year_to=fiscal_year_to, include=include, include_predecessors=include_predecessors, line_items=line_items, statement_type=statement_type)
+> CompaniesFinancialsRetrieve200Response companies_financials_retrieve(id, as_known_at=as_known_at, as_of=as_of, fiscal_period=fiscal_period, fiscal_year=fiscal_year, fiscal_year_from=fiscal_year_from, fiscal_year_to=fiscal_year_to, include=include, include_predecessors=include_predecessors, line_items=line_items, min_trust_tier=min_trust_tier, statement_type=statement_type)
 
 Retrieve Company Financials
 
@@ -190,11 +191,12 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
     include = 'include_example' # str | **Per-share figures and share counts are as reported, on each filing's own share basis: pass `split_adjusted` for a series comparable across stock splits.**  Comma-separated. `revisions` adds a `revisions` list to every line item: each recorded change to that value, oldest first, with `old_value` -> `new_value` and a reason category. With `as_known_at`, only the changes up to that time. `preliminary` adds `preliminary_results`: the company's own preliminary figures, published before the report and labelled preliminary, never merged into `periods`. `as_reported` adds `as_reported` to a standardised total read straight from the filer's XBRL whose calculation tree ties: the face lines it is made of, as the filer tagged them. Not served with `as_known_at`. `standalone_quarters` adds `standalone_quarters`: one three-month period per fiscal quarter (H2 for half-year reporters), income statement and cash flow, derived from year-to-date interims where the company reports no three-month figure, each value flagged `reported`, `derived` or `derived_approx`, never merged into `periods`. `split_adjusted` adds `split_adjusted` to every per-share figure (EPS, book value per share) and share count, in `periods` and `standalone_quarters`: the value on today's share basis (or `as_of`'s), next to the unchanged as-reported `value`, with its `adjustment_factor` and the `split_event_ids` from `/companies/{id}/splits/` it applies. Recomputed on every request, so a split re-adjusts history the day it takes effect. Not served with `as_known_at`. `ratios` adds `ratios`: per served fiscal year, fundamental ratios (margins, returns, leverage with and without lease liabilities, liquidity, turnover, growth, cash payout, per share and per employee) computed from the values `periods` serves, each with its `inputs` and `source_filing_ids`, or `null` with a `null_reason`. No ratios on share prices. (optional)
     include_predecessors = True # bool | Also serve the statements of the company's predecessors: the issuers it succeeded by reorganisation or redomicile (its `predecessors` of kind reorganization or other on GET /companies/{id}/, followed back through the chain), each from filings released up to and including the link's effective date (UTC), as `include_predecessors` does on GET /filings/. Each company is selected on its own statements; the requested company's win their periods, and a predecessor fills only periods no nearer company serves. `source_filing` names the filing each statement came from. Predecessors your plan cannot see are left out. With `include=split_adjusted`, values are adjusted by the predecessors' splits too, as GET /companies/{id}/splits/?include_predecessors=true serves them; a link states no exchange ratio, so each predecessor share counts as one share of its successor. Not combined with `as_known_at`, `include=preliminary` or `include=standalone_quarters` (`400`). (optional)
     line_items = 'line_items_example' # str | Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Statements with none of the requested codes are dropped. Unknown codes return `400`; see `/line-item-definitions/`. (optional)
+    min_trust_tier = 'min_trust_tier_example' # str | Serve only line items of at least this `trust_tier`, best first: `xbrl` (the issuer's own XBRL tag), `verified`, `accepted`, `review`. A line item with no tier, or of tier `derived` or `xbrl-derived` (not measured), is left out whenever this is set; a kept line item that is withheld for another reason is still served null with its `withheld_reason`. Without it every value is served with its tier. Cannot be combined with `include=preliminary`, `include=ratios` or `include=standalone_quarters`, which are computed from values this filter would leave out. Each tier's measured accuracy: `/companies/financials/trust-tiers/`. (optional)
     statement_type = 'statement_type_example' # str | Filter to a single statement type. (optional)
 
     try:
         # Retrieve Company Financials
-        api_response = await api_instance.companies_financials_retrieve(id, as_known_at=as_known_at, as_of=as_of, fiscal_period=fiscal_period, fiscal_year=fiscal_year, fiscal_year_from=fiscal_year_from, fiscal_year_to=fiscal_year_to, include=include, include_predecessors=include_predecessors, line_items=line_items, statement_type=statement_type)
+        api_response = await api_instance.companies_financials_retrieve(id, as_known_at=as_known_at, as_of=as_of, fiscal_period=fiscal_period, fiscal_year=fiscal_year, fiscal_year_from=fiscal_year_from, fiscal_year_to=fiscal_year_to, include=include, include_predecessors=include_predecessors, line_items=line_items, min_trust_tier=min_trust_tier, statement_type=statement_type)
         print("The response of CompaniesApi->companies_financials_retrieve:\n")
         pprint(api_response)
     except Exception as e:
@@ -218,6 +220,7 @@ Name | Type | Description  | Notes
  **include** | **str**| **Per-share figures and share counts are as reported, on each filing&#39;s own share basis: pass &#x60;split_adjusted&#x60; for a series comparable across stock splits.**  Comma-separated. &#x60;revisions&#x60; adds a &#x60;revisions&#x60; list to every line item: each recorded change to that value, oldest first, with &#x60;old_value&#x60; -&gt; &#x60;new_value&#x60; and a reason category. With &#x60;as_known_at&#x60;, only the changes up to that time. &#x60;preliminary&#x60; adds &#x60;preliminary_results&#x60;: the company&#39;s own preliminary figures, published before the report and labelled preliminary, never merged into &#x60;periods&#x60;. &#x60;as_reported&#x60; adds &#x60;as_reported&#x60; to a standardised total read straight from the filer&#39;s XBRL whose calculation tree ties: the face lines it is made of, as the filer tagged them. Not served with &#x60;as_known_at&#x60;. &#x60;standalone_quarters&#x60; adds &#x60;standalone_quarters&#x60;: one three-month period per fiscal quarter (H2 for half-year reporters), income statement and cash flow, derived from year-to-date interims where the company reports no three-month figure, each value flagged &#x60;reported&#x60;, &#x60;derived&#x60; or &#x60;derived_approx&#x60;, never merged into &#x60;periods&#x60;. &#x60;split_adjusted&#x60; adds &#x60;split_adjusted&#x60; to every per-share figure (EPS, book value per share) and share count, in &#x60;periods&#x60; and &#x60;standalone_quarters&#x60;: the value on today&#39;s share basis (or &#x60;as_of&#x60;&#39;s), next to the unchanged as-reported &#x60;value&#x60;, with its &#x60;adjustment_factor&#x60; and the &#x60;split_event_ids&#x60; from &#x60;/companies/{id}/splits/&#x60; it applies. Recomputed on every request, so a split re-adjusts history the day it takes effect. Not served with &#x60;as_known_at&#x60;. &#x60;ratios&#x60; adds &#x60;ratios&#x60;: per served fiscal year, fundamental ratios (margins, returns, leverage with and without lease liabilities, liquidity, turnover, growth, cash payout, per share and per employee) computed from the values &#x60;periods&#x60; serves, each with its &#x60;inputs&#x60; and &#x60;source_filing_ids&#x60;, or &#x60;null&#x60; with a &#x60;null_reason&#x60;. No ratios on share prices. | [optional] 
  **include_predecessors** | **bool**| Also serve the statements of the company&#39;s predecessors: the issuers it succeeded by reorganisation or redomicile (its &#x60;predecessors&#x60; of kind reorganization or other on GET /companies/{id}/, followed back through the chain), each from filings released up to and including the link&#39;s effective date (UTC), as &#x60;include_predecessors&#x60; does on GET /filings/. Each company is selected on its own statements; the requested company&#39;s win their periods, and a predecessor fills only periods no nearer company serves. &#x60;source_filing&#x60; names the filing each statement came from. Predecessors your plan cannot see are left out. With &#x60;include&#x3D;split_adjusted&#x60;, values are adjusted by the predecessors&#39; splits too, as GET /companies/{id}/splits/?include_predecessors&#x3D;true serves them; a link states no exchange ratio, so each predecessor share counts as one share of its successor. Not combined with &#x60;as_known_at&#x60;, &#x60;include&#x3D;preliminary&#x60; or &#x60;include&#x3D;standalone_quarters&#x60; (&#x60;400&#x60;). | [optional] 
  **line_items** | **str**| Comma-separated KPI codes to include (e.g. &#x60;revenue,ebitda,net_income_loss&#x60;). Omit to return all extracted line items. Statements with none of the requested codes are dropped. Unknown codes return &#x60;400&#x60;; see &#x60;/line-item-definitions/&#x60;. | [optional] 
+ **min_trust_tier** | **str**| Serve only line items of at least this &#x60;trust_tier&#x60;, best first: &#x60;xbrl&#x60; (the issuer&#39;s own XBRL tag), &#x60;verified&#x60;, &#x60;accepted&#x60;, &#x60;review&#x60;. A line item with no tier, or of tier &#x60;derived&#x60; or &#x60;xbrl-derived&#x60; (not measured), is left out whenever this is set; a kept line item that is withheld for another reason is still served null with its &#x60;withheld_reason&#x60;. Without it every value is served with its tier. Cannot be combined with &#x60;include&#x3D;preliminary&#x60;, &#x60;include&#x3D;ratios&#x60; or &#x60;include&#x3D;standalone_quarters&#x60;, which are computed from values this filter would leave out. Each tier&#39;s measured accuracy: &#x60;/companies/financials/trust-tiers/&#x60;. | [optional] 
  **statement_type** | **str**| Filter to a single statement type. | [optional] 
 
 ### Return type
@@ -240,6 +243,88 @@ Name | Type | Description  | Notes
 **200** | Structured company financials document. |  -  |
 **400** | Invalid query parameter. |  -  |
 **404** | Company not found. |  -  |
+**403** | Missing or invalid API key, or the plan does not include this endpoint. |  -  |
+**429** | Rate limit, plan quota or spend cap reached. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **companies_financials_trust_tiers_retrieve**
+> Dict[str, Optional[object]] companies_financials_trust_tiers_retrieve()
+
+Measured accuracy of each trust tier
+
+The published accuracy of each `trust_tier` a financials line item carries: how often values of the tier matched the issuer's own XBRL in a pre-registered sample, with the sample size and a 95% interval. A rate for the class, not a probability for one value.
+
+### Example
+
+* Bearer (JWT) Authentication (CognitoJWT):
+* Api Key Authentication (ApiKeyAuth):
+
+```python
+import financial_reports_generated_client
+from financial_reports_generated_client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.financialreports.eu
+# See configuration.py for a list of all supported configuration parameters.
+configuration = financial_reports_generated_client.Configuration(
+    host = "https://api.financialreports.eu"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization (JWT): CognitoJWT
+configuration = financial_reports_generated_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Configure API key authorization: ApiKeyAuth
+configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+async with financial_reports_generated_client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = financial_reports_generated_client.CompaniesApi(api_client)
+
+    try:
+        # Measured accuracy of each trust tier
+        api_response = await api_instance.companies_financials_trust_tiers_retrieve()
+        print("The response of CompaniesApi->companies_financials_trust_tiers_retrieve:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling CompaniesApi->companies_financials_trust_tiers_retrieve: %s\n" % e)
+```
+
+
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+**Dict[str, Optional[object]]**
+
+### Authorization
+
+[CognitoJWT](../README.md#CognitoJWT), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** |  |  -  |
 **403** | Missing or invalid API key, or the plan does not include this endpoint. |  -  |
 **429** | Rate limit, plan quota or spend cap reached. |  -  |
 

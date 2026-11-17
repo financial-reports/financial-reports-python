@@ -18,7 +18,7 @@ from typing_extensions import Annotated
 
 from datetime import date
 from pydantic import Field, StrictBool, StrictInt, StrictStr, field_validator
-from typing import Optional
+from typing import Any, Dict, Optional
 from typing_extensions import Annotated
 from financial_reports_generated_client.models.companies_dividends_retrieve200_response import CompaniesDividendsRetrieve200Response
 from financial_reports_generated_client.models.companies_financials_retrieve200_response import CompaniesFinancialsRetrieve200Response
@@ -370,6 +370,7 @@ class CompaniesApi:
         include: Annotated[Optional[StrictStr], Field(description="**Per-share figures and share counts are as reported, on each filing's own share basis: pass `split_adjusted` for a series comparable across stock splits.**  Comma-separated. `revisions` adds a `revisions` list to every line item: each recorded change to that value, oldest first, with `old_value` -> `new_value` and a reason category. With `as_known_at`, only the changes up to that time. `preliminary` adds `preliminary_results`: the company's own preliminary figures, published before the report and labelled preliminary, never merged into `periods`. `as_reported` adds `as_reported` to a standardised total read straight from the filer's XBRL whose calculation tree ties: the face lines it is made of, as the filer tagged them. Not served with `as_known_at`. `standalone_quarters` adds `standalone_quarters`: one three-month period per fiscal quarter (H2 for half-year reporters), income statement and cash flow, derived from year-to-date interims where the company reports no three-month figure, each value flagged `reported`, `derived` or `derived_approx`, never merged into `periods`. `split_adjusted` adds `split_adjusted` to every per-share figure (EPS, book value per share) and share count, in `periods` and `standalone_quarters`: the value on today's share basis (or `as_of`'s), next to the unchanged as-reported `value`, with its `adjustment_factor` and the `split_event_ids` from `/companies/{id}/splits/` it applies. Recomputed on every request, so a split re-adjusts history the day it takes effect. Not served with `as_known_at`. `ratios` adds `ratios`: per served fiscal year, fundamental ratios (margins, returns, leverage with and without lease liabilities, liquidity, turnover, growth, cash payout, per share and per employee) computed from the values `periods` serves, each with its `inputs` and `source_filing_ids`, or `null` with a `null_reason`. No ratios on share prices.")] = None,
         include_predecessors: Annotated[Optional[StrictBool], Field(description="Also serve the statements of the company's predecessors: the issuers it succeeded by reorganisation or redomicile (its `predecessors` of kind reorganization or other on GET /companies/{id}/, followed back through the chain), each from filings released up to and including the link's effective date (UTC), as `include_predecessors` does on GET /filings/. Each company is selected on its own statements; the requested company's win their periods, and a predecessor fills only periods no nearer company serves. `source_filing` names the filing each statement came from. Predecessors your plan cannot see are left out. With `include=split_adjusted`, values are adjusted by the predecessors' splits too, as GET /companies/{id}/splits/?include_predecessors=true serves them; a link states no exchange ratio, so each predecessor share counts as one share of its successor. Not combined with `as_known_at`, `include=preliminary` or `include=standalone_quarters` (`400`).")] = None,
         line_items: Annotated[Optional[StrictStr], Field(description="Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Statements with none of the requested codes are dropped. Unknown codes return `400`; see `/line-item-definitions/`.")] = None,
+        min_trust_tier: Annotated[Optional[StrictStr], Field(description="Serve only line items of at least this `trust_tier`, best first: `xbrl` (the issuer's own XBRL tag), `verified`, `accepted`, `review`. A line item with no tier, or of tier `derived` or `xbrl-derived` (not measured), is left out whenever this is set; a kept line item that is withheld for another reason is still served null with its `withheld_reason`. Without it every value is served with its tier. Cannot be combined with `include=preliminary`, `include=ratios` or `include=standalone_quarters`, which are computed from values this filter would leave out. Each tier's measured accuracy: `/companies/financials/trust-tiers/`.")] = None,
         statement_type: Annotated[Optional[StrictStr], Field(description="Filter to a single statement type.")] = None,
         _request_timeout: Union[
             None,
@@ -408,6 +409,8 @@ class CompaniesApi:
         :type include_predecessors: bool
         :param line_items: Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Statements with none of the requested codes are dropped. Unknown codes return `400`; see `/line-item-definitions/`.
         :type line_items: str
+        :param min_trust_tier: Serve only line items of at least this `trust_tier`, best first: `xbrl` (the issuer's own XBRL tag), `verified`, `accepted`, `review`. A line item with no tier, or of tier `derived` or `xbrl-derived` (not measured), is left out whenever this is set; a kept line item that is withheld for another reason is still served null with its `withheld_reason`. Without it every value is served with its tier. Cannot be combined with `include=preliminary`, `include=ratios` or `include=standalone_quarters`, which are computed from values this filter would leave out. Each tier's measured accuracy: `/companies/financials/trust-tiers/`.
+        :type min_trust_tier: str
         :param statement_type: Filter to a single statement type.
         :type statement_type: str
         :param _request_timeout: timeout setting for this request. If one
@@ -443,6 +446,7 @@ class CompaniesApi:
             include=include,
             include_predecessors=include_predecessors,
             line_items=line_items,
+            min_trust_tier=min_trust_tier,
             statement_type=statement_type,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -481,6 +485,7 @@ class CompaniesApi:
         include: Annotated[Optional[StrictStr], Field(description="**Per-share figures and share counts are as reported, on each filing's own share basis: pass `split_adjusted` for a series comparable across stock splits.**  Comma-separated. `revisions` adds a `revisions` list to every line item: each recorded change to that value, oldest first, with `old_value` -> `new_value` and a reason category. With `as_known_at`, only the changes up to that time. `preliminary` adds `preliminary_results`: the company's own preliminary figures, published before the report and labelled preliminary, never merged into `periods`. `as_reported` adds `as_reported` to a standardised total read straight from the filer's XBRL whose calculation tree ties: the face lines it is made of, as the filer tagged them. Not served with `as_known_at`. `standalone_quarters` adds `standalone_quarters`: one three-month period per fiscal quarter (H2 for half-year reporters), income statement and cash flow, derived from year-to-date interims where the company reports no three-month figure, each value flagged `reported`, `derived` or `derived_approx`, never merged into `periods`. `split_adjusted` adds `split_adjusted` to every per-share figure (EPS, book value per share) and share count, in `periods` and `standalone_quarters`: the value on today's share basis (or `as_of`'s), next to the unchanged as-reported `value`, with its `adjustment_factor` and the `split_event_ids` from `/companies/{id}/splits/` it applies. Recomputed on every request, so a split re-adjusts history the day it takes effect. Not served with `as_known_at`. `ratios` adds `ratios`: per served fiscal year, fundamental ratios (margins, returns, leverage with and without lease liabilities, liquidity, turnover, growth, cash payout, per share and per employee) computed from the values `periods` serves, each with its `inputs` and `source_filing_ids`, or `null` with a `null_reason`. No ratios on share prices.")] = None,
         include_predecessors: Annotated[Optional[StrictBool], Field(description="Also serve the statements of the company's predecessors: the issuers it succeeded by reorganisation or redomicile (its `predecessors` of kind reorganization or other on GET /companies/{id}/, followed back through the chain), each from filings released up to and including the link's effective date (UTC), as `include_predecessors` does on GET /filings/. Each company is selected on its own statements; the requested company's win their periods, and a predecessor fills only periods no nearer company serves. `source_filing` names the filing each statement came from. Predecessors your plan cannot see are left out. With `include=split_adjusted`, values are adjusted by the predecessors' splits too, as GET /companies/{id}/splits/?include_predecessors=true serves them; a link states no exchange ratio, so each predecessor share counts as one share of its successor. Not combined with `as_known_at`, `include=preliminary` or `include=standalone_quarters` (`400`).")] = None,
         line_items: Annotated[Optional[StrictStr], Field(description="Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Statements with none of the requested codes are dropped. Unknown codes return `400`; see `/line-item-definitions/`.")] = None,
+        min_trust_tier: Annotated[Optional[StrictStr], Field(description="Serve only line items of at least this `trust_tier`, best first: `xbrl` (the issuer's own XBRL tag), `verified`, `accepted`, `review`. A line item with no tier, or of tier `derived` or `xbrl-derived` (not measured), is left out whenever this is set; a kept line item that is withheld for another reason is still served null with its `withheld_reason`. Without it every value is served with its tier. Cannot be combined with `include=preliminary`, `include=ratios` or `include=standalone_quarters`, which are computed from values this filter would leave out. Each tier's measured accuracy: `/companies/financials/trust-tiers/`.")] = None,
         statement_type: Annotated[Optional[StrictStr], Field(description="Filter to a single statement type.")] = None,
         _request_timeout: Union[
             None,
@@ -519,6 +524,8 @@ class CompaniesApi:
         :type include_predecessors: bool
         :param line_items: Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Statements with none of the requested codes are dropped. Unknown codes return `400`; see `/line-item-definitions/`.
         :type line_items: str
+        :param min_trust_tier: Serve only line items of at least this `trust_tier`, best first: `xbrl` (the issuer's own XBRL tag), `verified`, `accepted`, `review`. A line item with no tier, or of tier `derived` or `xbrl-derived` (not measured), is left out whenever this is set; a kept line item that is withheld for another reason is still served null with its `withheld_reason`. Without it every value is served with its tier. Cannot be combined with `include=preliminary`, `include=ratios` or `include=standalone_quarters`, which are computed from values this filter would leave out. Each tier's measured accuracy: `/companies/financials/trust-tiers/`.
+        :type min_trust_tier: str
         :param statement_type: Filter to a single statement type.
         :type statement_type: str
         :param _request_timeout: timeout setting for this request. If one
@@ -554,6 +561,7 @@ class CompaniesApi:
             include=include,
             include_predecessors=include_predecessors,
             line_items=line_items,
+            min_trust_tier=min_trust_tier,
             statement_type=statement_type,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -592,6 +600,7 @@ class CompaniesApi:
         include: Annotated[Optional[StrictStr], Field(description="**Per-share figures and share counts are as reported, on each filing's own share basis: pass `split_adjusted` for a series comparable across stock splits.**  Comma-separated. `revisions` adds a `revisions` list to every line item: each recorded change to that value, oldest first, with `old_value` -> `new_value` and a reason category. With `as_known_at`, only the changes up to that time. `preliminary` adds `preliminary_results`: the company's own preliminary figures, published before the report and labelled preliminary, never merged into `periods`. `as_reported` adds `as_reported` to a standardised total read straight from the filer's XBRL whose calculation tree ties: the face lines it is made of, as the filer tagged them. Not served with `as_known_at`. `standalone_quarters` adds `standalone_quarters`: one three-month period per fiscal quarter (H2 for half-year reporters), income statement and cash flow, derived from year-to-date interims where the company reports no three-month figure, each value flagged `reported`, `derived` or `derived_approx`, never merged into `periods`. `split_adjusted` adds `split_adjusted` to every per-share figure (EPS, book value per share) and share count, in `periods` and `standalone_quarters`: the value on today's share basis (or `as_of`'s), next to the unchanged as-reported `value`, with its `adjustment_factor` and the `split_event_ids` from `/companies/{id}/splits/` it applies. Recomputed on every request, so a split re-adjusts history the day it takes effect. Not served with `as_known_at`. `ratios` adds `ratios`: per served fiscal year, fundamental ratios (margins, returns, leverage with and without lease liabilities, liquidity, turnover, growth, cash payout, per share and per employee) computed from the values `periods` serves, each with its `inputs` and `source_filing_ids`, or `null` with a `null_reason`. No ratios on share prices.")] = None,
         include_predecessors: Annotated[Optional[StrictBool], Field(description="Also serve the statements of the company's predecessors: the issuers it succeeded by reorganisation or redomicile (its `predecessors` of kind reorganization or other on GET /companies/{id}/, followed back through the chain), each from filings released up to and including the link's effective date (UTC), as `include_predecessors` does on GET /filings/. Each company is selected on its own statements; the requested company's win their periods, and a predecessor fills only periods no nearer company serves. `source_filing` names the filing each statement came from. Predecessors your plan cannot see are left out. With `include=split_adjusted`, values are adjusted by the predecessors' splits too, as GET /companies/{id}/splits/?include_predecessors=true serves them; a link states no exchange ratio, so each predecessor share counts as one share of its successor. Not combined with `as_known_at`, `include=preliminary` or `include=standalone_quarters` (`400`).")] = None,
         line_items: Annotated[Optional[StrictStr], Field(description="Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Statements with none of the requested codes are dropped. Unknown codes return `400`; see `/line-item-definitions/`.")] = None,
+        min_trust_tier: Annotated[Optional[StrictStr], Field(description="Serve only line items of at least this `trust_tier`, best first: `xbrl` (the issuer's own XBRL tag), `verified`, `accepted`, `review`. A line item with no tier, or of tier `derived` or `xbrl-derived` (not measured), is left out whenever this is set; a kept line item that is withheld for another reason is still served null with its `withheld_reason`. Without it every value is served with its tier. Cannot be combined with `include=preliminary`, `include=ratios` or `include=standalone_quarters`, which are computed from values this filter would leave out. Each tier's measured accuracy: `/companies/financials/trust-tiers/`.")] = None,
         statement_type: Annotated[Optional[StrictStr], Field(description="Filter to a single statement type.")] = None,
         _request_timeout: Union[
             None,
@@ -630,6 +639,8 @@ class CompaniesApi:
         :type include_predecessors: bool
         :param line_items: Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Statements with none of the requested codes are dropped. Unknown codes return `400`; see `/line-item-definitions/`.
         :type line_items: str
+        :param min_trust_tier: Serve only line items of at least this `trust_tier`, best first: `xbrl` (the issuer's own XBRL tag), `verified`, `accepted`, `review`. A line item with no tier, or of tier `derived` or `xbrl-derived` (not measured), is left out whenever this is set; a kept line item that is withheld for another reason is still served null with its `withheld_reason`. Without it every value is served with its tier. Cannot be combined with `include=preliminary`, `include=ratios` or `include=standalone_quarters`, which are computed from values this filter would leave out. Each tier's measured accuracy: `/companies/financials/trust-tiers/`.
+        :type min_trust_tier: str
         :param statement_type: Filter to a single statement type.
         :type statement_type: str
         :param _request_timeout: timeout setting for this request. If one
@@ -665,6 +676,7 @@ class CompaniesApi:
             include=include,
             include_predecessors=include_predecessors,
             line_items=line_items,
+            min_trust_tier=min_trust_tier,
             statement_type=statement_type,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -698,6 +710,7 @@ class CompaniesApi:
         include,
         include_predecessors,
         line_items,
+        min_trust_tier,
         statement_type,
         _request_auth,
         _content_type,
@@ -759,6 +772,10 @@ class CompaniesApi:
             
             _query_params.append(('line_items', line_items))
             
+        if min_trust_tier is not None:
+            
+            _query_params.append(('min_trust_tier', min_trust_tier))
+            
         if statement_type is not None:
             
             _query_params.append(('statement_type', statement_type))
@@ -786,6 +803,259 @@ class CompaniesApi:
         return self.api_client.param_serialize(
             method='GET',
             resource_path='/companies/{id}/financials/',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    async def companies_financials_trust_tiers_retrieve(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> Dict[str, Optional[object]]:
+        """Measured accuracy of each trust tier
+
+        The published accuracy of each `trust_tier` a financials line item carries: how often values of the tier matched the issuer's own XBRL in a pre-registered sample, with the sample size and a 95% interval. A rate for the class, not a probability for one value.
+
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._companies_financials_trust_tiers_retrieve_serialize(
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "Dict[str, Optional[object]]",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    async def companies_financials_trust_tiers_retrieve_with_http_info(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[Dict[str, Optional[object]]]:
+        """Measured accuracy of each trust tier
+
+        The published accuracy of each `trust_tier` a financials line item carries: how often values of the tier matched the issuer's own XBRL in a pre-registered sample, with the sample size and a 95% interval. A rate for the class, not a probability for one value.
+
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._companies_financials_trust_tiers_retrieve_serialize(
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "Dict[str, Optional[object]]",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    async def companies_financials_trust_tiers_retrieve_without_preload_content(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Measured accuracy of each trust tier
+
+        The published accuracy of each `trust_tier` a financials line item carries: how often values of the tier matched the issuer's own XBRL in a pre-registered sample, with the sample size and a 95% interval. A rate for the class, not a probability for one value.
+
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._companies_financials_trust_tiers_retrieve_serialize(
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "Dict[str, Optional[object]]",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _companies_financials_trust_tiers_retrieve_serialize(
+        self,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'CognitoJWT', 
+            'ApiKeyAuth'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/companies/financials/trust-tiers/',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,

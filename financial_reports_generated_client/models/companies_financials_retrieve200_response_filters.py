@@ -19,7 +19,7 @@ import re  # noqa: F401
 import json
 
 from datetime import date, datetime
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
@@ -36,9 +36,20 @@ class CompaniesFinancialsRetrieve200ResponseFilters(BaseModel):
     fiscal_period: Optional[StrictStr] = None
     line_items: Optional[List[StrictStr]] = None
     as_of: Optional[date] = None
+    min_trust_tier: Optional[StrictStr] = None
     as_known_at: Optional[datetime] = Field(default=None, description="The instant values were reconstructed at, in UTC: a bare date is echoed as the end of that day, a future time as now.")
     include: Optional[List[StrictStr]] = None
-    __properties: ClassVar[List[str]] = ["statement_type", "fiscal_year", "fiscal_year_from", "fiscal_year_to", "fiscal_period", "line_items", "as_of", "as_known_at", "include"]
+    __properties: ClassVar[List[str]] = ["statement_type", "fiscal_year", "fiscal_year_from", "fiscal_year_to", "fiscal_period", "line_items", "as_of", "min_trust_tier", "as_known_at", "include"]
+
+    @field_validator('min_trust_tier')
+    def min_trust_tier_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['xbrl', 'verified', 'accepted', 'review']):
+            raise ValueError("must be one of enum values ('xbrl', 'verified', 'accepted', 'review')")
+        return value
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -133,6 +144,7 @@ class CompaniesFinancialsRetrieve200ResponseFilters(BaseModel):
             "fiscal_period": obj.get("fiscal_period"),
             "line_items": obj.get("line_items"),
             "as_of": obj.get("as_of"),
+            "min_trust_tier": obj.get("min_trust_tier"),
             "as_known_at": obj.get("as_known_at"),
             "include": obj.get("include")
         })
