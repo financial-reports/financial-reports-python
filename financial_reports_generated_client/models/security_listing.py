@@ -41,7 +41,7 @@ class SecurityListing(BaseModel):
     composite_figi: StrictStr
     share_class_figi: StrictStr
     historical: StrictBool = Field(description="`true` when the company is delisted: the line records a venue it used to trade on, not a current one. The ticker may since have been reused by another issuer.")
-    exchange_symbol: StrictStr = Field(description="The exchange's own code where it differs from `ticker`: the NSE symbol on XNSE (`ICICIBANK`), the numeric BSE scrip code on XBOM (`532174`). Empty elsewhere and where unknown.")
+    exchange_symbol: StrictStr = Field(description="The exchange's own code where it differs from `ticker`: the NSE symbol on XNSE (`ICICIBANK`), the numeric BSE scrip code on XBOM (`532174`), the Bursa Malaysia stock code on XKLS (`1155`), the SGX code on XSES (`D05`). Empty elsewhere and where unknown.")
     __properties: ClassVar[List[str]] = ["id", "company", "mic", "ticker", "exch_code", "exchange_name", "security_type", "market_sector", "figi", "composite_figi", "share_class_figi", "historical", "exchange_symbol"]
 
     model_config = ConfigDict(

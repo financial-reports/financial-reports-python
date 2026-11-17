@@ -29,8 +29,8 @@ class CompanyListing(BaseModel):
     One equity listing of the company: venue, ticker, FIGI, and whether it is historical.
     """ # noqa: E501
     mic: Optional[StrictStr] = Field(description="ISO 10383 Market Identifier Code of the venue.")
-    ticker: StrictStr = Field(description="Ticker on that venue, as published with its FIGI. On most venues it is the exchange's symbol; on Indian venues it is not (`ICICIBC`), and the exchange's is in `exchange_symbol`.")
-    exchange_symbol: Optional[StrictStr] = Field(description="The exchange's own code where it differs from `ticker`: the NSE symbol on XNSE (`ICICIBANK`), the numeric BSE scrip code on XBOM (`532174`). Null elsewhere and where unknown.")
+    ticker: StrictStr = Field(description="Ticker on that venue, as published with its FIGI. On most venues it is the exchange's symbol; on Indian, Malaysian and Singapore venues it is not (`ICICIBC`, `MAY`), and the exchange's is in `exchange_symbol`.")
+    exchange_symbol: Optional[StrictStr] = Field(description="The exchange's own code where it differs from `ticker`: the NSE symbol on XNSE (`ICICIBANK`), the numeric BSE scrip code on XBOM (`532174`), the Bursa Malaysia stock code on XKLS (`1155`), the SGX code on XSES (`D05`). Null elsewhere and where unknown.")
     exchange_name: Optional[StrictStr] = Field(description="Name of the venue.")
     exch_code: Optional[StrictStr] = Field(description="Short exchange code, e.g. `GY` for Xetra.")
     security_type: Optional[StrictStr] = Field(description="Security type, e.g. `Common Stock`.")

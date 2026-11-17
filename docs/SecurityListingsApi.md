@@ -59,7 +59,7 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
     ordering = 'ordering_example' # str | Which field to use when ordering the results. (optional)
     page = 56 # int | A page number within the paginated result set. (optional)
     page_size = 56 # int | Number of results to return per page. (optional)
-    ticker = 'ticker_example' # str | Ticker on that venue. Case-insensitive. (optional)
+    ticker = 'ticker_example' # str | Ticker on that venue. Case-insensitive. Where no listing has this ticker, matches `exchange_symbol` instead (`ICICIBANK` on XNSE, `1155` on XKLS). (optional)
 
     try:
         # List Security Listings
@@ -84,7 +84,7 @@ Name | Type | Description  | Notes
  **ordering** | **str**| Which field to use when ordering the results. | [optional] 
  **page** | **int**| A page number within the paginated result set. | [optional] 
  **page_size** | **int**| Number of results to return per page. | [optional] 
- **ticker** | **str**| Ticker on that venue. Case-insensitive. | [optional] 
+ **ticker** | **str**| Ticker on that venue. Case-insensitive. Where no listing has this ticker, matches &#x60;exchange_symbol&#x60; instead (&#x60;ICICIBANK&#x60; on XNSE, &#x60;1155&#x60; on XKLS). | [optional] 
 
 ### Return type
 

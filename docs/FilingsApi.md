@@ -10,6 +10,7 @@ Method | HTTP request | Description
 [**filings_markdown_retrieve**](FilingsApi.md#filings_markdown_retrieve) | **GET** /filings/{id}/markdown/ | Retrieve Filing Markdown
 [**filings_markdown_search_create**](FilingsApi.md#filings_markdown_search_create) | **POST** /filings/markdown/search/ | Search Many Filings at Once
 [**filings_markdown_search_retrieve**](FilingsApi.md#filings_markdown_search_retrieve) | **GET** /filings/{id}/markdown/search/ | Search Within a Filing&#39;s Markdown
+[**filings_removed_list**](FilingsApi.md#filings_removed_list) | **GET** /filings/removed/ | List Removed Filings
 [**filings_retrieve**](FilingsApi.md#filings_retrieve) | **GET** /filings/{id}/ | Retrieve Filing Details
 [**filings_search_list**](FilingsApi.md#filings_search_list) | **GET** /filings/search/ | Search Filing Text Across All Filings
 
@@ -663,6 +664,110 @@ void (empty response body)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Matches with their character offsets. |  -  |
+**403** | Missing or invalid API key, or the plan does not include this endpoint. |  -  |
+**429** | Rate limit, plan quota or spend cap reached. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **filings_removed_list**
+> PaginatedRemovedFilingList filings_removed_list(since, page_size=page_size, cursor=cursor)
+
+List Removed Filings
+
+**Cost:** 1 credit per request.
+
+---
+Filings you could see that are no longer available to you, oldest first.
+
+A filing we withdraw, or move to a company outside your plan, drops out of the filing list and its detail call returns 404, so a copy built by polling would keep it forever. Poll this feed to reconcile: delete every `filing_id` it returns. It is the polling counterpart of the `filing.removed` webhook event, which reaches only filings a webhook was sent.
+
+**How to poll.** Pass `since` (start with the date of your first sync, e.g. `2026-09-01`), follow `next` until it is null, then use the last `removed_at` as `since` next time. A filing can appear more than once; deleting it twice is harmless. Results are in your plan's scope only: countries, sources and watchlist.
+
+**What it covers:** filings withdrawn (`hidden`), byte-identical copies withdrawn in favour of the original (`duplicate_copy`), and filings moved to a company we do not list (`company_hidden`) or outside your plan (`out_of_scope`). Holds (a filing held for review, or a source we have suspended pending a check) and filings that were never public are not listed. A filing that comes back reappears in the filing list with a new `updated_date`.
+
+**Not covered:** a filing deleted outright, a company withdrawn as a whole without its filings changing, and company merges, which `GET /companies/merges/` announces. Moves are covered from 2026-10-01, when they began to be recorded.
+
+### Example
+
+* Bearer (JWT) Authentication (CognitoJWT):
+* Api Key Authentication (ApiKeyAuth):
+
+```python
+import financial_reports_generated_client
+from financial_reports_generated_client.models.paginated_removed_filing_list import PaginatedRemovedFilingList
+from financial_reports_generated_client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.financialreports.eu
+# See configuration.py for a list of all supported configuration parameters.
+configuration = financial_reports_generated_client.Configuration(
+    host = "https://api.financialreports.eu"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization (JWT): CognitoJWT
+configuration = financial_reports_generated_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Configure API key authorization: ApiKeyAuth
+configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+async with financial_reports_generated_client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = financial_reports_generated_client.FilingsApi(api_client)
+    since = '2013-10-20T19:20:30+01:00' # datetime | Only removals at or after this time (ISO 8601; a date means midnight UTC).
+    page_size = 56 # int | Results per page (default 100, maximum 1000). (optional)
+    cursor = 'cursor_example' # str | Continue a walk: pass the cursor from a `next` link unchanged. (optional)
+
+    try:
+        # List Removed Filings
+        api_response = await api_instance.filings_removed_list(since, page_size=page_size, cursor=cursor)
+        print("The response of FilingsApi->filings_removed_list:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling FilingsApi->filings_removed_list: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **since** | **datetime**| Only removals at or after this time (ISO 8601; a date means midnight UTC). | 
+ **page_size** | **int**| Results per page (default 100, maximum 1000). | [optional] 
+ **cursor** | **str**| Continue a walk: pass the cursor from a &#x60;next&#x60; link unchanged. | [optional] 
+
+### Return type
+
+[**PaginatedRemovedFilingList**](PaginatedRemovedFilingList.md)
+
+### Authorization
+
+[CognitoJWT](../README.md#CognitoJWT), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Success. |  -  |
+**400** | Missing or invalid &#x60;since&#x60;, &#x60;cursor&#x60; or &#x60;page_size&#x60;. |  -  |
+**401** | Unauthorized |  -  |
 **403** | Missing or invalid API key, or the plan does not include this endpoint. |  -  |
 **429** | Rate limit, plan quota or spend cap reached. |  -  |
 

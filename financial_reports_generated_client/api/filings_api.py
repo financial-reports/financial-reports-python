@@ -26,6 +26,7 @@ from financial_reports_generated_client.models.markdown_batch_search_response im
 from financial_reports_generated_client.models.paginated_filing_history_list import PaginatedFilingHistoryList
 from financial_reports_generated_client.models.paginated_filing_search_result_list import PaginatedFilingSearchResultList
 from financial_reports_generated_client.models.paginated_filing_summary_list import PaginatedFilingSummaryList
+from financial_reports_generated_client.models.paginated_removed_filing_list import PaginatedRemovedFilingList
 
 from financial_reports_generated_client.api_client import ApiClient, RequestSerialized
 from financial_reports_generated_client.api_response import ApiResponse
@@ -2560,6 +2561,325 @@ class FilingsApi:
         return self.api_client.param_serialize(
             method='GET',
             resource_path='/filings/{id}/markdown/search/',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    async def filings_removed_list(
+        self,
+        since: Annotated[datetime, Field(description="Only removals at or after this time (ISO 8601; a date means midnight UTC).")],
+        page_size: Annotated[Optional[StrictInt], Field(description="Results per page (default 100, maximum 1000).")] = None,
+        cursor: Annotated[Optional[StrictStr], Field(description="Continue a walk: pass the cursor from a `next` link unchanged.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> PaginatedRemovedFilingList:
+        """List Removed Filings
+
+        **Cost:** 1 credit per request.  --- Filings you could see that are no longer available to you, oldest first.  A filing we withdraw, or move to a company outside your plan, drops out of the filing list and its detail call returns 404, so a copy built by polling would keep it forever. Poll this feed to reconcile: delete every `filing_id` it returns. It is the polling counterpart of the `filing.removed` webhook event, which reaches only filings a webhook was sent.  **How to poll.** Pass `since` (start with the date of your first sync, e.g. `2026-09-01`), follow `next` until it is null, then use the last `removed_at` as `since` next time. A filing can appear more than once; deleting it twice is harmless. Results are in your plan's scope only: countries, sources and watchlist.  **What it covers:** filings withdrawn (`hidden`), byte-identical copies withdrawn in favour of the original (`duplicate_copy`), and filings moved to a company we do not list (`company_hidden`) or outside your plan (`out_of_scope`). Holds (a filing held for review, or a source we have suspended pending a check) and filings that were never public are not listed. A filing that comes back reappears in the filing list with a new `updated_date`.  **Not covered:** a filing deleted outright, a company withdrawn as a whole without its filings changing, and company merges, which `GET /companies/merges/` announces. Moves are covered from 2026-10-01, when they began to be recorded.
+
+        :param since: Only removals at or after this time (ISO 8601; a date means midnight UTC). (required)
+        :type since: datetime
+        :param page_size: Results per page (default 100, maximum 1000).
+        :type page_size: int
+        :param cursor: Continue a walk: pass the cursor from a `next` link unchanged.
+        :type cursor: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._filings_removed_list_serialize(
+            since=since,
+            page_size=page_size,
+            cursor=cursor,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PaginatedRemovedFilingList",
+            '400': "ErrorDetail",
+            '401': "ErrorDetail",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    async def filings_removed_list_with_http_info(
+        self,
+        since: Annotated[datetime, Field(description="Only removals at or after this time (ISO 8601; a date means midnight UTC).")],
+        page_size: Annotated[Optional[StrictInt], Field(description="Results per page (default 100, maximum 1000).")] = None,
+        cursor: Annotated[Optional[StrictStr], Field(description="Continue a walk: pass the cursor from a `next` link unchanged.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[PaginatedRemovedFilingList]:
+        """List Removed Filings
+
+        **Cost:** 1 credit per request.  --- Filings you could see that are no longer available to you, oldest first.  A filing we withdraw, or move to a company outside your plan, drops out of the filing list and its detail call returns 404, so a copy built by polling would keep it forever. Poll this feed to reconcile: delete every `filing_id` it returns. It is the polling counterpart of the `filing.removed` webhook event, which reaches only filings a webhook was sent.  **How to poll.** Pass `since` (start with the date of your first sync, e.g. `2026-09-01`), follow `next` until it is null, then use the last `removed_at` as `since` next time. A filing can appear more than once; deleting it twice is harmless. Results are in your plan's scope only: countries, sources and watchlist.  **What it covers:** filings withdrawn (`hidden`), byte-identical copies withdrawn in favour of the original (`duplicate_copy`), and filings moved to a company we do not list (`company_hidden`) or outside your plan (`out_of_scope`). Holds (a filing held for review, or a source we have suspended pending a check) and filings that were never public are not listed. A filing that comes back reappears in the filing list with a new `updated_date`.  **Not covered:** a filing deleted outright, a company withdrawn as a whole without its filings changing, and company merges, which `GET /companies/merges/` announces. Moves are covered from 2026-10-01, when they began to be recorded.
+
+        :param since: Only removals at or after this time (ISO 8601; a date means midnight UTC). (required)
+        :type since: datetime
+        :param page_size: Results per page (default 100, maximum 1000).
+        :type page_size: int
+        :param cursor: Continue a walk: pass the cursor from a `next` link unchanged.
+        :type cursor: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._filings_removed_list_serialize(
+            since=since,
+            page_size=page_size,
+            cursor=cursor,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PaginatedRemovedFilingList",
+            '400': "ErrorDetail",
+            '401': "ErrorDetail",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    async def filings_removed_list_without_preload_content(
+        self,
+        since: Annotated[datetime, Field(description="Only removals at or after this time (ISO 8601; a date means midnight UTC).")],
+        page_size: Annotated[Optional[StrictInt], Field(description="Results per page (default 100, maximum 1000).")] = None,
+        cursor: Annotated[Optional[StrictStr], Field(description="Continue a walk: pass the cursor from a `next` link unchanged.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """List Removed Filings
+
+        **Cost:** 1 credit per request.  --- Filings you could see that are no longer available to you, oldest first.  A filing we withdraw, or move to a company outside your plan, drops out of the filing list and its detail call returns 404, so a copy built by polling would keep it forever. Poll this feed to reconcile: delete every `filing_id` it returns. It is the polling counterpart of the `filing.removed` webhook event, which reaches only filings a webhook was sent.  **How to poll.** Pass `since` (start with the date of your first sync, e.g. `2026-09-01`), follow `next` until it is null, then use the last `removed_at` as `since` next time. A filing can appear more than once; deleting it twice is harmless. Results are in your plan's scope only: countries, sources and watchlist.  **What it covers:** filings withdrawn (`hidden`), byte-identical copies withdrawn in favour of the original (`duplicate_copy`), and filings moved to a company we do not list (`company_hidden`) or outside your plan (`out_of_scope`). Holds (a filing held for review, or a source we have suspended pending a check) and filings that were never public are not listed. A filing that comes back reappears in the filing list with a new `updated_date`.  **Not covered:** a filing deleted outright, a company withdrawn as a whole without its filings changing, and company merges, which `GET /companies/merges/` announces. Moves are covered from 2026-10-01, when they began to be recorded.
+
+        :param since: Only removals at or after this time (ISO 8601; a date means midnight UTC). (required)
+        :type since: datetime
+        :param page_size: Results per page (default 100, maximum 1000).
+        :type page_size: int
+        :param cursor: Continue a walk: pass the cursor from a `next` link unchanged.
+        :type cursor: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._filings_removed_list_serialize(
+            since=since,
+            page_size=page_size,
+            cursor=cursor,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PaginatedRemovedFilingList",
+            '400': "ErrorDetail",
+            '401': "ErrorDetail",
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _filings_removed_list_serialize(
+        self,
+        since,
+        page_size,
+        cursor,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        if page_size is not None:
+            
+            _query_params.append(('page_size', page_size))
+            
+        if since is not None:
+            if isinstance(since, datetime):
+                _query_params.append(
+                    (
+                        'since',
+                        since.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('since', since))
+            
+        if cursor is not None:
+            
+            _query_params.append(('cursor', cursor))
+            
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'CognitoJWT', 
+            'ApiKeyAuth'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/filings/removed/',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,

@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "1.4.190"
+__version__ = "1.4.191"
 
 # Define package exports
 __all__ = [
@@ -150,6 +150,7 @@ __all__ = [
     "PaginatedISINList",
     "PaginatedLanguageList",
     "PaginatedLineItemDefinitionList",
+    "PaginatedRemovedFilingList",
     "PaginatedSecurityListingList",
     "PaginatedSourceList",
     "PaginatedWebhookDeliveryList",
@@ -158,6 +159,8 @@ __all__ = [
     "ProcessingStatusEnum",
     "RateLimitError",
     "ReasonEnum",
+    "RemovedFiling",
+    "RemovedFilingReasonEnum",
     "ResolveRow",
     "SecurityListing",
     "Source",
@@ -315,6 +318,7 @@ from financial_reports_generated_client.models.paginated_isic_section_list impor
 from financial_reports_generated_client.models.paginated_isin_list import PaginatedISINList as PaginatedISINList
 from financial_reports_generated_client.models.paginated_language_list import PaginatedLanguageList as PaginatedLanguageList
 from financial_reports_generated_client.models.paginated_line_item_definition_list import PaginatedLineItemDefinitionList as PaginatedLineItemDefinitionList
+from financial_reports_generated_client.models.paginated_removed_filing_list import PaginatedRemovedFilingList as PaginatedRemovedFilingList
 from financial_reports_generated_client.models.paginated_security_listing_list import PaginatedSecurityListingList as PaginatedSecurityListingList
 from financial_reports_generated_client.models.paginated_source_list import PaginatedSourceList as PaginatedSourceList
 from financial_reports_generated_client.models.paginated_webhook_delivery_list import PaginatedWebhookDeliveryList as PaginatedWebhookDeliveryList
@@ -323,6 +327,8 @@ from financial_reports_generated_client.models.patched_webhook import PatchedWeb
 from financial_reports_generated_client.models.processing_status_enum import ProcessingStatusEnum as ProcessingStatusEnum
 from financial_reports_generated_client.models.rate_limit_error import RateLimitError as RateLimitError
 from financial_reports_generated_client.models.reason_enum import ReasonEnum as ReasonEnum
+from financial_reports_generated_client.models.removed_filing import RemovedFiling as RemovedFiling
+from financial_reports_generated_client.models.removed_filing_reason_enum import RemovedFilingReasonEnum as RemovedFilingReasonEnum
 from financial_reports_generated_client.models.resolve_row import ResolveRow as ResolveRow
 from financial_reports_generated_client.models.security_listing import SecurityListing as SecurityListing
 from financial_reports_generated_client.models.source import Source as Source

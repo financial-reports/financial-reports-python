@@ -50,7 +50,7 @@ class SecurityListingsApi:
         ordering: Annotated[Optional[StrictStr], Field(description="Which field to use when ordering the results.")] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
-        ticker: Annotated[Optional[StrictStr], Field(description="Ticker on that venue. Case-insensitive.")] = None,
+        ticker: Annotated[Optional[StrictStr], Field(description="Ticker on that venue. Case-insensitive. Where no listing has this ticker, matches `exchange_symbol` instead (`ICICIBANK` on XNSE, `1155` on XKLS).")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -82,7 +82,7 @@ class SecurityListingsApi:
         :type page: int
         :param page_size: Number of results to return per page.
         :type page_size: int
-        :param ticker: Ticker on that venue. Case-insensitive.
+        :param ticker: Ticker on that venue. Case-insensitive. Where no listing has this ticker, matches `exchange_symbol` instead (`ICICIBANK` on XNSE, `1155` on XKLS).
         :type ticker: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -147,7 +147,7 @@ class SecurityListingsApi:
         ordering: Annotated[Optional[StrictStr], Field(description="Which field to use when ordering the results.")] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
-        ticker: Annotated[Optional[StrictStr], Field(description="Ticker on that venue. Case-insensitive.")] = None,
+        ticker: Annotated[Optional[StrictStr], Field(description="Ticker on that venue. Case-insensitive. Where no listing has this ticker, matches `exchange_symbol` instead (`ICICIBANK` on XNSE, `1155` on XKLS).")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -179,7 +179,7 @@ class SecurityListingsApi:
         :type page: int
         :param page_size: Number of results to return per page.
         :type page_size: int
-        :param ticker: Ticker on that venue. Case-insensitive.
+        :param ticker: Ticker on that venue. Case-insensitive. Where no listing has this ticker, matches `exchange_symbol` instead (`ICICIBANK` on XNSE, `1155` on XKLS).
         :type ticker: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -244,7 +244,7 @@ class SecurityListingsApi:
         ordering: Annotated[Optional[StrictStr], Field(description="Which field to use when ordering the results.")] = None,
         page: Annotated[Optional[StrictInt], Field(description="A page number within the paginated result set.")] = None,
         page_size: Annotated[Optional[StrictInt], Field(description="Number of results to return per page.")] = None,
-        ticker: Annotated[Optional[StrictStr], Field(description="Ticker on that venue. Case-insensitive.")] = None,
+        ticker: Annotated[Optional[StrictStr], Field(description="Ticker on that venue. Case-insensitive. Where no listing has this ticker, matches `exchange_symbol` instead (`ICICIBANK` on XNSE, `1155` on XKLS).")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -276,7 +276,7 @@ class SecurityListingsApi:
         :type page: int
         :param page_size: Number of results to return per page.
         :type page_size: int
-        :param ticker: Ticker on that venue. Case-insensitive.
+        :param ticker: Ticker on that venue. Case-insensitive. Where no listing has this ticker, matches `exchange_symbol` instead (`ICICIBANK` on XNSE, `1155` on XKLS).
         :type ticker: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
