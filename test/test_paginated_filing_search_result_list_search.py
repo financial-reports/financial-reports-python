@@ -51,6 +51,7 @@ class TestPaginatedFilingSearchResultListSearch(unittest.TestCase):
                     },
                 expanded_note = '',
                 relaxed_note = '',
+                sorted_by = '',
                 types_resolved = [
                     financial_reports_generated_client.models.paginated_filing_search_result_list_search_types_resolved_inner.PaginatedFilingSearchResultList_search_types_resolved_inner(
                         param = 'type', 

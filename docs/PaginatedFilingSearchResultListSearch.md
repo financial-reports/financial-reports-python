@@ -1,6 +1,6 @@
 # PaginatedFilingSearchResultListSearch
 
-About the full-text candidate set. `count` is the number of matching filings you can see among those this endpoint pages, at most `max_results` (with `group_by=company`, the number of company rows). Visibility is checked against the index's candidates in relevance order, up to a scan limit.
+About the full-text candidate set. `count` is the number of matching filings you can see among those this endpoint pages, at most `max_results` (with `group_by=company`, the number of company rows). Visibility is checked against the index's candidates in relevance order (date order when `ordering` leads with `release_datetime` or `added_to_platform`), up to a scan limit.
 
 ## Properties
 
@@ -17,6 +17,7 @@ Name | Type | Description | Notes
 **expanded_terms** | **Dict[str, List[str]]** | Present only when a &#x60;q&#x60; value is a known finance term (e.g. \&quot;going concern\&quot;, \&quot;share buyback\&quot;) and the request filters by &#x60;languages&#x60;/&#x60;language&#x60; or &#x60;countries&#x60;: the same term in those filing languages, also searched (weighted below your own terms), per value. | [optional] 
 **expanded_note** | **str** | The same, in words. | [optional] 
 **relaxed_note** | **str** | Present only when no filing contained every word of a long &#x60;q&#x60; value (6 words or more): the results then contain most of its words, not all. Shorter, key-term values are more precise. | [optional] 
+**sorted_by** | **str** | What chose the matches the cap kept: &#x60;relevance&#x60; (the best &#x60;max_results&#x60; matches), or the leading date ordering, e.g. &#x60;-release_datetime&#x60; (the newest &#x60;max_results&#x60; matches of all). Other orderings sort the relevance-chosen matches, so they read &#x60;relevance&#x60;. | [optional] 
 **types_resolved** | [**List[PaginatedFilingSearchResultListSearchTypesResolvedInner]**](PaginatedFilingSearchResultListSearchTypesResolvedInner.md) | How each &#x60;type&#x60;/&#x60;types&#x60; code that is not a FinancialFilings type code (a regulator form name such as 10-Q or 8-K, or a retired code) was searched. Empty when every code was a type code. | [optional] 
 
 ## Example

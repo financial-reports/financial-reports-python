@@ -27,7 +27,7 @@ from pydantic_core import to_jsonable_python
 
 class PaginatedFilingSearchResultListSearch(BaseModel):
     """
-    About the full-text candidate set. `count` is the number of matching filings you can see among those this endpoint pages, at most `max_results` (with `group_by=company`, the number of company rows). Visibility is checked against the index's candidates in relevance order, up to a scan limit.
+    About the full-text candidate set. `count` is the number of matching filings you can see among those this endpoint pages, at most `max_results` (with `group_by=company`, the number of company rows). Visibility is checked against the index's candidates in relevance order (date order when `ordering` leads with `release_datetime` or `added_to_platform`), up to a scan limit.
     """ # noqa: E501
     capped: Optional[StrictBool] = Field(default=None, description="True: more matching filings MAY exist beyond what this endpoint pages, either because more than `max_results` are visible or because the scan stopped early (`scan_complete` false). False: `count` is every match you can see.")
     scan_complete: Optional[StrictBool] = Field(default=None, description="True: every candidate the index matched was checked. False: the scan stopped (a scan limit or time budget) before checking every candidate. An EMPTY page with `scan_complete` false is NOT an absence, and more matching filings may exist; `count` is then a lower bound (what the scan found), not the visible total: narrow `q` or the filters and search again.")
@@ -40,8 +40,9 @@ class PaginatedFilingSearchResultListSearch(BaseModel):
     expanded_terms: Optional[Dict[str, List[StrictStr]]] = Field(default=None, description="Present only when a `q` value is a known finance term (e.g. \"going concern\", \"share buyback\") and the request filters by `languages`/`language` or `countries`: the same term in those filing languages, also searched (weighted below your own terms), per value.")
     expanded_note: Optional[StrictStr] = Field(default=None, description="The same, in words.")
     relaxed_note: Optional[StrictStr] = Field(default=None, description="Present only when no filing contained every word of a long `q` value (6 words or more): the results then contain most of its words, not all. Shorter, key-term values are more precise.")
+    sorted_by: Optional[StrictStr] = Field(default=None, description="What chose the matches the cap kept: `relevance` (the best `max_results` matches), or the leading date ordering, e.g. `-release_datetime` (the newest `max_results` matches of all). Other orderings sort the relevance-chosen matches, so they read `relevance`.")
     types_resolved: Optional[List[PaginatedFilingSearchResultListSearchTypesResolvedInner]] = Field(default=None, description="How each `type`/`types` code that is not a FinancialFilings type code (a regulator form name such as 10-Q or 8-K, or a retired code) was searched. Empty when every code was a type code.")
-    __properties: ClassVar[List[str]] = ["capped", "scan_complete", "max_results", "max_results_note", "scope", "group_by", "filings_grouped", "message", "expanded_terms", "expanded_note", "relaxed_note", "types_resolved"]
+    __properties: ClassVar[List[str]] = ["capped", "scan_complete", "max_results", "max_results_note", "scope", "group_by", "filings_grouped", "message", "expanded_terms", "expanded_note", "relaxed_note", "sorted_by", "types_resolved"]
 
     @field_validator('scope')
     def scope_validate_enum(cls, value):
@@ -131,6 +132,7 @@ class PaginatedFilingSearchResultListSearch(BaseModel):
             "expanded_terms": obj.get("expanded_terms"),
             "expanded_note": obj.get("expanded_note"),
             "relaxed_note": obj.get("relaxed_note"),
+            "sorted_by": obj.get("sorted_by"),
             "types_resolved": [PaginatedFilingSearchResultListSearchTypesResolvedInner.from_dict(_item) for _item in obj["types_resolved"]] if obj.get("types_resolved") is not None else None
         })
         return _obj
