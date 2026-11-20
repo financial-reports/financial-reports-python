@@ -115,6 +115,39 @@ class TestCompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInner(unit
                         filing_type = '', 
                         release_datetime = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
                         is_selected = True, )
+                    ],
+                first_reported = financial_reports_generated_client.models.companies_financials_retrieve_200_response_periods_inner_statements_inner_first_reported.companies_financials_retrieve_200_response_periods_inner_statements_inner_first_reported(
+                    filing_id = 56, 
+                    filing_type = '', 
+                    release_datetime = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
+                    is_comparative = True, 
+                    line_items = [
+                        financial_reports_generated_client.models.companies_financials_retrieve_200_response_periods_inner_statements_inner_first_reported_line_items_inner.companies_financials_retrieve_200_response_periods_inner_statements_inner_first_reported_line_items_inner(
+                            code = '', 
+                            name = '', 
+                            value = '', 
+                            currency = '', 
+                            trust_tier = '', 
+                            withheld_reason = 'derived_unconfirmed', )
+                        ], ),
+                vintages = [
+                    financial_reports_generated_client.models.companies_financials_retrieve_200_response_periods_inner_statements_inner_vintages_inner.companies_financials_retrieve_200_response_periods_inner_statements_inner_vintages_inner(
+                        filing_id = 56, 
+                        filing_type = '', 
+                        release_datetime = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
+                        is_comparative = True, 
+                        line_items = [
+                            financial_reports_generated_client.models.companies_financials_retrieve_200_response_periods_inner_statements_inner_first_reported_line_items_inner.companies_financials_retrieve_200_response_periods_inner_statements_inner_first_reported_line_items_inner(
+                                code = '', 
+                                name = '', 
+                                value = '', 
+                                currency = '', 
+                                trust_tier = '', 
+                                withheld_reason = 'derived_unconfirmed', )
+                            ], 
+                        is_selected = True, 
+                        is_first_reported = True, 
+                        is_own_report = True, )
                     ]
             )
         else:

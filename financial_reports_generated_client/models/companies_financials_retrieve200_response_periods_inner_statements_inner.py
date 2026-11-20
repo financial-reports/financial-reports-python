@@ -22,9 +22,11 @@ from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr, field_
 from typing import Any, ClassVar, Dict, List, Optional
 from financial_reports_generated_client.models.companies_financials_retrieve200_response_currency import CompaniesFinancialsRetrieve200ResponseCurrency
 from financial_reports_generated_client.models.companies_financials_retrieve200_response_periods_inner_statements_inner_extraction import CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerExtraction
+from financial_reports_generated_client.models.companies_financials_retrieve200_response_periods_inner_statements_inner_first_reported import CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerFirstReported
 from financial_reports_generated_client.models.companies_financials_retrieve200_response_periods_inner_statements_inner_line_items_inner import CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItemsInner
 from financial_reports_generated_client.models.companies_financials_retrieve200_response_periods_inner_statements_inner_source_filing import CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerSourceFiling
 from financial_reports_generated_client.models.companies_financials_retrieve200_response_periods_inner_statements_inner_sources_inner import CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerSourcesInner
+from financial_reports_generated_client.models.companies_financials_retrieve200_response_periods_inner_statements_inner_vintages_inner import CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerVintagesInner
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
@@ -46,7 +48,9 @@ class CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInner(BaseMode
     is_comparative: StrictBool = Field(description="True when this period was read from the comparative (prior-year) column of a later report, because no report presented it as its own period. A data-quality signal, not provenance, so it is returned even when `sources_masked` is true.")
     source_filing: Optional[CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerSourceFiling] = None
     sources: Optional[List[CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerSourcesInner]] = Field(default=None, description="Every filing that reported this (period, statement_type), including the candidates selection rejected and any filing whose values filled in the selected statement. Omitted when `sources_masked` is true. The selected filing is always available as `source_filing`.")
-    __properties: ClassVar[List[str]] = ["statement_type", "statement_type_display", "currency", "currency_mismatch", "accounting_standard", "accounting_standard_basis", "consolidation_basis", "extraction", "line_items", "withdrawn_reason", "is_comparative", "source_filing", "sources"]
+    first_reported: Optional[CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerFirstReported] = None
+    vintages: Optional[List[CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerVintagesInner]] = Field(default=None, description="Present only with `include=vintages`, and omitted when `sources_masked` is true. Every filing's own figures for this period and statement, oldest first: the original report, later reports of the same period (an earnings release, then the annual report; a re-filed report) and stored prior-year columns of later reports (`is_comparative`; annual periods only). For filings read from the filer's XBRL we store the filing's own period, so a later restatement there is mostly not listed. Per-share figures are as reported: `include=split_adjusted` adjusts `periods` only.")
+    __properties: ClassVar[List[str]] = ["statement_type", "statement_type_display", "currency", "currency_mismatch", "accounting_standard", "accounting_standard_basis", "consolidation_basis", "extraction", "line_items", "withdrawn_reason", "is_comparative", "source_filing", "sources", "first_reported", "vintages"]
 
     @field_validator('statement_type')
     def statement_type_validate_enum(cls, value):
@@ -155,6 +159,15 @@ class CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInner(BaseMode
             for _item_sources in self.sources:
                 _items.append(_item_sources.to_dict() if _item_sources is not None else None)
             _dict['sources'] = _items
+        # override the default output from pydantic by calling `to_dict()` of first_reported
+        if self.first_reported:
+            _dict['first_reported'] = self.first_reported.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of each item in vintages (list)
+        _items = []
+        if self.vintages:
+            for _item_vintages in self.vintages:
+                _items.append(_item_vintages.to_dict() if _item_vintages is not None else None)
+            _dict['vintages'] = _items
         # set to None if currency (nullable) is None
         # and model_fields_set contains the field
         if self.currency is None and "currency" in self.model_fields_set:
@@ -180,6 +193,11 @@ class CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInner(BaseMode
         if self.source_filing is None and "source_filing" in self.model_fields_set:
             _dict['source_filing'] = None
 
+        # set to None if first_reported (nullable) is None
+        # and model_fields_set contains the field
+        if self.first_reported is None and "first_reported" in self.model_fields_set:
+            _dict['first_reported'] = None
+
         return _dict
 
     @classmethod
@@ -204,7 +222,9 @@ class CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInner(BaseMode
             "withdrawn_reason": obj.get("withdrawn_reason"),
             "is_comparative": obj.get("is_comparative"),
             "source_filing": CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerSourceFiling.from_dict(obj["source_filing"]) if obj.get("source_filing") is not None else None,
-            "sources": [CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerSourcesInner.from_dict(_item) for _item in obj["sources"]] if obj.get("sources") is not None else None
+            "sources": [CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerSourcesInner.from_dict(_item) for _item in obj["sources"]] if obj.get("sources") is not None else None,
+            "first_reported": CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerFirstReported.from_dict(obj["first_reported"]) if obj.get("first_reported") is not None else None,
+            "vintages": [CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerVintagesInner.from_dict(_item) for _item in obj["vintages"]] if obj.get("vintages") is not None else None
         })
         return _obj
 
