@@ -18,7 +18,7 @@ List Line Item Definitions
 ---
 Every line item a financial statement can contain. `depth` and `parent_code` give the statement hierarchy.
 
-`templates` lists the company types a line item fits (`industrial`, `bank`, `insurer`); filter with `?template=bank`. Industrial-only items still appear for banks and insurers, but mean something different there.
+`templates` lists the company types a line item fits (`industrial`, `bank`, `insurer`); filter with `?template=bank`. Industrial-only items are not served for banks and insurers (see the `template` field of a company's financials).
 
 Some codes come only from a filing's XBRL (`goodwill`, `consolidated_net_income`, `total_debt_incl_leases`, `debt_to_equity` and 32 others), so a filing without XBRL never has them.
 

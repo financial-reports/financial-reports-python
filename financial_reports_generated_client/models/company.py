@@ -51,7 +51,7 @@ class Company(BaseModel):
     isin_count: StrictInt = Field(description="Total number of ISINs associated with this company.")
     primary_isin: Optional[StrictStr] = Field(description="The company's primary ISIN (ISO 6166), or null when no primary is designated. Equivalent to isins[0] when a primary exists.")
     lei: StrictStr = Field(description="Legal Entity Identifier (ISO 17442).")
-    country_code: StrictStr = Field(description="ISO 3166-1 alpha-2 country code of the company's primary registration or headquarters.")
+    country_code: StrictStr = Field(description="ISO 3166-1 alpha-2 country code of the company's home listing market, which can differ from where it is incorporated or headquartered.")
     address: StrictStr = Field(description="The company's primary street address.")
     city: StrictStr = Field(description="The city where the company's headquarters is located.")
     zip_code: StrictStr = Field(description="The postal or ZIP code for the company's address.")

@@ -622,7 +622,8 @@ class FilingsApi:
         extensions: Annotated[Optional[StrictStr], Field(description="Filter by file extension(s). Single (e.g., PDF) or comma-separated (e.g., PDF,XBRL). Case-insensitive.")] = None,
         file_size_max: Annotated[Optional[StrictInt], Field(description="Filter by maximum file size in bytes.")] = None,
         file_size_min: Annotated[Optional[StrictInt], Field(description="Filter by minimum file size in bytes.")] = None,
-        fiscal_period: Annotated[Optional[StrictStr], Field(description="Fiscal period of the report (`FY` full year, `H1` first half, and so on). Set only on 10-K, 10-K-ESEF, IR and ER filings.")] = None,
+        fiscal_period: Annotated[Optional[StrictStr], Field(description="Fiscal period of the report (`FY` full year, `H1` first half, `9M` nine months, and so on). Exact match. Sources label the half-year report `H1` or `Q2` and the nine-month report `9M` or `Q3`, so to get either label use `fiscal_periods=H1,Q2` or `fiscal_periods=9M,Q3`. Set only on 10-K, 10-K-ESEF, IR and ER filings.")] = None,
+        fiscal_periods: Annotated[Optional[StrictStr], Field(description="Comma-separated fiscal periods (e.g. `H1,Q2` for the half-year report, `9M,Q3` for the nine-month report). Case-insensitive. An unknown value returns `400` naming it.")] = None,
         fiscal_year: Annotated[Optional[StrictInt], Field(description="Fiscal year of the report (e.g. `2024`). Set only on annual reports, interim reports and earnings releases (10-K, 10-K-ESEF, IR, ER).")] = None,
         include_companions: Annotated[Optional[StrictBool], Field(description="Include companion data files in type and category filters. Companions are small machine-readable XBRL/XML/JSON files stored beside a report for financial extraction, typed like that report. Most are not converted to markdown and show processing_status SKIPPED; the report beside them carries the text. Default false: type, types, category and categories return the reports only.")] = None,
         include_predecessors: Annotated[Optional[StrictBool], Field(description="With `company`, also return the filings of the company's predecessors: the issuers it succeeded by reorganisation or redomicile (its `predecessors` of kind reorganization or other on GET /companies/{id}/, followed back through the chain; merged-in targets and spin-off parents are not included), each up to and including the link's effective date (UTC). Each filing's `company` is still the issuer that filed it. Default false. Requires `company`; `lei` and `company_isin` do not follow predecessors.")] = None,
@@ -646,7 +647,7 @@ class FilingsApi:
         reasoning_contains: Annotated[Optional[StrictStr], Field(description="Case-insensitive match inside the notes kept on how the filing type was set (3+ characters). The notes themselves are not served: `filing_type_reasoning` is always null. Needs at least one other filter (a date range, company, ISIN, LEI, type, category or source), otherwise 400. That filter is not checked for how much it narrows: a very wide one is accepted, and the request may then hit the statement timeout. The notes show what was looked at; they are not our classification policy and can cite rules that do not exist.")] = None,
         release_datetime_from: Annotated[Optional[datetime], Field(description="Filter by release datetime (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         release_datetime_to: Annotated[Optional[datetime], Field(description="Filter by release datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
-        search: Annotated[Optional[StrictStr], Field(description="Search across filing title and associated company name. Case-insensitive. Multiple whitespace-separated terms are AND-combined (each term must match either the title or the company name).")] = None,
+        search: Annotated[Optional[StrictStr], Field(description="Search across filing title and associated company name and ticker. Case-insensitive. Multiple whitespace-separated terms are AND-combined (each term must match the title, the company name, or exactly one of the company's tickers); trailing legal forms such as `Corporation`, `AG` or `S.p.A.` are ignored, so `Bloom Energy Corporation` finds `Bloom Energy Corp`.")] = None,
         source: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Filter by a single data source ID.")] = None,
         source_filing_type: Annotated[Optional[StrictStr], Field(description="The form name exactly as the source publishes it (e.g. `10-Q`, `8-K`). Case-sensitive exact match on free text that varies by source.")] = None,
         sources: Annotated[Optional[StrictStr], Field(description="Filter by data source ID(s). Comma-separated for multiple values (e.g., 38,40,51).")] = None,
@@ -693,8 +694,10 @@ class FilingsApi:
         :type file_size_max: int
         :param file_size_min: Filter by minimum file size in bytes.
         :type file_size_min: int
-        :param fiscal_period: Fiscal period of the report (`FY` full year, `H1` first half, and so on). Set only on 10-K, 10-K-ESEF, IR and ER filings.
+        :param fiscal_period: Fiscal period of the report (`FY` full year, `H1` first half, `9M` nine months, and so on). Exact match. Sources label the half-year report `H1` or `Q2` and the nine-month report `9M` or `Q3`, so to get either label use `fiscal_periods=H1,Q2` or `fiscal_periods=9M,Q3`. Set only on 10-K, 10-K-ESEF, IR and ER filings.
         :type fiscal_period: str
+        :param fiscal_periods: Comma-separated fiscal periods (e.g. `H1,Q2` for the half-year report, `9M,Q3` for the nine-month report). Case-insensitive. An unknown value returns `400` naming it.
+        :type fiscal_periods: str
         :param fiscal_year: Fiscal year of the report (e.g. `2024`). Set only on annual reports, interim reports and earnings releases (10-K, 10-K-ESEF, IR, ER).
         :type fiscal_year: int
         :param include_companions: Include companion data files in type and category filters. Companions are small machine-readable XBRL/XML/JSON files stored beside a report for financial extraction, typed like that report. Most are not converted to markdown and show processing_status SKIPPED; the report beside them carries the text. Default false: type, types, category and categories return the reports only.
@@ -741,7 +744,7 @@ class FilingsApi:
         :type release_datetime_from: datetime
         :param release_datetime_to: Filter by release datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).
         :type release_datetime_to: datetime
-        :param search: Search across filing title and associated company name. Case-insensitive. Multiple whitespace-separated terms are AND-combined (each term must match either the title or the company name).
+        :param search: Search across filing title and associated company name and ticker. Case-insensitive. Multiple whitespace-separated terms are AND-combined (each term must match the title, the company name, or exactly one of the company's tickers); trailing legal forms such as `Corporation`, `AG` or `S.p.A.` are ignored, so `Bloom Energy Corporation` finds `Bloom Energy Corp`.
         :type search: str
         :param source: Filter by a single data source ID.
         :type source: float
@@ -795,6 +798,7 @@ class FilingsApi:
             file_size_max=file_size_max,
             file_size_min=file_size_min,
             fiscal_period=fiscal_period,
+            fiscal_periods=fiscal_periods,
             fiscal_year=fiscal_year,
             include_companions=include_companions,
             include_predecessors=include_predecessors,
@@ -865,7 +869,8 @@ class FilingsApi:
         extensions: Annotated[Optional[StrictStr], Field(description="Filter by file extension(s). Single (e.g., PDF) or comma-separated (e.g., PDF,XBRL). Case-insensitive.")] = None,
         file_size_max: Annotated[Optional[StrictInt], Field(description="Filter by maximum file size in bytes.")] = None,
         file_size_min: Annotated[Optional[StrictInt], Field(description="Filter by minimum file size in bytes.")] = None,
-        fiscal_period: Annotated[Optional[StrictStr], Field(description="Fiscal period of the report (`FY` full year, `H1` first half, and so on). Set only on 10-K, 10-K-ESEF, IR and ER filings.")] = None,
+        fiscal_period: Annotated[Optional[StrictStr], Field(description="Fiscal period of the report (`FY` full year, `H1` first half, `9M` nine months, and so on). Exact match. Sources label the half-year report `H1` or `Q2` and the nine-month report `9M` or `Q3`, so to get either label use `fiscal_periods=H1,Q2` or `fiscal_periods=9M,Q3`. Set only on 10-K, 10-K-ESEF, IR and ER filings.")] = None,
+        fiscal_periods: Annotated[Optional[StrictStr], Field(description="Comma-separated fiscal periods (e.g. `H1,Q2` for the half-year report, `9M,Q3` for the nine-month report). Case-insensitive. An unknown value returns `400` naming it.")] = None,
         fiscal_year: Annotated[Optional[StrictInt], Field(description="Fiscal year of the report (e.g. `2024`). Set only on annual reports, interim reports and earnings releases (10-K, 10-K-ESEF, IR, ER).")] = None,
         include_companions: Annotated[Optional[StrictBool], Field(description="Include companion data files in type and category filters. Companions are small machine-readable XBRL/XML/JSON files stored beside a report for financial extraction, typed like that report. Most are not converted to markdown and show processing_status SKIPPED; the report beside them carries the text. Default false: type, types, category and categories return the reports only.")] = None,
         include_predecessors: Annotated[Optional[StrictBool], Field(description="With `company`, also return the filings of the company's predecessors: the issuers it succeeded by reorganisation or redomicile (its `predecessors` of kind reorganization or other on GET /companies/{id}/, followed back through the chain; merged-in targets and spin-off parents are not included), each up to and including the link's effective date (UTC). Each filing's `company` is still the issuer that filed it. Default false. Requires `company`; `lei` and `company_isin` do not follow predecessors.")] = None,
@@ -889,7 +894,7 @@ class FilingsApi:
         reasoning_contains: Annotated[Optional[StrictStr], Field(description="Case-insensitive match inside the notes kept on how the filing type was set (3+ characters). The notes themselves are not served: `filing_type_reasoning` is always null. Needs at least one other filter (a date range, company, ISIN, LEI, type, category or source), otherwise 400. That filter is not checked for how much it narrows: a very wide one is accepted, and the request may then hit the statement timeout. The notes show what was looked at; they are not our classification policy and can cite rules that do not exist.")] = None,
         release_datetime_from: Annotated[Optional[datetime], Field(description="Filter by release datetime (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         release_datetime_to: Annotated[Optional[datetime], Field(description="Filter by release datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
-        search: Annotated[Optional[StrictStr], Field(description="Search across filing title and associated company name. Case-insensitive. Multiple whitespace-separated terms are AND-combined (each term must match either the title or the company name).")] = None,
+        search: Annotated[Optional[StrictStr], Field(description="Search across filing title and associated company name and ticker. Case-insensitive. Multiple whitespace-separated terms are AND-combined (each term must match the title, the company name, or exactly one of the company's tickers); trailing legal forms such as `Corporation`, `AG` or `S.p.A.` are ignored, so `Bloom Energy Corporation` finds `Bloom Energy Corp`.")] = None,
         source: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Filter by a single data source ID.")] = None,
         source_filing_type: Annotated[Optional[StrictStr], Field(description="The form name exactly as the source publishes it (e.g. `10-Q`, `8-K`). Case-sensitive exact match on free text that varies by source.")] = None,
         sources: Annotated[Optional[StrictStr], Field(description="Filter by data source ID(s). Comma-separated for multiple values (e.g., 38,40,51).")] = None,
@@ -936,8 +941,10 @@ class FilingsApi:
         :type file_size_max: int
         :param file_size_min: Filter by minimum file size in bytes.
         :type file_size_min: int
-        :param fiscal_period: Fiscal period of the report (`FY` full year, `H1` first half, and so on). Set only on 10-K, 10-K-ESEF, IR and ER filings.
+        :param fiscal_period: Fiscal period of the report (`FY` full year, `H1` first half, `9M` nine months, and so on). Exact match. Sources label the half-year report `H1` or `Q2` and the nine-month report `9M` or `Q3`, so to get either label use `fiscal_periods=H1,Q2` or `fiscal_periods=9M,Q3`. Set only on 10-K, 10-K-ESEF, IR and ER filings.
         :type fiscal_period: str
+        :param fiscal_periods: Comma-separated fiscal periods (e.g. `H1,Q2` for the half-year report, `9M,Q3` for the nine-month report). Case-insensitive. An unknown value returns `400` naming it.
+        :type fiscal_periods: str
         :param fiscal_year: Fiscal year of the report (e.g. `2024`). Set only on annual reports, interim reports and earnings releases (10-K, 10-K-ESEF, IR, ER).
         :type fiscal_year: int
         :param include_companions: Include companion data files in type and category filters. Companions are small machine-readable XBRL/XML/JSON files stored beside a report for financial extraction, typed like that report. Most are not converted to markdown and show processing_status SKIPPED; the report beside them carries the text. Default false: type, types, category and categories return the reports only.
@@ -984,7 +991,7 @@ class FilingsApi:
         :type release_datetime_from: datetime
         :param release_datetime_to: Filter by release datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).
         :type release_datetime_to: datetime
-        :param search: Search across filing title and associated company name. Case-insensitive. Multiple whitespace-separated terms are AND-combined (each term must match either the title or the company name).
+        :param search: Search across filing title and associated company name and ticker. Case-insensitive. Multiple whitespace-separated terms are AND-combined (each term must match the title, the company name, or exactly one of the company's tickers); trailing legal forms such as `Corporation`, `AG` or `S.p.A.` are ignored, so `Bloom Energy Corporation` finds `Bloom Energy Corp`.
         :type search: str
         :param source: Filter by a single data source ID.
         :type source: float
@@ -1038,6 +1045,7 @@ class FilingsApi:
             file_size_max=file_size_max,
             file_size_min=file_size_min,
             fiscal_period=fiscal_period,
+            fiscal_periods=fiscal_periods,
             fiscal_year=fiscal_year,
             include_companions=include_companions,
             include_predecessors=include_predecessors,
@@ -1108,7 +1116,8 @@ class FilingsApi:
         extensions: Annotated[Optional[StrictStr], Field(description="Filter by file extension(s). Single (e.g., PDF) or comma-separated (e.g., PDF,XBRL). Case-insensitive.")] = None,
         file_size_max: Annotated[Optional[StrictInt], Field(description="Filter by maximum file size in bytes.")] = None,
         file_size_min: Annotated[Optional[StrictInt], Field(description="Filter by minimum file size in bytes.")] = None,
-        fiscal_period: Annotated[Optional[StrictStr], Field(description="Fiscal period of the report (`FY` full year, `H1` first half, and so on). Set only on 10-K, 10-K-ESEF, IR and ER filings.")] = None,
+        fiscal_period: Annotated[Optional[StrictStr], Field(description="Fiscal period of the report (`FY` full year, `H1` first half, `9M` nine months, and so on). Exact match. Sources label the half-year report `H1` or `Q2` and the nine-month report `9M` or `Q3`, so to get either label use `fiscal_periods=H1,Q2` or `fiscal_periods=9M,Q3`. Set only on 10-K, 10-K-ESEF, IR and ER filings.")] = None,
+        fiscal_periods: Annotated[Optional[StrictStr], Field(description="Comma-separated fiscal periods (e.g. `H1,Q2` for the half-year report, `9M,Q3` for the nine-month report). Case-insensitive. An unknown value returns `400` naming it.")] = None,
         fiscal_year: Annotated[Optional[StrictInt], Field(description="Fiscal year of the report (e.g. `2024`). Set only on annual reports, interim reports and earnings releases (10-K, 10-K-ESEF, IR, ER).")] = None,
         include_companions: Annotated[Optional[StrictBool], Field(description="Include companion data files in type and category filters. Companions are small machine-readable XBRL/XML/JSON files stored beside a report for financial extraction, typed like that report. Most are not converted to markdown and show processing_status SKIPPED; the report beside them carries the text. Default false: type, types, category and categories return the reports only.")] = None,
         include_predecessors: Annotated[Optional[StrictBool], Field(description="With `company`, also return the filings of the company's predecessors: the issuers it succeeded by reorganisation or redomicile (its `predecessors` of kind reorganization or other on GET /companies/{id}/, followed back through the chain; merged-in targets and spin-off parents are not included), each up to and including the link's effective date (UTC). Each filing's `company` is still the issuer that filed it. Default false. Requires `company`; `lei` and `company_isin` do not follow predecessors.")] = None,
@@ -1132,7 +1141,7 @@ class FilingsApi:
         reasoning_contains: Annotated[Optional[StrictStr], Field(description="Case-insensitive match inside the notes kept on how the filing type was set (3+ characters). The notes themselves are not served: `filing_type_reasoning` is always null. Needs at least one other filter (a date range, company, ISIN, LEI, type, category or source), otherwise 400. That filter is not checked for how much it narrows: a very wide one is accepted, and the request may then hit the statement timeout. The notes show what was looked at; they are not our classification policy and can cite rules that do not exist.")] = None,
         release_datetime_from: Annotated[Optional[datetime], Field(description="Filter by release datetime (inclusive start, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
         release_datetime_to: Annotated[Optional[datetime], Field(description="Filter by release datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).")] = None,
-        search: Annotated[Optional[StrictStr], Field(description="Search across filing title and associated company name. Case-insensitive. Multiple whitespace-separated terms are AND-combined (each term must match either the title or the company name).")] = None,
+        search: Annotated[Optional[StrictStr], Field(description="Search across filing title and associated company name and ticker. Case-insensitive. Multiple whitespace-separated terms are AND-combined (each term must match the title, the company name, or exactly one of the company's tickers); trailing legal forms such as `Corporation`, `AG` or `S.p.A.` are ignored, so `Bloom Energy Corporation` finds `Bloom Energy Corp`.")] = None,
         source: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Filter by a single data source ID.")] = None,
         source_filing_type: Annotated[Optional[StrictStr], Field(description="The form name exactly as the source publishes it (e.g. `10-Q`, `8-K`). Case-sensitive exact match on free text that varies by source.")] = None,
         sources: Annotated[Optional[StrictStr], Field(description="Filter by data source ID(s). Comma-separated for multiple values (e.g., 38,40,51).")] = None,
@@ -1179,8 +1188,10 @@ class FilingsApi:
         :type file_size_max: int
         :param file_size_min: Filter by minimum file size in bytes.
         :type file_size_min: int
-        :param fiscal_period: Fiscal period of the report (`FY` full year, `H1` first half, and so on). Set only on 10-K, 10-K-ESEF, IR and ER filings.
+        :param fiscal_period: Fiscal period of the report (`FY` full year, `H1` first half, `9M` nine months, and so on). Exact match. Sources label the half-year report `H1` or `Q2` and the nine-month report `9M` or `Q3`, so to get either label use `fiscal_periods=H1,Q2` or `fiscal_periods=9M,Q3`. Set only on 10-K, 10-K-ESEF, IR and ER filings.
         :type fiscal_period: str
+        :param fiscal_periods: Comma-separated fiscal periods (e.g. `H1,Q2` for the half-year report, `9M,Q3` for the nine-month report). Case-insensitive. An unknown value returns `400` naming it.
+        :type fiscal_periods: str
         :param fiscal_year: Fiscal year of the report (e.g. `2024`). Set only on annual reports, interim reports and earnings releases (10-K, 10-K-ESEF, IR, ER).
         :type fiscal_year: int
         :param include_companions: Include companion data files in type and category filters. Companions are small machine-readable XBRL/XML/JSON files stored beside a report for financial extraction, typed like that report. Most are not converted to markdown and show processing_status SKIPPED; the report beside them carries the text. Default false: type, types, category and categories return the reports only.
@@ -1227,7 +1238,7 @@ class FilingsApi:
         :type release_datetime_from: datetime
         :param release_datetime_to: Filter by release datetime (inclusive end, YYYY-MM-DDTHH:MM:SSZ format).
         :type release_datetime_to: datetime
-        :param search: Search across filing title and associated company name. Case-insensitive. Multiple whitespace-separated terms are AND-combined (each term must match either the title or the company name).
+        :param search: Search across filing title and associated company name and ticker. Case-insensitive. Multiple whitespace-separated terms are AND-combined (each term must match the title, the company name, or exactly one of the company's tickers); trailing legal forms such as `Corporation`, `AG` or `S.p.A.` are ignored, so `Bloom Energy Corporation` finds `Bloom Energy Corp`.
         :type search: str
         :param source: Filter by a single data source ID.
         :type source: float
@@ -1281,6 +1292,7 @@ class FilingsApi:
             file_size_max=file_size_max,
             file_size_min=file_size_min,
             fiscal_period=fiscal_period,
+            fiscal_periods=fiscal_periods,
             fiscal_year=fiscal_year,
             include_companions=include_companions,
             include_predecessors=include_predecessors,
@@ -1347,6 +1359,7 @@ class FilingsApi:
         file_size_max,
         file_size_min,
         fiscal_period,
+        fiscal_periods,
         fiscal_year,
         include_companions,
         include_predecessors,
@@ -1463,6 +1476,10 @@ class FilingsApi:
         if fiscal_period is not None:
             
             _query_params.append(('fiscal_period', fiscal_period))
+            
+        if fiscal_periods is not None:
+            
+            _query_params.append(('fiscal_periods', fiscal_periods))
             
         if fiscal_year is not None:
             

@@ -36,7 +36,7 @@ class CompanyMinimal(BaseModel):
     lei: StrictStr = Field(description="Legal Entity Identifier (ISO 17442).")
     sub_industry_code: Optional[StrictStr] = Field(description="ISIC classification code classifying the company.")
     oics_code: Optional[StrictStr] = Field(description="The company's primary OICS class code (OICS v0.4; codes can still change before v1.0), e.g. `TC.SC.SEM.CHP`. Null when the company has no class under the current OICS version, including entity types that carry none (funds, shells, financing vehicles). The full label is the `oics` object on the full company representation.")
-    country_code: StrictStr = Field(description="ISO 3166-1 alpha-2 country code of the company's primary registration or headquarters.")
+    country_code: StrictStr = Field(description="ISO 3166-1 alpha-2 country code of the company's home listing market, which can differ from where it is incorporated or headquartered.")
     date_public: Optional[date] = Field(description="Date this company record was last updated on the FinancialFilings platform. This is not the IPO or listing date: that is `date_ipo` on `GET /companies/{id}/`. With `id`, it is the `date_public_cursor` of an incremental company sync.")
     __properties: ClassVar[List[str]] = ["id", "name", "tagline", "isins", "lei", "sub_industry_code", "oics_code", "country_code", "date_public"]
 

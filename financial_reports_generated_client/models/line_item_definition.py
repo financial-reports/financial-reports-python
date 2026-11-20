@@ -40,7 +40,7 @@ class LineItemDefinition(BaseModel):
     category: Optional[Annotated[str, Field(strict=True, max_length=80)]] = Field(default=None, description="Optional grouping within a statement (e.g. 'Operating Expenses').")
     description: Optional[StrictStr] = Field(default=None, description="Definition of the line item.")
     aliases: List[StrictStr] = Field(description="Alternative labels this line item may appear under in source filings.")
-    templates: List[StrictStr] = Field(description="KPI templates this line item is meaningful for: `industrial`, `bank`, `insurer`. Industrial-only items (gross profit, current assets, ...) are still served for banks and insurers but do not mean the same thing there. A company's template is the `template` field of its financials.")
+    templates: List[StrictStr] = Field(description="KPI templates this line item is meaningful for: `industrial`, `bank`, `insurer`. Industrial-only items (gross profit, current assets, ...) are not served for banks and insurers: the API leaves them out of their financials. A company's template is the `template` field of its financials.")
     __properties: ClassVar[List[str]] = ["code", "name", "statement_type", "statement_type_display", "depth", "parent_code", "sort_order", "category", "description", "aliases", "templates"]
 
     model_config = ConfigDict(

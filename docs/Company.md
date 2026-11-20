@@ -14,7 +14,7 @@ Name | Type | Description | Notes
 **isin_count** | **int** | Total number of ISINs associated with this company. | [readonly] 
 **primary_isin** | **str** | The company&#39;s primary ISIN (ISO 6166), or null when no primary is designated. Equivalent to isins[0] when a primary exists. | [readonly] 
 **lei** | **str** | Legal Entity Identifier (ISO 17442). | [readonly] 
-**country_code** | **str** | ISO 3166-1 alpha-2 country code of the company&#39;s primary registration or headquarters. | [readonly] 
+**country_code** | **str** | ISO 3166-1 alpha-2 country code of the company&#39;s home listing market, which can differ from where it is incorporated or headquartered. | [readonly] 
 **address** | **str** | The company&#39;s primary street address. | [readonly] 
 **city** | **str** | The city where the company&#39;s headquarters is located. | [readonly] 
 **zip_code** | **str** | The postal or ZIP code for the company&#39;s address. | [readonly] 
