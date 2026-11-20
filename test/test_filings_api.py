@@ -48,6 +48,13 @@ class TestFilingsApi(unittest.IsolatedAsyncioTestCase):
         """
         pass
 
+    async def test_filings_markdown_outline_retrieve(self) -> None:
+        """Test case for filings_markdown_outline_retrieve
+
+        Outline of a Filing's Markdown
+        """
+        pass
+
     async def test_filings_markdown_retrieve(self) -> None:
         """Test case for filings_markdown_retrieve
 
@@ -87,6 +94,13 @@ class TestFilingsApi(unittest.IsolatedAsyncioTestCase):
         """Test case for filings_search_list
 
         Search Filing Text Across All Filings
+        """
+        pass
+
+    async def test_filings_transcript_retrieve(self) -> None:
+        """Test case for filings_transcript_retrieve
+
+        Retrieve a Call's Structured Transcript
         """
         pass
 

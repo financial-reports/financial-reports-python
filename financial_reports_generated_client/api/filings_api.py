@@ -18,7 +18,7 @@ from typing_extensions import Annotated
 
 from datetime import datetime
 from pydantic import Field, StrictBool, StrictBytes, StrictFloat, StrictInt, StrictStr, field_validator
-from typing import List, Optional, Tuple, Union
+from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 from financial_reports_generated_client.models.filing import Filing
 from financial_reports_generated_client.models.markdown_batch_search_request import MarkdownBatchSearchRequest
@@ -1672,6 +1672,308 @@ class FilingsApi:
         return self.api_client.param_serialize(
             method='GET',
             resource_path='/filings/',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    async def filings_markdown_outline_retrieve(
+        self,
+        id: Annotated[StrictInt, Field(description="A unique integer value identifying this filing.")],
+        limit: Annotated[Optional[StrictInt], Field(description="Most entries to return, 1-2,000 (default 500). Past it the deepest level keeps only its longest sections.")] = None,
+        max_level: Annotated[Optional[StrictInt], Field(description="Only headings at this level or shallower, 1-6 (default: every level).")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> None:
+        """Outline of a Filing's Markdown
+
+        **Cost:** 6 credits per request (12 for premium filing types).  --- The headings of one filing's processed Markdown, in document order, so you can read the section you need instead of paging the whole filing. Each entry has its heading `level`, cleaned `title`, character `offset` and `length`: pass them as `offset` and `limit` to `GET /filings/{id}/markdown/?offset=&limit=` to read that section (a section longer than 200,000 characters is read in more than one window). `page` is the PDF page of the last `<!-- page N -->` marker before the heading, or null where the conversion has none. Headings are what the conversion marked as headings (`#` lines, whole-line bold where the conversion uses no `#`, and `PART`/`Item`/`Note` lines of periodic reports); repeated page headers, table rows and table-of-contents rows are left out. A short filing or one converted without headings can have few or none: use `GET /filings/{id}/markdown/search/?q=` then. At most `limit` entries come back; past it the deepest levels keep only their longest sections, then the next level up, and `truncated` says so. `scanned_chars` is how much of the document was outlined: all of it, up to 20,000,000 characters or 2,000,000 lines. Billed as one Markdown request, at the price in the Cost line, only when it returns at least one heading; an outline with none bills nothing (on a plan metered in requests it still counts as one request). Through the MCP server it shares the filing's once-a-day Markdown charge with reads and searches of it.
+
+        :param id: A unique integer value identifying this filing. (required)
+        :type id: int
+        :param limit: Most entries to return, 1-2,000 (default 500). Past it the deepest level keeps only its longest sections.
+        :type limit: int
+        :param max_level: Only headings at this level or shallower, 1-6 (default: every level).
+        :type max_level: int
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._filings_markdown_outline_retrieve_serialize(
+            id=id,
+            limit=limit,
+            max_level=max_level,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': None,
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    async def filings_markdown_outline_retrieve_with_http_info(
+        self,
+        id: Annotated[StrictInt, Field(description="A unique integer value identifying this filing.")],
+        limit: Annotated[Optional[StrictInt], Field(description="Most entries to return, 1-2,000 (default 500). Past it the deepest level keeps only its longest sections.")] = None,
+        max_level: Annotated[Optional[StrictInt], Field(description="Only headings at this level or shallower, 1-6 (default: every level).")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[None]:
+        """Outline of a Filing's Markdown
+
+        **Cost:** 6 credits per request (12 for premium filing types).  --- The headings of one filing's processed Markdown, in document order, so you can read the section you need instead of paging the whole filing. Each entry has its heading `level`, cleaned `title`, character `offset` and `length`: pass them as `offset` and `limit` to `GET /filings/{id}/markdown/?offset=&limit=` to read that section (a section longer than 200,000 characters is read in more than one window). `page` is the PDF page of the last `<!-- page N -->` marker before the heading, or null where the conversion has none. Headings are what the conversion marked as headings (`#` lines, whole-line bold where the conversion uses no `#`, and `PART`/`Item`/`Note` lines of periodic reports); repeated page headers, table rows and table-of-contents rows are left out. A short filing or one converted without headings can have few or none: use `GET /filings/{id}/markdown/search/?q=` then. At most `limit` entries come back; past it the deepest levels keep only their longest sections, then the next level up, and `truncated` says so. `scanned_chars` is how much of the document was outlined: all of it, up to 20,000,000 characters or 2,000,000 lines. Billed as one Markdown request, at the price in the Cost line, only when it returns at least one heading; an outline with none bills nothing (on a plan metered in requests it still counts as one request). Through the MCP server it shares the filing's once-a-day Markdown charge with reads and searches of it.
+
+        :param id: A unique integer value identifying this filing. (required)
+        :type id: int
+        :param limit: Most entries to return, 1-2,000 (default 500). Past it the deepest level keeps only its longest sections.
+        :type limit: int
+        :param max_level: Only headings at this level or shallower, 1-6 (default: every level).
+        :type max_level: int
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._filings_markdown_outline_retrieve_serialize(
+            id=id,
+            limit=limit,
+            max_level=max_level,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': None,
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    async def filings_markdown_outline_retrieve_without_preload_content(
+        self,
+        id: Annotated[StrictInt, Field(description="A unique integer value identifying this filing.")],
+        limit: Annotated[Optional[StrictInt], Field(description="Most entries to return, 1-2,000 (default 500). Past it the deepest level keeps only its longest sections.")] = None,
+        max_level: Annotated[Optional[StrictInt], Field(description="Only headings at this level or shallower, 1-6 (default: every level).")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Outline of a Filing's Markdown
+
+        **Cost:** 6 credits per request (12 for premium filing types).  --- The headings of one filing's processed Markdown, in document order, so you can read the section you need instead of paging the whole filing. Each entry has its heading `level`, cleaned `title`, character `offset` and `length`: pass them as `offset` and `limit` to `GET /filings/{id}/markdown/?offset=&limit=` to read that section (a section longer than 200,000 characters is read in more than one window). `page` is the PDF page of the last `<!-- page N -->` marker before the heading, or null where the conversion has none. Headings are what the conversion marked as headings (`#` lines, whole-line bold where the conversion uses no `#`, and `PART`/`Item`/`Note` lines of periodic reports); repeated page headers, table rows and table-of-contents rows are left out. A short filing or one converted without headings can have few or none: use `GET /filings/{id}/markdown/search/?q=` then. At most `limit` entries come back; past it the deepest levels keep only their longest sections, then the next level up, and `truncated` says so. `scanned_chars` is how much of the document was outlined: all of it, up to 20,000,000 characters or 2,000,000 lines. Billed as one Markdown request, at the price in the Cost line, only when it returns at least one heading; an outline with none bills nothing (on a plan metered in requests it still counts as one request). Through the MCP server it shares the filing's once-a-day Markdown charge with reads and searches of it.
+
+        :param id: A unique integer value identifying this filing. (required)
+        :type id: int
+        :param limit: Most entries to return, 1-2,000 (default 500). Past it the deepest level keeps only its longest sections.
+        :type limit: int
+        :param max_level: Only headings at this level or shallower, 1-6 (default: every level).
+        :type max_level: int
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._filings_markdown_outline_retrieve_serialize(
+            id=id,
+            limit=limit,
+            max_level=max_level,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': None,
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _filings_markdown_outline_retrieve_serialize(
+        self,
+        id,
+        limit,
+        max_level,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if id is not None:
+            _path_params['id'] = id
+        # process the query parameters
+        if limit is not None:
+            
+            _query_params.append(('limit', limit))
+            
+        if max_level is not None:
+            
+            _query_params.append(('max_level', max_level))
+            
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'CognitoJWT', 
+            'ApiKeyAuth'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/filings/{id}/markdown/outline/',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -3878,6 +4180,277 @@ class FilingsApi:
         return self.api_client.param_serialize(
             method='GET',
             resource_path='/filings/search/',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    async def filings_transcript_retrieve(
+        self,
+        id: Annotated[StrictInt, Field(description="A unique integer value identifying this filing.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> Dict[str, Optional[object]]:
+        """Retrieve a Call's Structured Transcript
+
+        **Cost:** 6 credits per request (12 for premium filing types).  --- The structured version of a call transcript we have restructured, as JSON (`schema_version` `transcript/1`): the company and event, the sections (`prepared_remarks`, `qa`), the participants, and every turn with its speaker, its type (`prepared`, `operator`, `moderator`, `question`, `answer`, `other`) and, for an answer, the question it responds to (`answers_turn`). It carries the same words as the filing's markdown (`GET /filings/{id}/markdown/`), which is rendered from it.  Only call transcripts we have restructured have one; any other filing returns 404 with reason `no_structured_transcript`. When we publish a new version, both this JSON and the markdown change. `X-Transcript-Version` gives the version served. `X-Transcript-Stale: 1` means the underlying recording's transcription has changed since this version was produced; the version is still the one we serve. Each call is billed as one Markdown request.
+
+        :param id: A unique integer value identifying this filing. (required)
+        :type id: int
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._filings_transcript_retrieve_serialize(
+            id=id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "Dict[str, Optional[object]]",
+            '403': "ErrorDetail",
+            '404': "TranscriptNotFound",
+            '429': "RateLimitError",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    async def filings_transcript_retrieve_with_http_info(
+        self,
+        id: Annotated[StrictInt, Field(description="A unique integer value identifying this filing.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[Dict[str, Optional[object]]]:
+        """Retrieve a Call's Structured Transcript
+
+        **Cost:** 6 credits per request (12 for premium filing types).  --- The structured version of a call transcript we have restructured, as JSON (`schema_version` `transcript/1`): the company and event, the sections (`prepared_remarks`, `qa`), the participants, and every turn with its speaker, its type (`prepared`, `operator`, `moderator`, `question`, `answer`, `other`) and, for an answer, the question it responds to (`answers_turn`). It carries the same words as the filing's markdown (`GET /filings/{id}/markdown/`), which is rendered from it.  Only call transcripts we have restructured have one; any other filing returns 404 with reason `no_structured_transcript`. When we publish a new version, both this JSON and the markdown change. `X-Transcript-Version` gives the version served. `X-Transcript-Stale: 1` means the underlying recording's transcription has changed since this version was produced; the version is still the one we serve. Each call is billed as one Markdown request.
+
+        :param id: A unique integer value identifying this filing. (required)
+        :type id: int
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._filings_transcript_retrieve_serialize(
+            id=id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "Dict[str, Optional[object]]",
+            '403': "ErrorDetail",
+            '404': "TranscriptNotFound",
+            '429': "RateLimitError",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    async def filings_transcript_retrieve_without_preload_content(
+        self,
+        id: Annotated[StrictInt, Field(description="A unique integer value identifying this filing.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Retrieve a Call's Structured Transcript
+
+        **Cost:** 6 credits per request (12 for premium filing types).  --- The structured version of a call transcript we have restructured, as JSON (`schema_version` `transcript/1`): the company and event, the sections (`prepared_remarks`, `qa`), the participants, and every turn with its speaker, its type (`prepared`, `operator`, `moderator`, `question`, `answer`, `other`) and, for an answer, the question it responds to (`answers_turn`). It carries the same words as the filing's markdown (`GET /filings/{id}/markdown/`), which is rendered from it.  Only call transcripts we have restructured have one; any other filing returns 404 with reason `no_structured_transcript`. When we publish a new version, both this JSON and the markdown change. `X-Transcript-Version` gives the version served. `X-Transcript-Stale: 1` means the underlying recording's transcription has changed since this version was produced; the version is still the one we serve. Each call is billed as one Markdown request.
+
+        :param id: A unique integer value identifying this filing. (required)
+        :type id: int
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._filings_transcript_retrieve_serialize(
+            id=id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "Dict[str, Optional[object]]",
+            '403': "ErrorDetail",
+            '404': "TranscriptNotFound",
+            '429': "RateLimitError",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _filings_transcript_retrieve_serialize(
+        self,
+        id,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if id is not None:
+            _path_params['id'] = id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'CognitoJWT', 
+            'ApiKeyAuth'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/filings/{id}/transcript/',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,

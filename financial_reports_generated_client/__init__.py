@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "1.4.201"
+__version__ = "1.4.202"
 
 # Define package exports
 __all__ = [
@@ -172,6 +172,8 @@ __all__ = [
     "StatementTypeEnum",
     "StatusEnum",
     "StockIndex",
+    "TranscriptNotFound",
+    "TranscriptNotFoundReasonEnum",
     "WatchlistAction",
     "WatchlistCompany",
     "WatchlistPage",
@@ -345,6 +347,8 @@ from financial_reports_generated_client.models.source import Source as Source
 from financial_reports_generated_client.models.statement_type_enum import StatementTypeEnum as StatementTypeEnum
 from financial_reports_generated_client.models.status_enum import StatusEnum as StatusEnum
 from financial_reports_generated_client.models.stock_index import StockIndex as StockIndex
+from financial_reports_generated_client.models.transcript_not_found import TranscriptNotFound as TranscriptNotFound
+from financial_reports_generated_client.models.transcript_not_found_reason_enum import TranscriptNotFoundReasonEnum as TranscriptNotFoundReasonEnum
 from financial_reports_generated_client.models.watchlist_action import WatchlistAction as WatchlistAction
 from financial_reports_generated_client.models.watchlist_company import WatchlistCompany as WatchlistCompany
 from financial_reports_generated_client.models.watchlist_page import WatchlistPage as WatchlistPage

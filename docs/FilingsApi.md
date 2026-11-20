@@ -7,12 +7,14 @@ Method | HTTP request | Description
 [**filings_document_retrieve**](FilingsApi.md#filings_document_retrieve) | **GET** /filings/{id}/document/ | Retrieve Filing Document
 [**filings_history_retrieve**](FilingsApi.md#filings_history_retrieve) | **GET** /filings/{id}/history/ | Retrieve Filing History (Audit Trail)
 [**filings_list**](FilingsApi.md#filings_list) | **GET** /filings/ | List Filings
+[**filings_markdown_outline_retrieve**](FilingsApi.md#filings_markdown_outline_retrieve) | **GET** /filings/{id}/markdown/outline/ | Outline of a Filing&#39;s Markdown
 [**filings_markdown_retrieve**](FilingsApi.md#filings_markdown_retrieve) | **GET** /filings/{id}/markdown/ | Retrieve Filing Markdown
 [**filings_markdown_search_create**](FilingsApi.md#filings_markdown_search_create) | **POST** /filings/markdown/search/ | Search Many Filings at Once
 [**filings_markdown_search_retrieve**](FilingsApi.md#filings_markdown_search_retrieve) | **GET** /filings/{id}/markdown/search/ | Search Within a Filing&#39;s Markdown
 [**filings_removed_list**](FilingsApi.md#filings_removed_list) | **GET** /filings/removed/ | List Removed Filings
 [**filings_retrieve**](FilingsApi.md#filings_retrieve) | **GET** /filings/{id}/ | Retrieve Filing Details
 [**filings_search_list**](FilingsApi.md#filings_search_list) | **GET** /filings/search/ | Search Filing Text Across All Filings
+[**filings_transcript_retrieve**](FilingsApi.md#filings_transcript_retrieve) | **GET** /filings/{id}/transcript/ | Retrieve a Call&#39;s Structured Transcript
 
 
 # **filings_document_retrieve**
@@ -378,6 +380,97 @@ Name | Type | Description  | Notes
 **200** | Success. The response structure will be the full Filing object if &#x60;view&#x3D;full&#x60; is used. |  -  |
 **400** | Invalid query parameter, e.g. an unknown &#x60;types&#x60; code or a page beyond the limits. |  -  |
 **401** | Unauthorized |  -  |
+**403** | Missing or invalid API key, or the plan does not include this endpoint. |  -  |
+**429** | Rate limit, plan quota or spend cap reached. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **filings_markdown_outline_retrieve**
+> filings_markdown_outline_retrieve(id, limit=limit, max_level=max_level)
+
+Outline of a Filing's Markdown
+
+**Cost:** 6 credits per request (12 for premium filing types).
+
+---
+The headings of one filing's processed Markdown, in document order, so you can read the section you need instead of paging the whole filing. Each entry has its heading `level`, cleaned `title`, character `offset` and `length`: pass them as `offset` and `limit` to `GET /filings/{id}/markdown/?offset=&limit=` to read that section (a section longer than 200,000 characters is read in more than one window). `page` is the PDF page of the last `<!-- page N -->` marker before the heading, or null where the conversion has none. Headings are what the conversion marked as headings (`#` lines, whole-line bold where the conversion uses no `#`, and `PART`/`Item`/`Note` lines of periodic reports); repeated page headers, table rows and table-of-contents rows are left out. A short filing or one converted without headings can have few or none: use `GET /filings/{id}/markdown/search/?q=` then. At most `limit` entries come back; past it the deepest levels keep only their longest sections, then the next level up, and `truncated` says so. `scanned_chars` is how much of the document was outlined: all of it, up to 20,000,000 characters or 2,000,000 lines. Billed as one Markdown request, at the price in the Cost line, only when it returns at least one heading; an outline with none bills nothing (on a plan metered in requests it still counts as one request). Through the MCP server it shares the filing's once-a-day Markdown charge with reads and searches of it.
+
+### Example
+
+* Bearer (JWT) Authentication (CognitoJWT):
+* Api Key Authentication (ApiKeyAuth):
+
+```python
+import financial_reports_generated_client
+from financial_reports_generated_client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.financialreports.eu
+# See configuration.py for a list of all supported configuration parameters.
+configuration = financial_reports_generated_client.Configuration(
+    host = "https://api.financialreports.eu"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization (JWT): CognitoJWT
+configuration = financial_reports_generated_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Configure API key authorization: ApiKeyAuth
+configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+async with financial_reports_generated_client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = financial_reports_generated_client.FilingsApi(api_client)
+    id = 56 # int | A unique integer value identifying this filing.
+    limit = 56 # int | Most entries to return, 1-2,000 (default 500). Past it the deepest level keeps only its longest sections. (optional)
+    max_level = 56 # int | Only headings at this level or shallower, 1-6 (default: every level). (optional)
+
+    try:
+        # Outline of a Filing's Markdown
+        await api_instance.filings_markdown_outline_retrieve(id, limit=limit, max_level=max_level)
+    except Exception as e:
+        print("Exception when calling FilingsApi->filings_markdown_outline_retrieve: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **int**| A unique integer value identifying this filing. | 
+ **limit** | **int**| Most entries to return, 1-2,000 (default 500). Past it the deepest level keeps only its longest sections. | [optional] 
+ **max_level** | **int**| Only headings at this level or shallower, 1-6 (default: every level). | [optional] 
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[CognitoJWT](../README.md#CognitoJWT), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | The headings with their character offsets. |  -  |
 **403** | Missing or invalid API key, or the plan does not include this endpoint. |  -  |
 **429** | Rate limit, plan quota or spend cap reached. |  -  |
 
@@ -1022,6 +1115,98 @@ Name | Type | Description  | Notes
 **429** | Too many searches running (&#x60;search_busy&#x60;), or a plan rate limit. Retry after &#x60;Retry-After&#x60; seconds. Not billed. |  -  |
 **503** | The full-text index is unavailable (&#x60;search_unavailable&#x60;: retry later), or this search is too heavy to answer in time (&#x60;search_too_slow&#x60;: narrow q or the filters, or lower max_results). Not billed. |  -  |
 **403** | Missing or invalid API key, or the plan does not include this endpoint. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **filings_transcript_retrieve**
+> Dict[str, Optional[object]] filings_transcript_retrieve(id)
+
+Retrieve a Call's Structured Transcript
+
+**Cost:** 6 credits per request (12 for premium filing types).
+
+---
+The structured version of a call transcript we have restructured, as JSON (`schema_version` `transcript/1`): the company and event, the sections (`prepared_remarks`, `qa`), the participants, and every turn with its speaker, its type (`prepared`, `operator`, `moderator`, `question`, `answer`, `other`) and, for an answer, the question it responds to (`answers_turn`). It carries the same words as the filing's markdown (`GET /filings/{id}/markdown/`), which is rendered from it.
+
+Only call transcripts we have restructured have one; any other filing returns 404 with reason `no_structured_transcript`. When we publish a new version, both this JSON and the markdown change. `X-Transcript-Version` gives the version served. `X-Transcript-Stale: 1` means the underlying recording's transcription has changed since this version was produced; the version is still the one we serve. Each call is billed as one Markdown request.
+
+### Example
+
+* Bearer (JWT) Authentication (CognitoJWT):
+* Api Key Authentication (ApiKeyAuth):
+
+```python
+import financial_reports_generated_client
+from financial_reports_generated_client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.financialreports.eu
+# See configuration.py for a list of all supported configuration parameters.
+configuration = financial_reports_generated_client.Configuration(
+    host = "https://api.financialreports.eu"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization (JWT): CognitoJWT
+configuration = financial_reports_generated_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Configure API key authorization: ApiKeyAuth
+configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+async with financial_reports_generated_client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = financial_reports_generated_client.FilingsApi(api_client)
+    id = 56 # int | A unique integer value identifying this filing.
+
+    try:
+        # Retrieve a Call's Structured Transcript
+        api_response = await api_instance.filings_transcript_retrieve(id)
+        print("The response of FilingsApi->filings_transcript_retrieve:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling FilingsApi->filings_transcript_retrieve: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **int**| A unique integer value identifying this filing. | 
+
+### Return type
+
+**Dict[str, Optional[object]]**
+
+### Authorization
+
+[CognitoJWT](../README.md#CognitoJWT), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | The structured transcript (&#x60;transcript/1&#x60;). |  -  |
+**403** | Forbidden. Your plan does not include access to this endpoint. |  -  |
+**404** | Not Found. The filing has no structured transcript to serve. |  -  |
+**429** | Rate limit, plan quota or spend cap reached. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
