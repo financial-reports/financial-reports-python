@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **value** | **str** | A decimal string, as in &#x60;periods&#x60;. | 
 **currency** | **str** |  | [optional] 
 **trust_tier** | **str** |  | [optional] 
-**withheld_reason** | **str** |  | [optional] 
+**withheld_reason** | **str** | Present only when &#x60;value&#x60; is null. &#x60;derived_unconfirmed&#x60;: as in &#x60;periods&#x60;. &#x60;scale_conflict&#x60;: the filing&#39;s figure sits a power of ten (10x, 100x, ...) from the figure &#x60;periods&#x60; serves for the line, so one of the two readings is mis-scaled; it is refused, not corrected. Never on per-share figures or share counts. | [optional] 
 
 ## Example
 

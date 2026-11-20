@@ -47,7 +47,7 @@ class TestCompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerVinta
                         value = '', 
                         currency = '', 
                         trust_tier = '', 
-                        withheld_reason = 'derived_unconfirmed', )
+                        withheld_reason = '', )
                     ],
                 is_selected = True,
                 is_first_reported = True,
@@ -66,7 +66,7 @@ class TestCompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerVinta
                         value = '', 
                         currency = '', 
                         trust_tier = '', 
-                        withheld_reason = 'derived_unconfirmed', )
+                        withheld_reason = '', )
                     ],
                 is_selected = True,
                 is_first_reported = True,

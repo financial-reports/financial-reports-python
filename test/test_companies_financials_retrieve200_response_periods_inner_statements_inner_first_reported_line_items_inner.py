@@ -41,7 +41,7 @@ class TestCompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerFirst
                 value = '',
                 currency = '',
                 trust_tier = '',
-                withheld_reason = 'derived_unconfirmed'
+                withheld_reason = ''
             )
         else:
             return CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerFirstReportedLineItemsInner(

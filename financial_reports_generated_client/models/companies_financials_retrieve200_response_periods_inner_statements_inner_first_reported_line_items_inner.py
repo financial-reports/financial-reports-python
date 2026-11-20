@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
@@ -33,18 +33,8 @@ class CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerFirstRepo
     value: Optional[StrictStr] = Field(description="A decimal string, as in `periods`.")
     currency: Optional[StrictStr] = None
     trust_tier: Optional[StrictStr] = None
-    withheld_reason: Optional[StrictStr] = None
+    withheld_reason: Optional[StrictStr] = Field(default=None, description="Present only when `value` is null. `derived_unconfirmed`: as in `periods`. `scale_conflict`: the filing's figure sits a power of ten (10x, 100x, ...) from the figure `periods` serves for the line, so one of the two readings is mis-scaled; it is refused, not corrected. Never on per-share figures or share counts.")
     __properties: ClassVar[List[str]] = ["code", "name", "value", "currency", "trust_tier", "withheld_reason"]
-
-    @field_validator('withheld_reason')
-    def withheld_reason_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(['derived_unconfirmed']):
-            raise ValueError("must be one of enum values ('derived_unconfirmed')")
-        return value
 
     model_config = ConfigDict(
         validate_by_name=True,

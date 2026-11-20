@@ -158,7 +158,7 @@ class TestCompaniesFinancialsRetrieve200Response(unittest.TestCase):
                                             name = '', 
                                             value = '', 
                                             trust_tier = '', 
-                                            withheld_reason = 'derived_unconfirmed', )
+                                            withheld_reason = '', )
                                         ], ), 
                                 vintages = [
                                     financial_reports_generated_client.models.companies_financials_retrieve_200_response_periods_inner_statements_inner_vintages_inner.companies_financials_retrieve_200_response_periods_inner_statements_inner_vintages_inner(
@@ -172,7 +172,7 @@ class TestCompaniesFinancialsRetrieve200Response(unittest.TestCase):
                                                 name = '', 
                                                 value = '', 
                                                 trust_tier = '', 
-                                                withheld_reason = 'derived_unconfirmed', )
+                                                withheld_reason = '', )
                                             ], 
                                         is_selected = True, 
                                         is_first_reported = True, 
@@ -396,7 +396,7 @@ class TestCompaniesFinancialsRetrieve200Response(unittest.TestCase):
                                             name = '', 
                                             value = '', 
                                             trust_tier = '', 
-                                            withheld_reason = 'derived_unconfirmed', )
+                                            withheld_reason = '', )
                                         ], ), 
                                 vintages = [
                                     financial_reports_generated_client.models.companies_financials_retrieve_200_response_periods_inner_statements_inner_vintages_inner.companies_financials_retrieve_200_response_periods_inner_statements_inner_vintages_inner(
@@ -410,7 +410,7 @@ class TestCompaniesFinancialsRetrieve200Response(unittest.TestCase):
                                                 name = '', 
                                                 value = '', 
                                                 trust_tier = '', 
-                                                withheld_reason = 'derived_unconfirmed', )
+                                                withheld_reason = '', )
                                             ], 
                                         is_selected = True, 
                                         is_first_reported = True, 
