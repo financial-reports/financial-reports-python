@@ -48,6 +48,7 @@ class CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItems
     confirmed_precision: Optional[Union[StrictFloat, StrictInt]] = Field(description="How often values confirmed this way were right when judged blind (0.975 for a second extraction agreeing, 0.93 for an extracted value agreeing with a filled gap): a rate for the class, not a probability for this value. Null when `confirmed` is null.")
     trust_tier: Optional[StrictStr] = Field(description="How the value was read, best first. `xbrl`: the issuer's own XBRL tag (as tagged, or with only its sign or scale normalised). `xbrl-derived`: calculated by us from the issuer's XBRL tags (a total built from tagged components). `verified`: read from the report by AI, accepted by our claim check and confirmed by an independent check of its scale, unit, period and scope. `accepted`: read by AI and accepted by the claim check, not verified. `review`: read by AI where the claim check did not accept it. `derived`: calculated from AI-read values. Null: any other value (a statement extracted by an earlier method, a total we built from tagged components) or a null value. Filter with `min_trust_tier`.")
     trust_tier_accuracy: Optional[Union[StrictFloat, StrictInt]] = Field(description="The measured accuracy of the value's `trust_tier`: how often values of that tier matched the issuer's own XBRL in a pre-registered sample. A rate for the class, not a probability for this value. Null for a tier not measured. Method and sample sizes: `/companies/financials/trust-tiers/`.")
+    trust_grade: Optional[StrictStr] = Field(description="The value's grade, from its `trust_tier`'s measured accuracy: `platinum` at least 97%, `gold` 90-97%, `silver` 80-90%, `bronze` 50-80%, `withheld` below 50% (served only with `include_withheld_grades=true`). `xbrl` is platinum by definition (the filer's own tag). Null: not graded (no tier, or a tier not measured). A grade for the class, not for this value. Filter with `min_trust_grade`; bands and rates: `/companies/financials/trust-tiers/`.")
     withheld_reason: Optional[StrictStr] = Field(default=None, description="Present only when `value` is null because the figure is a derived or analytic line (net debt, cash and short-term investments, capitalisation, debt issued or repaid, intangibles, retained earnings, ...) that no second source confirms and that is not the filer's own XBRL reading. `derived_unconfirmed`. The statement keeps the line; `raw_value`, `scale`, `source_page` and `confidence` are null with it. Absent on every other value.")
     revisions: Optional[List[CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItemsInnerRevisionsInner]] = Field(default=None, description="Present only with `include=revisions`: every recorded change to this value, oldest first (with `as_known_at`, up to that time). Empty when none was recorded. Recording started 2026-10-19T17:05:18Z; `pre_recording` entries are older corrections whose `changed_at` is approximate (the change happened at or before it).")
     withdrawn_reason: Optional[StrictStr] = Field(default=None, description="Present only with `as_known_at`, and only on a statement (and on its values) that was served for this company at that time and is not served for it today because it was withdrawn: `reattributed`: the statement now belongs to another company record, where it may be served; `purged`: reserved, its filing was removed altogether (not served yet; the filing's type, release time and links would be null unless recorded). Absent everywhere else.")
@@ -55,7 +56,7 @@ class CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItems
     split_adjusted: Optional[CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItemsInnerSplitAdjusted] = None
     updated_at: datetime = Field(description="When this value was last written. Equal to the extraction time for an untouched value; moves when a later correction pass rewrites the value in place (a re-extraction replaces the whole statement and sets a new one). Compare it with the value from your previous poll to detect a changed figure without diffing. It does not move when a whole statement is withdrawn or when a different filing starts supplying the period; watch `source_filing` for that.")
     available_at: Optional[datetime] = Field(description="When the filing this value was read from was released. Usually the statement's own `source_filing.release_datetime`. Later where the value was filled in from another filing because the selected statement lacks it (named in `extraction.notes`): for example a prior-year figure taken from the next annual report. For a point-in-time series, drop values whose `available_at` is after your cutoff, or pass `as_of`, which never serves a value from a filing released after it.")
-    __properties: ClassVar[List[str]] = ["code", "name", "statement_type", "depth", "parent_code", "sort_order", "value", "raw_value", "scale", "currency", "confidence", "source_page", "confirmed", "confirmed_precision", "trust_tier", "trust_tier_accuracy", "withheld_reason", "revisions", "withdrawn_reason", "as_reported", "split_adjusted", "updated_at", "available_at"]
+    __properties: ClassVar[List[str]] = ["code", "name", "statement_type", "depth", "parent_code", "sort_order", "value", "raw_value", "scale", "currency", "confidence", "source_page", "confirmed", "confirmed_precision", "trust_tier", "trust_tier_accuracy", "trust_grade", "withheld_reason", "revisions", "withdrawn_reason", "as_reported", "split_adjusted", "updated_at", "available_at"]
 
     @field_validator('statement_type')
     def statement_type_validate_enum(cls, value):
@@ -82,6 +83,16 @@ class CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItems
 
         if value not in set(['xbrl', 'xbrl-derived', 'verified', 'accepted', 'review', 'derived']):
             raise ValueError("must be one of enum values ('xbrl', 'xbrl-derived', 'verified', 'accepted', 'review', 'derived')")
+        return value
+
+    @field_validator('trust_grade')
+    def trust_grade_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['platinum', 'gold', 'silver', 'bronze', 'withheld']):
+            raise ValueError("must be one of enum values ('platinum', 'gold', 'silver', 'bronze', 'withheld')")
         return value
 
     @field_validator('withheld_reason')
@@ -210,6 +221,11 @@ class CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItems
         if self.trust_tier_accuracy is None and "trust_tier_accuracy" in self.model_fields_set:
             _dict['trust_tier_accuracy'] = None
 
+        # set to None if trust_grade (nullable) is None
+        # and model_fields_set contains the field
+        if self.trust_grade is None and "trust_grade" in self.model_fields_set:
+            _dict['trust_grade'] = None
+
         # set to None if split_adjusted (nullable) is None
         # and model_fields_set contains the field
         if self.split_adjusted is None and "split_adjusted" in self.model_fields_set:
@@ -248,6 +264,7 @@ class CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItems
             "confirmed_precision": obj.get("confirmed_precision"),
             "trust_tier": obj.get("trust_tier"),
             "trust_tier_accuracy": obj.get("trust_tier_accuracy"),
+            "trust_grade": obj.get("trust_grade"),
             "withheld_reason": obj.get("withheld_reason"),
             "revisions": [CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItemsInnerRevisionsInner.from_dict(_item) for _item in obj["revisions"]] if obj.get("revisions") is not None else None,
             "withdrawn_reason": obj.get("withdrawn_reason"),

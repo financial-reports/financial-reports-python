@@ -499,6 +499,8 @@ Every (filing_id, query) pair you send comes back exactly once, with one `status
 
 `unavailable` and `skipped` are NOT evidence that the text is absent: only `no_match` is.
 
+A `no_match` pair also carries `near_matches`, the same approximate passages as the single search returns on a miss (up to 3, holding most of the query's words, each with `match: "approximate"`, `matched_words` and `missing_words`). They do not change the status and are never billed. An empty list means nothing came close; the field is absent when the request ran out of time for them, or they could not be worked out (search that filing on its own to get them).
+
 ### Example
 
 * Bearer (JWT) Authentication (CognitoJWT):
@@ -588,7 +590,9 @@ Search Within a Filing's Markdown
 **Cost:** 6 credits per request (12 for premium filing types).
 
 ---
-Find text inside one filing's processed Markdown without downloading all of it. Case-insensitive substring match. A phrase of two or more words also matches where the conversion split it across lines, table cells or pages, or ran its words together. Exact hits come first in document order, then those split ones, each with ~440 characters of context and its character `offset`. Pass that offset (minus a margin) to `GET /filings/{id}/markdown/?offset=&limit=` to read the surrounding section. `total_hits` counts every match, so you can tell when `max_hits` was spent on the table of contents. Billed as one Markdown request, at the price in the Cost line, only when it finds at least one match; a search with no match bills nothing (on a plan metered in requests it still counts as one request).
+Find text inside one filing's processed Markdown without downloading all of it. Case-insensitive substring match. A phrase of two or more words also matches where the conversion split it across lines, table cells or pages, or ran its words together. Exact hits come first in document order, then those split ones, each with ~440 characters of context and its character `offset`. Pass that offset (minus a margin) to `GET /filings/{id}/markdown/?offset=&limit=` to read the surrounding section. `total_hits` counts every match, so you can tell when `max_hits` was spent on the table of contents.
+
+**Near matches.** When nothing matches (`total_hits` 0), the response also carries `near_matches`: up to 3 passages, each at most ~300 characters from first to last matched word, that hold the most of the query's content words (stopwords such as "for" and "the" are ignored; singular and plural, hyphenated and unhyphenated spellings count as the same word). A two-word query needs both words, a longer one at least two thirds of them, and a query with one content word near-matches only another spelling of it ("noncontrolling" finds "non-controlling"), never the word as typed; a query of more than 12 content words gets none. Each is `{offset, snippet, match: "approximate", matched_words, missing_words}`. They are NOT matches: the filing does not contain the query as written, `total_hits` stays 0 and the search is billed as a miss. Read around a near match's `offset` to see whether the filing says the same thing in other words. `near_matches` is an empty list when nothing comes close, and absent when there are hits (or when they could not be worked out within 2 seconds). Billed as one Markdown request, at the price in the Cost line, only when it finds at least one match; a search with no match bills nothing (on a plan metered in requests it still counts as one request).
 
 ### Example
 
@@ -665,7 +669,7 @@ void (empty response body)
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Matches with their character offsets. |  -  |
+**200** | Matches with their character offsets; on a miss, approximate &#x60;near_matches&#x60;. |  -  |
 **403** | Missing or invalid API key, or the plan does not include this endpoint. |  -  |
 **429** | Rate limit, plan quota or spend cap reached. |  -  |
 

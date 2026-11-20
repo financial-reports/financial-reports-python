@@ -45,6 +45,18 @@ class TestMarkdownBatchSearchResult(unittest.TestCase):
                     financial_reports_generated_client.models.filing_search_hit.FilingSearchHit(
                         offset = 56, 
                         snippet = '', )
+                    ],
+                near_matches = [
+                    financial_reports_generated_client.models.markdown_batch_search_near_match.MarkdownBatchSearchNearMatch(
+                        offset = 56, 
+                        snippet = '', 
+                        match = 'approximate', 
+                        matched_words = [
+                            ''
+                            ], 
+                        missing_words = [
+                            ''
+                            ], )
                     ]
             )
         else:

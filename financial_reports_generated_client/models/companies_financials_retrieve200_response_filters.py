@@ -19,7 +19,7 @@ import re  # noqa: F401
 import json
 
 from datetime import date, datetime
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr, field_validator
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
@@ -37,9 +37,11 @@ class CompaniesFinancialsRetrieve200ResponseFilters(BaseModel):
     line_items: Optional[List[StrictStr]] = None
     as_of: Optional[date] = None
     min_trust_tier: Optional[StrictStr] = None
+    min_trust_grade: Optional[StrictStr] = None
+    include_withheld_grades: Optional[StrictBool] = None
     as_known_at: Optional[datetime] = Field(default=None, description="The instant values were reconstructed at, in UTC: a bare date is echoed as the end of that day, a future time as now.")
     include: Optional[List[StrictStr]] = None
-    __properties: ClassVar[List[str]] = ["statement_type", "fiscal_year", "fiscal_year_from", "fiscal_year_to", "fiscal_period", "line_items", "as_of", "min_trust_tier", "as_known_at", "include"]
+    __properties: ClassVar[List[str]] = ["statement_type", "fiscal_year", "fiscal_year_from", "fiscal_year_to", "fiscal_period", "line_items", "as_of", "min_trust_tier", "min_trust_grade", "include_withheld_grades", "as_known_at", "include"]
 
     @field_validator('min_trust_tier')
     def min_trust_tier_validate_enum(cls, value):
@@ -49,6 +51,16 @@ class CompaniesFinancialsRetrieve200ResponseFilters(BaseModel):
 
         if value not in set(['xbrl', 'verified', 'accepted', 'review']):
             raise ValueError("must be one of enum values ('xbrl', 'verified', 'accepted', 'review')")
+        return value
+
+    @field_validator('min_trust_grade')
+    def min_trust_grade_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['platinum', 'gold', 'silver', 'bronze']):
+            raise ValueError("must be one of enum values ('platinum', 'gold', 'silver', 'bronze')")
         return value
 
     model_config = ConfigDict(
@@ -145,6 +157,8 @@ class CompaniesFinancialsRetrieve200ResponseFilters(BaseModel):
             "line_items": obj.get("line_items"),
             "as_of": obj.get("as_of"),
             "min_trust_tier": obj.get("min_trust_tier"),
+            "min_trust_grade": obj.get("min_trust_grade"),
+            "include_withheld_grades": obj.get("include_withheld_grades"),
             "as_known_at": obj.get("as_known_at"),
             "include": obj.get("include")
         })

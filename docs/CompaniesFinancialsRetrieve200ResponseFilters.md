@@ -13,6 +13,8 @@ Name | Type | Description | Notes
 **line_items** | **List[str]** |  | [optional] 
 **as_of** | **date** |  | [optional] 
 **min_trust_tier** | **str** |  | [optional] 
+**min_trust_grade** | **str** |  | [optional] 
+**include_withheld_grades** | **bool** |  | [optional] 
 **as_known_at** | **datetime** | The instant values were reconstructed at, in UTC: a bare date is echoed as the end of that day, a future time as now. | [optional] 
 **include** | **List[str]** |  | [optional] 
 

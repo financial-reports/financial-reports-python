@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **reason** | **str** |  | [optional] 
 **total_hits** | **int** |  | [optional] 
 **hits** | [**List[MarkdownBatchSearchHit]**](MarkdownBatchSearchHit.md) |  | [optional] 
+**near_matches** | [**List[MarkdownBatchSearchNearMatch]**](MarkdownBatchSearchNearMatch.md) | no_match only: up to 3 approximate passages holding most of the query&#39;s words, as on the single search. Not matches, not billed. Absent when the request ran out of time for them, or they could not be worked out. | [optional] 
 
 ## Example
 

@@ -41,13 +41,14 @@ class CompaniesFinancialsRetrieve200Response(BaseModel):
     sources_masked: StrictBool = Field(description="True when your account does not have source identities unlocked. Then `sources` is omitted from every statement.")
     filters: CompaniesFinancialsRetrieve200ResponseFilters
     period_count: StrictInt
+    trust_grade_withheld: StrictInt = Field(description="Line items of grade `withheld` left out of `periods` (0 with `include_withheld_grades=true`). Withheld values still count as readings when other values are checked against each other.")
     periods: List[CompaniesFinancialsRetrieve200ResponsePeriodsInner]
     notice: Optional[StrictStr] = None
     history_window: Optional[CompaniesFinancialsRetrieve200ResponseHistoryWindow] = None
     preliminary_results: Optional[List[CompaniesFinancialsRetrieve200ResponsePreliminaryResultsInner]] = Field(default=None, description="Present only with `include=preliminary`. The company's own preliminary results figures, published before the report for the period and expected to differ from it (today: Korean 잠정실적 notices). Never merged into `periods`. One entry per notice and period, corrections included, so the history is point in time: `is_latest` marks the newest notice for its period and basis among those returned.")
     standalone_quarters: Optional[List[CompaniesFinancialsRetrieve200ResponseStandaloneQuartersInner]] = Field(default=None, description="Present only with `include=standalone_quarters`. One three-month period per fiscal quarter (a six-month `H2` for a company that reports half years only), income statement and cash flow, newest first. `reported` values are the company's own three-month figures; `derived` values are differences of its reported year-to-date figures (`formula`, e.g. `H1 - Q1`, and the `source_filing_ids` they rest on); `derived_approx` is EPS as the difference of year-to-date EPS, given only when the weighted share count moved less than 2%. A value that cannot be derived safely is `null` with a `null_reason`. `periods` stays exactly as reported.")
     ratios: Optional[List[CompaniesFinancialsRetrieve200ResponseRatiosInner]] = Field(default=None, description="Present only with `include=ratios`. One entry per served fiscal year (`FY`), newest first, each with the same ratios in a fixed order, computed from the values `periods` serves for that year (fiscal-year-end balances, never averaged; no ratios on share prices). Each ratio lists the served `inputs` it was built from and their `source_filing_ids`. A ratio that cannot be built is `null` with a `null_reason`. Fractions are decimals (0.12 = 12%); `currency` is set only for amounts (net debt, per share, per employee).")
-    __properties: ClassVar[List[str]] = ["company_id", "template", "currency", "sources_masked", "filters", "period_count", "periods", "notice", "history_window", "preliminary_results", "standalone_quarters", "ratios"]
+    __properties: ClassVar[List[str]] = ["company_id", "template", "currency", "sources_masked", "filters", "period_count", "trust_grade_withheld", "periods", "notice", "history_window", "preliminary_results", "standalone_quarters", "ratios"]
 
     @field_validator('template')
     def template_validate_enum(cls, value):
@@ -154,6 +155,7 @@ class CompaniesFinancialsRetrieve200Response(BaseModel):
             "sources_masked": obj.get("sources_masked"),
             "filters": CompaniesFinancialsRetrieve200ResponseFilters.from_dict(obj["filters"]) if obj.get("filters") is not None else None,
             "period_count": obj.get("period_count"),
+            "trust_grade_withheld": obj.get("trust_grade_withheld"),
             "periods": [CompaniesFinancialsRetrieve200ResponsePeriodsInner.from_dict(_item) for _item in obj["periods"]] if obj.get("periods") is not None else None,
             "notice": obj.get("notice"),
             "history_window": CompaniesFinancialsRetrieve200ResponseHistoryWindow.from_dict(obj["history_window"]) if obj.get("history_window") is not None else None,

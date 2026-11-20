@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **sources_masked** | **bool** | True when your account does not have source identities unlocked. Then &#x60;sources&#x60; is omitted from every statement. | 
 **filters** | [**CompaniesFinancialsRetrieve200ResponseFilters**](CompaniesFinancialsRetrieve200ResponseFilters.md) |  | 
 **period_count** | **int** |  | 
+**trust_grade_withheld** | **int** | Line items of grade &#x60;withheld&#x60; left out of &#x60;periods&#x60; (0 with &#x60;include_withheld_grades&#x3D;true&#x60;). Withheld values still count as readings when other values are checked against each other. | 
 **periods** | [**List[CompaniesFinancialsRetrieve200ResponsePeriodsInner]**](CompaniesFinancialsRetrieve200ResponsePeriodsInner.md) |  | 
 **notice** | **str** |  | [optional] 
 **history_window** | [**CompaniesFinancialsRetrieve200ResponseHistoryWindow**](CompaniesFinancialsRetrieve200ResponseHistoryWindow.md) |  | [optional] 

@@ -69,6 +69,7 @@ class TestCompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInner(unit
                         confirmed_precision = 1.337, 
                         trust_tier = 'xbrl', 
                         trust_tier_accuracy = 1.337, 
+                        trust_grade = 'platinum', 
                         withheld_reason = 'derived_unconfirmed', 
                         revisions = [
                             financial_reports_generated_client.models.companies_financials_retrieve_200_response_periods_inner_statements_inner_line_items_inner_revisions_inner.companies_financials_retrieve_200_response_periods_inner_statements_inner_line_items_inner_revisions_inner(
@@ -182,6 +183,7 @@ class TestCompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInner(unit
                         confirmed_precision = 1.337, 
                         trust_tier = 'xbrl', 
                         trust_tier_accuracy = 1.337, 
+                        trust_grade = 'platinum', 
                         withheld_reason = 'derived_unconfirmed', 
                         revisions = [
                             financial_reports_generated_client.models.companies_financials_retrieve_200_response_periods_inner_statements_inner_line_items_inner_revisions_inner.companies_financials_retrieve_200_response_periods_inner_statements_inner_line_items_inner_revisions_inner(

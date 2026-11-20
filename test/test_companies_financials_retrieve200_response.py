@@ -54,11 +54,14 @@ class TestCompaniesFinancialsRetrieve200Response(unittest.TestCase):
                         ], 
                     as_of = datetime.datetime.strptime('1975-12-30', '%Y-%m-%d').date(), 
                     min_trust_tier = 'xbrl', 
+                    min_trust_grade = 'platinum', 
+                    include_withheld_grades = True, 
                     as_known_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
                     include = [
                         ''
                         ], ),
                 period_count = 56,
+                trust_grade_withheld = 56,
                 periods = [
                     financial_reports_generated_client.models.companies_financials_retrieve_200_response_periods_inner.companies_financials_retrieve_200_response_periods_inner(
                         fiscal_year = 56, 
@@ -100,6 +103,7 @@ class TestCompaniesFinancialsRetrieve200Response(unittest.TestCase):
                                         confirmed_precision = 1.337, 
                                         trust_tier = 'xbrl', 
                                         trust_tier_accuracy = 1.337, 
+                                        trust_grade = 'platinum', 
                                         withheld_reason = 'derived_unconfirmed', 
                                         revisions = [
                                             financial_reports_generated_client.models.companies_financials_retrieve_200_response_periods_inner_statements_inner_line_items_inner_revisions_inner.companies_financials_retrieve_200_response_periods_inner_statements_inner_line_items_inner_revisions_inner(
@@ -292,11 +296,14 @@ class TestCompaniesFinancialsRetrieve200Response(unittest.TestCase):
                         ], 
                     as_of = datetime.datetime.strptime('1975-12-30', '%Y-%m-%d').date(), 
                     min_trust_tier = 'xbrl', 
+                    min_trust_grade = 'platinum', 
+                    include_withheld_grades = True, 
                     as_known_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
                     include = [
                         ''
                         ], ),
                 period_count = 56,
+                trust_grade_withheld = 56,
                 periods = [
                     financial_reports_generated_client.models.companies_financials_retrieve_200_response_periods_inner.companies_financials_retrieve_200_response_periods_inner(
                         fiscal_year = 56, 
@@ -338,6 +345,7 @@ class TestCompaniesFinancialsRetrieve200Response(unittest.TestCase):
                                         confirmed_precision = 1.337, 
                                         trust_tier = 'xbrl', 
                                         trust_tier_accuracy = 1.337, 
+                                        trust_grade = 'platinum', 
                                         withheld_reason = 'derived_unconfirmed', 
                                         revisions = [
                                             financial_reports_generated_client.models.companies_financials_retrieve_200_response_periods_inner_statements_inner_line_items_inner_revisions_inner.companies_financials_retrieve_200_response_periods_inner_statements_inner_line_items_inner_revisions_inner(

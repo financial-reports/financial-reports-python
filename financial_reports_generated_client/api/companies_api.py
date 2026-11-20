@@ -369,7 +369,9 @@ class CompaniesApi:
         fiscal_year_to: Annotated[Optional[StrictInt], Field(description="Fiscal year range end (inclusive).")] = None,
         include: Annotated[Optional[StrictStr], Field(description="**Per-share figures and share counts are as reported, on each filing's own share basis: pass `split_adjusted` for a series comparable across stock splits.**  Comma-separated. `revisions` adds a `revisions` list to every line item: each recorded change to that value, oldest first, with `old_value` -> `new_value` and a reason category. With `as_known_at`, only the changes up to that time. `preliminary` adds `preliminary_results`: the company's own preliminary figures, published before the report and labelled preliminary, never merged into `periods`. `as_reported` adds `as_reported` to a standardised total read straight from the filer's XBRL whose calculation tree ties: the face lines it is made of, as the filer tagged them. Not served with `as_known_at`. `standalone_quarters` adds `standalone_quarters`: one three-month period per fiscal quarter (H2 for half-year reporters), income statement and cash flow, derived from year-to-date interims where the company reports no three-month figure, each value flagged `reported`, `derived` or `derived_approx`, never merged into `periods`. `split_adjusted` adds `split_adjusted` to every per-share figure (EPS, book value per share) and share count, in `periods` and `standalone_quarters`: the value on today's share basis (or `as_of`'s), next to the unchanged as-reported `value`, with its `adjustment_factor` and the `split_event_ids` from `/companies/{id}/splits/` it applies. Recomputed on every request, so a split re-adjusts history the day it takes effect. Not served with `as_known_at`. `ratios` adds `ratios`: per served fiscal year, fundamental ratios (margins, returns, leverage with and without lease liabilities, liquidity, turnover, growth, cash payout, per share and per employee) computed from the values `periods` serves, each with its `inputs` and `source_filing_ids`, or `null` with a `null_reason`. No ratios on share prices. `first_reported` adds `first_reported` to every statement: the period's figures as the filing that first reported the period as its own stated them, with that filing's id and release time; `null` where no filing did (a period held only as a later report's prior-year column, or a derived one). `vintages` adds `vintages` to every statement: every filing's own figures for the period, oldest first, the original report, later reports of the same period and stored prior-year columns. Omitted, like `sources`, when `sources_masked` is true. Both pass the same withholds as `periods`: a value withheld there is `null` here.")] = None,
         include_predecessors: Annotated[Optional[StrictBool], Field(description="Also serve the statements of the company's predecessors: the issuers it succeeded by reorganisation or redomicile (its `predecessors` of kind reorganization or other on GET /companies/{id}/, followed back through the chain), each from filings released up to and including the link's effective date (UTC), as `include_predecessors` does on GET /filings/. Each company is selected on its own statements; the requested company's win their periods, and a predecessor fills only periods no nearer company serves. `source_filing` names the filing each statement came from. Predecessors your plan cannot see are left out. With `include=split_adjusted`, values are adjusted by the predecessors' splits too, as GET /companies/{id}/splits/?include_predecessors=true serves them; a link states no exchange ratio, so each predecessor share counts as one share of its successor. Not combined with `as_known_at`, `include=preliminary` or `include=standalone_quarters` (`400`).")] = None,
+        include_withheld_grades: Annotated[Optional[StrictBool], Field(description="Also serve line items of grade `withheld` (a tier measured below 50% accurate). Without it they are left out, and `trust_grade_withheld` counts them. Cannot be combined with `include=preliminary`, `include=ratios` or `include=standalone_quarters`.")] = None,
         line_items: Annotated[Optional[StrictStr], Field(description="Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Statements with none of the requested codes are dropped. Unknown codes return `400`; see `/line-item-definitions/`.")] = None,
+        min_trust_grade: Annotated[Optional[StrictStr], Field(description="Serve only line items of at least this `trust_grade`, best first: `platinum`, `gold`, `silver`, `bronze`. A tier's grade comes from its published accuracy (`/companies/financials/trust-tiers/`); `xbrl` is platinum by definition. A line item with no grade (no tier, or `derived` / `xbrl-derived`, not measured) is left out whenever this is set, and so is a value served null for another reason (it has no grade either). Cannot be combined with `include=preliminary`, `include=ratios` or `include=standalone_quarters`.")] = None,
         min_trust_tier: Annotated[Optional[StrictStr], Field(description="Serve only line items of at least this `trust_tier`, best first: `xbrl` (the issuer's own XBRL tag), `verified`, `accepted`, `review`. A line item with no tier, or of tier `derived` or `xbrl-derived` (not measured), is left out whenever this is set; a kept line item that is withheld for another reason is still served null with its `withheld_reason`. Without it every value is served with its tier. Cannot be combined with `include=preliminary`, `include=ratios` or `include=standalone_quarters`, which are computed from values this filter would leave out. Each tier's measured accuracy: `/companies/financials/trust-tiers/`.")] = None,
         statement_type: Annotated[Optional[StrictStr], Field(description="Filter to a single statement type.")] = None,
         _request_timeout: Union[
@@ -407,8 +409,12 @@ class CompaniesApi:
         :type include: str
         :param include_predecessors: Also serve the statements of the company's predecessors: the issuers it succeeded by reorganisation or redomicile (its `predecessors` of kind reorganization or other on GET /companies/{id}/, followed back through the chain), each from filings released up to and including the link's effective date (UTC), as `include_predecessors` does on GET /filings/. Each company is selected on its own statements; the requested company's win their periods, and a predecessor fills only periods no nearer company serves. `source_filing` names the filing each statement came from. Predecessors your plan cannot see are left out. With `include=split_adjusted`, values are adjusted by the predecessors' splits too, as GET /companies/{id}/splits/?include_predecessors=true serves them; a link states no exchange ratio, so each predecessor share counts as one share of its successor. Not combined with `as_known_at`, `include=preliminary` or `include=standalone_quarters` (`400`).
         :type include_predecessors: bool
+        :param include_withheld_grades: Also serve line items of grade `withheld` (a tier measured below 50% accurate). Without it they are left out, and `trust_grade_withheld` counts them. Cannot be combined with `include=preliminary`, `include=ratios` or `include=standalone_quarters`.
+        :type include_withheld_grades: bool
         :param line_items: Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Statements with none of the requested codes are dropped. Unknown codes return `400`; see `/line-item-definitions/`.
         :type line_items: str
+        :param min_trust_grade: Serve only line items of at least this `trust_grade`, best first: `platinum`, `gold`, `silver`, `bronze`. A tier's grade comes from its published accuracy (`/companies/financials/trust-tiers/`); `xbrl` is platinum by definition. A line item with no grade (no tier, or `derived` / `xbrl-derived`, not measured) is left out whenever this is set, and so is a value served null for another reason (it has no grade either). Cannot be combined with `include=preliminary`, `include=ratios` or `include=standalone_quarters`.
+        :type min_trust_grade: str
         :param min_trust_tier: Serve only line items of at least this `trust_tier`, best first: `xbrl` (the issuer's own XBRL tag), `verified`, `accepted`, `review`. A line item with no tier, or of tier `derived` or `xbrl-derived` (not measured), is left out whenever this is set; a kept line item that is withheld for another reason is still served null with its `withheld_reason`. Without it every value is served with its tier. Cannot be combined with `include=preliminary`, `include=ratios` or `include=standalone_quarters`, which are computed from values this filter would leave out. Each tier's measured accuracy: `/companies/financials/trust-tiers/`.
         :type min_trust_tier: str
         :param statement_type: Filter to a single statement type.
@@ -445,7 +451,9 @@ class CompaniesApi:
             fiscal_year_to=fiscal_year_to,
             include=include,
             include_predecessors=include_predecessors,
+            include_withheld_grades=include_withheld_grades,
             line_items=line_items,
+            min_trust_grade=min_trust_grade,
             min_trust_tier=min_trust_tier,
             statement_type=statement_type,
             _request_auth=_request_auth,
@@ -484,7 +492,9 @@ class CompaniesApi:
         fiscal_year_to: Annotated[Optional[StrictInt], Field(description="Fiscal year range end (inclusive).")] = None,
         include: Annotated[Optional[StrictStr], Field(description="**Per-share figures and share counts are as reported, on each filing's own share basis: pass `split_adjusted` for a series comparable across stock splits.**  Comma-separated. `revisions` adds a `revisions` list to every line item: each recorded change to that value, oldest first, with `old_value` -> `new_value` and a reason category. With `as_known_at`, only the changes up to that time. `preliminary` adds `preliminary_results`: the company's own preliminary figures, published before the report and labelled preliminary, never merged into `periods`. `as_reported` adds `as_reported` to a standardised total read straight from the filer's XBRL whose calculation tree ties: the face lines it is made of, as the filer tagged them. Not served with `as_known_at`. `standalone_quarters` adds `standalone_quarters`: one three-month period per fiscal quarter (H2 for half-year reporters), income statement and cash flow, derived from year-to-date interims where the company reports no three-month figure, each value flagged `reported`, `derived` or `derived_approx`, never merged into `periods`. `split_adjusted` adds `split_adjusted` to every per-share figure (EPS, book value per share) and share count, in `periods` and `standalone_quarters`: the value on today's share basis (or `as_of`'s), next to the unchanged as-reported `value`, with its `adjustment_factor` and the `split_event_ids` from `/companies/{id}/splits/` it applies. Recomputed on every request, so a split re-adjusts history the day it takes effect. Not served with `as_known_at`. `ratios` adds `ratios`: per served fiscal year, fundamental ratios (margins, returns, leverage with and without lease liabilities, liquidity, turnover, growth, cash payout, per share and per employee) computed from the values `periods` serves, each with its `inputs` and `source_filing_ids`, or `null` with a `null_reason`. No ratios on share prices. `first_reported` adds `first_reported` to every statement: the period's figures as the filing that first reported the period as its own stated them, with that filing's id and release time; `null` where no filing did (a period held only as a later report's prior-year column, or a derived one). `vintages` adds `vintages` to every statement: every filing's own figures for the period, oldest first, the original report, later reports of the same period and stored prior-year columns. Omitted, like `sources`, when `sources_masked` is true. Both pass the same withholds as `periods`: a value withheld there is `null` here.")] = None,
         include_predecessors: Annotated[Optional[StrictBool], Field(description="Also serve the statements of the company's predecessors: the issuers it succeeded by reorganisation or redomicile (its `predecessors` of kind reorganization or other on GET /companies/{id}/, followed back through the chain), each from filings released up to and including the link's effective date (UTC), as `include_predecessors` does on GET /filings/. Each company is selected on its own statements; the requested company's win their periods, and a predecessor fills only periods no nearer company serves. `source_filing` names the filing each statement came from. Predecessors your plan cannot see are left out. With `include=split_adjusted`, values are adjusted by the predecessors' splits too, as GET /companies/{id}/splits/?include_predecessors=true serves them; a link states no exchange ratio, so each predecessor share counts as one share of its successor. Not combined with `as_known_at`, `include=preliminary` or `include=standalone_quarters` (`400`).")] = None,
+        include_withheld_grades: Annotated[Optional[StrictBool], Field(description="Also serve line items of grade `withheld` (a tier measured below 50% accurate). Without it they are left out, and `trust_grade_withheld` counts them. Cannot be combined with `include=preliminary`, `include=ratios` or `include=standalone_quarters`.")] = None,
         line_items: Annotated[Optional[StrictStr], Field(description="Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Statements with none of the requested codes are dropped. Unknown codes return `400`; see `/line-item-definitions/`.")] = None,
+        min_trust_grade: Annotated[Optional[StrictStr], Field(description="Serve only line items of at least this `trust_grade`, best first: `platinum`, `gold`, `silver`, `bronze`. A tier's grade comes from its published accuracy (`/companies/financials/trust-tiers/`); `xbrl` is platinum by definition. A line item with no grade (no tier, or `derived` / `xbrl-derived`, not measured) is left out whenever this is set, and so is a value served null for another reason (it has no grade either). Cannot be combined with `include=preliminary`, `include=ratios` or `include=standalone_quarters`.")] = None,
         min_trust_tier: Annotated[Optional[StrictStr], Field(description="Serve only line items of at least this `trust_tier`, best first: `xbrl` (the issuer's own XBRL tag), `verified`, `accepted`, `review`. A line item with no tier, or of tier `derived` or `xbrl-derived` (not measured), is left out whenever this is set; a kept line item that is withheld for another reason is still served null with its `withheld_reason`. Without it every value is served with its tier. Cannot be combined with `include=preliminary`, `include=ratios` or `include=standalone_quarters`, which are computed from values this filter would leave out. Each tier's measured accuracy: `/companies/financials/trust-tiers/`.")] = None,
         statement_type: Annotated[Optional[StrictStr], Field(description="Filter to a single statement type.")] = None,
         _request_timeout: Union[
@@ -522,8 +532,12 @@ class CompaniesApi:
         :type include: str
         :param include_predecessors: Also serve the statements of the company's predecessors: the issuers it succeeded by reorganisation or redomicile (its `predecessors` of kind reorganization or other on GET /companies/{id}/, followed back through the chain), each from filings released up to and including the link's effective date (UTC), as `include_predecessors` does on GET /filings/. Each company is selected on its own statements; the requested company's win their periods, and a predecessor fills only periods no nearer company serves. `source_filing` names the filing each statement came from. Predecessors your plan cannot see are left out. With `include=split_adjusted`, values are adjusted by the predecessors' splits too, as GET /companies/{id}/splits/?include_predecessors=true serves them; a link states no exchange ratio, so each predecessor share counts as one share of its successor. Not combined with `as_known_at`, `include=preliminary` or `include=standalone_quarters` (`400`).
         :type include_predecessors: bool
+        :param include_withheld_grades: Also serve line items of grade `withheld` (a tier measured below 50% accurate). Without it they are left out, and `trust_grade_withheld` counts them. Cannot be combined with `include=preliminary`, `include=ratios` or `include=standalone_quarters`.
+        :type include_withheld_grades: bool
         :param line_items: Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Statements with none of the requested codes are dropped. Unknown codes return `400`; see `/line-item-definitions/`.
         :type line_items: str
+        :param min_trust_grade: Serve only line items of at least this `trust_grade`, best first: `platinum`, `gold`, `silver`, `bronze`. A tier's grade comes from its published accuracy (`/companies/financials/trust-tiers/`); `xbrl` is platinum by definition. A line item with no grade (no tier, or `derived` / `xbrl-derived`, not measured) is left out whenever this is set, and so is a value served null for another reason (it has no grade either). Cannot be combined with `include=preliminary`, `include=ratios` or `include=standalone_quarters`.
+        :type min_trust_grade: str
         :param min_trust_tier: Serve only line items of at least this `trust_tier`, best first: `xbrl` (the issuer's own XBRL tag), `verified`, `accepted`, `review`. A line item with no tier, or of tier `derived` or `xbrl-derived` (not measured), is left out whenever this is set; a kept line item that is withheld for another reason is still served null with its `withheld_reason`. Without it every value is served with its tier. Cannot be combined with `include=preliminary`, `include=ratios` or `include=standalone_quarters`, which are computed from values this filter would leave out. Each tier's measured accuracy: `/companies/financials/trust-tiers/`.
         :type min_trust_tier: str
         :param statement_type: Filter to a single statement type.
@@ -560,7 +574,9 @@ class CompaniesApi:
             fiscal_year_to=fiscal_year_to,
             include=include,
             include_predecessors=include_predecessors,
+            include_withheld_grades=include_withheld_grades,
             line_items=line_items,
+            min_trust_grade=min_trust_grade,
             min_trust_tier=min_trust_tier,
             statement_type=statement_type,
             _request_auth=_request_auth,
@@ -599,7 +615,9 @@ class CompaniesApi:
         fiscal_year_to: Annotated[Optional[StrictInt], Field(description="Fiscal year range end (inclusive).")] = None,
         include: Annotated[Optional[StrictStr], Field(description="**Per-share figures and share counts are as reported, on each filing's own share basis: pass `split_adjusted` for a series comparable across stock splits.**  Comma-separated. `revisions` adds a `revisions` list to every line item: each recorded change to that value, oldest first, with `old_value` -> `new_value` and a reason category. With `as_known_at`, only the changes up to that time. `preliminary` adds `preliminary_results`: the company's own preliminary figures, published before the report and labelled preliminary, never merged into `periods`. `as_reported` adds `as_reported` to a standardised total read straight from the filer's XBRL whose calculation tree ties: the face lines it is made of, as the filer tagged them. Not served with `as_known_at`. `standalone_quarters` adds `standalone_quarters`: one three-month period per fiscal quarter (H2 for half-year reporters), income statement and cash flow, derived from year-to-date interims where the company reports no three-month figure, each value flagged `reported`, `derived` or `derived_approx`, never merged into `periods`. `split_adjusted` adds `split_adjusted` to every per-share figure (EPS, book value per share) and share count, in `periods` and `standalone_quarters`: the value on today's share basis (or `as_of`'s), next to the unchanged as-reported `value`, with its `adjustment_factor` and the `split_event_ids` from `/companies/{id}/splits/` it applies. Recomputed on every request, so a split re-adjusts history the day it takes effect. Not served with `as_known_at`. `ratios` adds `ratios`: per served fiscal year, fundamental ratios (margins, returns, leverage with and without lease liabilities, liquidity, turnover, growth, cash payout, per share and per employee) computed from the values `periods` serves, each with its `inputs` and `source_filing_ids`, or `null` with a `null_reason`. No ratios on share prices. `first_reported` adds `first_reported` to every statement: the period's figures as the filing that first reported the period as its own stated them, with that filing's id and release time; `null` where no filing did (a period held only as a later report's prior-year column, or a derived one). `vintages` adds `vintages` to every statement: every filing's own figures for the period, oldest first, the original report, later reports of the same period and stored prior-year columns. Omitted, like `sources`, when `sources_masked` is true. Both pass the same withholds as `periods`: a value withheld there is `null` here.")] = None,
         include_predecessors: Annotated[Optional[StrictBool], Field(description="Also serve the statements of the company's predecessors: the issuers it succeeded by reorganisation or redomicile (its `predecessors` of kind reorganization or other on GET /companies/{id}/, followed back through the chain), each from filings released up to and including the link's effective date (UTC), as `include_predecessors` does on GET /filings/. Each company is selected on its own statements; the requested company's win their periods, and a predecessor fills only periods no nearer company serves. `source_filing` names the filing each statement came from. Predecessors your plan cannot see are left out. With `include=split_adjusted`, values are adjusted by the predecessors' splits too, as GET /companies/{id}/splits/?include_predecessors=true serves them; a link states no exchange ratio, so each predecessor share counts as one share of its successor. Not combined with `as_known_at`, `include=preliminary` or `include=standalone_quarters` (`400`).")] = None,
+        include_withheld_grades: Annotated[Optional[StrictBool], Field(description="Also serve line items of grade `withheld` (a tier measured below 50% accurate). Without it they are left out, and `trust_grade_withheld` counts them. Cannot be combined with `include=preliminary`, `include=ratios` or `include=standalone_quarters`.")] = None,
         line_items: Annotated[Optional[StrictStr], Field(description="Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Statements with none of the requested codes are dropped. Unknown codes return `400`; see `/line-item-definitions/`.")] = None,
+        min_trust_grade: Annotated[Optional[StrictStr], Field(description="Serve only line items of at least this `trust_grade`, best first: `platinum`, `gold`, `silver`, `bronze`. A tier's grade comes from its published accuracy (`/companies/financials/trust-tiers/`); `xbrl` is platinum by definition. A line item with no grade (no tier, or `derived` / `xbrl-derived`, not measured) is left out whenever this is set, and so is a value served null for another reason (it has no grade either). Cannot be combined with `include=preliminary`, `include=ratios` or `include=standalone_quarters`.")] = None,
         min_trust_tier: Annotated[Optional[StrictStr], Field(description="Serve only line items of at least this `trust_tier`, best first: `xbrl` (the issuer's own XBRL tag), `verified`, `accepted`, `review`. A line item with no tier, or of tier `derived` or `xbrl-derived` (not measured), is left out whenever this is set; a kept line item that is withheld for another reason is still served null with its `withheld_reason`. Without it every value is served with its tier. Cannot be combined with `include=preliminary`, `include=ratios` or `include=standalone_quarters`, which are computed from values this filter would leave out. Each tier's measured accuracy: `/companies/financials/trust-tiers/`.")] = None,
         statement_type: Annotated[Optional[StrictStr], Field(description="Filter to a single statement type.")] = None,
         _request_timeout: Union[
@@ -637,8 +655,12 @@ class CompaniesApi:
         :type include: str
         :param include_predecessors: Also serve the statements of the company's predecessors: the issuers it succeeded by reorganisation or redomicile (its `predecessors` of kind reorganization or other on GET /companies/{id}/, followed back through the chain), each from filings released up to and including the link's effective date (UTC), as `include_predecessors` does on GET /filings/. Each company is selected on its own statements; the requested company's win their periods, and a predecessor fills only periods no nearer company serves. `source_filing` names the filing each statement came from. Predecessors your plan cannot see are left out. With `include=split_adjusted`, values are adjusted by the predecessors' splits too, as GET /companies/{id}/splits/?include_predecessors=true serves them; a link states no exchange ratio, so each predecessor share counts as one share of its successor. Not combined with `as_known_at`, `include=preliminary` or `include=standalone_quarters` (`400`).
         :type include_predecessors: bool
+        :param include_withheld_grades: Also serve line items of grade `withheld` (a tier measured below 50% accurate). Without it they are left out, and `trust_grade_withheld` counts them. Cannot be combined with `include=preliminary`, `include=ratios` or `include=standalone_quarters`.
+        :type include_withheld_grades: bool
         :param line_items: Comma-separated KPI codes to include (e.g. `revenue,ebitda,net_income_loss`). Omit to return all extracted line items. Statements with none of the requested codes are dropped. Unknown codes return `400`; see `/line-item-definitions/`.
         :type line_items: str
+        :param min_trust_grade: Serve only line items of at least this `trust_grade`, best first: `platinum`, `gold`, `silver`, `bronze`. A tier's grade comes from its published accuracy (`/companies/financials/trust-tiers/`); `xbrl` is platinum by definition. A line item with no grade (no tier, or `derived` / `xbrl-derived`, not measured) is left out whenever this is set, and so is a value served null for another reason (it has no grade either). Cannot be combined with `include=preliminary`, `include=ratios` or `include=standalone_quarters`.
+        :type min_trust_grade: str
         :param min_trust_tier: Serve only line items of at least this `trust_tier`, best first: `xbrl` (the issuer's own XBRL tag), `verified`, `accepted`, `review`. A line item with no tier, or of tier `derived` or `xbrl-derived` (not measured), is left out whenever this is set; a kept line item that is withheld for another reason is still served null with its `withheld_reason`. Without it every value is served with its tier. Cannot be combined with `include=preliminary`, `include=ratios` or `include=standalone_quarters`, which are computed from values this filter would leave out. Each tier's measured accuracy: `/companies/financials/trust-tiers/`.
         :type min_trust_tier: str
         :param statement_type: Filter to a single statement type.
@@ -675,7 +697,9 @@ class CompaniesApi:
             fiscal_year_to=fiscal_year_to,
             include=include,
             include_predecessors=include_predecessors,
+            include_withheld_grades=include_withheld_grades,
             line_items=line_items,
+            min_trust_grade=min_trust_grade,
             min_trust_tier=min_trust_tier,
             statement_type=statement_type,
             _request_auth=_request_auth,
@@ -709,7 +733,9 @@ class CompaniesApi:
         fiscal_year_to,
         include,
         include_predecessors,
+        include_withheld_grades,
         line_items,
+        min_trust_grade,
         min_trust_tier,
         statement_type,
         _request_auth,
@@ -768,9 +794,17 @@ class CompaniesApi:
             
             _query_params.append(('include_predecessors', include_predecessors))
             
+        if include_withheld_grades is not None:
+            
+            _query_params.append(('include_withheld_grades', include_withheld_grades))
+            
         if line_items is not None:
             
             _query_params.append(('line_items', line_items))
+            
+        if min_trust_grade is not None:
+            
+            _query_params.append(('min_trust_grade', min_trust_grade))
             
         if min_trust_tier is not None:
             
@@ -869,8 +903,6 @@ class CompaniesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Dict[str, Optional[object]]",
-            '403': "ErrorDetail",
-            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -934,8 +966,6 @@ class CompaniesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Dict[str, Optional[object]]",
-            '403': "ErrorDetail",
-            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -999,8 +1029,6 @@ class CompaniesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Dict[str, Optional[object]]",
-            '403': "ErrorDetail",
-            '429': "RateLimitError",
         }
         response_data = await self.api_client.call_api(
             *_param,

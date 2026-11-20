@@ -46,6 +46,8 @@ class TestCompaniesFinancialsRetrieve200ResponseFilters(unittest.TestCase):
                     ],
                 as_of = datetime.datetime.strptime('1975-12-30', '%Y-%m-%d').date(),
                 min_trust_tier = 'xbrl',
+                min_trust_grade = 'platinum',
+                include_withheld_grades = True,
                 as_known_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
                 include = [
                     ''

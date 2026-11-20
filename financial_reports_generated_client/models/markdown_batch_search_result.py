@@ -18,9 +18,10 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from financial_reports_generated_client.models.markdown_batch_search_hit import MarkdownBatchSearchHit
+from financial_reports_generated_client.models.markdown_batch_search_near_match import MarkdownBatchSearchNearMatch
 from financial_reports_generated_client.models.markdown_batch_search_result_status_enum import MarkdownBatchSearchResultStatusEnum
 from typing import Optional, Set
 from typing_extensions import Self
@@ -36,7 +37,8 @@ class MarkdownBatchSearchResult(BaseModel):
     reason: Optional[StrictStr] = None
     total_hits: Optional[StrictInt] = None
     hits: Optional[List[MarkdownBatchSearchHit]] = None
-    __properties: ClassVar[List[str]] = ["filing_id", "query", "status", "reason", "total_hits", "hits"]
+    near_matches: Optional[List[MarkdownBatchSearchNearMatch]] = Field(default=None, description="no_match only: up to 3 approximate passages holding most of the query's words, as on the single search. Not matches, not billed. Absent when the request ran out of time for them, or they could not be worked out.")
+    __properties: ClassVar[List[str]] = ["filing_id", "query", "status", "reason", "total_hits", "hits", "near_matches"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -83,6 +85,12 @@ class MarkdownBatchSearchResult(BaseModel):
             for _item_hits in self.hits:
                 _items.append(_item_hits.to_dict() if _item_hits is not None else None)
             _dict['hits'] = _items
+        # override the default output from pydantic by calling `to_dict()` of each item in near_matches (list)
+        _items = []
+        if self.near_matches:
+            for _item_near_matches in self.near_matches:
+                _items.append(_item_near_matches.to_dict() if _item_near_matches is not None else None)
+            _dict['near_matches'] = _items
         # set to None if reason (nullable) is None
         # and model_fields_set contains the field
         if self.reason is None and "reason" in self.model_fields_set:
@@ -110,7 +118,8 @@ class MarkdownBatchSearchResult(BaseModel):
             "status": obj.get("status"),
             "reason": obj.get("reason"),
             "total_hits": obj.get("total_hits"),
-            "hits": [MarkdownBatchSearchHit.from_dict(_item) for _item in obj["hits"]] if obj.get("hits") is not None else None
+            "hits": [MarkdownBatchSearchHit.from_dict(_item) for _item in obj["hits"]] if obj.get("hits") is not None else None,
+            "near_matches": [MarkdownBatchSearchNearMatch.from_dict(_item) for _item in obj["near_matches"]] if obj.get("near_matches") is not None else None
         })
         return _obj
 
