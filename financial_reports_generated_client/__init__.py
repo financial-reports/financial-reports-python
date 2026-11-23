@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "1.4.203"
+__version__ = "1.4.204"
 
 # Define package exports
 __all__ = [
@@ -172,8 +172,15 @@ __all__ = [
     "StatementTypeEnum",
     "StatusEnum",
     "StockIndex",
+    "Transcript",
+    "TranscriptCompany",
+    "TranscriptEvent",
     "TranscriptNotFound",
     "TranscriptNotFoundReasonEnum",
+    "TranscriptParticipant",
+    "TranscriptQuality",
+    "TranscriptSection",
+    "TranscriptTurn",
     "WatchlistAction",
     "WatchlistCompany",
     "WatchlistPage",
@@ -347,8 +354,15 @@ from financial_reports_generated_client.models.source import Source as Source
 from financial_reports_generated_client.models.statement_type_enum import StatementTypeEnum as StatementTypeEnum
 from financial_reports_generated_client.models.status_enum import StatusEnum as StatusEnum
 from financial_reports_generated_client.models.stock_index import StockIndex as StockIndex
+from financial_reports_generated_client.models.transcript import Transcript as Transcript
+from financial_reports_generated_client.models.transcript_company import TranscriptCompany as TranscriptCompany
+from financial_reports_generated_client.models.transcript_event import TranscriptEvent as TranscriptEvent
 from financial_reports_generated_client.models.transcript_not_found import TranscriptNotFound as TranscriptNotFound
 from financial_reports_generated_client.models.transcript_not_found_reason_enum import TranscriptNotFoundReasonEnum as TranscriptNotFoundReasonEnum
+from financial_reports_generated_client.models.transcript_participant import TranscriptParticipant as TranscriptParticipant
+from financial_reports_generated_client.models.transcript_quality import TranscriptQuality as TranscriptQuality
+from financial_reports_generated_client.models.transcript_section import TranscriptSection as TranscriptSection
+from financial_reports_generated_client.models.transcript_turn import TranscriptTurn as TranscriptTurn
 from financial_reports_generated_client.models.watchlist_action import WatchlistAction as WatchlistAction
 from financial_reports_generated_client.models.watchlist_company import WatchlistCompany as WatchlistCompany
 from financial_reports_generated_client.models.watchlist_page import WatchlistPage as WatchlistPage

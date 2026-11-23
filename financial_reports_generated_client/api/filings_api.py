@@ -18,7 +18,7 @@ from typing_extensions import Annotated
 
 from datetime import datetime
 from pydantic import Field, StrictBool, StrictBytes, StrictFloat, StrictInt, StrictStr, field_validator
-from typing import Any, Dict, List, Optional, Tuple, Union
+from typing import List, Optional, Tuple, Union
 from typing_extensions import Annotated
 from financial_reports_generated_client.models.filing import Filing
 from financial_reports_generated_client.models.markdown_batch_search_request import MarkdownBatchSearchRequest
@@ -27,6 +27,7 @@ from financial_reports_generated_client.models.paginated_filing_history_list imp
 from financial_reports_generated_client.models.paginated_filing_search_result_list import PaginatedFilingSearchResultList
 from financial_reports_generated_client.models.paginated_filing_summary_list import PaginatedFilingSummaryList
 from financial_reports_generated_client.models.paginated_removed_filing_list import PaginatedRemovedFilingList
+from financial_reports_generated_client.models.transcript import Transcript
 
 from financial_reports_generated_client.api_client import ApiClient, RequestSerialized
 from financial_reports_generated_client.api_response import ApiResponse
@@ -2011,7 +2012,7 @@ class FilingsApi:
     ) -> str:
         """Retrieve Filing Markdown
 
-        **Cost:** 6 credits per request (12 for premium filing types).  --- Retrieve the raw processed content of a single filing in Markdown format.  **Large filings.** An annual report can run to several hundred thousand tokens. Every response carries `X-Total-Chars`, the full document's length in characters. Pass `offset` and/or `limit` (characters) to read one window instead of the whole document; while characters remain after the window, the response also carries `X-Next-Offset`. To find the part you need first, use `GET /filings/{id}/markdown/search/?q=`. Each call, whole or windowed, is billed as one Markdown request. Through the MCP server, which pages large filings in chunks, a filing's Markdown is billed once per day.
+        **Cost:** 6 credits per request (12 for premium filing types).  --- Retrieve the raw processed content of a single filing in Markdown format.  **Large filings.** An annual report can run to several hundred thousand tokens. Every response carries `X-Total-Chars`, the full document's length in characters. Pass `offset` and/or `limit` (characters) to read one window instead of the whole document; while characters remain after the window, the response also carries `X-Next-Offset`. To find the part you need first, use `GET /filings/{id}/markdown/search/?q=`. Each call, whole or windowed, is billed as one Markdown request. Through the MCP server, which pages large filings in chunks, a filing's Markdown is billed once per day.  **Call transcripts.** A call transcript we have restructured starts with `# Company: Event title (date)`, then, when the call was released with a known limitation, one line `> Note: ...` saying what it is. The call follows under `## Prepared remarks` and `## Questions and answers` (a call without one of these parts has only the other), and each speaker's turn is headed in bold by the speaker's name, firm and title where known. In the Q&A, questions are tagged `[Q]` and answers `[A]` (`**[Q] Name - Firm - Analyst**`); operator and moderator turns are labelled by speaker. The same call as JSON, with the participants, turn types and the question each answer responds to, is at `GET /filings/{id}/transcript/`.
 
         :param id: A unique integer value identifying this filing. (required)
         :type id: int
@@ -2093,7 +2094,7 @@ class FilingsApi:
     ) -> ApiResponse[str]:
         """Retrieve Filing Markdown
 
-        **Cost:** 6 credits per request (12 for premium filing types).  --- Retrieve the raw processed content of a single filing in Markdown format.  **Large filings.** An annual report can run to several hundred thousand tokens. Every response carries `X-Total-Chars`, the full document's length in characters. Pass `offset` and/or `limit` (characters) to read one window instead of the whole document; while characters remain after the window, the response also carries `X-Next-Offset`. To find the part you need first, use `GET /filings/{id}/markdown/search/?q=`. Each call, whole or windowed, is billed as one Markdown request. Through the MCP server, which pages large filings in chunks, a filing's Markdown is billed once per day.
+        **Cost:** 6 credits per request (12 for premium filing types).  --- Retrieve the raw processed content of a single filing in Markdown format.  **Large filings.** An annual report can run to several hundred thousand tokens. Every response carries `X-Total-Chars`, the full document's length in characters. Pass `offset` and/or `limit` (characters) to read one window instead of the whole document; while characters remain after the window, the response also carries `X-Next-Offset`. To find the part you need first, use `GET /filings/{id}/markdown/search/?q=`. Each call, whole or windowed, is billed as one Markdown request. Through the MCP server, which pages large filings in chunks, a filing's Markdown is billed once per day.  **Call transcripts.** A call transcript we have restructured starts with `# Company: Event title (date)`, then, when the call was released with a known limitation, one line `> Note: ...` saying what it is. The call follows under `## Prepared remarks` and `## Questions and answers` (a call without one of these parts has only the other), and each speaker's turn is headed in bold by the speaker's name, firm and title where known. In the Q&A, questions are tagged `[Q]` and answers `[A]` (`**[Q] Name - Firm - Analyst**`); operator and moderator turns are labelled by speaker. The same call as JSON, with the participants, turn types and the question each answer responds to, is at `GET /filings/{id}/transcript/`.
 
         :param id: A unique integer value identifying this filing. (required)
         :type id: int
@@ -2175,7 +2176,7 @@ class FilingsApi:
     ) -> RESTResponseType:
         """Retrieve Filing Markdown
 
-        **Cost:** 6 credits per request (12 for premium filing types).  --- Retrieve the raw processed content of a single filing in Markdown format.  **Large filings.** An annual report can run to several hundred thousand tokens. Every response carries `X-Total-Chars`, the full document's length in characters. Pass `offset` and/or `limit` (characters) to read one window instead of the whole document; while characters remain after the window, the response also carries `X-Next-Offset`. To find the part you need first, use `GET /filings/{id}/markdown/search/?q=`. Each call, whole or windowed, is billed as one Markdown request. Through the MCP server, which pages large filings in chunks, a filing's Markdown is billed once per day.
+        **Cost:** 6 credits per request (12 for premium filing types).  --- Retrieve the raw processed content of a single filing in Markdown format.  **Large filings.** An annual report can run to several hundred thousand tokens. Every response carries `X-Total-Chars`, the full document's length in characters. Pass `offset` and/or `limit` (characters) to read one window instead of the whole document; while characters remain after the window, the response also carries `X-Next-Offset`. To find the part you need first, use `GET /filings/{id}/markdown/search/?q=`. Each call, whole or windowed, is billed as one Markdown request. Through the MCP server, which pages large filings in chunks, a filing's Markdown is billed once per day.  **Call transcripts.** A call transcript we have restructured starts with `# Company: Event title (date)`, then, when the call was released with a known limitation, one line `> Note: ...` saying what it is. The call follows under `## Prepared remarks` and `## Questions and answers` (a call without one of these parts has only the other), and each speaker's turn is headed in bold by the speaker's name, firm and title where known. In the Q&A, questions are tagged `[Q]` and answers `[A]` (`**[Q] Name - Firm - Analyst**`); operator and moderator turns are labelled by speaker. The same call as JSON, with the participants, turn types and the question each answer responds to, is at `GET /filings/{id}/transcript/`.
 
         :param id: A unique integer value identifying this filing. (required)
         :type id: int
@@ -4211,10 +4212,10 @@ class FilingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Dict[str, Optional[object]]:
+    ) -> Transcript:
         """Retrieve a Call's Structured Transcript
 
-        **Cost:** 6 credits per request (12 for premium filing types).  --- The structured version of a call transcript we have restructured, as JSON (`schema_version` `transcript/1`): the company and event, the sections (`prepared_remarks`, `qa`), the participants, and every turn with its speaker, its type (`prepared`, `operator`, `moderator`, `question`, `answer`, `other`) and, for an answer, the question it responds to (`answers_turn`). It carries the same words as the filing's markdown (`GET /filings/{id}/markdown/`), which is rendered from it.  Only call transcripts we have restructured have one; any other filing returns 404 with reason `no_structured_transcript`. When we publish a new version, both this JSON and the markdown change. `X-Transcript-Version` gives the version served. `X-Transcript-Stale: 1` means the underlying recording's transcription has changed since this version was produced; the version is still the one we serve. Each call is billed as one Markdown request.
+        **Cost:** 6 credits per request (12 for premium filing types).  --- The structured version of a call transcript we have restructured, as JSON (`schema_version` `transcript/1`): the company and event, the sections (`prepared_remarks`, `qa`), the participants, and every turn with its speaker, its type (`prepared`, `operator`, `moderator`, `question`, `answer`, `other`) and, for an answer, the question it responds to (`answers_turn`). It carries the same words as the filing's markdown (`GET /filings/{id}/markdown/`), which is rendered from it. A call released with a known limitation also carries `quality`: the limitation's flags and a plain-English note, which the markdown shows under its title. Fields may be added within `transcript/1`, so ignore any field you do not know.  Only call transcripts we have restructured have one; any other filing returns 404 with reason `no_structured_transcript`. When we publish a new version, both this JSON and the markdown change. `X-Transcript-Version` gives the version served. `X-Transcript-Stale: 1` means the underlying recording's transcription has changed since this version was produced; the version is still the one we serve. Each call is billed as one Markdown request.
 
         :param id: A unique integer value identifying this filing. (required)
         :type id: int
@@ -4249,7 +4250,7 @@ class FilingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, Optional[object]]",
+            '200': "Transcript",
             '403': "ErrorDetail",
             '404': "TranscriptNotFound",
             '429': "RateLimitError",
@@ -4281,10 +4282,10 @@ class FilingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Dict[str, Optional[object]]]:
+    ) -> ApiResponse[Transcript]:
         """Retrieve a Call's Structured Transcript
 
-        **Cost:** 6 credits per request (12 for premium filing types).  --- The structured version of a call transcript we have restructured, as JSON (`schema_version` `transcript/1`): the company and event, the sections (`prepared_remarks`, `qa`), the participants, and every turn with its speaker, its type (`prepared`, `operator`, `moderator`, `question`, `answer`, `other`) and, for an answer, the question it responds to (`answers_turn`). It carries the same words as the filing's markdown (`GET /filings/{id}/markdown/`), which is rendered from it.  Only call transcripts we have restructured have one; any other filing returns 404 with reason `no_structured_transcript`. When we publish a new version, both this JSON and the markdown change. `X-Transcript-Version` gives the version served. `X-Transcript-Stale: 1` means the underlying recording's transcription has changed since this version was produced; the version is still the one we serve. Each call is billed as one Markdown request.
+        **Cost:** 6 credits per request (12 for premium filing types).  --- The structured version of a call transcript we have restructured, as JSON (`schema_version` `transcript/1`): the company and event, the sections (`prepared_remarks`, `qa`), the participants, and every turn with its speaker, its type (`prepared`, `operator`, `moderator`, `question`, `answer`, `other`) and, for an answer, the question it responds to (`answers_turn`). It carries the same words as the filing's markdown (`GET /filings/{id}/markdown/`), which is rendered from it. A call released with a known limitation also carries `quality`: the limitation's flags and a plain-English note, which the markdown shows under its title. Fields may be added within `transcript/1`, so ignore any field you do not know.  Only call transcripts we have restructured have one; any other filing returns 404 with reason `no_structured_transcript`. When we publish a new version, both this JSON and the markdown change. `X-Transcript-Version` gives the version served. `X-Transcript-Stale: 1` means the underlying recording's transcription has changed since this version was produced; the version is still the one we serve. Each call is billed as one Markdown request.
 
         :param id: A unique integer value identifying this filing. (required)
         :type id: int
@@ -4319,7 +4320,7 @@ class FilingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, Optional[object]]",
+            '200': "Transcript",
             '403': "ErrorDetail",
             '404': "TranscriptNotFound",
             '429': "RateLimitError",
@@ -4354,7 +4355,7 @@ class FilingsApi:
     ) -> RESTResponseType:
         """Retrieve a Call's Structured Transcript
 
-        **Cost:** 6 credits per request (12 for premium filing types).  --- The structured version of a call transcript we have restructured, as JSON (`schema_version` `transcript/1`): the company and event, the sections (`prepared_remarks`, `qa`), the participants, and every turn with its speaker, its type (`prepared`, `operator`, `moderator`, `question`, `answer`, `other`) and, for an answer, the question it responds to (`answers_turn`). It carries the same words as the filing's markdown (`GET /filings/{id}/markdown/`), which is rendered from it.  Only call transcripts we have restructured have one; any other filing returns 404 with reason `no_structured_transcript`. When we publish a new version, both this JSON and the markdown change. `X-Transcript-Version` gives the version served. `X-Transcript-Stale: 1` means the underlying recording's transcription has changed since this version was produced; the version is still the one we serve. Each call is billed as one Markdown request.
+        **Cost:** 6 credits per request (12 for premium filing types).  --- The structured version of a call transcript we have restructured, as JSON (`schema_version` `transcript/1`): the company and event, the sections (`prepared_remarks`, `qa`), the participants, and every turn with its speaker, its type (`prepared`, `operator`, `moderator`, `question`, `answer`, `other`) and, for an answer, the question it responds to (`answers_turn`). It carries the same words as the filing's markdown (`GET /filings/{id}/markdown/`), which is rendered from it. A call released with a known limitation also carries `quality`: the limitation's flags and a plain-English note, which the markdown shows under its title. Fields may be added within `transcript/1`, so ignore any field you do not know.  Only call transcripts we have restructured have one; any other filing returns 404 with reason `no_structured_transcript`. When we publish a new version, both this JSON and the markdown change. `X-Transcript-Version` gives the version served. `X-Transcript-Stale: 1` means the underlying recording's transcription has changed since this version was produced; the version is still the one we serve. Each call is billed as one Markdown request.
 
         :param id: A unique integer value identifying this filing. (required)
         :type id: int
@@ -4389,7 +4390,7 @@ class FilingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Dict[str, Optional[object]]",
+            '200': "Transcript",
             '403': "ErrorDetail",
             '404': "TranscriptNotFound",
             '429': "RateLimitError",
