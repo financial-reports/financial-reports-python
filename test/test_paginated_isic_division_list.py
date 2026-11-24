@@ -44,7 +44,8 @@ class TestPaginatedISICDivisionList(unittest.TestCase):
                         code = '', 
                         name = '', 
                         sector = null, )
-                    ]
+                    ],
+                count_is_estimate = True
             )
         else:
             return PaginatedISICDivisionList(

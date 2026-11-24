@@ -54,7 +54,8 @@ class TestPaginatedSecurityListingList(unittest.TestCase):
                         share_class_figi = '', 
                         historical = True, 
                         exchange_symbol = '', )
-                    ]
+                    ],
+                count_is_estimate = True
             )
         else:
             return PaginatedSecurityListingList(

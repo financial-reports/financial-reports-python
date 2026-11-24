@@ -43,7 +43,8 @@ class TestPaginatedISICSectionList(unittest.TestCase):
                     financial_reports_generated_client.models.isic_section.ISICSection(
                         code = '', 
                         name = '', )
-                    ]
+                    ],
+                count_is_estimate = True
             )
         else:
             return PaginatedISICSectionList(

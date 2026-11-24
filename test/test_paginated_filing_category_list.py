@@ -44,7 +44,8 @@ class TestPaginatedFilingCategoryList(unittest.TestCase):
                         id = 56, 
                         name = '', 
                         sort_order = 56, )
-                    ]
+                    ],
+                count_is_estimate = True
             )
         else:
             return PaginatedFilingCategoryList(

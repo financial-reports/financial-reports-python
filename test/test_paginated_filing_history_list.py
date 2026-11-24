@@ -48,7 +48,8 @@ class TestPaginatedFilingHistoryList(unittest.TestCase):
                         changes = {
                             'key' : null
                             }, )
-                    ]
+                    ],
+                count_is_estimate = True
             )
         else:
             return PaginatedFilingHistoryList(

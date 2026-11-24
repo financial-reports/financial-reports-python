@@ -58,6 +58,7 @@ class TestPaginatedFilingSearchResultList(unittest.TestCase):
                         source_filing_id = '', 
                         match = null, )
                     ],
+                count_is_estimate = True,
                 history_window = financial_reports_generated_client.models.paginated_filing_search_result_list_history_window.PaginatedFilingSearchResultList_history_window(
                     limited = True, 
                     max_history_days = 56, 

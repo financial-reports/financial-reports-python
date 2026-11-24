@@ -52,7 +52,8 @@ class TestPaginatedCompanyMinimalList(unittest.TestCase):
                         oics_code = '', 
                         country_code = '', 
                         date_public = datetime.datetime.strptime('1975-12-30', '%Y-%m-%d').date(), )
-                    ]
+                    ],
+                count_is_estimate = True
             )
         else:
             return PaginatedCompanyMinimalList(

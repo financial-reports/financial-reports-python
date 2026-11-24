@@ -46,7 +46,8 @@ class TestPaginatedSourceList(unittest.TestCase):
                         url = '', 
                         description = '', 
                         has_named_speakers = True, )
-                    ]
+                    ],
+                count_is_estimate = True
             )
         else:
             return PaginatedSourceList(

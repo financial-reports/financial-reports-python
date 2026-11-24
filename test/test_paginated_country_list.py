@@ -45,7 +45,8 @@ class TestPaginatedCountryList(unittest.TestCase):
                         alpha_2 = '', 
                         alpha_3 = '', 
                         numeric = '', )
-                    ]
+                    ],
+                count_is_estimate = True
             )
         else:
             return PaginatedCountryList(

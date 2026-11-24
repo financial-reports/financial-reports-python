@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from financial_reports_generated_client.models.filings_facts_retrieve200_response_results_inner import FilingsFactsRetrieve200ResponseResultsInner
 from typing import Optional, Set
@@ -30,10 +30,11 @@ class FilingsFactsRetrieve200Response(BaseModel):
     FilingsFactsRetrieve200Response
     """ # noqa: E501
     count: StrictInt = Field(description="Facts across all pages: what paging through costs, up front.")
+    count_is_estimate: Optional[StrictBool] = Field(default=None, description="Always false here: `count` is exact.")
     next: Optional[StrictStr]
     previous: Optional[StrictStr]
     results: List[FilingsFactsRetrieve200ResponseResultsInner]
-    __properties: ClassVar[List[str]] = ["count", "next", "previous", "results"]
+    __properties: ClassVar[List[str]] = ["count", "count_is_estimate", "next", "previous", "results"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -103,6 +104,7 @@ class FilingsFactsRetrieve200Response(BaseModel):
 
         _obj = cls.model_validate({
             "count": obj.get("count"),
+            "count_is_estimate": obj.get("count_is_estimate"),
             "next": obj.get("next"),
             "previous": obj.get("previous"),
             "results": [FilingsFactsRetrieve200ResponseResultsInner.from_dict(_item) for _item in obj["results"]] if obj.get("results") is not None else None

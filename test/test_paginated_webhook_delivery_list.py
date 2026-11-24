@@ -49,7 +49,8 @@ class TestPaginatedWebhookDeliveryList(unittest.TestCase):
                         response_status_code = 56, 
                         duration_ms = 56, 
                         created_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), )
-                    ]
+                    ],
+                count_is_estimate = True
             )
         else:
             return PaginatedWebhookDeliveryList(

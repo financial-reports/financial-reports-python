@@ -44,7 +44,8 @@ class TestPaginatedISICClassList(unittest.TestCase):
                         code = '', 
                         name = '', 
                         industry = null, )
-                    ]
+                    ],
+                count_is_estimate = True
             )
         else:
             return PaginatedISICClassList(

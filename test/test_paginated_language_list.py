@@ -44,7 +44,8 @@ class TestPaginatedLanguageList(unittest.TestCase):
                         id = 56, 
                         code = '', 
                         name = '', )
-                    ]
+                    ],
+                count_is_estimate = True
             )
         else:
             return PaginatedLanguageList(

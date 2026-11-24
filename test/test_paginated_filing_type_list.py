@@ -46,7 +46,8 @@ class TestPaginatedFilingTypeList(unittest.TestCase):
                         name = '', 
                         description = '', 
                         category = null, )
-                    ]
+                    ],
+                count_is_estimate = True
             )
         else:
             return PaginatedFilingTypeList(

@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from financial_reports_generated_client.models.filing_type import FilingType
 from typing import Optional, Set
@@ -29,11 +29,12 @@ class PaginatedFilingTypeList(BaseModel):
     """
     PaginatedFilingTypeList
     """ # noqa: E501
-    count: StrictInt = Field(description="Total matching results. Exact for cheap queries, an estimate on broad or expensive ones. Do not use it to decide when to stop: follow `next` until it is null.", json_schema_extra={"examples": [123]})
+    count: StrictInt = Field(description="Total matching results. Exact for cheap queries, an estimate on broad or expensive ones, which can be far too low: `count_is_estimate` says which. Do not use it to decide when to stop: follow `next` until it is null.", json_schema_extra={"examples": [123]})
     next: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["http://api.example.org/accounts/?page=4"]})
     previous: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["http://api.example.org/accounts/?page=2"]})
     results: List[FilingType]
-    __properties: ClassVar[List[str]] = ["count", "next", "previous", "results"]
+    count_is_estimate: Optional[StrictBool] = Field(default=None, description="True when `count` is an estimate rather than an exact count. An estimate can be off by a factor of ten or more. For an exact count, narrow the query (a shorter release_datetime window, fewer types or countries) until this is false, then add up the parts.")
+    __properties: ClassVar[List[str]] = ["count", "next", "previous", "results", "count_is_estimate"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -95,7 +96,8 @@ class PaginatedFilingTypeList(BaseModel):
             "count": obj.get("count"),
             "next": obj.get("next"),
             "previous": obj.get("previous"),
-            "results": [FilingType.from_dict(_item) for _item in obj["results"]] if obj.get("results") is not None else None
+            "results": [FilingType.from_dict(_item) for _item in obj["results"]] if obj.get("results") is not None else None,
+            "count_is_estimate": obj.get("count_is_estimate")
         })
         return _obj
 

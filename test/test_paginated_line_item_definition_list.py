@@ -56,7 +56,8 @@ class TestPaginatedLineItemDefinitionList(unittest.TestCase):
                         templates = [
                             ''
                             ], )
-                    ]
+                    ],
+                count_is_estimate = True
             )
         else:
             return PaginatedLineItemDefinitionList(

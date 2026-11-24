@@ -37,6 +37,7 @@ class TestFilingsFactsRetrieve200Response(unittest.TestCase):
         if include_optional:
             return FilingsFactsRetrieve200Response(
                 count = 56,
+                count_is_estimate = True,
                 next = '',
                 previous = '',
                 results = [

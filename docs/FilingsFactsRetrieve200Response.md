@@ -6,6 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **count** | **int** | Facts across all pages: what paging through costs, up front. | 
+**count_is_estimate** | **bool** | Always false here: &#x60;count&#x60; is exact. | [optional] 
 **next** | **str** |  | 
 **previous** | **str** |  | 
 **results** | [**List[FilingsFactsRetrieve200ResponseResultsInner]**](FilingsFactsRetrieve200ResponseResultsInner.md) |  | 
