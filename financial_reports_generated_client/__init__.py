@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "1.4.207"
+__version__ = "1.4.208"
 
 # Define package exports
 __all__ = [
@@ -29,6 +29,7 @@ __all__ = [
     "FinancialDataApi",
     "ISICClassificationsApi",
     "ISINsApi",
+    "InsidersHoldingsApi",
     "LanguagesApi",
     "SecurityListingsApi",
     "SourcesApi",
@@ -131,12 +132,14 @@ __all__ = [
     "ISICSection",
     "ISIN",
     "IngestionModeEnum",
+    "InsiderTransaction",
     "Jurisdiction",
     "KindEnum",
     "Language",
     "LastStatusEnum",
     "LineItemDefinition",
     "ListedStockExchange",
+    "MajorHolding",
     "MarkdownBatchSearchHit",
     "MarkdownBatchSearchNearMatch",
     "MarkdownBatchSearchRequest",
@@ -163,8 +166,10 @@ __all__ = [
     "PaginatedISICGroupList",
     "PaginatedISICSectionList",
     "PaginatedISINList",
+    "PaginatedInsiderTransactionList",
     "PaginatedLanguageList",
     "PaginatedLineItemDefinitionList",
+    "PaginatedMajorHoldingList",
     "PaginatedRemovedFilingList",
     "PaginatedSavedSearchList",
     "PaginatedSecurityListingList",
@@ -228,6 +233,7 @@ from financial_reports_generated_client.api.filings_api import FilingsApi as Fil
 from financial_reports_generated_client.api.financial_data_api import FinancialDataApi as FinancialDataApi
 from financial_reports_generated_client.api.isic_classifications_api import ISICClassificationsApi as ISICClassificationsApi
 from financial_reports_generated_client.api.isins_api import ISINsApi as ISINsApi
+from financial_reports_generated_client.api.insiders_holdings_api import InsidersHoldingsApi as InsidersHoldingsApi
 from financial_reports_generated_client.api.languages_api import LanguagesApi as LanguagesApi
 from financial_reports_generated_client.api.security_listings_api import SecurityListingsApi as SecurityListingsApi
 from financial_reports_generated_client.api.sources_api import SourcesApi as SourcesApi
@@ -334,12 +340,14 @@ from financial_reports_generated_client.models.isic_group import ISICGroup as IS
 from financial_reports_generated_client.models.isic_section import ISICSection as ISICSection
 from financial_reports_generated_client.models.isin import ISIN as ISIN
 from financial_reports_generated_client.models.ingestion_mode_enum import IngestionModeEnum as IngestionModeEnum
+from financial_reports_generated_client.models.insider_transaction import InsiderTransaction as InsiderTransaction
 from financial_reports_generated_client.models.jurisdiction import Jurisdiction as Jurisdiction
 from financial_reports_generated_client.models.kind_enum import KindEnum as KindEnum
 from financial_reports_generated_client.models.language import Language as Language
 from financial_reports_generated_client.models.last_status_enum import LastStatusEnum as LastStatusEnum
 from financial_reports_generated_client.models.line_item_definition import LineItemDefinition as LineItemDefinition
 from financial_reports_generated_client.models.listed_stock_exchange import ListedStockExchange as ListedStockExchange
+from financial_reports_generated_client.models.major_holding import MajorHolding as MajorHolding
 from financial_reports_generated_client.models.markdown_batch_search_hit import MarkdownBatchSearchHit as MarkdownBatchSearchHit
 from financial_reports_generated_client.models.markdown_batch_search_near_match import MarkdownBatchSearchNearMatch as MarkdownBatchSearchNearMatch
 from financial_reports_generated_client.models.markdown_batch_search_request import MarkdownBatchSearchRequest as MarkdownBatchSearchRequest
@@ -366,8 +374,10 @@ from financial_reports_generated_client.models.paginated_isic_division_list impo
 from financial_reports_generated_client.models.paginated_isic_group_list import PaginatedISICGroupList as PaginatedISICGroupList
 from financial_reports_generated_client.models.paginated_isic_section_list import PaginatedISICSectionList as PaginatedISICSectionList
 from financial_reports_generated_client.models.paginated_isin_list import PaginatedISINList as PaginatedISINList
+from financial_reports_generated_client.models.paginated_insider_transaction_list import PaginatedInsiderTransactionList as PaginatedInsiderTransactionList
 from financial_reports_generated_client.models.paginated_language_list import PaginatedLanguageList as PaginatedLanguageList
 from financial_reports_generated_client.models.paginated_line_item_definition_list import PaginatedLineItemDefinitionList as PaginatedLineItemDefinitionList
+from financial_reports_generated_client.models.paginated_major_holding_list import PaginatedMajorHoldingList as PaginatedMajorHoldingList
 from financial_reports_generated_client.models.paginated_removed_filing_list import PaginatedRemovedFilingList as PaginatedRemovedFilingList
 from financial_reports_generated_client.models.paginated_saved_search_list import PaginatedSavedSearchList as PaginatedSavedSearchList
 from financial_reports_generated_client.models.paginated_security_listing_list import PaginatedSecurityListingList as PaginatedSecurityListingList
