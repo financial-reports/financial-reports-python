@@ -19,7 +19,7 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
@@ -29,10 +29,10 @@ class CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerExtractio
     """
     CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerExtraction
     """ # noqa: E501
-    model: Optional[StrictStr] = None
-    prompt_version: Optional[StrictStr] = None
+    model: Optional[StrictStr] = Field(default=None, description="How the statement was read: `xbrl-native@<version>` from the filer's own XBRL, `document-extraction@<date>` from the filing document. Match on the prefix; the suffix is a version.")
+    prompt_version: Optional[StrictStr] = Field(default=None, description="The extractor version: the XBRL engine's version, or the date of the document extractor's version.")
     extracted_at: Optional[datetime] = None
-    notes: Optional[StrictStr] = None
+    notes: Optional[StrictStr] = Field(default=None, description="Always null.")
     __properties: ClassVar[List[str]] = ["model", "prompt_version", "extracted_at", "notes"]
 
     model_config = ConfigDict(

@@ -5,10 +5,10 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**model** | **str** |  | [optional] 
-**prompt_version** | **str** |  | [optional] 
+**model** | **str** | How the statement was read: &#x60;xbrl-native@&lt;version&gt;&#x60; from the filer&#39;s own XBRL, &#x60;document-extraction@&lt;date&gt;&#x60; from the filing document. Match on the prefix; the suffix is a version. | [optional] 
+**prompt_version** | **str** | The extractor version: the XBRL engine&#39;s version, or the date of the document extractor&#39;s version. | [optional] 
 **extracted_at** | **datetime** |  | [optional] 
-**notes** | **str** |  | [optional] 
+**notes** | **str** | Always null. | [optional] 
 
 ## Example
 
