@@ -140,7 +140,7 @@ List Major Holdings
 **Cost:** 40 credits per request.
 
 ---
-Major-shareholding notices as rows: one row per reporting person, with voting and dispositive power, the aggregate owned and the percent of the class. The persons on one notice often count the same shares (a fund and its manager, the members of a group), so do not add one notice's rows up. US: Schedule 13D and 13G and their amendments, in the structured form the SEC has required since 18 December 2024.
+Major-shareholding notices as rows: one row per reporting person, with voting and dispositive power, the aggregate owned and the percent of the class. The persons on one notice often count the same shares (a fund and its manager, the members of a group), so do not add one notice's rows up. US: Schedule 13D and 13G and their amendments, in the structured form required since 18 December 2024.
 
 Filter by issuer (`company`, `company_isin`, `lei`, `countries`), `regime`, `holder_ref`, the event date or the publication date.
 
