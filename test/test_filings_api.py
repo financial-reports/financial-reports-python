@@ -34,6 +34,13 @@ class TestFilingsApi(unittest.IsolatedAsyncioTestCase):
         """
         pass
 
+    async def test_filings_facts_retrieve(self) -> None:
+        """Test case for filings_facts_retrieve
+
+        List Filing Facts (As Reported)
+        """
+        pass
+
     async def test_filings_history_retrieve(self) -> None:
         """Test case for filings_history_retrieve
 
@@ -94,6 +101,69 @@ class TestFilingsApi(unittest.IsolatedAsyncioTestCase):
         """Test case for filings_search_list
 
         Search Filing Text Across All Filings
+        """
+        pass
+
+    async def test_filings_search_saved_create(self) -> None:
+        """Test case for filings_search_saved_create
+
+        Create Saved Search
+        """
+        pass
+
+    async def test_filings_search_saved_destroy(self) -> None:
+        """Test case for filings_search_saved_destroy
+
+        Delete Saved Search
+        """
+        pass
+
+    async def test_filings_search_saved_list(self) -> None:
+        """Test case for filings_search_saved_list
+
+        List Saved Searches
+        """
+        pass
+
+    async def test_filings_search_saved_new_create(self) -> None:
+        """Test case for filings_search_saved_new_create
+
+        Pull New Saved Search Hits
+        """
+        pass
+
+    async def test_filings_search_saved_partial_update(self) -> None:
+        """Test case for filings_search_saved_partial_update
+
+        Partially Update Saved Search
+        """
+        pass
+
+    async def test_filings_search_saved_preview_create(self) -> None:
+        """Test case for filings_search_saved_preview_create
+
+        Preview Saved Search
+        """
+        pass
+
+    async def test_filings_search_saved_retrieve(self) -> None:
+        """Test case for filings_search_saved_retrieve
+
+        Retrieve Saved Search
+        """
+        pass
+
+    async def test_filings_search_saved_update(self) -> None:
+        """Test case for filings_search_saved_update
+
+        Update Saved Search
+        """
+        pass
+
+    async def test_filings_statements_retrieve(self) -> None:
+        """Test case for filings_statements_retrieve
+
+        Retrieve Filing Statements (As Reported)
         """
         pass
 

@@ -5,6 +5,7 @@ All URIs are relative to *https://api.financialreports.eu*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**filings_document_retrieve**](FilingsApi.md#filings_document_retrieve) | **GET** /filings/{id}/document/ | Retrieve Filing Document
+[**filings_facts_retrieve**](FilingsApi.md#filings_facts_retrieve) | **GET** /filings/{id}/facts/ | List Filing Facts (As Reported)
 [**filings_history_retrieve**](FilingsApi.md#filings_history_retrieve) | **GET** /filings/{id}/history/ | Retrieve Filing History (Audit Trail)
 [**filings_list**](FilingsApi.md#filings_list) | **GET** /filings/ | List Filings
 [**filings_markdown_outline_retrieve**](FilingsApi.md#filings_markdown_outline_retrieve) | **GET** /filings/{id}/markdown/outline/ | Outline of a Filing&#39;s Markdown
@@ -14,6 +15,15 @@ Method | HTTP request | Description
 [**filings_removed_list**](FilingsApi.md#filings_removed_list) | **GET** /filings/removed/ | List Removed Filings
 [**filings_retrieve**](FilingsApi.md#filings_retrieve) | **GET** /filings/{id}/ | Retrieve Filing Details
 [**filings_search_list**](FilingsApi.md#filings_search_list) | **GET** /filings/search/ | Search Filing Text Across All Filings
+[**filings_search_saved_create**](FilingsApi.md#filings_search_saved_create) | **POST** /filings/search/saved/ | Create Saved Search
+[**filings_search_saved_destroy**](FilingsApi.md#filings_search_saved_destroy) | **DELETE** /filings/search/saved/{id}/ | Delete Saved Search
+[**filings_search_saved_list**](FilingsApi.md#filings_search_saved_list) | **GET** /filings/search/saved/ | List Saved Searches
+[**filings_search_saved_new_create**](FilingsApi.md#filings_search_saved_new_create) | **POST** /filings/search/saved/{id}/new/ | Pull New Saved Search Hits
+[**filings_search_saved_partial_update**](FilingsApi.md#filings_search_saved_partial_update) | **PATCH** /filings/search/saved/{id}/ | Partially Update Saved Search
+[**filings_search_saved_preview_create**](FilingsApi.md#filings_search_saved_preview_create) | **POST** /filings/search/saved/{id}/preview/ | Preview Saved Search
+[**filings_search_saved_retrieve**](FilingsApi.md#filings_search_saved_retrieve) | **GET** /filings/search/saved/{id}/ | Retrieve Saved Search
+[**filings_search_saved_update**](FilingsApi.md#filings_search_saved_update) | **PUT** /filings/search/saved/{id}/ | Update Saved Search
+[**filings_statements_retrieve**](FilingsApi.md#filings_statements_retrieve) | **GET** /filings/{id}/statements/ | Retrieve Filing Statements (As Reported)
 [**filings_transcript_retrieve**](FilingsApi.md#filings_transcript_retrieve) | **GET** /filings/{id}/transcript/ | Retrieve a Call&#39;s Structured Transcript
 
 
@@ -109,6 +119,118 @@ Name | Type | Description  | Notes
 **200** | The main document, with its own Content-Type (e.g. text/html, application/xhtml+xml, application/pdf). |  -  |
 **302** | The filing is not a package, or its main document is over the size cap: redirect to the stored file. |  -  |
 **404** | Not Found. The filing has no document, or its package is unreadable or empty. |  -  |
+**403** | Missing or invalid API key, or the plan does not include this endpoint. |  -  |
+**429** | Rate limit, plan quota or spend cap reached. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **filings_facts_retrieve**
+> FilingsFactsRetrieve200Response filings_facts_retrieve(id, method=method, page=page, page_size=page_size, scope=scope, statement=statement)
+
+List Filing Facts (As Reported)
+
+**Cost:** 40 credits per request, or 0 when the response carries no value. Billed per page.
+
+---
+**Experimental:** the response may change without an API version bump.
+
+**As reported.** Labels, lines, order and periods are the company's own; nothing is mapped to a standard taxonomy, converted or restated. For standardised line items across companies, use GET /companies/{id}/financials/.
+
+**Where the values come from.** Each value says how it was read (`method`): `xbrl` and `structured` are the company's own tagged or structured statements; `llm` was read from the report itself, where the company files no machine-readable statements. Filings with neither have no facts.
+
+**Not included:** note numbers per line, text facts, and values still under review.
+
+**Values** are exact decimal strings in the stated unit, unscaled: parse them with a decimal type.
+
+Every numeric value the filing reports, one per fact: XBRL first, then by statement (BS, IS, CI, CF, EQ, NOTE, OTHER) and the filing's own order. At most 100 per page; `count` says how many there are before you page, and `statement` narrows the list.
+
+### Example
+
+* Bearer (JWT) Authentication (CognitoJWT):
+* Api Key Authentication (ApiKeyAuth):
+
+```python
+import financial_reports_generated_client
+from financial_reports_generated_client.models.filings_facts_retrieve200_response import FilingsFactsRetrieve200Response
+from financial_reports_generated_client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.financialreports.eu
+# See configuration.py for a list of all supported configuration parameters.
+configuration = financial_reports_generated_client.Configuration(
+    host = "https://api.financialreports.eu"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization (JWT): CognitoJWT
+configuration = financial_reports_generated_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Configure API key authorization: ApiKeyAuth
+configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+async with financial_reports_generated_client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = financial_reports_generated_client.FilingsApi(api_client)
+    id = 56 # int | A unique integer value identifying this filing.
+    method = 'method_example' # str | Only values read this way. (optional)
+    page = 56 # int | Page number, from 1. (optional)
+    page_size = 56 # int | Facts per page, at most 100 (the default). (optional)
+    scope = 'scope_example' # str | Comma-separated: only facts of these scopes (`consolidated`, `separate`, `segment`, `other`, `unknown`). Default: all. (optional)
+    statement = 'statement_example' # str | Comma-separated statements: `BS`, `IS`, `CI`, `CF`, `EQ`, `NOTE`, `OTHER`. Default: all. (optional)
+
+    try:
+        # List Filing Facts (As Reported)
+        api_response = await api_instance.filings_facts_retrieve(id, method=method, page=page, page_size=page_size, scope=scope, statement=statement)
+        print("The response of FilingsApi->filings_facts_retrieve:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling FilingsApi->filings_facts_retrieve: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **int**| A unique integer value identifying this filing. | 
+ **method** | **str**| Only values read this way. | [optional] 
+ **page** | **int**| Page number, from 1. | [optional] 
+ **page_size** | **int**| Facts per page, at most 100 (the default). | [optional] 
+ **scope** | **str**| Comma-separated: only facts of these scopes (&#x60;consolidated&#x60;, &#x60;separate&#x60;, &#x60;segment&#x60;, &#x60;other&#x60;, &#x60;unknown&#x60;). Default: all. | [optional] 
+ **statement** | **str**| Comma-separated statements: &#x60;BS&#x60;, &#x60;IS&#x60;, &#x60;CI&#x60;, &#x60;CF&#x60;, &#x60;EQ&#x60;, &#x60;NOTE&#x60;, &#x60;OTHER&#x60;. Default: all. | [optional] 
+
+### Return type
+
+[**FilingsFactsRetrieve200Response**](FilingsFactsRetrieve200Response.md)
+
+### Authorization
+
+[CognitoJWT](../README.md#CognitoJWT), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | The filing&#39;s facts, paginated. |  -  |
+**400** | Invalid query parameter. |  -  |
+**404** | Filing not found, or the filing has no facts. |  -  |
 **403** | Missing or invalid API key, or the plan does not include this endpoint. |  -  |
 **429** | Rate limit, plan quota or spend cap reached. |  -  |
 
@@ -1117,6 +1239,835 @@ Name | Type | Description  | Notes
 **429** | Too many searches running (&#x60;search_busy&#x60;), or a plan rate limit. Retry after &#x60;Retry-After&#x60; seconds. Not billed. |  -  |
 **503** | The full-text index is unavailable (&#x60;search_unavailable&#x60;: retry later), or this search is too heavy to answer in time (&#x60;search_too_slow&#x60;: narrow q or the filters, or lower max_results). Not billed. |  -  |
 **403** | Missing or invalid API key, or the plan does not include this endpoint. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **filings_search_saved_create**
+> SavedSearch filings_search_saved_create(saved_search)
+
+Create Saved Search
+
+Saves a full-text search to watch for new filings. With a `webhook`, FinancialFilings runs it about once an hour, sending the filings added since the last run to your webhook as one `saved_search.hits` event (at most `max_hits_per_run` hits, oldest first; `more` counts the rest, which the next runs send). Without one, pull the new hits yourself with `POST /filings/search/saved/{id}/new/`. Either way the search starts from when it is created: run `GET /filings/search/` for what already matches. Each run or pull that returns hits is billed as one page of `GET /filings/search/`; one with no new hits, or whose delivery fails, is free.
+
+Free: never charged credits.
+
+### Example
+
+* Bearer (JWT) Authentication (CognitoJWT):
+* Api Key Authentication (ApiKeyAuth):
+
+```python
+import financial_reports_generated_client
+from financial_reports_generated_client.models.saved_search import SavedSearch
+from financial_reports_generated_client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.financialreports.eu
+# See configuration.py for a list of all supported configuration parameters.
+configuration = financial_reports_generated_client.Configuration(
+    host = "https://api.financialreports.eu"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization (JWT): CognitoJWT
+configuration = financial_reports_generated_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Configure API key authorization: ApiKeyAuth
+configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+async with financial_reports_generated_client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = financial_reports_generated_client.FilingsApi(api_client)
+    saved_search = financial_reports_generated_client.SavedSearch() # SavedSearch | 
+
+    try:
+        # Create Saved Search
+        api_response = await api_instance.filings_search_saved_create(saved_search)
+        print("The response of FilingsApi->filings_search_saved_create:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling FilingsApi->filings_search_saved_create: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **saved_search** | [**SavedSearch**](SavedSearch.md)|  | 
+
+### Return type
+
+[**SavedSearch**](SavedSearch.md)
+
+### Authorization
+
+[CognitoJWT](../README.md#CognitoJWT), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**201** |  |  -  |
+**403** | Missing or invalid API key, or the plan does not include this endpoint. |  -  |
+**429** | Rate limit, plan quota or spend cap reached. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **filings_search_saved_destroy**
+> filings_search_saved_destroy(id)
+
+Delete Saved Search
+
+Deletes a saved search.
+
+Free: never charged credits.
+
+### Example
+
+* Bearer (JWT) Authentication (CognitoJWT):
+* Api Key Authentication (ApiKeyAuth):
+
+```python
+import financial_reports_generated_client
+from financial_reports_generated_client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.financialreports.eu
+# See configuration.py for a list of all supported configuration parameters.
+configuration = financial_reports_generated_client.Configuration(
+    host = "https://api.financialreports.eu"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization (JWT): CognitoJWT
+configuration = financial_reports_generated_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Configure API key authorization: ApiKeyAuth
+configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+async with financial_reports_generated_client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = financial_reports_generated_client.FilingsApi(api_client)
+    id = 56 # int | A unique integer value identifying this saved search.
+
+    try:
+        # Delete Saved Search
+        await api_instance.filings_search_saved_destroy(id)
+    except Exception as e:
+        print("Exception when calling FilingsApi->filings_search_saved_destroy: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **int**| A unique integer value identifying this saved search. | 
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[CognitoJWT](../README.md#CognitoJWT), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**204** | No response body |  -  |
+**403** | Missing or invalid API key, or the plan does not include this endpoint. |  -  |
+**429** | Rate limit, plan quota or spend cap reached. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **filings_search_saved_list**
+> PaginatedSavedSearchList filings_search_saved_list(page=page, page_size=page_size)
+
+List Saved Searches
+
+Your saved searches.
+
+Free: never charged credits.
+
+### Example
+
+* Bearer (JWT) Authentication (CognitoJWT):
+* Api Key Authentication (ApiKeyAuth):
+
+```python
+import financial_reports_generated_client
+from financial_reports_generated_client.models.paginated_saved_search_list import PaginatedSavedSearchList
+from financial_reports_generated_client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.financialreports.eu
+# See configuration.py for a list of all supported configuration parameters.
+configuration = financial_reports_generated_client.Configuration(
+    host = "https://api.financialreports.eu"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization (JWT): CognitoJWT
+configuration = financial_reports_generated_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Configure API key authorization: ApiKeyAuth
+configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+async with financial_reports_generated_client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = financial_reports_generated_client.FilingsApi(api_client)
+    page = 56 # int | A page number within the paginated result set. (optional)
+    page_size = 56 # int | Number of results to return per page. (optional)
+
+    try:
+        # List Saved Searches
+        api_response = await api_instance.filings_search_saved_list(page=page, page_size=page_size)
+        print("The response of FilingsApi->filings_search_saved_list:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling FilingsApi->filings_search_saved_list: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **page** | **int**| A page number within the paginated result set. | [optional] 
+ **page_size** | **int**| Number of results to return per page. | [optional] 
+
+### Return type
+
+[**PaginatedSavedSearchList**](PaginatedSavedSearchList.md)
+
+### Authorization
+
+[CognitoJWT](../README.md#CognitoJWT), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** |  |  -  |
+**403** | Missing or invalid API key, or the plan does not include this endpoint. |  -  |
+**429** | Rate limit, plan quota or spend cap reached. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **filings_search_saved_new_create**
+> SavedSearchPull filings_search_saved_new_create(id, repeat_last_pull=repeat_last_pull)
+
+Pull New Saved Search Hits
+
+Returns the filings added to FinancialFilings that match this saved search and that no earlier pull returned, oldest first, at most `max_hits_per_run`, and records them as returned: each filing is returned once. That includes a filing released long ago that reached FinancialFilings since the last pull, and one whose text arrived late (within 48 hours). Use this instead of re-running `GET /filings/search/` with a moving `release_datetime_from`, which misses both. When `more` is above 0, pull again for the rest. Only for an active saved search with no webhook (409 `delivers_to_webhook` or `saved_search_paused` otherwise). The response is the delivery: hits it returned are not returned again by a later pull, so keep them. If a response was lost, `repeat_last_pull=true` returns the hits of the last pull that returned any, again: no search, no snippets, nothing recorded, free. Billed as one page of `GET /filings/search/` when it returns at least one hit; an empty pull is free.
+
+### Example
+
+* Bearer (JWT) Authentication (CognitoJWT):
+* Api Key Authentication (ApiKeyAuth):
+
+```python
+import financial_reports_generated_client
+from financial_reports_generated_client.models.saved_search_pull import SavedSearchPull
+from financial_reports_generated_client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.financialreports.eu
+# See configuration.py for a list of all supported configuration parameters.
+configuration = financial_reports_generated_client.Configuration(
+    host = "https://api.financialreports.eu"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization (JWT): CognitoJWT
+configuration = financial_reports_generated_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Configure API key authorization: ApiKeyAuth
+configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+async with financial_reports_generated_client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = financial_reports_generated_client.FilingsApi(api_client)
+    id = 56 # int | A unique integer value identifying this saved search.
+    repeat_last_pull = True # bool | true: return the hits of the last pull that returned any, again (with `pulled_at`), instead of pulling. Not billed. (optional)
+
+    try:
+        # Pull New Saved Search Hits
+        api_response = await api_instance.filings_search_saved_new_create(id, repeat_last_pull=repeat_last_pull)
+        print("The response of FilingsApi->filings_search_saved_new_create:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling FilingsApi->filings_search_saved_new_create: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **int**| A unique integer value identifying this saved search. | 
+ **repeat_last_pull** | **bool**| true: return the hits of the last pull that returned any, again (with &#x60;pulled_at&#x60;), instead of pulling. Not billed. | [optional] 
+
+### Return type
+
+[**SavedSearchPull**](SavedSearchPull.md)
+
+### Authorization
+
+[CognitoJWT](../README.md#CognitoJWT), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** |  |  -  |
+**409** | The saved search delivers to a webhook (&#x60;delivers_to_webhook&#x60;), or is paused (&#x60;saved_search_paused&#x60;). Not billed. |  -  |
+**429** | Too many searches running (&#x60;search_busy&#x60;). Retry after &#x60;Retry-After&#x60; seconds. Not billed. |  -  |
+**503** | The full-text index is unavailable (&#x60;search_unavailable&#x60;). Retry later. Not billed. |  -  |
+**403** | Missing or invalid API key, or the plan does not include this endpoint. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **filings_search_saved_partial_update**
+> SavedSearch filings_search_saved_partial_update(id, patched_saved_search=patched_saved_search)
+
+Partially Update Saved Search
+
+Changes some fields of a saved search. Its cursor is kept (see Update).
+
+Free: never charged credits.
+
+### Example
+
+* Bearer (JWT) Authentication (CognitoJWT):
+* Api Key Authentication (ApiKeyAuth):
+
+```python
+import financial_reports_generated_client
+from financial_reports_generated_client.models.patched_saved_search import PatchedSavedSearch
+from financial_reports_generated_client.models.saved_search import SavedSearch
+from financial_reports_generated_client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.financialreports.eu
+# See configuration.py for a list of all supported configuration parameters.
+configuration = financial_reports_generated_client.Configuration(
+    host = "https://api.financialreports.eu"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization (JWT): CognitoJWT
+configuration = financial_reports_generated_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Configure API key authorization: ApiKeyAuth
+configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+async with financial_reports_generated_client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = financial_reports_generated_client.FilingsApi(api_client)
+    id = 56 # int | A unique integer value identifying this saved search.
+    patched_saved_search = financial_reports_generated_client.PatchedSavedSearch() # PatchedSavedSearch |  (optional)
+
+    try:
+        # Partially Update Saved Search
+        api_response = await api_instance.filings_search_saved_partial_update(id, patched_saved_search=patched_saved_search)
+        print("The response of FilingsApi->filings_search_saved_partial_update:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling FilingsApi->filings_search_saved_partial_update: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **int**| A unique integer value identifying this saved search. | 
+ **patched_saved_search** | [**PatchedSavedSearch**](PatchedSavedSearch.md)|  | [optional] 
+
+### Return type
+
+[**SavedSearch**](SavedSearch.md)
+
+### Authorization
+
+[CognitoJWT](../README.md#CognitoJWT), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** |  |  -  |
+**403** | Missing or invalid API key, or the plan does not include this endpoint. |  -  |
+**429** | Rate limit, plan quota or spend cap reached. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **filings_search_saved_preview_create**
+> SavedSearchPreview filings_search_saved_preview_create(id)
+
+Preview Saved Search
+
+Runs the saved search now and returns the hits its next run would deliver, without delivering them or moving its cursor. Billed as one page of `GET /filings/search/`, only when it returns at least one hit.
+
+### Example
+
+* Bearer (JWT) Authentication (CognitoJWT):
+* Api Key Authentication (ApiKeyAuth):
+
+```python
+import financial_reports_generated_client
+from financial_reports_generated_client.models.saved_search_preview import SavedSearchPreview
+from financial_reports_generated_client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.financialreports.eu
+# See configuration.py for a list of all supported configuration parameters.
+configuration = financial_reports_generated_client.Configuration(
+    host = "https://api.financialreports.eu"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization (JWT): CognitoJWT
+configuration = financial_reports_generated_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Configure API key authorization: ApiKeyAuth
+configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+async with financial_reports_generated_client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = financial_reports_generated_client.FilingsApi(api_client)
+    id = 56 # int | A unique integer value identifying this saved search.
+
+    try:
+        # Preview Saved Search
+        api_response = await api_instance.filings_search_saved_preview_create(id)
+        print("The response of FilingsApi->filings_search_saved_preview_create:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling FilingsApi->filings_search_saved_preview_create: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **int**| A unique integer value identifying this saved search. | 
+
+### Return type
+
+[**SavedSearchPreview**](SavedSearchPreview.md)
+
+### Authorization
+
+[CognitoJWT](../README.md#CognitoJWT), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** |  |  -  |
+**429** | Too many searches running (&#x60;search_busy&#x60;). Retry after &#x60;Retry-After&#x60; seconds. Not billed. |  -  |
+**503** | The full-text index is unavailable (&#x60;search_unavailable&#x60;). Retry later. |  -  |
+**403** | Missing or invalid API key, or the plan does not include this endpoint. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **filings_search_saved_retrieve**
+> SavedSearch filings_search_saved_retrieve(id)
+
+Retrieve Saved Search
+
+One saved search, with how its last run ended.
+
+Free: never charged credits.
+
+### Example
+
+* Bearer (JWT) Authentication (CognitoJWT):
+* Api Key Authentication (ApiKeyAuth):
+
+```python
+import financial_reports_generated_client
+from financial_reports_generated_client.models.saved_search import SavedSearch
+from financial_reports_generated_client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.financialreports.eu
+# See configuration.py for a list of all supported configuration parameters.
+configuration = financial_reports_generated_client.Configuration(
+    host = "https://api.financialreports.eu"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization (JWT): CognitoJWT
+configuration = financial_reports_generated_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Configure API key authorization: ApiKeyAuth
+configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+async with financial_reports_generated_client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = financial_reports_generated_client.FilingsApi(api_client)
+    id = 56 # int | A unique integer value identifying this saved search.
+
+    try:
+        # Retrieve Saved Search
+        api_response = await api_instance.filings_search_saved_retrieve(id)
+        print("The response of FilingsApi->filings_search_saved_retrieve:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling FilingsApi->filings_search_saved_retrieve: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **int**| A unique integer value identifying this saved search. | 
+
+### Return type
+
+[**SavedSearch**](SavedSearch.md)
+
+### Authorization
+
+[CognitoJWT](../README.md#CognitoJWT), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** |  |  -  |
+**403** | Missing or invalid API key, or the plan does not include this endpoint. |  -  |
+**429** | Rate limit, plan quota or spend cap reached. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **filings_search_saved_update**
+> SavedSearch filings_search_saved_update(id, saved_search)
+
+Update Saved Search
+
+Replaces a saved search. Its cursor is kept, so after a change to `params` the next run may also deliver matches of the new search added up to 48 hours before the cursor. Left out, `webhook` is kept; set it to null to pull the search instead, whose first pull then returns what is new since the cursor.
+
+Free: never charged credits.
+
+### Example
+
+* Bearer (JWT) Authentication (CognitoJWT):
+* Api Key Authentication (ApiKeyAuth):
+
+```python
+import financial_reports_generated_client
+from financial_reports_generated_client.models.saved_search import SavedSearch
+from financial_reports_generated_client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.financialreports.eu
+# See configuration.py for a list of all supported configuration parameters.
+configuration = financial_reports_generated_client.Configuration(
+    host = "https://api.financialreports.eu"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization (JWT): CognitoJWT
+configuration = financial_reports_generated_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Configure API key authorization: ApiKeyAuth
+configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+async with financial_reports_generated_client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = financial_reports_generated_client.FilingsApi(api_client)
+    id = 56 # int | A unique integer value identifying this saved search.
+    saved_search = financial_reports_generated_client.SavedSearch() # SavedSearch | 
+
+    try:
+        # Update Saved Search
+        api_response = await api_instance.filings_search_saved_update(id, saved_search)
+        print("The response of FilingsApi->filings_search_saved_update:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling FilingsApi->filings_search_saved_update: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **int**| A unique integer value identifying this saved search. | 
+ **saved_search** | [**SavedSearch**](SavedSearch.md)|  | 
+
+### Return type
+
+[**SavedSearch**](SavedSearch.md)
+
+### Authorization
+
+[CognitoJWT](../README.md#CognitoJWT), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** |  |  -  |
+**403** | Missing or invalid API key, or the plan does not include this endpoint. |  -  |
+**429** | Rate limit, plan quota or spend cap reached. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **filings_statements_retrieve**
+> FilingsStatementsRetrieve200Response filings_statements_retrieve(id, method=method, scope=scope, statement=statement)
+
+Retrieve Filing Statements (As Reported)
+
+**Cost:** 40 credits per request, or 0 when the response carries no value.
+
+---
+**Experimental:** the response may change without an API version bump.
+
+**As reported.** Labels, lines, order and periods are the company's own; nothing is mapped to a standard taxonomy, converted or restated. For standardised line items across companies, use GET /companies/{id}/financials/.
+
+**Where the values come from.** Each value says how it was read (`method`): `xbrl` and `structured` are the company's own tagged or structured statements; `llm` was read from the report itself, where the company files no machine-readable statements. Filings with neither have no facts.
+
+**Not included:** note numbers per line, text facts, and values still under review.
+
+**Values** are exact decimal strings in the stated unit, unscaled: parse them with a decimal type.
+
+The filing's statements as printed: each statement once, its period columns once, and per line its `values` aligned with `periods`, nested by the company's own presentation (`children`). Values keep the tagged sign; a line the company prints with the opposite sign has `negated: true` and `printed_values`. Statements read from the report are flat. A filing with both returns `xbrl` unless `method` is given.
+
+**One entity.** A filing can print the group's statements and the parent company's own (`separate`) side by side. You get the group's by default, or the company's own where the filing has nothing else; `scope` says which, per statement too, and `scopes_available` lists what else the filing holds. A segment's or another entity's figures are never served as a statement: GET /filings/{id}/facts/ has them, labelled.
+
+**Compared with `include=as_reported` on GET /companies/{id}/financials/:** that breaks down our standardised totals into the company's XBRL lines; this serves the whole statement as printed, including companies without XBRL.
+
+### Example
+
+* Bearer (JWT) Authentication (CognitoJWT):
+* Api Key Authentication (ApiKeyAuth):
+
+```python
+import financial_reports_generated_client
+from financial_reports_generated_client.models.filings_statements_retrieve200_response import FilingsStatementsRetrieve200Response
+from financial_reports_generated_client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.financialreports.eu
+# See configuration.py for a list of all supported configuration parameters.
+configuration = financial_reports_generated_client.Configuration(
+    host = "https://api.financialreports.eu"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization (JWT): CognitoJWT
+configuration = financial_reports_generated_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Configure API key authorization: ApiKeyAuth
+configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+async with financial_reports_generated_client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = financial_reports_generated_client.FilingsApi(api_client)
+    id = 56 # int | A unique integer value identifying this filing.
+    method = 'method_example' # str | Only values read this way. (optional)
+    scope = 'scope_example' # str | Whose statements: `separate` for the company's own (parent-only or individual) statements, `all` for both, each table labelled. Default: the group's where the filing has any, else the company's own. (optional)
+    statement = 'statement_example' # str | Comma-separated statements: `BS`, `IS`, `CI`, `CF`, `EQ`, `NOTE`, `OTHER`. Default: `BS,IS,CI,CF,EQ`. (optional)
+
+    try:
+        # Retrieve Filing Statements (As Reported)
+        api_response = await api_instance.filings_statements_retrieve(id, method=method, scope=scope, statement=statement)
+        print("The response of FilingsApi->filings_statements_retrieve:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling FilingsApi->filings_statements_retrieve: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **int**| A unique integer value identifying this filing. | 
+ **method** | **str**| Only values read this way. | [optional] 
+ **scope** | **str**| Whose statements: &#x60;separate&#x60; for the company&#39;s own (parent-only or individual) statements, &#x60;all&#x60; for both, each table labelled. Default: the group&#39;s where the filing has any, else the company&#39;s own. | [optional] 
+ **statement** | **str**| Comma-separated statements: &#x60;BS&#x60;, &#x60;IS&#x60;, &#x60;CI&#x60;, &#x60;CF&#x60;, &#x60;EQ&#x60;, &#x60;NOTE&#x60;, &#x60;OTHER&#x60;. Default: &#x60;BS,IS,CI,CF,EQ&#x60;. | [optional] 
+
+### Return type
+
+[**FilingsStatementsRetrieve200Response**](FilingsStatementsRetrieve200Response.md)
+
+### Authorization
+
+[CognitoJWT](../README.md#CognitoJWT), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | The filing&#39;s statements. |  -  |
+**400** | Invalid query parameter. |  -  |
+**404** | Filing not found, or the filing has no statements. |  -  |
+**403** | Missing or invalid API key, or the plan does not include this endpoint. |  -  |
+**429** | Rate limit, plan quota or spend cap reached. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

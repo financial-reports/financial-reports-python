@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "1.4.204"
+__version__ = "1.4.205"
 
 # Define package exports
 __all__ = [
@@ -45,6 +45,7 @@ __all__ = [
     "ApiException",
     "AgentKeyClaimRequest",
     "AgentSignupRequest",
+    "BlankEnum",
     "BulkWatchlist",
     "BulkWatchlistResponse",
     "CompaniesDividendsRetrieve200Response",
@@ -115,6 +116,14 @@ __all__ = [
     "FilingSummary",
     "FilingType",
     "FilingUpdatedPayload",
+    "FilingsFactsRetrieve200Response",
+    "FilingsFactsRetrieve200ResponseResultsInner",
+    "FilingsFactsRetrieve200ResponseResultsInnerAsPrinted",
+    "FilingsFactsRetrieve200ResponseResultsInnerPeriod",
+    "FilingsFactsRetrieve200ResponseResultsInnerSource",
+    "FilingsStatementsRetrieve200Response",
+    "FilingsStatementsRetrieve200ResponseStatementsInner",
+    "FilingsStatementsRetrieve200ResponseStatementsInnerRowsInner",
     "FiscalPeriodEnum",
     "ISICClass",
     "ISICDivision",
@@ -125,6 +134,7 @@ __all__ = [
     "Jurisdiction",
     "KindEnum",
     "Language",
+    "LastStatusEnum",
     "LineItemDefinition",
     "ListedStockExchange",
     "MarkdownBatchSearchHit",
@@ -156,10 +166,12 @@ __all__ = [
     "PaginatedLanguageList",
     "PaginatedLineItemDefinitionList",
     "PaginatedRemovedFilingList",
+    "PaginatedSavedSearchList",
     "PaginatedSecurityListingList",
     "PaginatedSourceList",
     "PaginatedWebhookDeliveryList",
     "PaginatedWebhookList",
+    "PatchedSavedSearch",
     "PatchedWebhook",
     "ProcessingStatusEnum",
     "RateLimitError",
@@ -167,6 +179,15 @@ __all__ = [
     "RemovedFiling",
     "RemovedFilingReasonEnum",
     "ResolveRow",
+    "SavedSearch",
+    "SavedSearchHit",
+    "SavedSearchHitCompany",
+    "SavedSearchPreview",
+    "SavedSearchPull",
+    "SavedSearchPullRef",
+    "SavedSearchPullWindow",
+    "SavedSearchRef",
+    "SavedSearchWindow",
     "SecurityListing",
     "Source",
     "StatementTypeEnum",
@@ -227,6 +248,7 @@ from financial_reports_generated_client.exceptions import ApiException as ApiExc
 # import models into sdk package
 from financial_reports_generated_client.models.agent_key_claim_request import AgentKeyClaimRequest as AgentKeyClaimRequest
 from financial_reports_generated_client.models.agent_signup_request import AgentSignupRequest as AgentSignupRequest
+from financial_reports_generated_client.models.blank_enum import BlankEnum as BlankEnum
 from financial_reports_generated_client.models.bulk_watchlist import BulkWatchlist as BulkWatchlist
 from financial_reports_generated_client.models.bulk_watchlist_response import BulkWatchlistResponse as BulkWatchlistResponse
 from financial_reports_generated_client.models.companies_dividends_retrieve200_response import CompaniesDividendsRetrieve200Response as CompaniesDividendsRetrieve200Response
@@ -297,6 +319,14 @@ from financial_reports_generated_client.models.filing_search_result import Filin
 from financial_reports_generated_client.models.filing_summary import FilingSummary as FilingSummary
 from financial_reports_generated_client.models.filing_type import FilingType as FilingType
 from financial_reports_generated_client.models.filing_updated_payload import FilingUpdatedPayload as FilingUpdatedPayload
+from financial_reports_generated_client.models.filings_facts_retrieve200_response import FilingsFactsRetrieve200Response as FilingsFactsRetrieve200Response
+from financial_reports_generated_client.models.filings_facts_retrieve200_response_results_inner import FilingsFactsRetrieve200ResponseResultsInner as FilingsFactsRetrieve200ResponseResultsInner
+from financial_reports_generated_client.models.filings_facts_retrieve200_response_results_inner_as_printed import FilingsFactsRetrieve200ResponseResultsInnerAsPrinted as FilingsFactsRetrieve200ResponseResultsInnerAsPrinted
+from financial_reports_generated_client.models.filings_facts_retrieve200_response_results_inner_period import FilingsFactsRetrieve200ResponseResultsInnerPeriod as FilingsFactsRetrieve200ResponseResultsInnerPeriod
+from financial_reports_generated_client.models.filings_facts_retrieve200_response_results_inner_source import FilingsFactsRetrieve200ResponseResultsInnerSource as FilingsFactsRetrieve200ResponseResultsInnerSource
+from financial_reports_generated_client.models.filings_statements_retrieve200_response import FilingsStatementsRetrieve200Response as FilingsStatementsRetrieve200Response
+from financial_reports_generated_client.models.filings_statements_retrieve200_response_statements_inner import FilingsStatementsRetrieve200ResponseStatementsInner as FilingsStatementsRetrieve200ResponseStatementsInner
+from financial_reports_generated_client.models.filings_statements_retrieve200_response_statements_inner_rows_inner import FilingsStatementsRetrieve200ResponseStatementsInnerRowsInner as FilingsStatementsRetrieve200ResponseStatementsInnerRowsInner
 from financial_reports_generated_client.models.fiscal_period_enum import FiscalPeriodEnum as FiscalPeriodEnum
 from financial_reports_generated_client.models.isic_class import ISICClass as ISICClass
 from financial_reports_generated_client.models.isic_division import ISICDivision as ISICDivision
@@ -307,6 +337,7 @@ from financial_reports_generated_client.models.ingestion_mode_enum import Ingest
 from financial_reports_generated_client.models.jurisdiction import Jurisdiction as Jurisdiction
 from financial_reports_generated_client.models.kind_enum import KindEnum as KindEnum
 from financial_reports_generated_client.models.language import Language as Language
+from financial_reports_generated_client.models.last_status_enum import LastStatusEnum as LastStatusEnum
 from financial_reports_generated_client.models.line_item_definition import LineItemDefinition as LineItemDefinition
 from financial_reports_generated_client.models.listed_stock_exchange import ListedStockExchange as ListedStockExchange
 from financial_reports_generated_client.models.markdown_batch_search_hit import MarkdownBatchSearchHit as MarkdownBatchSearchHit
@@ -338,10 +369,12 @@ from financial_reports_generated_client.models.paginated_isin_list import Pagina
 from financial_reports_generated_client.models.paginated_language_list import PaginatedLanguageList as PaginatedLanguageList
 from financial_reports_generated_client.models.paginated_line_item_definition_list import PaginatedLineItemDefinitionList as PaginatedLineItemDefinitionList
 from financial_reports_generated_client.models.paginated_removed_filing_list import PaginatedRemovedFilingList as PaginatedRemovedFilingList
+from financial_reports_generated_client.models.paginated_saved_search_list import PaginatedSavedSearchList as PaginatedSavedSearchList
 from financial_reports_generated_client.models.paginated_security_listing_list import PaginatedSecurityListingList as PaginatedSecurityListingList
 from financial_reports_generated_client.models.paginated_source_list import PaginatedSourceList as PaginatedSourceList
 from financial_reports_generated_client.models.paginated_webhook_delivery_list import PaginatedWebhookDeliveryList as PaginatedWebhookDeliveryList
 from financial_reports_generated_client.models.paginated_webhook_list import PaginatedWebhookList as PaginatedWebhookList
+from financial_reports_generated_client.models.patched_saved_search import PatchedSavedSearch as PatchedSavedSearch
 from financial_reports_generated_client.models.patched_webhook import PatchedWebhook as PatchedWebhook
 from financial_reports_generated_client.models.processing_status_enum import ProcessingStatusEnum as ProcessingStatusEnum
 from financial_reports_generated_client.models.rate_limit_error import RateLimitError as RateLimitError
@@ -349,6 +382,15 @@ from financial_reports_generated_client.models.reason_enum import ReasonEnum as 
 from financial_reports_generated_client.models.removed_filing import RemovedFiling as RemovedFiling
 from financial_reports_generated_client.models.removed_filing_reason_enum import RemovedFilingReasonEnum as RemovedFilingReasonEnum
 from financial_reports_generated_client.models.resolve_row import ResolveRow as ResolveRow
+from financial_reports_generated_client.models.saved_search import SavedSearch as SavedSearch
+from financial_reports_generated_client.models.saved_search_hit import SavedSearchHit as SavedSearchHit
+from financial_reports_generated_client.models.saved_search_hit_company import SavedSearchHitCompany as SavedSearchHitCompany
+from financial_reports_generated_client.models.saved_search_preview import SavedSearchPreview as SavedSearchPreview
+from financial_reports_generated_client.models.saved_search_pull import SavedSearchPull as SavedSearchPull
+from financial_reports_generated_client.models.saved_search_pull_ref import SavedSearchPullRef as SavedSearchPullRef
+from financial_reports_generated_client.models.saved_search_pull_window import SavedSearchPullWindow as SavedSearchPullWindow
+from financial_reports_generated_client.models.saved_search_ref import SavedSearchRef as SavedSearchRef
+from financial_reports_generated_client.models.saved_search_window import SavedSearchWindow as SavedSearchWindow
 from financial_reports_generated_client.models.security_listing import SecurityListing as SecurityListing
 from financial_reports_generated_client.models.source import Source as Source
 from financial_reports_generated_client.models.statement_type_enum import StatementTypeEnum as StatementTypeEnum
