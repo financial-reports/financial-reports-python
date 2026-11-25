@@ -49,7 +49,7 @@ class CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItems
     trust_tier: Optional[StrictStr] = Field(description="How the value was read, best first. `xbrl`: the issuer's own XBRL tag (as tagged, or with only its sign or scale normalised). `xbrl-derived`: calculated by us from the issuer's XBRL tags (a total built from tagged components). `verified`: read from the report by AI, accepted by our claim check and confirmed by an independent check of its scale, unit, period and scope. `accepted`: read by AI and accepted by the claim check, not verified. `review`: read by AI where the claim check did not accept it. `derived`: calculated from AI-read values. Null: any other value (a statement extracted by an earlier method, a total we built from tagged components) or a null value. Filter with `min_trust_tier`.")
     trust_tier_accuracy: Optional[Union[StrictFloat, StrictInt]] = Field(description="The measured accuracy of the value's `trust_tier`: how often values of that tier matched the issuer's own XBRL in a pre-registered sample. A rate for the class, not a probability for this value. Null for a tier not measured. Method and sample sizes: `/companies/financials/trust-tiers/`.")
     trust_grade: Optional[StrictStr] = Field(description="The value's grade, from its `trust_tier`'s measured accuracy: `platinum` at least 97%, `gold` 90-97%, `silver` 80-90%, `bronze` 50-80%, `withheld` below 50% (served only with `include_withheld_grades=true`). `xbrl` is platinum by definition (the filer's own tag). Null: not graded (no tier, or a tier not measured). A grade for the class, not for this value. Filter with `min_trust_grade`; bands and rates: `/companies/financials/trust-tiers/`.")
-    withheld_reason: Optional[StrictStr] = Field(default=None, description="Present only when `value` is null because the figure is a derived or analytic line (net debt, cash and short-term investments, capitalisation, debt issued or repaid, intangibles, retained earnings, ...) that no second source confirms and that is not the filer's own XBRL reading. `derived_unconfirmed`. The statement keeps the line; `raw_value`, `scale`, `source_page` and `confidence` are null with it. Absent on every other value.")
+    withheld_reason: Optional[StrictStr] = Field(default=None, description="Present only when `value` is null because the figure is withheld. `derived_unconfirmed`: a derived or analytic line (net debt, cash and short-term investments, capitalisation, debt issued or repaid, intangibles, retained earnings, ...) that no second source confirms and that is not the filer's own XBRL reading. `verified_defect`: a check against the source document showed the figure to be wrong, or the line is built from such a figure (net debt from a wrong cash line); it is withheld until it is corrected, never replaced by a guess. The statement keeps the line; `raw_value`, `scale`, `source_page` and `confidence` are null with it. Absent on every other value.")
     revisions: Optional[List[CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItemsInnerRevisionsInner]] = Field(default=None, description="Present only with `include=revisions`: every recorded change to this value, oldest first (with `as_known_at`, up to that time). Empty when none was recorded. Recording started 2026-10-19T17:05:18Z; `pre_recording` entries are older corrections whose `changed_at` is approximate (the change happened at or before it).")
     withdrawn_reason: Optional[StrictStr] = Field(default=None, description="Present only with `as_known_at`, and only on a statement (and on its values) that was served for this company at that time and is not served for it today because it was withdrawn: `reattributed`: the statement now belongs to another company record, where it may be served; `purged`: reserved, its filing was removed altogether (not served yet; the filing's type, release time and links would be null unless recorded). Absent everywhere else.")
     as_reported: Optional[CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItemsInnerAsReported] = None
@@ -93,16 +93,6 @@ class CompaniesFinancialsRetrieve200ResponsePeriodsInnerStatementsInnerLineItems
 
         if value not in set(['platinum', 'gold', 'silver', 'bronze', 'withheld']):
             raise ValueError("must be one of enum values ('platinum', 'gold', 'silver', 'bronze', 'withheld')")
-        return value
-
-    @field_validator('withheld_reason')
-    def withheld_reason_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(['derived_unconfirmed']):
-            raise ValueError("must be one of enum values ('derived_unconfirmed')")
         return value
 
     @field_validator('withdrawn_reason')
