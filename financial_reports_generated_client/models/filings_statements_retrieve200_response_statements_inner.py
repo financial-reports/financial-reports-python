@@ -20,7 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from financial_reports_generated_client.models.filings_facts_retrieve200_response_results_inner_period import FilingsFactsRetrieve200ResponseResultsInnerPeriod
+from financial_reports_generated_client.models.companies_series_list200_response_results_inner_latest_period import CompaniesSeriesList200ResponseResultsInnerLatestPeriod
 from financial_reports_generated_client.models.filings_statements_retrieve200_response_statements_inner_rows_inner import FilingsStatementsRetrieve200ResponseStatementsInnerRowsInner
 from typing import Optional, Set
 from typing_extensions import Self
@@ -35,7 +35,7 @@ class FilingsStatementsRetrieve200ResponseStatementsInner(BaseModel):
     title: Optional[StrictStr] = None
     role: Optional[StrictStr] = None
     doc_lang: Optional[StrictStr] = Field(default=None, description="Present where known: the report's language (a language code such as `de`), the language of `label_doc_lang`.")
-    periods: List[FilingsFactsRetrieve200ResponseResultsInnerPeriod]
+    periods: List[CompaniesSeriesList200ResponseResultsInnerLatestPeriod]
     rows: List[FilingsStatementsRetrieve200ResponseStatementsInnerRowsInner]
     __properties: ClassVar[List[str]] = ["statement", "scope", "title", "role", "doc_lang", "periods", "rows"]
 
@@ -117,7 +117,7 @@ class FilingsStatementsRetrieve200ResponseStatementsInner(BaseModel):
             "title": obj.get("title"),
             "role": obj.get("role"),
             "doc_lang": obj.get("doc_lang"),
-            "periods": [FilingsFactsRetrieve200ResponseResultsInnerPeriod.from_dict(_item) for _item in obj["periods"]] if obj.get("periods") is not None else None,
+            "periods": [CompaniesSeriesList200ResponseResultsInnerLatestPeriod.from_dict(_item) for _item in obj["periods"]] if obj.get("periods") is not None else None,
             "rows": [FilingsStatementsRetrieve200ResponseStatementsInnerRowsInner.from_dict(_item) for _item in obj["rows"]] if obj.get("rows") is not None else None
         })
         return _obj

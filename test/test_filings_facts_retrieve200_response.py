@@ -51,7 +51,7 @@ class TestFilingsFactsRetrieve200Response(unittest.TestCase):
                             }, 
                         value = '', 
                         unit = '', 
-                        period = financial_reports_generated_client.models.filings_facts_retrieve_200_response_results_inner_period.filings_facts_retrieve_200_response_results_inner_period(
+                        period = financial_reports_generated_client.models.companies_series_list_200_response_results_inner_latest_period.companies_series_list_200_response_results_inner_latest_period(
                             start = datetime.datetime.strptime('1975-12-30', '%Y-%m-%d').date(), 
                             end = datetime.datetime.strptime('1975-12-30', '%Y-%m-%d').date(), 
                             fiscal_label = '', ), 
@@ -59,10 +59,10 @@ class TestFilingsFactsRetrieve200Response(unittest.TestCase):
                         status = '', 
                         confidence = 1.337, 
                         decimals = 56, 
-                        source = financial_reports_generated_client.models.filings_facts_retrieve_200_response_results_inner_source.filings_facts_retrieve_200_response_results_inner_source(
+                        source = financial_reports_generated_client.models.companies_series_list_200_response_results_inner_latest_source.companies_series_list_200_response_results_inner_latest_source(
                             filing_id = 56, 
                             ref = '', ), 
-                        as_printed = financial_reports_generated_client.models.filings_facts_retrieve_200_response_results_inner_as_printed.filings_facts_retrieve_200_response_results_inner_as_printed(
+                        as_printed = financial_reports_generated_client.models.companies_series_list_200_response_results_inner_latest_as_printed.companies_series_list_200_response_results_inner_latest_as_printed(
                             value = '', 
                             scale = 56, ), )
                     ]
@@ -83,7 +83,7 @@ class TestFilingsFactsRetrieve200Response(unittest.TestCase):
                             }, 
                         value = '', 
                         unit = '', 
-                        period = financial_reports_generated_client.models.filings_facts_retrieve_200_response_results_inner_period.filings_facts_retrieve_200_response_results_inner_period(
+                        period = financial_reports_generated_client.models.companies_series_list_200_response_results_inner_latest_period.companies_series_list_200_response_results_inner_latest_period(
                             start = datetime.datetime.strptime('1975-12-30', '%Y-%m-%d').date(), 
                             end = datetime.datetime.strptime('1975-12-30', '%Y-%m-%d').date(), 
                             fiscal_label = '', ), 
@@ -91,10 +91,10 @@ class TestFilingsFactsRetrieve200Response(unittest.TestCase):
                         status = '', 
                         confidence = 1.337, 
                         decimals = 56, 
-                        source = financial_reports_generated_client.models.filings_facts_retrieve_200_response_results_inner_source.filings_facts_retrieve_200_response_results_inner_source(
+                        source = financial_reports_generated_client.models.companies_series_list_200_response_results_inner_latest_source.companies_series_list_200_response_results_inner_latest_source(
                             filing_id = 56, 
                             ref = '', ), 
-                        as_printed = financial_reports_generated_client.models.filings_facts_retrieve_200_response_results_inner_as_printed.filings_facts_retrieve_200_response_results_inner_as_printed(
+                        as_printed = financial_reports_generated_client.models.companies_series_list_200_response_results_inner_latest_as_printed.companies_series_list_200_response_results_inner_latest_as_printed(
                             value = '', 
                             scale = 56, ), )
                     ],

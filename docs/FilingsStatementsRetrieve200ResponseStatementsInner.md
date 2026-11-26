@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **title** | **str** |  | [optional] 
 **role** | **str** |  | [optional] 
 **doc_lang** | **str** | Present where known: the report&#39;s language (a language code such as &#x60;de&#x60;), the language of &#x60;label_doc_lang&#x60;. | [optional] 
-**periods** | [**List[FilingsFactsRetrieve200ResponseResultsInnerPeriod]**](FilingsFactsRetrieve200ResponseResultsInnerPeriod.md) |  | 
+**periods** | [**List[CompaniesSeriesList200ResponseResultsInnerLatestPeriod]**](CompaniesSeriesList200ResponseResultsInnerLatestPeriod.md) |  | 
 **rows** | [**List[FilingsStatementsRetrieve200ResponseStatementsInnerRowsInner]**](FilingsStatementsRetrieve200ResponseStatementsInnerRowsInner.md) |  | 
 
 ## Example

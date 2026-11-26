@@ -12,13 +12,13 @@ Name | Type | Description | Notes
 **dims** | **Dict[str, str]** | &#x60;{\&quot;axis\&quot;: \&quot;member\&quot;}&#x60; for a breakdown fact; absent when there are none. | [optional] 
 **value** | **decimal.Decimal** | Exact decimal string, in &#x60;unit&#x60;, unscaled. | 
 **unit** | **str** | ISO currency code, &#x60;shares&#x60;, &#x60;pure&#x60;, or a ratio such as &#x60;EUR/shares&#x60;. | [optional] 
-**period** | [**FilingsFactsRetrieve200ResponseResultsInnerPeriod**](FilingsFactsRetrieve200ResponseResultsInnerPeriod.md) |  | 
+**period** | [**CompaniesSeriesList200ResponseResultsInnerLatestPeriod**](CompaniesSeriesList200ResponseResultsInnerLatestPeriod.md) |  | 
 **method** | **str** | Where the value was read: &#x60;xbrl&#x60; and &#x60;structured&#x60; are the company&#39;s own tagged or structured statements; &#x60;llm&#x60; was read from the report&#39;s text and tables. | 
 **status** | **str** |  | 
 **confidence** | **float** | For an &#x60;llm&#x60; value. | [optional] 
 **decimals** | **int** | The precision the company tagged (&#x60;-6&#x60; &#x3D; millions). | [optional] 
-**source** | [**FilingsFactsRetrieve200ResponseResultsInnerSource**](FilingsFactsRetrieve200ResponseResultsInnerSource.md) |  | 
-**as_printed** | [**FilingsFactsRetrieve200ResponseResultsInnerAsPrinted**](FilingsFactsRetrieve200ResponseResultsInnerAsPrinted.md) |  | [optional] 
+**source** | [**CompaniesSeriesList200ResponseResultsInnerLatestSource**](CompaniesSeriesList200ResponseResultsInnerLatestSource.md) |  | 
+**as_printed** | [**CompaniesSeriesList200ResponseResultsInnerLatestAsPrinted**](CompaniesSeriesList200ResponseResultsInnerLatestAsPrinted.md) |  | [optional] 
 
 ## Example
 

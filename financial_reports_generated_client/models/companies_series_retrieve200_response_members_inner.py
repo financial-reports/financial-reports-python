@@ -25,14 +25,17 @@ from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
 
-class FilingsFactsRetrieve200ResponseResultsInnerPeriod(BaseModel):
+class CompaniesSeriesRetrieve200ResponseMembersInner(BaseModel):
     """
-    FilingsFactsRetrieve200ResponseResultsInnerPeriod
+    CompaniesSeriesRetrieve200ResponseMembersInner
     """ # noqa: E501
-    start: Optional[date] = Field(default=None, description="Absent for a balance (an instant).")
-    end: date
-    fiscal_label: Optional[StrictStr] = Field(default=None, description="e.g. `FY2025`, `Q3 2025`, `9M 2025`.")
-    __properties: ClassVar[List[str]] = ["start", "end", "fiscal_label"]
+    key: Optional[StrictStr] = None
+    method: Optional[StrictStr] = Field(default=None, description="Where the value was read: `xbrl` and `structured` are the company's own tagged or structured statements; `llm` was read from the report's text and tables.")
+    concept: Optional[StrictStr] = None
+    link: Optional[StrictStr] = Field(default=None, description="How the member joined, when it is not the first.")
+    first_period_end: Optional[date] = None
+    last_period_end: Optional[date] = None
+    __properties: ClassVar[List[str]] = ["key", "method", "concept", "link", "first_period_end", "last_period_end"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -52,7 +55,7 @@ class FilingsFactsRetrieve200ResponseResultsInnerPeriod(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of FilingsFactsRetrieve200ResponseResultsInnerPeriod from a JSON string"""
+        """Create an instance of CompaniesSeriesRetrieve200ResponseMembersInner from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -77,7 +80,7 @@ class FilingsFactsRetrieve200ResponseResultsInnerPeriod(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of FilingsFactsRetrieve200ResponseResultsInnerPeriod from a dict"""
+        """Create an instance of CompaniesSeriesRetrieve200ResponseMembersInner from a dict"""
         if obj is None:
             return None
 
@@ -85,9 +88,12 @@ class FilingsFactsRetrieve200ResponseResultsInnerPeriod(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "start": obj.get("start"),
-            "end": obj.get("end"),
-            "fiscal_label": obj.get("fiscal_label")
+            "key": obj.get("key"),
+            "method": obj.get("method"),
+            "concept": obj.get("concept"),
+            "link": obj.get("link"),
+            "first_period_end": obj.get("first_period_end"),
+            "last_period_end": obj.get("last_period_end")
         })
         return _obj
 

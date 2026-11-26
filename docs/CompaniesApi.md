@@ -13,6 +13,8 @@ Method | HTTP request | Description
 [**companies_resolve_create**](CompaniesApi.md#companies_resolve_create) | **POST** /companies/resolve/ | Resolve Companies by Identifier (Batch)
 [**companies_retrieve**](CompaniesApi.md#companies_retrieve) | **GET** /companies/{id}/ | Retrieve Company Details
 [**companies_segments_retrieve**](CompaniesApi.md#companies_segments_retrieve) | **GET** /companies/{id}/segments/ | Retrieve Company Segments
+[**companies_series_list**](CompaniesApi.md#companies_series_list) | **GET** /companies/{id}/series/ | List Company Series (As Reported)
+[**companies_series_retrieve**](CompaniesApi.md#companies_series_retrieve) | **GET** /companies/{id}/series/{key}/ | Retrieve Company Series (As Reported)
 [**companies_splits_retrieve**](CompaniesApi.md#companies_splits_retrieve) | **GET** /companies/{id}/splits/ | Retrieve Company Stock Splits
 
 
@@ -952,6 +954,224 @@ Name | Type | Description  | Notes
 **200** | Segment figures. |  -  |
 **400** | Invalid query parameter. |  -  |
 **404** | Company not found. |  -  |
+**403** | Missing or invalid API key, or the plan does not include this endpoint. |  -  |
+**429** | Rate limit, plan quota or spend cap reached. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **companies_series_list**
+> CompaniesSeriesList200Response companies_series_list(id, as_of=as_of, page=page, page_size=page_size, period=period, search=search)
+
+List Company Series (As Reported)
+
+**Cost:** 40 credits per request, or 0 when the response carries no value. Billed per page.
+
+---
+**Experimental:** the response may change without an API version bump.
+
+**As reported, over time.** One series per line the company tags (concept, breakdown, unit, period length), joined across its filings: the newest value for each period, and the version history when a later filing restated one. Nothing is mapped to a standard taxonomy; for standardised line items across companies, use GET /companies/{id}/financials/.
+
+**Where the values come from:** the company's own XBRL or structured statements (`method` `xbrl` or `structured`). Values read from report text are not part of the series.
+
+**Values** are exact decimal strings in the stated unit, unscaled: parse them with a decimal type.
+
+The company's series, the ones with the most periods first, each with its latest value. At most 100 per page; `search` and `period` narrow the list. GET /companies/{id}/series/{key}/ returns one series' full history.
+
+### Example
+
+* Bearer (JWT) Authentication (CognitoJWT):
+* Api Key Authentication (ApiKeyAuth):
+
+```python
+import financial_reports_generated_client
+from financial_reports_generated_client.models.companies_series_list200_response import CompaniesSeriesList200Response
+from financial_reports_generated_client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.financialreports.eu
+# See configuration.py for a list of all supported configuration parameters.
+configuration = financial_reports_generated_client.Configuration(
+    host = "https://api.financialreports.eu"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization (JWT): CognitoJWT
+configuration = financial_reports_generated_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Configure API key authorization: ApiKeyAuth
+configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+async with financial_reports_generated_client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = financial_reports_generated_client.CompaniesApi(api_client)
+    id = 56 # int | A unique integer value identifying this company.
+    as_of = 'as_of_example' # str | `YYYY-MM-DD`: the values as they were known at the end of that day (UTC), before any later restatement. Not available for the largest companies (422). (optional)
+    page = 56 # int | Page number, from 1. (optional)
+    page_size = 56 # int | Series per page, at most 100 (the default). (optional)
+    period = 'period_example' # str | `annual`: fiscal years and year-end balances; `quarterly`: quarters and all balances. Default: every period length. (optional)
+    search = 'search_example' # str | Only series whose label or concept contains this (case-insensitive). (optional)
+
+    try:
+        # List Company Series (As Reported)
+        api_response = await api_instance.companies_series_list(id, as_of=as_of, page=page, page_size=page_size, period=period, search=search)
+        print("The response of CompaniesApi->companies_series_list:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling CompaniesApi->companies_series_list: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **int**| A unique integer value identifying this company. | 
+ **as_of** | **str**| &#x60;YYYY-MM-DD&#x60;: the values as they were known at the end of that day (UTC), before any later restatement. Not available for the largest companies (422). | [optional] 
+ **page** | **int**| Page number, from 1. | [optional] 
+ **page_size** | **int**| Series per page, at most 100 (the default). | [optional] 
+ **period** | **str**| &#x60;annual&#x60;: fiscal years and year-end balances; &#x60;quarterly&#x60;: quarters and all balances. Default: every period length. | [optional] 
+ **search** | **str**| Only series whose label or concept contains this (case-insensitive). | [optional] 
+
+### Return type
+
+[**CompaniesSeriesList200Response**](CompaniesSeriesList200Response.md)
+
+### Authorization
+
+[CognitoJWT](../README.md#CognitoJWT), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | The company&#39;s series, paginated. |  -  |
+**400** | Invalid query parameter, e.g. &#x60;period&#x60; or &#x60;as_of&#x60;. |  -  |
+**404** | Filing not found, or the company has no series. |  -  |
+**422** | &#x60;as_of&#x60; asked for a company whose series are too large to compute on request. |  -  |
+**403** | Missing or invalid API key, or the plan does not include this endpoint. |  -  |
+**429** | Rate limit, plan quota or spend cap reached. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **companies_series_retrieve**
+> CompaniesSeriesRetrieve200Response companies_series_retrieve(id, key, as_of=as_of, period=period)
+
+Retrieve Company Series (As Reported)
+
+**Cost:** 40 credits per request, or 0 when the response carries no value.
+
+---
+**Experimental:** the response may change without an API version bump.
+
+**As reported, over time.** One series per line the company tags (concept, breakdown, unit, period length), joined across its filings: the newest value for each period, and the version history when a later filing restated one. Nothing is mapped to a standard taxonomy; for standardised line items across companies, use GET /companies/{id}/financials/.
+
+**Where the values come from:** the company's own XBRL or structured statements (`method` `xbrl` or `structured`). Values read from report text are not part of the series.
+
+**Values** are exact decimal strings in the stated unit, unscaled: parse them with a decimal type.
+
+One series' full history: the newest value for each period, its version and, where a later filing restated it, the value it replaced. `members` lists the lines the series joins (a concept the company renamed stays one series), and any member's key finds the series.
+
+### Example
+
+* Bearer (JWT) Authentication (CognitoJWT):
+* Api Key Authentication (ApiKeyAuth):
+
+```python
+import financial_reports_generated_client
+from financial_reports_generated_client.models.companies_series_retrieve200_response import CompaniesSeriesRetrieve200Response
+from financial_reports_generated_client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.financialreports.eu
+# See configuration.py for a list of all supported configuration parameters.
+configuration = financial_reports_generated_client.Configuration(
+    host = "https://api.financialreports.eu"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization (JWT): CognitoJWT
+configuration = financial_reports_generated_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Configure API key authorization: ApiKeyAuth
+configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+async with financial_reports_generated_client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = financial_reports_generated_client.CompaniesApi(api_client)
+    id = 56 # int | A unique integer value identifying this company.
+    key = 'key_example' # str | A series key from the list, or any of its members' keys.
+    as_of = 'as_of_example' # str | `YYYY-MM-DD`: the values as they were known at the end of that day (UTC), before any later restatement. Not available for the largest companies (422). (optional)
+    period = 'period_example' # str | `annual`: fiscal years and year-end balances; `quarterly`: quarters and all balances. Default: every period length. (optional)
+
+    try:
+        # Retrieve Company Series (As Reported)
+        api_response = await api_instance.companies_series_retrieve(id, key, as_of=as_of, period=period)
+        print("The response of CompaniesApi->companies_series_retrieve:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling CompaniesApi->companies_series_retrieve: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **int**| A unique integer value identifying this company. | 
+ **key** | **str**| A series key from the list, or any of its members&#39; keys. | 
+ **as_of** | **str**| &#x60;YYYY-MM-DD&#x60;: the values as they were known at the end of that day (UTC), before any later restatement. Not available for the largest companies (422). | [optional] 
+ **period** | **str**| &#x60;annual&#x60;: fiscal years and year-end balances; &#x60;quarterly&#x60;: quarters and all balances. Default: every period length. | [optional] 
+
+### Return type
+
+[**CompaniesSeriesRetrieve200Response**](CompaniesSeriesRetrieve200Response.md)
+
+### Authorization
+
+[CognitoJWT](../README.md#CognitoJWT), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | One series. |  -  |
+**400** | Invalid query parameter, e.g. &#x60;period&#x60; or &#x60;as_of&#x60;. |  -  |
+**404** | Filing not found, or no series has this key. |  -  |
+**422** | &#x60;as_of&#x60; asked for a company whose series are too large to compute on request. |  -  |
 **403** | Missing or invalid API key, or the plan does not include this endpoint. |  -  |
 **429** | Rate limit, plan quota or spend cap reached. |  -  |
 

@@ -23,6 +23,8 @@ from typing_extensions import Annotated
 from financial_reports_generated_client.models.companies_dividends_retrieve200_response import CompaniesDividendsRetrieve200Response
 from financial_reports_generated_client.models.companies_financials_retrieve200_response import CompaniesFinancialsRetrieve200Response
 from financial_reports_generated_client.models.companies_segments_retrieve200_response import CompaniesSegmentsRetrieve200Response
+from financial_reports_generated_client.models.companies_series_list200_response import CompaniesSeriesList200Response
+from financial_reports_generated_client.models.companies_series_retrieve200_response import CompaniesSeriesRetrieve200Response
 from financial_reports_generated_client.models.companies_splits_retrieve200_response import CompaniesSplitsRetrieve200Response
 from financial_reports_generated_client.models.company import Company
 from financial_reports_generated_client.models.company_resolve_request import CompanyResolveRequest
@@ -3196,6 +3198,694 @@ class CompaniesApi:
         return self.api_client.param_serialize(
             method='GET',
             resource_path='/companies/{id}/segments/',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    async def companies_series_list(
+        self,
+        id: Annotated[StrictInt, Field(description="A unique integer value identifying this company.")],
+        as_of: Annotated[Optional[StrictStr], Field(description="`YYYY-MM-DD`: the values as they were known at the end of that day (UTC), before any later restatement. Not available for the largest companies (422).")] = None,
+        page: Annotated[Optional[StrictInt], Field(description="Page number, from 1.")] = None,
+        page_size: Annotated[Optional[StrictInt], Field(description="Series per page, at most 100 (the default).")] = None,
+        period: Annotated[Optional[StrictStr], Field(description="`annual`: fiscal years and year-end balances; `quarterly`: quarters and all balances. Default: every period length.")] = None,
+        search: Annotated[Optional[StrictStr], Field(description="Only series whose label or concept contains this (case-insensitive).")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> CompaniesSeriesList200Response:
+        """List Company Series (As Reported)
+
+        **Cost:** 40 credits per request, or 0 when the response carries no value. Billed per page.  --- **Experimental:** the response may change without an API version bump.  **As reported, over time.** One series per line the company tags (concept, breakdown, unit, period length), joined across its filings: the newest value for each period, and the version history when a later filing restated one. Nothing is mapped to a standard taxonomy; for standardised line items across companies, use GET /companies/{id}/financials/.  **Where the values come from:** the company's own XBRL or structured statements (`method` `xbrl` or `structured`). Values read from report text are not part of the series.  **Values** are exact decimal strings in the stated unit, unscaled: parse them with a decimal type.  The company's series, the ones with the most periods first, each with its latest value. At most 100 per page; `search` and `period` narrow the list. GET /companies/{id}/series/{key}/ returns one series' full history.
+
+        :param id: A unique integer value identifying this company. (required)
+        :type id: int
+        :param as_of: `YYYY-MM-DD`: the values as they were known at the end of that day (UTC), before any later restatement. Not available for the largest companies (422).
+        :type as_of: str
+        :param page: Page number, from 1.
+        :type page: int
+        :param page_size: Series per page, at most 100 (the default).
+        :type page_size: int
+        :param period: `annual`: fiscal years and year-end balances; `quarterly`: quarters and all balances. Default: every period length.
+        :type period: str
+        :param search: Only series whose label or concept contains this (case-insensitive).
+        :type search: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._companies_series_list_serialize(
+            id=id,
+            as_of=as_of,
+            page=page,
+            page_size=page_size,
+            period=period,
+            search=search,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "CompaniesSeriesList200Response",
+            '400': None,
+            '404': None,
+            '422': None,
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    async def companies_series_list_with_http_info(
+        self,
+        id: Annotated[StrictInt, Field(description="A unique integer value identifying this company.")],
+        as_of: Annotated[Optional[StrictStr], Field(description="`YYYY-MM-DD`: the values as they were known at the end of that day (UTC), before any later restatement. Not available for the largest companies (422).")] = None,
+        page: Annotated[Optional[StrictInt], Field(description="Page number, from 1.")] = None,
+        page_size: Annotated[Optional[StrictInt], Field(description="Series per page, at most 100 (the default).")] = None,
+        period: Annotated[Optional[StrictStr], Field(description="`annual`: fiscal years and year-end balances; `quarterly`: quarters and all balances. Default: every period length.")] = None,
+        search: Annotated[Optional[StrictStr], Field(description="Only series whose label or concept contains this (case-insensitive).")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[CompaniesSeriesList200Response]:
+        """List Company Series (As Reported)
+
+        **Cost:** 40 credits per request, or 0 when the response carries no value. Billed per page.  --- **Experimental:** the response may change without an API version bump.  **As reported, over time.** One series per line the company tags (concept, breakdown, unit, period length), joined across its filings: the newest value for each period, and the version history when a later filing restated one. Nothing is mapped to a standard taxonomy; for standardised line items across companies, use GET /companies/{id}/financials/.  **Where the values come from:** the company's own XBRL or structured statements (`method` `xbrl` or `structured`). Values read from report text are not part of the series.  **Values** are exact decimal strings in the stated unit, unscaled: parse them with a decimal type.  The company's series, the ones with the most periods first, each with its latest value. At most 100 per page; `search` and `period` narrow the list. GET /companies/{id}/series/{key}/ returns one series' full history.
+
+        :param id: A unique integer value identifying this company. (required)
+        :type id: int
+        :param as_of: `YYYY-MM-DD`: the values as they were known at the end of that day (UTC), before any later restatement. Not available for the largest companies (422).
+        :type as_of: str
+        :param page: Page number, from 1.
+        :type page: int
+        :param page_size: Series per page, at most 100 (the default).
+        :type page_size: int
+        :param period: `annual`: fiscal years and year-end balances; `quarterly`: quarters and all balances. Default: every period length.
+        :type period: str
+        :param search: Only series whose label or concept contains this (case-insensitive).
+        :type search: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._companies_series_list_serialize(
+            id=id,
+            as_of=as_of,
+            page=page,
+            page_size=page_size,
+            period=period,
+            search=search,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "CompaniesSeriesList200Response",
+            '400': None,
+            '404': None,
+            '422': None,
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    async def companies_series_list_without_preload_content(
+        self,
+        id: Annotated[StrictInt, Field(description="A unique integer value identifying this company.")],
+        as_of: Annotated[Optional[StrictStr], Field(description="`YYYY-MM-DD`: the values as they were known at the end of that day (UTC), before any later restatement. Not available for the largest companies (422).")] = None,
+        page: Annotated[Optional[StrictInt], Field(description="Page number, from 1.")] = None,
+        page_size: Annotated[Optional[StrictInt], Field(description="Series per page, at most 100 (the default).")] = None,
+        period: Annotated[Optional[StrictStr], Field(description="`annual`: fiscal years and year-end balances; `quarterly`: quarters and all balances. Default: every period length.")] = None,
+        search: Annotated[Optional[StrictStr], Field(description="Only series whose label or concept contains this (case-insensitive).")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """List Company Series (As Reported)
+
+        **Cost:** 40 credits per request, or 0 when the response carries no value. Billed per page.  --- **Experimental:** the response may change without an API version bump.  **As reported, over time.** One series per line the company tags (concept, breakdown, unit, period length), joined across its filings: the newest value for each period, and the version history when a later filing restated one. Nothing is mapped to a standard taxonomy; for standardised line items across companies, use GET /companies/{id}/financials/.  **Where the values come from:** the company's own XBRL or structured statements (`method` `xbrl` or `structured`). Values read from report text are not part of the series.  **Values** are exact decimal strings in the stated unit, unscaled: parse them with a decimal type.  The company's series, the ones with the most periods first, each with its latest value. At most 100 per page; `search` and `period` narrow the list. GET /companies/{id}/series/{key}/ returns one series' full history.
+
+        :param id: A unique integer value identifying this company. (required)
+        :type id: int
+        :param as_of: `YYYY-MM-DD`: the values as they were known at the end of that day (UTC), before any later restatement. Not available for the largest companies (422).
+        :type as_of: str
+        :param page: Page number, from 1.
+        :type page: int
+        :param page_size: Series per page, at most 100 (the default).
+        :type page_size: int
+        :param period: `annual`: fiscal years and year-end balances; `quarterly`: quarters and all balances. Default: every period length.
+        :type period: str
+        :param search: Only series whose label or concept contains this (case-insensitive).
+        :type search: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._companies_series_list_serialize(
+            id=id,
+            as_of=as_of,
+            page=page,
+            page_size=page_size,
+            period=period,
+            search=search,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "CompaniesSeriesList200Response",
+            '400': None,
+            '404': None,
+            '422': None,
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _companies_series_list_serialize(
+        self,
+        id,
+        as_of,
+        page,
+        page_size,
+        period,
+        search,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if id is not None:
+            _path_params['id'] = id
+        # process the query parameters
+        if as_of is not None:
+            
+            _query_params.append(('as_of', as_of))
+            
+        if page is not None:
+            
+            _query_params.append(('page', page))
+            
+        if page_size is not None:
+            
+            _query_params.append(('page_size', page_size))
+            
+        if period is not None:
+            
+            _query_params.append(('period', period))
+            
+        if search is not None:
+            
+            _query_params.append(('search', search))
+            
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'CognitoJWT', 
+            'ApiKeyAuth'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/companies/{id}/series/',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    async def companies_series_retrieve(
+        self,
+        id: Annotated[StrictInt, Field(description="A unique integer value identifying this company.")],
+        key: Annotated[StrictStr, Field(description="A series key from the list, or any of its members' keys.")],
+        as_of: Annotated[Optional[StrictStr], Field(description="`YYYY-MM-DD`: the values as they were known at the end of that day (UTC), before any later restatement. Not available for the largest companies (422).")] = None,
+        period: Annotated[Optional[StrictStr], Field(description="`annual`: fiscal years and year-end balances; `quarterly`: quarters and all balances. Default: every period length.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> CompaniesSeriesRetrieve200Response:
+        """Retrieve Company Series (As Reported)
+
+        **Cost:** 40 credits per request, or 0 when the response carries no value.  --- **Experimental:** the response may change without an API version bump.  **As reported, over time.** One series per line the company tags (concept, breakdown, unit, period length), joined across its filings: the newest value for each period, and the version history when a later filing restated one. Nothing is mapped to a standard taxonomy; for standardised line items across companies, use GET /companies/{id}/financials/.  **Where the values come from:** the company's own XBRL or structured statements (`method` `xbrl` or `structured`). Values read from report text are not part of the series.  **Values** are exact decimal strings in the stated unit, unscaled: parse them with a decimal type.  One series' full history: the newest value for each period, its version and, where a later filing restated it, the value it replaced. `members` lists the lines the series joins (a concept the company renamed stays one series), and any member's key finds the series.
+
+        :param id: A unique integer value identifying this company. (required)
+        :type id: int
+        :param key: A series key from the list, or any of its members' keys. (required)
+        :type key: str
+        :param as_of: `YYYY-MM-DD`: the values as they were known at the end of that day (UTC), before any later restatement. Not available for the largest companies (422).
+        :type as_of: str
+        :param period: `annual`: fiscal years and year-end balances; `quarterly`: quarters and all balances. Default: every period length.
+        :type period: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._companies_series_retrieve_serialize(
+            id=id,
+            key=key,
+            as_of=as_of,
+            period=period,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "CompaniesSeriesRetrieve200Response",
+            '400': None,
+            '404': None,
+            '422': None,
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    async def companies_series_retrieve_with_http_info(
+        self,
+        id: Annotated[StrictInt, Field(description="A unique integer value identifying this company.")],
+        key: Annotated[StrictStr, Field(description="A series key from the list, or any of its members' keys.")],
+        as_of: Annotated[Optional[StrictStr], Field(description="`YYYY-MM-DD`: the values as they were known at the end of that day (UTC), before any later restatement. Not available for the largest companies (422).")] = None,
+        period: Annotated[Optional[StrictStr], Field(description="`annual`: fiscal years and year-end balances; `quarterly`: quarters and all balances. Default: every period length.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[CompaniesSeriesRetrieve200Response]:
+        """Retrieve Company Series (As Reported)
+
+        **Cost:** 40 credits per request, or 0 when the response carries no value.  --- **Experimental:** the response may change without an API version bump.  **As reported, over time.** One series per line the company tags (concept, breakdown, unit, period length), joined across its filings: the newest value for each period, and the version history when a later filing restated one. Nothing is mapped to a standard taxonomy; for standardised line items across companies, use GET /companies/{id}/financials/.  **Where the values come from:** the company's own XBRL or structured statements (`method` `xbrl` or `structured`). Values read from report text are not part of the series.  **Values** are exact decimal strings in the stated unit, unscaled: parse them with a decimal type.  One series' full history: the newest value for each period, its version and, where a later filing restated it, the value it replaced. `members` lists the lines the series joins (a concept the company renamed stays one series), and any member's key finds the series.
+
+        :param id: A unique integer value identifying this company. (required)
+        :type id: int
+        :param key: A series key from the list, or any of its members' keys. (required)
+        :type key: str
+        :param as_of: `YYYY-MM-DD`: the values as they were known at the end of that day (UTC), before any later restatement. Not available for the largest companies (422).
+        :type as_of: str
+        :param period: `annual`: fiscal years and year-end balances; `quarterly`: quarters and all balances. Default: every period length.
+        :type period: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._companies_series_retrieve_serialize(
+            id=id,
+            key=key,
+            as_of=as_of,
+            period=period,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "CompaniesSeriesRetrieve200Response",
+            '400': None,
+            '404': None,
+            '422': None,
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    async def companies_series_retrieve_without_preload_content(
+        self,
+        id: Annotated[StrictInt, Field(description="A unique integer value identifying this company.")],
+        key: Annotated[StrictStr, Field(description="A series key from the list, or any of its members' keys.")],
+        as_of: Annotated[Optional[StrictStr], Field(description="`YYYY-MM-DD`: the values as they were known at the end of that day (UTC), before any later restatement. Not available for the largest companies (422).")] = None,
+        period: Annotated[Optional[StrictStr], Field(description="`annual`: fiscal years and year-end balances; `quarterly`: quarters and all balances. Default: every period length.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Retrieve Company Series (As Reported)
+
+        **Cost:** 40 credits per request, or 0 when the response carries no value.  --- **Experimental:** the response may change without an API version bump.  **As reported, over time.** One series per line the company tags (concept, breakdown, unit, period length), joined across its filings: the newest value for each period, and the version history when a later filing restated one. Nothing is mapped to a standard taxonomy; for standardised line items across companies, use GET /companies/{id}/financials/.  **Where the values come from:** the company's own XBRL or structured statements (`method` `xbrl` or `structured`). Values read from report text are not part of the series.  **Values** are exact decimal strings in the stated unit, unscaled: parse them with a decimal type.  One series' full history: the newest value for each period, its version and, where a later filing restated it, the value it replaced. `members` lists the lines the series joins (a concept the company renamed stays one series), and any member's key finds the series.
+
+        :param id: A unique integer value identifying this company. (required)
+        :type id: int
+        :param key: A series key from the list, or any of its members' keys. (required)
+        :type key: str
+        :param as_of: `YYYY-MM-DD`: the values as they were known at the end of that day (UTC), before any later restatement. Not available for the largest companies (422).
+        :type as_of: str
+        :param period: `annual`: fiscal years and year-end balances; `quarterly`: quarters and all balances. Default: every period length.
+        :type period: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._companies_series_retrieve_serialize(
+            id=id,
+            key=key,
+            as_of=as_of,
+            period=period,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "CompaniesSeriesRetrieve200Response",
+            '400': None,
+            '404': None,
+            '422': None,
+            '403': "ErrorDetail",
+            '429': "RateLimitError",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _companies_series_retrieve_serialize(
+        self,
+        id,
+        key,
+        as_of,
+        period,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if id is not None:
+            _path_params['id'] = id
+        if key is not None:
+            _path_params['key'] = key
+        # process the query parameters
+        if as_of is not None:
+            
+            _query_params.append(('as_of', as_of))
+            
+        if period is not None:
+            
+            _query_params.append(('period', period))
+            
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'CognitoJWT', 
+            'ApiKeyAuth'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/companies/{id}/series/{key}/',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,

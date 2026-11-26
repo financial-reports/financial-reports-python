@@ -24,9 +24,9 @@ from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
 
-class FilingsFactsRetrieve200ResponseResultsInnerSource(BaseModel):
+class CompaniesSeriesList200ResponseResultsInnerLatestSource(BaseModel):
     """
-    FilingsFactsRetrieve200ResponseResultsInnerSource
+    CompaniesSeriesList200ResponseResultsInnerLatestSource
     """ # noqa: E501
     filing_id: StrictInt
     ref: Optional[StrictStr] = Field(default=None, description="Where in the document the value is.")
@@ -50,7 +50,7 @@ class FilingsFactsRetrieve200ResponseResultsInnerSource(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of FilingsFactsRetrieve200ResponseResultsInnerSource from a JSON string"""
+        """Create an instance of CompaniesSeriesList200ResponseResultsInnerLatestSource from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -75,7 +75,7 @@ class FilingsFactsRetrieve200ResponseResultsInnerSource(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of FilingsFactsRetrieve200ResponseResultsInnerSource from a dict"""
+        """Create an instance of CompaniesSeriesList200ResponseResultsInnerLatestSource from a dict"""
         if obj is None:
             return None
 

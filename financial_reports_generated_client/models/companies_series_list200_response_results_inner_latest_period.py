@@ -18,19 +18,21 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr
+from datetime import date
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
 
-class FilingsFactsRetrieve200ResponseResultsInnerAsPrinted(BaseModel):
+class CompaniesSeriesList200ResponseResultsInnerLatestPeriod(BaseModel):
     """
-    The value as printed in the report, and its scale (6 = millions).
+    CompaniesSeriesList200ResponseResultsInnerLatestPeriod
     """ # noqa: E501
-    value: Optional[StrictStr] = None
-    scale: Optional[StrictInt] = None
-    __properties: ClassVar[List[str]] = ["value", "scale"]
+    start: Optional[date] = Field(default=None, description="Absent for a balance (an instant).")
+    end: date
+    fiscal_label: Optional[StrictStr] = Field(default=None, description="e.g. `FY2025`, `Q3 2025`, `9M 2025`.")
+    __properties: ClassVar[List[str]] = ["start", "end", "fiscal_label"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -50,7 +52,7 @@ class FilingsFactsRetrieve200ResponseResultsInnerAsPrinted(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of FilingsFactsRetrieve200ResponseResultsInnerAsPrinted from a JSON string"""
+        """Create an instance of CompaniesSeriesList200ResponseResultsInnerLatestPeriod from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -71,16 +73,11 @@ class FilingsFactsRetrieve200ResponseResultsInnerAsPrinted(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if scale (nullable) is None
-        # and model_fields_set contains the field
-        if self.scale is None and "scale" in self.model_fields_set:
-            _dict['scale'] = None
-
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of FilingsFactsRetrieve200ResponseResultsInnerAsPrinted from a dict"""
+        """Create an instance of CompaniesSeriesList200ResponseResultsInnerLatestPeriod from a dict"""
         if obj is None:
             return None
 
@@ -88,8 +85,9 @@ class FilingsFactsRetrieve200ResponseResultsInnerAsPrinted(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "value": obj.get("value"),
-            "scale": obj.get("scale")
+            "start": obj.get("start"),
+            "end": obj.get("end"),
+            "fiscal_label": obj.get("fiscal_label")
         })
         return _obj
 

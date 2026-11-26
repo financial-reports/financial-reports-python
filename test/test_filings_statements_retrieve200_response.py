@@ -46,7 +46,7 @@ class TestFilingsStatementsRetrieve200Response(unittest.TestCase):
                         role = '', 
                         doc_lang = '', 
                         periods = [
-                            financial_reports_generated_client.models.filings_facts_retrieve_200_response_results_inner_period.filings_facts_retrieve_200_response_results_inner_period(
+                            financial_reports_generated_client.models.companies_series_list_200_response_results_inner_latest_period.companies_series_list_200_response_results_inner_latest_period(
                                 start = datetime.datetime.strptime('1975-12-30', '%Y-%m-%d').date(), 
                                 end = datetime.datetime.strptime('1975-12-30', '%Y-%m-%d').date(), 
                                 fiscal_label = '', )
@@ -104,7 +104,7 @@ class TestFilingsStatementsRetrieve200Response(unittest.TestCase):
                         role = '', 
                         doc_lang = '', 
                         periods = [
-                            financial_reports_generated_client.models.filings_facts_retrieve_200_response_results_inner_period.filings_facts_retrieve_200_response_results_inner_period(
+                            financial_reports_generated_client.models.companies_series_list_200_response_results_inner_latest_period.companies_series_list_200_response_results_inner_latest_period(
                                 start = datetime.datetime.strptime('1975-12-30', '%Y-%m-%d').date(), 
                                 end = datetime.datetime.strptime('1975-12-30', '%Y-%m-%d').date(), 
                                 fiscal_label = '', )

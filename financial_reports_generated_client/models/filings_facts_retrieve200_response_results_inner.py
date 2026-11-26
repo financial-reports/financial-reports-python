@@ -20,9 +20,9 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional, Union
-from financial_reports_generated_client.models.filings_facts_retrieve200_response_results_inner_as_printed import FilingsFactsRetrieve200ResponseResultsInnerAsPrinted
-from financial_reports_generated_client.models.filings_facts_retrieve200_response_results_inner_period import FilingsFactsRetrieve200ResponseResultsInnerPeriod
-from financial_reports_generated_client.models.filings_facts_retrieve200_response_results_inner_source import FilingsFactsRetrieve200ResponseResultsInnerSource
+from financial_reports_generated_client.models.companies_series_list200_response_results_inner_latest_as_printed import CompaniesSeriesList200ResponseResultsInnerLatestAsPrinted
+from financial_reports_generated_client.models.companies_series_list200_response_results_inner_latest_period import CompaniesSeriesList200ResponseResultsInnerLatestPeriod
+from financial_reports_generated_client.models.companies_series_list200_response_results_inner_latest_source import CompaniesSeriesList200ResponseResultsInnerLatestSource
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
@@ -38,13 +38,13 @@ class FilingsFactsRetrieve200ResponseResultsInner(BaseModel):
     dims: Optional[Dict[str, StrictStr]] = Field(default=None, description="`{\"axis\": \"member\"}` for a breakdown fact; absent when there are none.")
     value: StrictStr = Field(description="Exact decimal string, in `unit`, unscaled.")
     unit: Optional[StrictStr] = Field(default=None, description="ISO currency code, `shares`, `pure`, or a ratio such as `EUR/shares`.")
-    period: FilingsFactsRetrieve200ResponseResultsInnerPeriod
+    period: CompaniesSeriesList200ResponseResultsInnerLatestPeriod
     method: StrictStr = Field(description="Where the value was read: `xbrl` and `structured` are the company's own tagged or structured statements; `llm` was read from the report's text and tables.")
     status: StrictStr
     confidence: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="For an `llm` value.")
     decimals: Optional[StrictInt] = Field(default=None, description="The precision the company tagged (`-6` = millions).")
-    source: FilingsFactsRetrieve200ResponseResultsInnerSource
-    as_printed: Optional[FilingsFactsRetrieve200ResponseResultsInnerAsPrinted] = None
+    source: CompaniesSeriesList200ResponseResultsInnerLatestSource
+    as_printed: Optional[CompaniesSeriesList200ResponseResultsInnerLatestAsPrinted] = None
     __properties: ClassVar[List[str]] = ["label", "concept", "statement", "scope", "dims", "value", "unit", "period", "method", "status", "confidence", "decimals", "source", "as_printed"]
 
     model_config = ConfigDict(
@@ -114,13 +114,13 @@ class FilingsFactsRetrieve200ResponseResultsInner(BaseModel):
             "dims": obj.get("dims"),
             "value": obj.get("value"),
             "unit": obj.get("unit"),
-            "period": FilingsFactsRetrieve200ResponseResultsInnerPeriod.from_dict(obj["period"]) if obj.get("period") is not None else None,
+            "period": CompaniesSeriesList200ResponseResultsInnerLatestPeriod.from_dict(obj["period"]) if obj.get("period") is not None else None,
             "method": obj.get("method"),
             "status": obj.get("status"),
             "confidence": obj.get("confidence"),
             "decimals": obj.get("decimals"),
-            "source": FilingsFactsRetrieve200ResponseResultsInnerSource.from_dict(obj["source"]) if obj.get("source") is not None else None,
-            "as_printed": FilingsFactsRetrieve200ResponseResultsInnerAsPrinted.from_dict(obj["as_printed"]) if obj.get("as_printed") is not None else None
+            "source": CompaniesSeriesList200ResponseResultsInnerLatestSource.from_dict(obj["source"]) if obj.get("source") is not None else None,
+            "as_printed": CompaniesSeriesList200ResponseResultsInnerLatestAsPrinted.from_dict(obj["as_printed"]) if obj.get("as_printed") is not None else None
         })
         return _obj
 
