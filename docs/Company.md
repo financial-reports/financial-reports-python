@@ -30,7 +30,7 @@ Name | Type | Description | Notes
 **date_ipo** | **date** | Date of the company&#39;s Initial Public Offering (IPO). Returns null when the IPO date is unknown. | [readonly] 
 **main_stock_exchange** | **str** | URL of the company&#39;s listing page on its main stock exchange, where known; empty for most companies. Not a MIC: exchange codes are in &#x60;listings&#x60;. | [readonly] 
 **is_listed** | **bool** | Indicates if the company is currently publicly listed. | [readonly] 
-**listing_status** | **str** | Canonical exchange-listing state. One of: LISTED, DELISTED, SUSPENDED, UNKNOWN. The boolean &#x60;is_listed&#x60; is derived from this (False only when DELISTED). | [readonly] 
+**listing_status** | **str** | Canonical exchange-listing state. One of: LISTED, DELISTED, SUSPENDED, UNKNOWN, PRE_LISTING (filed offering documents, never listed; includes withdrawn IPOs). More values may be added. The boolean &#x60;is_listed&#x60; is derived from this (False when DELISTED or PRE_LISTING). | [readonly] 
 **delisting_date** | **date** | Date the company was delisted, if known. Null while listed. | [readonly] 
 **delisting_reason** | **str** | Reason for delisting when DELISTED: ACQUISITION, BANKRUPTCY, GOING_PRIVATE, REGULATORY, VOLUNTARY, EXCHANGE_TRANSFER, MATURED, OTHER. Empty string while listed. | [readonly] 
 **social_facebook** | **str** | Facebook page URL. | [readonly] 

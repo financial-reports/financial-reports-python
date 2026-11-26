@@ -390,7 +390,7 @@ async with financial_reports_generated_client.ApiClient(configuration) as api_cl
     industry_group = 'industry_group_example' # str | Filter by ISIC Division code. (optional)
     isin = 'isin_example' # str | Filter by Company ISIN. Case-insensitive. (optional)
     lei = 'lei_example' # str | Filter by Company Legal Entity Identifier (LEI). Case-insensitive. (optional)
-    listing_status = 'listing_status_example' # str | Filter by exchange-listing state (LISTED, DELISTED, SUSPENDED, UNKNOWN).  * `LISTED` - Listed * `DELISTED` - Delisted * `SUSPENDED` - Suspended * `UNKNOWN` - Unknown (optional)
+    listing_status = 'listing_status_example' # str | Filter by exchange-listing state (LISTED, DELISTED, SUSPENDED, UNKNOWN, PRE_LISTING).  * `LISTED` - Listed * `DELISTED` - Delisted * `SUSPENDED` - Suspended * `UNKNOWN` - Unknown * `PRE_LISTING` - Pre-listing (optional)
     oics_class = 'oics_class_example' # str | Filter by OICS class code (e.g. `TC.SC.SEM.CHP`). Matches the company's primary class, not its secondaries. OICS v0.4. (optional)
     oics_entity_type = 'oics_entity_type_example' # str | Filter by OICS entity type: OPERATING, HOLDING, FUND, SPAC_SHELL, FINANCING_VEHICLE or PUBLIC_SECTOR. OICS v0.4. (optional)
     oics_group = 'oics_group_example' # str | Filter by OICS industry group code (e.g. `TC.SC`). Matches the company's primary class. OICS v0.4. (optional)
@@ -431,7 +431,7 @@ Name | Type | Description  | Notes
  **industry_group** | **str**| Filter by ISIC Division code. | [optional] 
  **isin** | **str**| Filter by Company ISIN. Case-insensitive. | [optional] 
  **lei** | **str**| Filter by Company Legal Entity Identifier (LEI). Case-insensitive. | [optional] 
- **listing_status** | **str**| Filter by exchange-listing state (LISTED, DELISTED, SUSPENDED, UNKNOWN).  * &#x60;LISTED&#x60; - Listed * &#x60;DELISTED&#x60; - Delisted * &#x60;SUSPENDED&#x60; - Suspended * &#x60;UNKNOWN&#x60; - Unknown | [optional] 
+ **listing_status** | **str**| Filter by exchange-listing state (LISTED, DELISTED, SUSPENDED, UNKNOWN, PRE_LISTING).  * &#x60;LISTED&#x60; - Listed * &#x60;DELISTED&#x60; - Delisted * &#x60;SUSPENDED&#x60; - Suspended * &#x60;UNKNOWN&#x60; - Unknown * &#x60;PRE_LISTING&#x60; - Pre-listing | [optional] 
  **oics_class** | **str**| Filter by OICS class code (e.g. &#x60;TC.SC.SEM.CHP&#x60;). Matches the company&#39;s primary class, not its secondaries. OICS v0.4. | [optional] 
  **oics_entity_type** | **str**| Filter by OICS entity type: OPERATING, HOLDING, FUND, SPAC_SHELL, FINANCING_VEHICLE or PUBLIC_SECTOR. OICS v0.4. | [optional] 
  **oics_group** | **str**| Filter by OICS industry group code (e.g. &#x60;TC.SC&#x60;). Matches the company&#39;s primary class. OICS v0.4. | [optional] 

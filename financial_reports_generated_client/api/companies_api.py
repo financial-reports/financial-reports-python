@@ -1113,7 +1113,7 @@ class CompaniesApi:
         industry_group: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Division code.")] = None,
         isin: Annotated[Optional[StrictStr], Field(description="Filter by Company ISIN. Case-insensitive.")] = None,
         lei: Annotated[Optional[StrictStr], Field(description="Filter by Company Legal Entity Identifier (LEI). Case-insensitive.")] = None,
-        listing_status: Annotated[Optional[StrictStr], Field(description="Filter by exchange-listing state (LISTED, DELISTED, SUSPENDED, UNKNOWN).  * `LISTED` - Listed * `DELISTED` - Delisted * `SUSPENDED` - Suspended * `UNKNOWN` - Unknown")] = None,
+        listing_status: Annotated[Optional[StrictStr], Field(description="Filter by exchange-listing state (LISTED, DELISTED, SUSPENDED, UNKNOWN, PRE_LISTING).  * `LISTED` - Listed * `DELISTED` - Delisted * `SUSPENDED` - Suspended * `UNKNOWN` - Unknown * `PRE_LISTING` - Pre-listing")] = None,
         oics_class: Annotated[Optional[StrictStr], Field(description="Filter by OICS class code (e.g. `TC.SC.SEM.CHP`). Matches the company's primary class, not its secondaries. OICS v0.4.")] = None,
         oics_entity_type: Annotated[Optional[StrictStr], Field(description="Filter by OICS entity type: OPERATING, HOLDING, FUND, SPAC_SHELL, FINANCING_VEHICLE or PUBLIC_SECTOR. OICS v0.4.")] = None,
         oics_group: Annotated[Optional[StrictStr], Field(description="Filter by OICS industry group code (e.g. `TC.SC`). Matches the company's primary class. OICS v0.4.")] = None,
@@ -1163,7 +1163,7 @@ class CompaniesApi:
         :type isin: str
         :param lei: Filter by Company Legal Entity Identifier (LEI). Case-insensitive.
         :type lei: str
-        :param listing_status: Filter by exchange-listing state (LISTED, DELISTED, SUSPENDED, UNKNOWN).  * `LISTED` - Listed * `DELISTED` - Delisted * `SUSPENDED` - Suspended * `UNKNOWN` - Unknown
+        :param listing_status: Filter by exchange-listing state (LISTED, DELISTED, SUSPENDED, UNKNOWN, PRE_LISTING).  * `LISTED` - Listed * `DELISTED` - Delisted * `SUSPENDED` - Suspended * `UNKNOWN` - Unknown * `PRE_LISTING` - Pre-listing
         :type listing_status: str
         :param oics_class: Filter by OICS class code (e.g. `TC.SC.SEM.CHP`). Matches the company's primary class, not its secondaries. OICS v0.4.
         :type oics_class: str
@@ -1275,7 +1275,7 @@ class CompaniesApi:
         industry_group: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Division code.")] = None,
         isin: Annotated[Optional[StrictStr], Field(description="Filter by Company ISIN. Case-insensitive.")] = None,
         lei: Annotated[Optional[StrictStr], Field(description="Filter by Company Legal Entity Identifier (LEI). Case-insensitive.")] = None,
-        listing_status: Annotated[Optional[StrictStr], Field(description="Filter by exchange-listing state (LISTED, DELISTED, SUSPENDED, UNKNOWN).  * `LISTED` - Listed * `DELISTED` - Delisted * `SUSPENDED` - Suspended * `UNKNOWN` - Unknown")] = None,
+        listing_status: Annotated[Optional[StrictStr], Field(description="Filter by exchange-listing state (LISTED, DELISTED, SUSPENDED, UNKNOWN, PRE_LISTING).  * `LISTED` - Listed * `DELISTED` - Delisted * `SUSPENDED` - Suspended * `UNKNOWN` - Unknown * `PRE_LISTING` - Pre-listing")] = None,
         oics_class: Annotated[Optional[StrictStr], Field(description="Filter by OICS class code (e.g. `TC.SC.SEM.CHP`). Matches the company's primary class, not its secondaries. OICS v0.4.")] = None,
         oics_entity_type: Annotated[Optional[StrictStr], Field(description="Filter by OICS entity type: OPERATING, HOLDING, FUND, SPAC_SHELL, FINANCING_VEHICLE or PUBLIC_SECTOR. OICS v0.4.")] = None,
         oics_group: Annotated[Optional[StrictStr], Field(description="Filter by OICS industry group code (e.g. `TC.SC`). Matches the company's primary class. OICS v0.4.")] = None,
@@ -1325,7 +1325,7 @@ class CompaniesApi:
         :type isin: str
         :param lei: Filter by Company Legal Entity Identifier (LEI). Case-insensitive.
         :type lei: str
-        :param listing_status: Filter by exchange-listing state (LISTED, DELISTED, SUSPENDED, UNKNOWN).  * `LISTED` - Listed * `DELISTED` - Delisted * `SUSPENDED` - Suspended * `UNKNOWN` - Unknown
+        :param listing_status: Filter by exchange-listing state (LISTED, DELISTED, SUSPENDED, UNKNOWN, PRE_LISTING).  * `LISTED` - Listed * `DELISTED` - Delisted * `SUSPENDED` - Suspended * `UNKNOWN` - Unknown * `PRE_LISTING` - Pre-listing
         :type listing_status: str
         :param oics_class: Filter by OICS class code (e.g. `TC.SC.SEM.CHP`). Matches the company's primary class, not its secondaries. OICS v0.4.
         :type oics_class: str
@@ -1437,7 +1437,7 @@ class CompaniesApi:
         industry_group: Annotated[Optional[StrictStr], Field(description="Filter by ISIC Division code.")] = None,
         isin: Annotated[Optional[StrictStr], Field(description="Filter by Company ISIN. Case-insensitive.")] = None,
         lei: Annotated[Optional[StrictStr], Field(description="Filter by Company Legal Entity Identifier (LEI). Case-insensitive.")] = None,
-        listing_status: Annotated[Optional[StrictStr], Field(description="Filter by exchange-listing state (LISTED, DELISTED, SUSPENDED, UNKNOWN).  * `LISTED` - Listed * `DELISTED` - Delisted * `SUSPENDED` - Suspended * `UNKNOWN` - Unknown")] = None,
+        listing_status: Annotated[Optional[StrictStr], Field(description="Filter by exchange-listing state (LISTED, DELISTED, SUSPENDED, UNKNOWN, PRE_LISTING).  * `LISTED` - Listed * `DELISTED` - Delisted * `SUSPENDED` - Suspended * `UNKNOWN` - Unknown * `PRE_LISTING` - Pre-listing")] = None,
         oics_class: Annotated[Optional[StrictStr], Field(description="Filter by OICS class code (e.g. `TC.SC.SEM.CHP`). Matches the company's primary class, not its secondaries. OICS v0.4.")] = None,
         oics_entity_type: Annotated[Optional[StrictStr], Field(description="Filter by OICS entity type: OPERATING, HOLDING, FUND, SPAC_SHELL, FINANCING_VEHICLE or PUBLIC_SECTOR. OICS v0.4.")] = None,
         oics_group: Annotated[Optional[StrictStr], Field(description="Filter by OICS industry group code (e.g. `TC.SC`). Matches the company's primary class. OICS v0.4.")] = None,
@@ -1487,7 +1487,7 @@ class CompaniesApi:
         :type isin: str
         :param lei: Filter by Company Legal Entity Identifier (LEI). Case-insensitive.
         :type lei: str
-        :param listing_status: Filter by exchange-listing state (LISTED, DELISTED, SUSPENDED, UNKNOWN).  * `LISTED` - Listed * `DELISTED` - Delisted * `SUSPENDED` - Suspended * `UNKNOWN` - Unknown
+        :param listing_status: Filter by exchange-listing state (LISTED, DELISTED, SUSPENDED, UNKNOWN, PRE_LISTING).  * `LISTED` - Listed * `DELISTED` - Delisted * `SUSPENDED` - Suspended * `UNKNOWN` - Unknown * `PRE_LISTING` - Pre-listing
         :type listing_status: str
         :param oics_class: Filter by OICS class code (e.g. `TC.SC.SEM.CHP`). Matches the company's primary class, not its secondaries. OICS v0.4.
         :type oics_class: str

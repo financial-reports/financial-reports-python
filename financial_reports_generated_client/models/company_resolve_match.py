@@ -34,7 +34,7 @@ class CompanyResolveMatch(BaseModel):
     isins: List[StrictStr] = Field(description="Primary ISIN(s). Use the company detail endpoint for the full list.")
     lei: StrictStr = Field(description="Legal Entity Identifier (ISO 17442).")
     country_code: Optional[StrictStr] = Field(description="ISO 3166-1 alpha-2 country code.")
-    listing_status: StrictStr = Field(description="LISTED, DELISTED, SUSPENDED or UNKNOWN.")
+    listing_status: StrictStr = Field(description="LISTED, DELISTED, SUSPENDED, UNKNOWN or PRE_LISTING.")
     __properties: ClassVar[List[str]] = ["id", "name", "ticker", "isins", "lei", "country_code", "listing_status"]
 
     model_config = ConfigDict(

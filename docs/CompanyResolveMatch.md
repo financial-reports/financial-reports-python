@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 **isins** | **List[str]** | Primary ISIN(s). Use the company detail endpoint for the full list. | [readonly] 
 **lei** | **str** | Legal Entity Identifier (ISO 17442). | [readonly] 
 **country_code** | **str** | ISO 3166-1 alpha-2 country code. | [readonly] 
-**listing_status** | **str** | LISTED, DELISTED, SUSPENDED or UNKNOWN. | [readonly] 
+**listing_status** | **str** | LISTED, DELISTED, SUSPENDED, UNKNOWN or PRE_LISTING. | [readonly] 
 
 ## Example
 

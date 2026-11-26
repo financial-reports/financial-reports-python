@@ -67,7 +67,7 @@ class Company(BaseModel):
     date_ipo: Optional[date] = Field(description="Date of the company's Initial Public Offering (IPO). Returns null when the IPO date is unknown.")
     main_stock_exchange: Optional[StrictStr] = Field(description="URL of the company's listing page on its main stock exchange, where known; empty for most companies. Not a MIC: exchange codes are in `listings`.")
     is_listed: Optional[StrictBool] = Field(description="Indicates if the company is currently publicly listed.")
-    listing_status: StrictStr = Field(description="Canonical exchange-listing state. One of: LISTED, DELISTED, SUSPENDED, UNKNOWN. The boolean `is_listed` is derived from this (False only when DELISTED).")
+    listing_status: StrictStr = Field(description="Canonical exchange-listing state. One of: LISTED, DELISTED, SUSPENDED, UNKNOWN, PRE_LISTING (filed offering documents, never listed; includes withdrawn IPOs). More values may be added. The boolean `is_listed` is derived from this (False when DELISTED or PRE_LISTING).")
     delisting_date: Optional[date] = Field(description="Date the company was delisted, if known. Null while listed.")
     delisting_reason: StrictStr = Field(description="Reason for delisting when DELISTED: ACQUISITION, BANKRUPTCY, GOING_PRIVATE, REGULATORY, VOLUNTARY, EXCHANGE_TRANSFER, MATURED, OTHER. Empty string while listed.")
     social_facebook: Optional[StrictStr] = Field(description="Facebook page URL.")
